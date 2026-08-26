@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ibm-black: #161616;
+  --color-ibm-gray-100: #161616;
+  --color-ibm-gray-90: #262626;
+  --color-ibm-gray-80: #393939;
+  --color-ibm-gray-70: #525252;
+  --color-ibm-gray-60: #6f6f6f;
+  --color-ibm-gray-50: #8d8d8d;
+  --color-ibm-gray-40: #a8a8a8;
+  --color-ibm-gray-30: #c6c6c6;
+  --color-ibm-gray-20: #e0e0e0;
+  --color-ibm-gray-10: #f4f4f4;
+  --color-ibm-blue-60: #0f62fe;
+  --color-ibm-blue-70: #0353e9;
+  --color-ibm-blue-80: #002d9c;
+  --color-ibm-teal-40: #08bdba;
+  --color-ibm-purple-60: #8a3ffc;
+  --color-ibm-warm-gray-10: #f3f0ee;
+  --font-ibm-plex-sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  --font-ibm-plex-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-ibm-plex-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* IBM Carbon style focus */
+*:focus-visible {
+  outline: 1px solid var(--color-ibm-blue-60);
+  outline-offset: 2px;
+}
+
+/* Subtle grid background like IBM Granite */
+.ibm-grid-bg {
+  background-image:
+    linear-gradient(to right, rgba(0,0,0,0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0,0,0,0.04) 1px, transparent 1px);
+  background-size: 80px 80px;
+}

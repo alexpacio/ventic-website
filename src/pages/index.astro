@@ -1,0 +1,27 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.tsx";
+import Hero from "../components/Hero.tsx";
+import Modes from "../components/Modes.tsx";
+import Why from "../components/Why.tsx";
+import How from "../components/How.tsx";
+import ModelsSection from "../components/Models.tsx";
+import Features from "../components/Features.tsx";
+import Pricing from "../components/Pricing.tsx";
+import Footer from "../components/Footer.tsx";
+import "../styles/global.css";
+---
+
+<Layout title="Ventic — Private AI on dedicated GPUs. Turnkey.">
+  <Navbar client:load />
+  <main>
+    <Hero client:load />
+    <Modes />
+    <Why />
+    <How />
+    <ModelsSection />
+    <Features />
+    <Pricing />
+  </main>
+  <Footer client:load />
+</Layout>
