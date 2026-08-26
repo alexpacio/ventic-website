@@ -1,41 +1,46 @@
-const models = [
-  {
-    name: "Qwen 3.8",
-    tag: "Agentic • Coding",
-    tier: "Tier 1 — Max intelligence",
-    desc: "Best for complex reasoning, long-horizon agents and deep code generation.",
-    stats: { context: "128k", speed: "~1.9k tok/s", use: "Agents, coding" },
-    accent: "bg-[#0f62fe]",
-  },
-  {
-    name: "DeepSeek v4 Flash 0731",
-    tag: "Speed • Value",
-    tier: "Tier 2 — Balanced",
-    desc: "Flash-optimized for high throughput and low latency. Excellent cost/performance.",
-    stats: { context: "128k", speed: "~3.2k tok/s", use: "Production, chat" },
-    accent: "bg-[#8a3ffc]",
-  },
-  {
-    name: "Kimi K3",
-    tag: "Long context",
-    tier: "Tier 3 — Efficiency",
-    desc: "Ultra-long context specialist. Ideal for document-heavy and retrieval workloads.",
-    stats: { context: "200k+", speed: "~2.4k tok/s", use: "RAG, docs" },
-    accent: "bg-[#007d79]",
-  },
-];
+import { ui, defaultLang } from "../i18n/ui";
+type Lang = keyof typeof ui;
+type Props = { lang?: Lang };
 
-export default function ModelsSection() {
+export default function ModelsSection({ lang = defaultLang as Lang }: Props) {
+  const t = (key: string) => (ui[lang] as Record<string, string>)[key] ?? (ui[defaultLang] as Record<string, string>)[key] ?? key;
+  const models = [
+    {
+      name: t("models.qwen.name"),
+      tag: t("models.qwen.tag"),
+      tier: t("models.qwen.tier"),
+      desc: t("models.qwen.desc"),
+      stats: { context: t("models.qwen.context"), speed: t("models.qwen.speed"), use: t("models.qwen.use") },
+      accent: "bg-[#0f62fe]",
+    },
+    {
+      name: t("models.deepseek.name"),
+      tag: t("models.deepseek.tag"),
+      tier: t("models.deepseek.tier"),
+      desc: t("models.deepseek.desc"),
+      stats: { context: t("models.deepseek.context"), speed: t("models.deepseek.speed"), use: t("models.deepseek.use") },
+      accent: "bg-[#8a3ffc]",
+    },
+    {
+      name: t("models.kimi.name"),
+      tag: t("models.kimi.tag"),
+      tier: t("models.kimi.tier"),
+      desc: t("models.kimi.desc"),
+      stats: { context: t("models.kimi.context"), speed: t("models.kimi.speed"), use: t("models.kimi.use") },
+      accent: "bg-[#007d79]",
+    },
+  ];
+
   return (
     <section className="border-b border-[#e0e0e0] bg-[#f4f4f4]">
       <div className="mx-auto max-w-[1584px] px-6 lg:px-8 py-12 lg:py-16">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
-            <div className="font-mono text-[12px] tracking-[0.08em] uppercase text-[#0f62fe]">Which models</div>
-            <h2 className="mt-3 text-[28px] lg:text-[32px] font-light leading-[1.1] tracking-[-0.02em]">The best open-weights<br /><span className="font-semibold">for coding and agents.</span></h2>
+            <div className="font-mono text-[12px] tracking-[0.08em] uppercase text-[#0f62fe]">{t("models.eyebrow")}</div>
+            <h2 className="mt-3 text-[28px] lg:text-[32px] font-light leading-[1.1] tracking-[-0.02em]" dangerouslySetInnerHTML={{ __html: t("models.title") }} />
           </div>
           <p className="max-w-[44ch] text-[14px] leading-[1.6] text-[#525252]">
-            Three price/intelligence tiers. All served with hardware-tuned vLLM and embedding model. Swap anytime — same API.
+            {t("models.desc")}
           </p>
         </div>
 
@@ -51,30 +56,30 @@ export default function ModelsSection() {
 
               <div className="mt-6 grid grid-cols-3 gap-2 border-t border-[#e0e0e0] pt-4">
                 <div>
-                  <div className="font-mono text-[11px] tracking-wide uppercase text-[#6f6f6f]">Context</div>
+                  <div className="font-mono text-[11px] tracking-wide uppercase text-[#6f6f6f]">{t("models.table.context")}</div>
                   <div className="mt-1 text-[13px] font-medium">{m.stats.context}</div>
                 </div>
                 <div>
-                  <div className="font-mono text-[11px] tracking-wide uppercase text-[#6f6f6f]">Throughput</div>
+                  <div className="font-mono text-[11px] tracking-wide uppercase text-[#6f6f6f]">{t("models.table.throughput")}</div>
                   <div className="mt-1 text-[13px] font-medium">{m.stats.speed}</div>
                 </div>
                 <div>
-                  <div className="font-mono text-[11px] tracking-wide uppercase text-[#6f6f6f]">Best for</div>
+                  <div className="font-mono text-[11px] tracking-wide uppercase text-[#6f6f6f]">{t("models.table.bestfor")}</div>
                   <div className="mt-1 text-[13px] font-medium leading-tight">{m.stats.use}</div>
                 </div>
               </div>
 
               <div className="mt-6 flex gap-2">
-                <span className="flex-1 border border-[#e0e0e0] bg-[#f4f4f4] px-3 py-2 text-center font-mono text-[12px]">Open weights</span>
-                <span className="flex-1 border border-[#e0e0e0] bg-[#f4f4f4] px-3 py-2 text-center font-mono text-[12px]">vLLM tuned</span>
+                <span className="flex-1 border border-[#e0e0e0] bg-[#f4f4f4] px-3 py-2 text-center font-mono text-[12px]">{t("models.badge.open")}</span>
+                <span className="flex-1 border border-[#e0e0e0] bg-[#f4f4f4] px-3 py-2 text-center font-mono text-[12px]">{t("models.badge.vllm")}</span>
               </div>
             </div>
           ))}
         </div>
 
         <div className="mt-6 flex flex-wrap gap-2 font-mono text-[12px] text-[#525252]">
-          <span className="border border-[#e0e0e0] bg-white px-3 py-2">+ Embedding model included & hardware-optimized</span>
-          <span className="border border-[#e0e0e0] bg-white px-3 py-2">OpenAI-compatible • same endpoint for all models</span>
+          <span className="border border-[#e0e0e0] bg-white px-3 py-2">{t("models.footer.embedding")}</span>
+          <span className="border border-[#e0e0e0] bg-white px-3 py-2">{t("models.footer.compat")}</span>
         </div>
       </div>
     </section>

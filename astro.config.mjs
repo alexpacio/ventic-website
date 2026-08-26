@@ -9,6 +9,14 @@ export default defineConfig({
   site: 'https://ventic.it',
   integrations: [react()],
 
+  i18n: {
+    defaultLocale: 'it',
+    locales: ['it', 'en'],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
+
   vite: {
     plugins: [tailwindcss()]
   },

@@ -1,13 +1,25 @@
 ---
+import { getLangFromUrl } from "../i18n/utils";
+
 interface Props {
   title: string;
   description?: string;
+  lang?: string;
 }
 const { title, description = "We deploy private AI on dedicated GPUs. Turnkey. Your hardware, your data, our know-how." } = Astro.props;
+const lang = Astro.props.lang ?? getLangFromUrl(Astro.url);
+const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://ventic.it").toString();
+// alternate URLs
+const pathname = Astro.url.pathname;
+// strip /en prefix for alternate computation
+const isEn = pathname.startsWith("/en");
+const itPath = isEn ? pathname.replace(/^\/en/, "") || "/" : pathname;
+const enPath = isEn ? pathname : `/en${pathname === "/" ? "/" : pathname}`;
+const siteBase = (Astro.site ?? "https://ventic.it").toString().replace(/\/$/, "");
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -15,6 +27,10 @@ const { title, description = "We deploy private AI on dedicated GPUs. Turnkey. Y
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <title>{title}</title>
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="it" href={`${siteBase}${itPath}`} />
+    <link rel="alternate" hreflang="en" href={`${siteBase}${enPath}`} />
+    <link rel="alternate" hreflang="x-default" href={`${siteBase}${itPath}`} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />

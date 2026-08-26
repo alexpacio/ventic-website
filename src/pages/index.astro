@@ -9,19 +9,24 @@ import ModelsSection from "../components/Models.tsx";
 import Features from "../components/Features.tsx";
 import Pricing from "../components/Pricing.tsx";
 import Footer from "../components/Footer.tsx";
+import { ui } from "../i18n/ui";
+import { getLangFromUrl } from "../i18n/utils";
 import "../styles/global.css";
+
+const lang = getLangFromUrl(Astro.url);
+const t = (key: string) => (ui[lang] as Record<string, string>)[key] ?? (ui["it"] as Record<string, string>)[key] ?? key;
 ---
 
-<Layout title="Ventic — Private AI on dedicated GPUs. Turnkey.">
-  <Navbar client:load />
+<Layout title={t("seo.home.title")} description={t("seo.home.desc")} lang={lang}>
+  <Navbar client:load lang={lang} currentPath={Astro.url.pathname} />
   <main>
-    <Hero client:load />
-    <Modes />
-    <Why />
-    <How />
-    <ModelsSection />
-    <Features />
-    <Pricing />
+    <Hero client:load lang={lang} />
+    <Modes lang={lang} />
+    <Why lang={lang} />
+    <How lang={lang} />
+    <ModelsSection lang={lang} />
+    <Features lang={lang} />
+    <Pricing lang={lang} />
   </main>
-  <Footer client:load />
+  <Footer client:load lang={lang} />
 </Layout>

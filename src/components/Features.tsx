@@ -1,42 +1,47 @@
-export default function Features() {
+import { ui, defaultLang } from "../i18n/ui";
+type Lang = keyof typeof ui;
+type Props = { lang?: Lang };
+
+export default function Features({ lang = defaultLang as Lang }: Props) {
+  const t = (key: string) => (ui[lang] as Record<string, string>)[key] ?? (ui[defaultLang] as Record<string, string>)[key] ?? key;
   const items = [
     {
       k: "01",
-      title: "Fastest setup. Zero waste.",
-      desc: "Automation provisions vLLM with model- and hardware-specific tuning (LLM + embedding). Saves time and hourly rental costs.",
-      bullets: ["Per-GPU kernel & batch tuning", "Continuous batching, paged KV", "Quantization where it helps"],
+      title: t("features.01.title"),
+      desc: t("features.01.desc"),
+      bullets: [t("features.01.b1"), t("features.01.b2"), t("features.01.b3")],
     },
     {
       k: "02",
-      title: "Encrypted mesh — no public IP",
-      desc: "Reach the server and LLM securely even if it’s not exposed to the internet. No VPNs, no static IPv4, no insecure configs.",
-      bullets: ["WireGuard-based overlay", "Works behind NAT / firewall", "End-to-end encrypted"],
+      title: t("features.02.title"),
+      desc: t("features.02.desc"),
+      bullets: [t("features.02.b1"), t("features.02.b2"), t("features.02.b3")],
     },
     {
       k: "03",
-      title: "Observability that stays under control",
-      desc: "Monitor GPU/CPU, OS stats, per-user token consumption in real time. Alerts via any transport you prefer.",
-      bullets: ["GPU/CPU & OS dashboards", "Per-user token accounting", "Policy enforcement on queries"],
+      title: t("features.03.title"),
+      desc: t("features.03.desc"),
+      bullets: [t("features.03.b1"), t("features.03.b2"), t("features.03.b3")],
     },
     {
       k: "04",
-      title: "Account & key management",
-      desc: "Panel for account creation and API key deployment, management and revocation. 2FA + external auth integration.",
-      bullets: ["Create / rotate / revoke keys", "2FA enforced", "SSO / external IdP optional"],
+      title: t("features.04.title"),
+      desc: t("features.04.desc"),
+      bullets: [t("features.04.b1"), t("features.04.b2"), t("features.04.b3")],
     },
     {
       k: "05",
-      title: "Marketplace discovery (PaaS)",
-      desc: "Find the best server at the best price — spot/dedicated, US/EU/datacenter filters. Instant SEPA purchase.",
-      bullets: ["Spot & dedicated signals", "Region & infra filters", "One-click SEPA checkout"],
-      badge: "PaaS only",
+      title: t("features.05.title"),
+      desc: t("features.05.desc"),
+      bullets: [t("features.05.b1"), t("features.05.b2"), t("features.05.b3")],
+      badge: t("features.05.badge"),
     },
     {
       k: "06",
-      title: "Idle shutdown & wake (PaaS)",
-      desc: "When nobody uses Ventic, it shuts down the instance and brings it back when a request arrives. Avoid major waste.",
-      bullets: ["No idle burn", "Wake on request", "State restored automatically"],
-      badge: "PaaS only",
+      title: t("features.06.title"),
+      desc: t("features.06.desc"),
+      bullets: [t("features.06.b1"), t("features.06.b2"), t("features.06.b3")],
+      badge: t("features.06.badge"),
     },
   ];
 
@@ -45,11 +50,11 @@ export default function Features() {
       <div className="mx-auto max-w-[1584px] px-6 lg:px-8 py-12 lg:py-16">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
-            <div className="font-mono text-[12px] tracking-[0.08em] uppercase text-[#0f62fe]">What you get</div>
-            <h2 className="mt-3 text-[28px] lg:text-[32px] font-light leading-[1.1] tracking-[-0.02em]">Everything for<br /><span className="font-semibold">private production inference.</span></h2>
+            <div className="font-mono text-[12px] tracking-[0.08em] uppercase text-[#0f62fe]">{t("features.eyebrow")}</div>
+            <h2 className="mt-3 text-[28px] lg:text-[32px] font-light leading-[1.1] tracking-[-0.02em]" dangerouslySetInnerHTML={{ __html: t("features.title") }} />
           </div>
           <div className="font-mono text-[12px] text-[#6f6f6f] border border-[#e0e0e0] bg-[#f4f4f4] px-3 py-2">
-            Compatible with your existing OpenAI SDKs — change the base URL, keep the code.
+            {t("features.compat")}
           </div>
         </div>
 
@@ -76,14 +81,14 @@ export default function Features() {
         {/* Observability mock - IBM Carbon dashboard style */}
         <div className="mt-8 border border-[#e0e0e0] bg-[#f4f4f4] p-4 lg:p-6">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <span className="font-mono text-[12px] tracking-[0.08em] uppercase text-[#525252]">Observability preview — built-in</span>
-            <span className="font-mono text-[11px] text-[#6f6f6f]">Per-user token accounting • real-time</span>
+            <span className="font-mono text-[12px] tracking-[0.08em] uppercase text-[#525252]">{t("features.preview.label")}</span>
+            <span className="font-mono text-[11px] text-[#6f6f6f]">{t("features.preview.realtime")}</span>
           </div>
           <div className="mt-4 grid lg:grid-cols-[1.2fr_0.8fr] gap-4">
             <div className="border border-[#e0e0e0] bg-white p-4">
               <div className="flex items-center justify-between">
-                <span className="text-[13px] font-medium">GPU utilization — last 6h</span>
-                <span className="font-mono text-[11px] text-[#6f6f6f]">H100 • 94% avg</span>
+                <span className="text-[13px] font-medium">{t("features.preview.gpu")}</span>
+                <span className="font-mono text-[11px] text-[#6f6f6f]">{t("features.preview.gpuAvg")}</span>
               </div>
               <div className="mt-4 flex items-end gap-1 h-[72px]">
                 {[32, 48, 72, 55, 88, 94, 81, 90, 94, 86, 92, 94].map((h, i) => (
@@ -93,7 +98,7 @@ export default function Features() {
               <div className="mt-2 flex justify-between font-mono text-[11px] text-[#8d8d8d]"><span>00:00</span><span>03:00</span><span>06:00</span></div>
             </div>
             <div className="border border-[#e0e0e0] bg-white p-4">
-              <div className="text-[13px] font-medium">Token consumption — today</div>
+              <div className="text-[13px] font-medium">{t("features.preview.tokens")}</div>
               <div className="mt-4 space-y-3 font-mono text-[12px]">
                 {[
                   { user: "agent-prod", tok: "2.41M", pct: 72 },
@@ -108,8 +113,8 @@ export default function Features() {
                 ))}
               </div>
               <div className="mt-4 border-t border-[#e0e0e0] pt-3 flex gap-2 font-mono text-[11px]">
-                <span className="border border-[#e0e0e0] bg-[#f4f4f4] px-2 py-1">Alerts → Slack / Email / Webhook</span>
-                <span className="border border-[#e0e0e0] bg-[#f4f4f4] px-2 py-1">Policy: max 500k / day</span>
+                <span className="border border-[#e0e0e0] bg-[#f4f4f4] px-2 py-1">{t("features.preview.alerts")}</span>
+                <span className="border border-[#e0e0e0] bg-[#f4f4f4] px-2 py-1">{t("features.preview.policy")}</span>
               </div>
             </div>
           </div>
