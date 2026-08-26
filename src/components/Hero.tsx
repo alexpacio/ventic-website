@@ -150,7 +150,7 @@ function AgentCard() {
   const showAssistant = visible > assistantIdx;
 
   return (
-    <div className="border border-[#e0e0e0] bg-[#161616] text-[#f4f4f4] overflow-hidden flex flex-col shadow-[0_8px_40px_rgba(0,0,0,0.18)]">
+    <div className="border border-[#e0e0e0] bg-[#161616] text-[#f4f4f4] overflow-hidden flex flex-col shadow-[0_8px_40px_rgba(0,0,0,0.18)] h-[440px] sm:h-[460px] lg:h-[480px]">
       {/* Window chrome */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-[#393939] bg-[#262626] shrink-0">
         <div className="flex items-center gap-2">
@@ -178,8 +178,8 @@ function AgentCard() {
         </div>
       </div>
 
-      {/* Timeline */}
-      <div ref={scrollRef} className="flex-1 overflow-y-auto scrollbar-thin max-h-[420px] lg:max-h-[440px] min-h-[380px] bg-[#161616]">
+      {/* Timeline — fixed height, internal scroll only, no layout shift */}
+      <div ref={scrollRef} className="flex-1 overflow-y-auto scrollbar-thin min-h-0 bg-[#161616] overscroll-contain">
         <div className="p-4 lg:p-5 font-mono text-[13px] leading-[1.6]">
           {/* User prompt */}
           <div className="flex gap-3">
@@ -399,8 +399,47 @@ type HeroProps = {
 export default function Hero({ lang = defaultLang as Lang }: HeroProps) {
   const t = (key: string) => (ui[lang] as Record<string, string>)[key] ?? (ui[defaultLang] as Record<string, string>)[key] ?? key;
   return (
-    <section className="border-b border-[#e0e0e0] bg-white">
-      <div className="mx-auto max-w-[1584px] px-6 lg:px-8">
+    <section className="relative border-b border-[#e0e0e0] bg-white overflow-hidden">
+      {/* IBM-style background — immagine lavoro + video */}
+      <div className="absolute inset-0 pointer-events-none select-none" aria-hidden="true">
+        {/* Immagine di copertina: ambiente lavorativo dev (Unsplash) */}
+        <img
+          src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1920&q=80"
+          alt=""
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover opacity-[0.07]"
+        />
+        {/* Wash bianco per leggibilità — IBM duotone */}
+        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/85 to-white/65" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/50" />
+        {/* Griglia IBM sottile */}
+        <div
+          className="absolute inset-0 opacity-[0.035]"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, #000 1px, transparent 1px), linear-gradient(to bottom, #000 1px, transparent 1px)",
+            backgroundSize: "80px 80px",
+          }}
+        />
+        {/* Video ambiente lavorativo — desktop, lato destro mascherato */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1920&q=80"
+          className="hidden lg:block absolute right-0 top-0 h-full w-[56%] object-cover opacity-[0.11] [mask-image:linear-gradient(to_left,black_70%,transparent)] motion-reduce:hidden"
+        >
+          <source src="https://videos.pexels.com/video-files/2278095/2278095-hd_1920_1080_30fps.mp4" type="video/mp4" />
+          <source src="https://videos.pexels.com/video-files/18069234/18069234-uhd_1440_1440_24fps.mp4" type="video/mp4" />
+        </video>
+        {/* Vignettatura blu IBM leggera */}
+        <div className="absolute inset-0 bg-gradient-to-l from-[#0f62fe]/[0.04] via-transparent to-transparent hidden lg:block" />
+      </div>
+
+      <div className="relative mx-auto max-w-[1584px] px-6 lg:px-8">
         <div className="grid lg:grid-cols-[1.15fr_0.85fr] gap-0">
           {/* Left */}
           <div className="py-10 lg:py-16 lg:pr-12 xl:pr-16 border-b lg:border-b-0 lg:border-r border-[#e0e0e0]">

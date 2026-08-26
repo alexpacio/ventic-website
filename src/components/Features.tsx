@@ -45,9 +45,30 @@ export default function Features({ lang = defaultLang as Lang }: Props) {
     },
   ];
 
+  // IBM-style work environment thumbnails — Unsplash, reuse già verificati
+  const images = [
+    "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80", // code
+    "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80", // server
+    "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80", // dashboard/charts
+    "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80", // team
+    "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=800&q=80", // collaboration
+    "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80", // office energy
+  ];
+
   return (
-    <section id="features" className="border-b border-[#e0e0e0] bg-white">
-      <div className="mx-auto max-w-[1584px] px-6 lg:px-8 py-12 lg:py-16">
+    <section id="features" className="relative border-b border-[#e0e0e0] bg-white overflow-hidden">
+      {/* Sfondo ufficio leggero — IBM wash */}
+      <div className="absolute inset-0 pointer-events-none select-none" aria-hidden="true">
+        <img
+          src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1920&q=80"
+          alt=""
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover opacity-[0.035]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-white/80 to-white" />
+      </div>
+      <div className="relative mx-auto max-w-[1584px] px-6 lg:px-8 py-12 lg:py-16">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
             <div className="font-mono text-[12px] tracking-[0.08em] uppercase text-[#0f62fe]">{t("features.eyebrow")}</div>
@@ -58,22 +79,45 @@ export default function Features({ lang = defaultLang as Lang }: Props) {
           </div>
         </div>
 
-        <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-0 border border-[#e0e0e0]">
-          {items.map((it) => (
-            <div key={it.k} className="p-6 lg:p-7 border-b lg:border-r border-[#e0e0e0] last:border-b-0 bg-white [&:nth-child(3n)]:lg:border-r-0 [&:nth-child(3)]:md:border-r-0 [&:nth-child(6)]:md:border-r-0">
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-[12px] tracking-[0.08em] text-[#0f62fe]">{it.k}</span>
-                {it.badge && <span className="font-mono text-[11px] tracking-wide uppercase border border-[#0f62fe] text-[#0f62fe] px-1.5 py-0.5">{it.badge}</span>}
+        <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-0 border border-[#e0e0e0] bg-white overflow-hidden">
+          {items.map((it, idx) => (
+            <div
+              key={it.k}
+              className="flex flex-col border-b lg:border-r border-[#e0e0e0] last:border-b-0 bg-white [&:nth-child(3n)]:lg:border-r-0 [&:nth-child(3)]:md:border-r-0 [&:nth-child(6)]:md:border-r-0 group/card overflow-hidden"
+            >
+              <div className="relative h-[132px] overflow-hidden bg-[#f4f4f4]">
+                <img
+                  src={images[idx]}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  className="h-full w-full object-cover grayscale group-hover/card:grayscale-0 group-hover/card:scale-[1.02] transition-all duration-500"
+                />
+                <div className="absolute inset-0 bg-[#0f62fe]/[0.08] group-hover/card:bg-[#0f62fe]/[0.02] transition-colors" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
+                <div className="absolute top-3 left-3 flex items-center gap-2">
+                  <span className="bg-white text-[#0f62fe] font-mono text-[11px] tracking-[0.08em] px-1.5 py-1 leading-none border border-black/10 shadow-sm">
+                    {it.k}
+                  </span>
+                  {it.badge && (
+                    <span className="bg-[#0f62fe] text-white font-mono text-[10px] tracking-wide uppercase px-1.5 py-1 leading-none">
+                      {it.badge}
+                    </span>
+                  )}
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 h-px bg-white/20" />
               </div>
-              <h3 className="mt-3 text-[16px] font-semibold leading-tight tracking-[-0.01em]">{it.title}</h3>
-              <p className="mt-2 text-[14px] leading-[1.6] text-[#525252]">{it.desc}</p>
-              <ul className="mt-4 space-y-1.5">
-                {it.bullets.map((b) => (
-                  <li key={b} className="flex gap-2 text-[13px] leading-[1.5] text-[#262626]">
-                    <span className="mt-[7px] h-1 w-1 bg-[#8d8d8d] shrink-0" /> {b}
-                  </li>
-                ))}
-              </ul>
+              <div className="p-6 lg:p-6 flex-1 flex flex-col">
+                <h3 className="text-[16px] font-semibold leading-tight tracking-[-0.01em]">{it.title}</h3>
+                <p className="mt-2 text-[14px] leading-[1.6] text-[#525252]">{it.desc}</p>
+                <ul className="mt-4 space-y-1.5">
+                  {it.bullets.map((b) => (
+                    <li key={b} className="flex gap-2 text-[13px] leading-[1.5] text-[#262626]">
+                      <span className="mt-[7px] h-1 w-1 bg-[#8d8d8d] shrink-0" /> {b}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           ))}
         </div>

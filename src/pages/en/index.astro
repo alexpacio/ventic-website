@@ -2,6 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import Navbar from "../../components/Navbar.tsx";
 import Hero from "../../components/Hero.tsx";
+import WorkBanner from "../../components/WorkBanner.tsx";
 import Modes from "../../components/Modes.tsx";
 import Why from "../../components/Why.tsx";
 import How from "../../components/How.tsx";
@@ -21,6 +22,7 @@ const t = (key: string) => (ui[lang] as Record<string, string>)[key] ?? (ui["it"
   <Navbar client:load lang={lang} currentPath={Astro.url.pathname} />
   <main>
     <Hero client:load lang={lang} />
+    <WorkBanner client:load lang={lang} />
     <Modes lang={lang} />
     <Why lang={lang} />
     <How lang={lang} />
