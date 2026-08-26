@@ -1,0 +1,106 @@
+---
+import { LogoMark } from "../components/Logo";
+import Logo from "../components/Logo";
+---
+
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ventic — Anteprima Logo</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body class="bg-white text-[#161616] antialiased" style="font-family: IBM Plex Sans, system-ui, sans-serif">
+    <div class="mx-auto max-w-[1100px] px-6 py-10">
+      <a href="/" class="font-mono text-[12px] text-[#6f6f6f] hover:text-[#161616] underline">← torna alla home</a>
+      <h1 class="mt-4 text-[32px] font-light tracking-[-0.03em]">Anteprima logo <span class="font-semibold">ventic</span> — più accattivante</h1>
+      <p class="mt-2 max-w-[65ch] text-[14px] leading-[1.6] text-[#525252]">Passa il mouse sui mark per vedere l'animazione: leggero lift, allargamento V, pulse del diamond e glow. Variante <code class="bg-[#f4f4f4] px-1 py-0.5 border border-[#e0e0e0] text-[12px]">color</code> per header light, <code class="bg-[#f4f4f4] px-1 py-0.5 border border-[#e0e0e0] text-[12px]">mono-white</code> per header dark.</p>
+
+      <div class="mt-10 grid md:grid-cols-2 gap-6">
+        {/* Color on light */}
+        <div class="border border-[#e0e0e0] bg-white p-8">
+          <div class="font-mono text-[11px] tracking-[0.08em] uppercase text-[#6f6f6f]">01 — Color su light (navbar/footer)</div>
+          <div class="mt-6 flex items-center gap-6">
+            <LogoMark size={56} variant="color" animated />
+            <LogoMark size={40} variant="color" animated />
+            <LogoMark size={28} variant="color" animated />
+          </div>
+          <div class="mt-6 flex items-center gap-3">
+            <Logo size={28} variant="color" animated badgeText="PRIVATE AI" />
+          </div>
+          <div class="mt-4 font-mono text-[11px] text-[#8d8d8d]">hover → lift -0.5px + scale 1.015 + rot -0.6°, diamond pulse 1.18 + glow viola/blu</div>
+        </div>
+
+        {/* Mono white on dark */}
+        <div class="border border-[#393939] bg-[#161616] p-8">
+          <div class="font-mono text-[11px] tracking-[0.08em] uppercase text-[#a8a8a8]">02 — Mono-white su dark (header dark / hero scuro)</div>
+          <div class="mt-6 flex items-center gap-6">
+            <LogoMark size={56} variant="mono-white" animated />
+            <LogoMark size={40} variant="mono-white" animated />
+            <LogoMark size={28} variant="mono-white" animated />
+          </div>
+          <div class="mt-6">
+            <Logo size={28} variant="mono-white" animated badgeText="PRIVATE AI" />
+          </div>
+          <div class="mt-4 font-mono text-[11px] text-[#6f6f6f]">Per usare: &lt;LogoMark variant="mono-white" animated /&gt; su bg #161616</div>
+        </div>
+
+        {/* Mono dark on light minimal */}
+        <div class="border border-[#e0e0e0] bg-[#f4f4f4] p-8">
+          <div class="font-mono text-[11px] tracking-[0.08em] uppercase text-[#6f6f6f]">03 — Mono-dark minimal (watermark / doc)</div>
+          <div class="mt-6 flex items-center gap-6">
+            <LogoMark size={56} variant="mono-dark" />
+            <LogoMark size={40} variant="mono-dark" />
+            <LogoMark size={28} variant="mono-dark" />
+          </div>
+          <div class="mt-6">
+            <Logo size={28} variant="mono-dark" badgeText="PRIVATE AI" />
+          </div>
+          <div class="mt-4 font-mono text-[11px] text-[#8d8d8d]">senza gradiente, flat — per stampa o footer minimal</div>
+        </div>
+
+        {/* Sizes & favicon */}
+        <div class="border border-[#e0e0e0] bg-white p-8">
+          <div class="font-mono text-[11px] tracking-[0.08em] uppercase text-[#6f6f6f]">04 — Favicon & statica</div>
+          <div class="mt-6 flex items-end gap-6">
+            <div class="text-center">
+              <LogoMark size={32} variant="color" />
+              <div class="mt-2 font-mono text-[10px] text-[#6f6f6f]">32</div>
+            </div>
+            <div class="text-center">
+              <LogoMark size={24} variant="color" />
+              <div class="mt-2 font-mono text-[10px] text-[#6f6f6f]">24</div>
+            </div>
+            <div class="text-center">
+              <img src="/favicon.svg" width="32" height="32" alt="favicon" class="inline-block border border-[#e0e0e0] rounded-[8px]" />
+              <div class="mt-2 font-mono text-[10px] text-[#6f6f6f]">favicon.svg</div>
+            </div>
+          </div>
+          <div class="mt-6 font-mono text-[11px] text-[#8d8d8d] leading-[1.5]">Favicon già aggiornata in <code class="bg-[#f4f4f4] px-1 border border-[#e0e0e0]">public/favicon.svg</code> — gradiente + mesh + diamond, funziona su tab light/dark.</div>
+        </div>
+      </div>
+
+      <div class="mt-10 border border-[#e0e0e0] bg-[#f4f4f4] p-6">
+        <div class="font-mono text-[12px] tracking-[0.08em] uppercase text-[#525252]">Come usare</div>
+        <pre class="mt-3 bg-[#161616] text-[#f4f4f4] p-4 overflow-x-auto text-[12px] leading-[1.6] font-mono">import {"{ LogoMark }"} from "../components/Logo";
+
+// Light header (attuale Navbar)
+&lt;LogoMark size={28} variant="color" animated /&gt;
+
+// Dark header
+&lt;header class="bg-[#161616]"&gt;
+  &lt;LogoMark size={28} variant="mono-white" animated /&gt;
+  &lt;span class="text-white"&gt;ventic&lt;/span&gt;
+&lt;/header&gt;
+
+// Senza animazione (footer minimal)
+&lt;LogoMark size={28} variant="mono-dark" /&gt;</pre>
+      </div>
+
+      <div class="mt-8 flex gap-3">
+        <a href="/" class="bg-[#0f62fe] text-white px-5 py-2.5 text-[14px] font-medium hover:bg-[#0353e9]">Vai alla home</a>
+        <a href="/paas" class="border border-[#8d8d8d] px-5 py-2.5 text-[14px] font-medium hover:bg-[#f4f4f4]">Vedi su PaaS</a>
+      </div>
+    </div>
+  </body>
+</html>

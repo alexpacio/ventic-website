@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { ui, defaultLang } from "../i18n/ui";
+import { LogoMark } from "./Logo";
 
 type Lang = keyof typeof ui;
 
@@ -116,15 +117,15 @@ export default function Navbar({ lang = defaultLang as Lang, currentPath }: Prop
 
       <div className="mx-auto max-w-[1584px] px-6 lg:px-8">
         <div className="flex h-[48px] lg:h-[48px] items-center justify-between">
-          {/* Logo - IBM style: heavy wordmark */}
-          <a href={homeHref} className="flex items-center gap-3">
-            <div className="flex items-center gap-2">
-              <div className="h-6 w-6 bg-[#0f62fe] flex items-center justify-center">
-                <div className="h-[9px] w-[9px] bg-white" />
-              </div>
-              <span className="text-[20px] font-semibold tracking-[-0.02em] leading-none">ventic</span>
-              <span className="hidden sm:inline text-[10px] font-mono tracking-[0.14em] text-[#6f6f6f] border border-[#e0e0e0] px-1.5 py-0.5 -mb-0.5">{t("nav.logo.badge")}</span>
-            </div>
+          {/* Logo — animated color variant */}
+          <a href={homeHref} className="flex items-center gap-2.5 group/logo">
+            <LogoMark size={28} variant="color" animated />
+            <span className="flex items-baseline gap-2">
+              <span className="text-[20px] font-semibold tracking-[-0.035em] leading-none">ventic</span>
+              <span className="hidden sm:inline-flex items-center font-mono text-[10px] font-medium tracking-[0.14em] leading-none text-[#525252] bg-white border border-[#e0e0e0] px-1.5 py-1 rounded-[3px] shadow-[0_1px_0_rgba(0,0,0,0.04)] -mb-0.5">
+                {t("nav.logo.badge")}
+              </span>
+            </span>
           </a>
 
           {/* Desktop nav - IBM horizontal nav */}

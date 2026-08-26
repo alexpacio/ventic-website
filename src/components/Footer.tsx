@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { ui, defaultLang } from "../i18n/ui";
+import { LogoMark } from "./Logo";
 type Lang = keyof typeof ui;
 
 const CONTACT_EMAIL = "info@ventic.it";
@@ -63,10 +64,10 @@ Please let me know next steps.
       <div className="mx-auto max-w-[1584px] px-6 lg:px-8 py-12">
         <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-10">
           <div>
-            <div className="flex items-center gap-2">
-              <div className="h-6 w-6 bg-[#0f62fe] flex items-center justify-center"><div className="h-[9px] w-[9px] bg-white" /></div>
-              <span className="text-[18px] font-semibold tracking-[-0.02em]">ventic</span>
-              <span className="font-mono text-[10px] tracking-[0.14em] text-[#6f6f6f] border border-[#e0e0e0] bg-white px-1.5 py-0.5">PRIVATE AI</span>
+            <div className="flex items-center gap-2.5 group/logo">
+              <LogoMark size={28} variant="color" animated />
+              <span className="text-[18px] font-semibold tracking-[-0.035em] leading-none">ventic</span>
+              <span className="font-mono text-[10px] font-medium tracking-[0.14em] text-[#525252] border border-[#e0e0e0] bg-white px-1.5 py-1 rounded-[3px] leading-none">PRIVATE AI</span>
             </div>
             <p className="mt-4 max-w-[52ch] text-[14px] leading-[1.6] text-[#525252]">
               {t("footer.desc")}
