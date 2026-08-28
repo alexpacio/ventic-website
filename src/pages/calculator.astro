@@ -25,21 +25,7 @@ const lang = getLangFromUrl(Astro.url);
       <CostCalculator client:load lang={lang} />
     </div>
 
-    <section class="mt-8 border border-[#e0e0e0] bg-[#f4f4f4] p-6">
-      <h3 class="font-mono text-[12px] tracking-[0.08em] uppercase text-[#0f62fe]">Come è calcolato — trasparenza</h3>
-      <div class="mt-3 grid md:grid-cols-2 gap-6 text-[13px] leading-[1.6] text-[#525252]">
-        <div>
-          <strong class="text-[#161616]">VRAM</strong> = pesi (NVFP4 14G / 65G / 156.7G / 862G) + KV (0.065/0.07/0.03/0.045 MiB/tok × ctx×utenti) + overhead 4G +1.5G/200K tok (+2G DeepSeek indexer) ×1.08. Host: RAM ≥ weights×1.2+KV×0.6+32G, disk ≥ weights×2.5+120G, cores ≥8+utenti×4, inet e reliability da catalogo. Filtro EU/IT e datacenter (<code>hosting_type</code>) e verifica adeguatezza scartano host non idonei.
-        </div>
-        <div>
-          <strong class="text-[#161616]">Costi</strong> Vast $/h (spot) → Ventic $/h = 50% · Mensile Ventic = $/h × <em>fascia</em> (160h o 730h) + rete (<code>internet_down_cost_per_tb × TB↓ + up × TB↑</code> per host, es. B200 $0.8↓/$1.5↑). Per utente = totale / utenti. 1 USD ≈ 0.92 EUR. Budget confrontato con totale /mese; barra % e alternative ordinate per TCO.
-        </div>
-      </div>
-      <div class="mt-4 flex flex-wrap gap-2 font-mono text-[11px]">
-        <code class="bg-white border border-[#e0e0e0] px-2 py-1">8h×20gg = 160h/mese · €500 budget → €3.1/utente con 4 utenti Flash su B200</code>
-        <code class="bg-white border border-[#e0e0e0] px-2 py-1">h24 = 730h/mese · stesso setup → €14/utente, serve budget €2200</code>
-      </div>
-    </section>
+  
   </main>
   <Footer client:load lang={lang} />
 </Layout>
