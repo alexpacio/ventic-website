@@ -103,6 +103,7 @@ export default function Navbar({ lang = defaultLang as Lang, currentPath }: Prop
     { label: t("nav.links.features"), href: localizeHref("/#features", lang) },
     { label: t("nav.links.pricing"), href: localizeHref("/#pricing", lang) },
     { label: t("nav.links.paas"), href: localizeHref("/paas", lang) },
+    { label: t("nav.links.calculator"), href: localizeHref("/calculator", lang) },
   ];
 
   return (
