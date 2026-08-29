@@ -67,7 +67,6 @@ Please let me know next steps.
             <div className="flex items-center gap-2.5 group/logo">
               <LogoMark size={28} variant="color" animated />
               <span className="text-[18px] font-semibold tracking-[-0.035em] leading-none">ventic</span>
-              <span className="font-mono text-[10px] font-medium tracking-[0.14em] text-[#525252] border border-[#e0e0e0] bg-white px-1.5 py-1 rounded-[3px] leading-none">PRIVATE AI</span>
             </div>
             <p className="mt-4 max-w-[52ch] text-[14px] leading-[1.6] text-[#525252]">
               {t("footer.desc")}

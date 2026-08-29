@@ -121,12 +121,7 @@ export default function Navbar({ lang = defaultLang as Lang, currentPath }: Prop
           {/* Logo — animated color variant */}
           <a href={homeHref} className="flex items-center gap-2.5 group/logo">
             <LogoMark size={28} variant="color" animated />
-            <span className="flex items-baseline gap-2">
-              <span className="text-[20px] font-semibold tracking-[-0.035em] leading-none">ventic</span>
-              <span className="hidden sm:inline-flex items-center font-mono text-[10px] font-medium tracking-[0.14em] leading-none text-[#525252] bg-white border border-[#e0e0e0] px-1.5 py-1 rounded-[3px] shadow-[0_1px_0_rgba(0,0,0,0.04)] -mb-0.5">
-                {t("nav.logo.badge")}
-              </span>
-            </span>
+            <span className="text-[20px] font-semibold tracking-[-0.035em] leading-none">ventic</span>
           </a>
 
           {/* Desktop nav - IBM horizontal nav */}

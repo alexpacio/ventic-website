@@ -68,7 +68,7 @@ MODEL_CATALOG = {
         "arch": "dense + hybrid linear (qwen3_5, full_interval=4)",
         "native_ctx": 262144, "max_ctx": 1048576,
         "weights_gib": {"bf16":54.0,"fp8":27.0,"nvfp4":14.0,"q8":27.0,"mxfp8":27.0,"awq4":14.5},
-        "kv_mib_per_token_fp8":0.115,"kv_mib_per_token_nvfp4":0.065,
+        "kv_mib_per_token_fp8":0.115,"kv_mib_per_token_int8":0.115,"kv_mib_per_token_nvfp4":0.065,
         "quant_preference":["nvfp4","fp8","bf16"],
         "min_host": {"cpu_cores":16, "cpu_ram_gb":64, "disk_gb":250, "inet_mbps":300, "reliability":0.98},
         "recipes": [
@@ -83,7 +83,7 @@ MODEL_CATALOG = {
         "arch":"MoE + hybrid linear (qwen4_exp, hidden 2560, full_interval=4)",
         "native_ctx":262144,"max_ctx":1048576,
         "weights_gib":{"bf16":250.0,"fp8":125.0,"nvfp4":65.0,"q8":125.0,"mxfp8":125.0},
-        "kv_mib_per_token_fp8":0.12,"kv_mib_per_token_nvfp4":0.07,
+        "kv_mib_per_token_fp8":0.12,"kv_mib_per_token_int8":0.12,"kv_mib_per_token_nvfp4":0.07,
         "quant_preference":["nvfp4","fp8","bf16"],
         "min_host":{"cpu_cores":32,"cpu_ram_gb":128,"disk_gb":600,"inet_mbps":500,"reliability":0.985},
         "recipes": [
@@ -98,7 +98,7 @@ MODEL_CATALOG = {
         "arch":"MoE + MLA + DSA + MTP (hidden 4096, 43L, kv_heads=1) — NVFP4 ModelOpt v0.44",
         "native_ctx":1048576,"max_ctx":1048576,
         "weights_gib":{"bf16":568.0,"fp8":284.0,"nvfp4":156.7,"q8":284.0,"mxfp4":158.0,"mxfp8":284.0},
-        "kv_mib_per_token_fp8":0.06,"kv_mib_per_token_nvfp4":0.03,
+        "kv_mib_per_token_fp8":0.06,"kv_mib_per_token_int8":0.06,"kv_mib_per_token_nvfp4":0.03,
         "quant_preference":["nvfp4","fp8","bf16"],
         "min_host":{"cpu_cores":32,"cpu_ram_gb":256,"disk_gb":900,"inet_mbps":800,"reliability":0.99},
         "recipes": [
@@ -113,7 +113,7 @@ MODEL_CATALOG = {
         "arch":"MoE + MLA + DSA + MTP (hidden 7168, 61L, kv_heads=1)",
         "native_ctx":1048576,"max_ctx":1048576,
         "weights_gib":{"bf16":3200.0,"fp8":1600.0,"nvfp4":862.0,"q8":1600.0,"mxfp4":862.0},
-        "kv_mib_per_token_fp8":0.08,"kv_mib_per_token_nvfp4":0.045,
+        "kv_mib_per_token_fp8":0.08,"kv_mib_per_token_int8":0.08,"kv_mib_per_token_nvfp4":0.045,
         "quant_preference":["nvfp4","fp8"],
         "min_host":{"cpu_cores":64,"cpu_ram_gb":512,"disk_gb":2000,"inet_mbps":1000,"reliability":0.99},
         "recipes": [
@@ -121,6 +121,26 @@ MODEL_CATALOG = {
         ],
     },
 }
+
+
+MODEL_BENCH = {
+    "qwen3.8-27b": {"single_tps": 120, "total_tps": 1400},
+    "qwen3.8-flash-next": {"single_tps": 195, "total_tps": 4000},
+    "deepseek-v4-flash": {"single_tps": 200, "total_tps": 2200},
+    "deepseek-v4-pro": {"single_tps": 150, "total_tps": 1600},
+}
+def get_overbooking_factor(model_key, users, desired_tps):
+    b = MODEL_BENCH.get(model_key, {"single_tps": 100, "total_tps": 1500})
+    f = 0.60 + 0.40 * (desired_tps / max(1, b["single_tps"]))
+    f += max(0, users - 4) * 0.015
+    if users * desired_tps > b["total_tps"] * 0.9:
+        f = 1.0
+    return min(1.0, max(0.60, f))
+
+def get_disk_offload_factor(users, fascia="office"):
+    base = 0.55 if fascia == "office" else 0.80
+    scale = 1.0 if users <= 4 else 0.92 if users <= 8 else 0.85
+    return min(1.0, base * scale + (1 - scale) * 0.3)
 
 EU_COUNTRIES = {"AL","AT","BE","BG","HR","CY","CZ","DK","EE","FI","FR","DE","GR","HU","IE","IT","LV","LT","LU","MT","NL","PL","PT","RO","SK","SI","ES","SE","CH","NO","GB","IS","UK","TR","RS","UA","ME","MK","BA"}
 
@@ -136,27 +156,35 @@ GPU_CATALOG_FALLBACK = [
     {"name":"MI300X","vram_gib":192,"arch":"mi300x","spot_dph":2.99,"ondemand_dph":2.99,"bw_tbps":5.3,"interconnect":"Infinity Fabric","cpu_cores":13,"cpu_ram_gb":224,"disk_gb":13312,"reliability":0.992,"inet_down":2000,"inet_up":2000,"hosting_type":1,"geolocation":"Frankfurt, DE","verification":"verified","inet_down_cost_per_tb":1.2,"inet_up_cost_per_tb":2.0,"storage_cost_per_gb_month":0.12,"gpu_ram":196608,"num_gpus":1},
 ]
 
-BUNDLE_OPTIONS=[1,2,4,8]
+BUNDLE_OPTIONS=[1,2,3,4,6,8]
 FLEET_BUNDLES=[(2,"H200 141GB",282),(3,"H200 141GB",423),(4,"H200 141GB",564),(2,"B200 192GB",384),(3,"B200 192GB",576),(4,"B200 192GB",768),(5,"B200 192GB",960),(6,"B200 192GB",1152),(7,"B200 192GB",1344),(8,"H200 141GB",1128),(9,"B200 192GB",1728)]
 
 # ── Helpers: VRAM ────────────────────────────────────────────────────────────
-def estimate_vram_gib(model_key, quant, ctx_tokens, concurrency, kv_dtype="fp8"):
+def estimate_vram_gib(model_key, quant, ctx_tokens, concurrency, kv_dtype="fp8", desired_tps=None, fascia="office"):
     m=MODEL_CATALOG[model_key]
     if quant=="auto": quant=m["quant_preference"][0]
     weights=m["weights_gib"].get(quant)
     if weights is None:
         weights=m["weights_gib"]["fp8"]; quant="fp8"
-    kv_per=m.get("kv_mib_per_token_nvfp4", m["kv_mib_per_token_fp8"]) if (kv_dtype=="nvfp4" or quant=="nvfp4") else m["kv_mib_per_token_fp8"]
-    kv_gib=kv_per*ctx_tokens*concurrency/1024.0
+    # KV 8-bit: fp8 e int8 sono 1 byte/token, nvfp4 è 4-bit (~56% di fp8)
+    if desired_tps is not None:
+        OVERBOOKING_FACTOR=get_overbooking_factor(model_key, concurrency, desired_tps)
+    else:
+        OVERBOOKING_FACTOR=0.75
+    DISK_FACTOR=get_disk_offload_factor(concurrency, fascia)
+    kv_per_raw=m.get("kv_mib_per_token_nvfp4", m["kv_mib_per_token_fp8"]) if (kv_dtype=="nvfp4" or quant=="nvfp4") else (m.get("kv_mib_per_token_int8", m["kv_mib_per_token_fp8"]))
+    kv_gib_raw=kv_per_raw*ctx_tokens*concurrency/1024.0
+    kv_per=kv_per_raw
+    kv_gib=kv_gib_raw*OVERBOOKING_FACTOR*DISK_FACTOR
     overhead=4.0 + (ctx_tokens*concurrency/200000.0)*1.5
     if "deepseek" in model_key: overhead+=2.0
     if "flash-next" in model_key: overhead+=1.0
     total=(weights+kv_gib+overhead)*1.08
     return {"quant_used":quant,"weights_gib":weights,"kv_gib":kv_gib,"overhead_gib":overhead*1.08,"total_gib":total,"kv_per_token_mib":kv_per}
 
-def get_host_requirements(model_key, ctx, concurrency, quant_used):
+def get_host_requirements(model_key, ctx, concurrency, quant_used, desired_tps=None, fascia="office"):
     base=MODEL_CATALOG[model_key]["min_host"].copy()
-    est=estimate_vram_gib(model_key, quant_used, ctx, concurrency)
+    est=estimate_vram_gib(model_key, quant_used, ctx, concurrency, desired_tps=desired_tps, fascia=fascia)
     needed_ram_gb = max(base["cpu_ram_gb"], int(est["weights_gib"]*1.2 + est["kv_gib"]*0.6 + 32))
     needed_disk_gb = max(base["disk_gb"], int(est["weights_gib"]*2.5 + 120))
     needed_cores = max(base["cpu_cores"], 8 + concurrency*4)

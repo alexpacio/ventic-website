@@ -15,7 +15,7 @@ const lang = getLangFromUrl(Astro.url);
     <h1 class="mt-2 text-[30px] lg:text-[38px] font-light tracking-[-0.02em] leading-[1.1]">Cost calculator<br/><span class="font-semibold">monthly cost per user</span></h1>
     <p class="mt-3 max-w-[72ch] text-[14px] leading-[1.7] text-[#525252]">
       Pick model, context per user, concurrent users and time tier. Estimates VRAM (NVFP4 + KV), checks host RAM/CPU/disk/reliability/inet, adds network $/TB and shows <strong>total /month, per user /month and per user /hour</strong>. Highlights best option within budget.
-      Two tiers: <span class="bg-[#f4f4f4] border px-1.5 py-0.5 font-mono text-[12px]">8h × 20d = 160h/month</span> (office) and <span class="bg-[#161616] text-white px-1.5 py-0.5 font-mono text-[12px]">24/7 = 730h/month</span> (always-on). Ventic = 50% Vast.ai + network.
+      Two tiers: <span class="bg-[#f4f4f4] border px-1.5 py-0.5 font-mono text-[12px]">8h × 20d = 160h/month</span> (office) and <span class="bg-[#161616] text-white px-1.5 py-0.5 font-mono text-[12px]">24/7 = 730h/month</span> (always-on). All-inclusive PaaS price + network.
     </p>
     <div class="mt-8">
       <CostCalculator client:load lang={lang} />

@@ -15,7 +15,7 @@ const lang = getLangFromUrl(Astro.url);
     <h1 class="mt-2 text-[30px] lg:text-[38px] font-light tracking-[-0.02em] leading-[1.1]">Cost calculator<br/><span class="font-semibold">quanto costa al mese per utente</span></h1>
     <p class="mt-3 max-w-[72ch] text-[14px] leading-[1.7] text-[#525252]">
       Inserisci modello, contesto per utente, numero di utenti concorrenti e fascia oraria. Il calcolatore stima VRAM (pesi NVFP4 + KV + overhead), verifica RAM/CPU/disk/reliability/inet del host, considera costo rete <span class="font-mono text-[12px] bg-[#f4f4f4] border border-[#e0e0e0] px-1">$/TB</span> e ti dice <strong>costo totale /mese, per utente /mese e per utente /ora</strong>. Evidenzia la miglior soluzione entro il budget.
-      Due fasce: <span class="bg-[#f4f4f4] border border-[#e0e0e0] px-1.5 py-0.5 font-mono text-[12px]">8h × 20gg = 160h/mese</span> (ufficio) e <span class="bg-[#161616] text-white px-1.5 py-0.5 font-mono text-[12px]">h24 7/7 = 730h/mese</span> (always-on). Ventic = 50% Vast.ai + rete.
+      Due fasce: <span class="bg-[#f4f4f4] border border-[#e0e0e0] px-1.5 py-0.5 font-mono text-[12px]">8h × 20gg = 160h/mese</span> (ufficio) e <span class="bg-[#161616] text-white px-1.5 py-0.5 font-mono text-[12px]">h24 7/7 = 730h/mese</span> (always-on). Prezzo PaaS all-inclusive + rete.
     </p>
     <div class="mt-2 font-mono text-[11px] text-[#6f6f6f]">
       Dati: <a href="/reports/inventario-llm-privati-2026.md" class="underline text-[#0f62fe]">Report</a> · <a href="/reports/quotes-latest.json" class="underline text-[#0f62fe]">quotes-latest.json</a> · <code>scripts/vast-llm-inventory.py</code> · <a href="/inventario" class="underline text-[#0f62fe]">Inventario</a>

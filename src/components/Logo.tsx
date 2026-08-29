@@ -173,7 +173,7 @@ type Props = {
 export default function Logo({
   size = 28,
   showBadge = false,
-  badgeText = "PRIVATE AI",
+  badgeText = "",
   className,
   variant = "color",
   animated = false,
