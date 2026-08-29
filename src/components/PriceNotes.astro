@@ -1,0 +1,45 @@
+---
+import { content, type Lang } from "../i18n/content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const c = content[lang].pricingPage;
+const mail = content[lang].footer.mail;
+---
+<section class="notes-sec">
+  <div class="wrap grid inner">
+    <div class="left">
+      <span class="plate">{c.notes.plate}</span>
+      <ul class="ticks list">
+        {c.notes.items.map((n) => <li class="tick tick--mute">{n}</li>)}
+      </ul>
+    </div>
+    <div class="right">
+      <h2 class="h3">{c.notes.ctaTitle}</h2>
+      <p class="cell-b">{c.notes.ctaBody}</p>
+      <a class="btn btn--a" href={`mailto:${mail}`}>{c.notes.ctaBtn}</a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="foot">
+    <span class="mono meta">{c.foot.left}</span>
+    <span class="mono meta">{c.foot.right}</span>
+  </div>
+</div>
+
+<style>
+  .notes-sec { padding-bottom: 62px; }
+  .inner { align-items: end; }
+  .left { grid-column: span 7; }
+  .right { grid-column: span 5; display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+  .plate { margin-bottom: 20px; }
+  ul.list { list-style: none; margin: 0; padding: 0; gap: 14px; }
+  .right .btn { margin-top: 6px; }
+  .foot {
+    display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+    padding: 26px 0 34px; border-top: 1px solid var(--line-dim);
+  }
+  .meta { font-size: 11px; letter-spacing: .08em; color: var(--fg-ghost); }
+  @media (max-width: 860px) { .left, .right { grid-column: span 6; } }
+</style>

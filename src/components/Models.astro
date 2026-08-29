@@ -1,0 +1,80 @@
+---
+import { content, type Lang } from "../i18n/content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const c = content[lang].models;
+---
+<section id={c.id} class="sec sec--tint-top">
+  <div class="wrap grid">
+    <div class="left">
+      <span class="plate">{c.plate}</span>
+      <h2 class="h2">{c.title[0]}<br />{c.title[1]}</h2>
+      <p class="body lead-w">{c.lead}</p>
+
+      <div class="tablewrap">
+        <table class="tbl">
+          <thead>
+            <tr>{c.th.map((h) => <th class="mono th">{h}</th>)}</tr>
+          </thead>
+          <tbody>
+            {c.rows.map((r) => (
+              <tr>
+                <td class="mono name">{r.name}</td>
+                <td><span class={`mono tier ${r.top ? "tier--top" : ""}`}>{r.tier}</span></td>
+                <td class="use">{r.use}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="mono note">{c.note}</p>
+    </div>
+
+    <div class="right">
+      <div class="panel china">
+        <h3 class="ctitle">{c.china.title[0]}<br /><span class="hl">{c.china.title[1]}</span></h3>
+        <p class="p">{c.china.p1}</p>
+        <p class="p">{c.china.p2}</p>
+        <div class="tags">{c.china.tags.map((t) => <span class="plate plate--sm">{t}</span>)}</div>
+      </div>
+      <div class="sunk stable">
+        <span class="mono slabel">{c.stable.label}</span>
+        <p class="cell-b">{c.stable.body}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .left { grid-column: span 7; }
+  .right { grid-column: span 5; display: flex; flex-direction: column; gap: 20px; padding-top: 62px; }
+  .plate { margin-bottom: 22px; }
+  .lead-w { margin-top: 22px; max-width: 52ch; }
+
+  .tablewrap { margin-top: 34px; border: 1px solid var(--line-soft); border-radius: 3px; overflow-x: auto; }
+  .tbl { width: 100%; min-width: 520px; border-collapse: collapse; text-align: left; }
+  .th {
+    padding: 13px 20px; background: var(--raise);
+    font-size: 10px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--fg-faint);
+  }
+  .tbl td { padding: 20px; background: var(--panel-b); border-top: 1px solid var(--line-soft); vertical-align: top; }
+  .name { font-size: 15px; font-weight: 500; color: var(--fg-strong); white-space: nowrap; }
+  .tier { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-mute); }
+  .tier--top { color: var(--accent); }
+  .use { font-size: 15px; line-height: 1.5; color: var(--fg-mid); }
+  .note { margin-top: 16px; font-size: 12px; line-height: 1.6; color: var(--fg-faint); }
+
+  .china { padding: 32px 30px 34px; }
+  .ctitle { font-family: var(--display); font-size: clamp(26px, 2.6vw, 34px); font-weight: 700; line-height: 1.05; text-transform: uppercase; color: var(--fg-strong); }
+  .hl { color: var(--accent); }
+  .china .p { margin-top: 16px; font-size: 16px; line-height: 1.62; color: var(--fg-dim); }
+  .tags { display: flex; gap: 8px; margin-top: 22px; flex-wrap: wrap; }
+  .stable { display: flex; flex-direction: column; gap: 12px; padding: 24px 26px; }
+  .slabel { font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--fg-faint); }
+
+  @media (max-width: 1080px) {
+    .left, .right { grid-column: span 12; }
+    .right { padding-top: 0; }
+  }
+  @media (max-width: 860px) { .left, .right { grid-column: span 6; } }
+</style>

@@ -1,0 +1,45 @@
+---
+import { content, type Lang } from "../i18n/content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const c = content[lang].pricingPage;
+const cards = [c.byoh, c.paas];
+---
+<section class="pair-sec">
+  <div class="wrap pair">
+    {cards.map((m, i) => (
+      <article class={`panel card ${i === 1 ? "panel--warm" : ""}`}>
+        <div class={`panel-head ${i === 1 ? "panel-head--warm" : ""}`}>
+          <span class={`mono tag ${i === 1 ? "tag--warm" : ""}`}>{m.head}</span>
+          <span class="rivet"></span>
+        </div>
+        <div class="body-in">
+          <span class="prow">
+            <span class="price pval">{m.price}</span>
+            <span class="mono punit">{m.unit}</span>
+          </span>
+          <p class="desc">{m.desc}</p>
+          <span class="seam"></span>
+          <ul class="ticks">{m.ticks.map((t) => <li class="tick">{t}</li>)}</ul>
+          <div class="sunk note">{m.note}</div>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .pair-sec { padding-bottom: 62px; }
+  .pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+  .card { display: flex; flex-direction: column; padding: 0; overflow: hidden; }
+  .tag { font-size: 11px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: #a9a7a1; }
+  .tag--warm { color: var(--accent); }
+  .body-in { display: flex; flex-direction: column; gap: 22px; padding: 32px 28px 30px; flex-grow: 1; }
+  .prow { display: flex; align-items: baseline; gap: 10px; }
+  .pval { font-size: clamp(38px, 4vw, 52px); }
+  .punit { font-size: 15px; color: var(--fg-mute); }
+  .desc { font-size: 15px; line-height: 1.6; color: var(--fg-dim); }
+  ul.ticks { list-style: none; margin: 0; padding: 0; }
+  .note { margin-top: auto; padding: 16px 18px; font-size: 14px; line-height: 1.55; color: var(--fg-mid); }
+  @media (max-width: 900px) { .pair { grid-template-columns: 1fr; } }
+</style>

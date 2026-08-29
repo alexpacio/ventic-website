@@ -1,0 +1,56 @@
+---
+import AgentPanel from "./AgentPanel.astro";
+import { content, type Lang } from "../i18n/content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const h = content[lang].hero;
+const how = lang === "it" ? "/#come-funziona" : "/en/#how-it-works";
+---
+<section class="hero rules">
+  <span class="grain" aria-hidden="true"></span>
+  <div class="wrap grid inner">
+    <div class="copy">
+      <span class="plate plate--accent">
+        <span class="dot" style="width:6px;height:6px;box-shadow:none"></span>
+        {h.plate}
+      </span>
+      <h1 class="h1">
+        {h.title[0]}<br />{h.title[1]}<br /><span class="hl">{h.title[2]}</span>
+      </h1>
+      <p class="lead measure">{h.lead}</p>
+      <p class="sub measure">{h.sub}</p>
+      <div class="actions">
+        <a class="btn btn--a" href="#contatto">{h.cta1}</a>
+        <a class="btn btn--b" href={how}>{h.cta2}</a>
+      </div>
+      <p class="mono micro">{h.micro}</p>
+    </div>
+    <div class="panelcol"><AgentPanel lang={lang} /></div>
+  </div>
+</section>
+
+<style>
+  .hero { position: relative; overflow: hidden; padding: 88px 0 96px; }
+  .inner { position: relative; align-items: start; }
+  .copy { grid-column: span 7; }
+  .panelcol { grid-column: span 5; }
+
+  .plate { margin-bottom: 26px; }
+  .h1 { margin: 0; }
+  .hl { color: var(--accent); }
+  .measure { max-width: 46ch; }
+  .lead { margin-top: 30px; }
+  .sub { margin-top: 18px; font-size: 17px; line-height: 1.55; color: var(--fg-faint); }
+  .actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 38px; }
+  .micro { margin-top: 20px; font-size: 12px; letter-spacing: .06em; color: var(--fg-faint); }
+
+  @media (max-width: 1080px) {
+    .copy { grid-column: span 12; }
+    .panelcol { grid-column: span 12; max-width: 560px; }
+  }
+  @media (max-width: 860px) {
+    .hero { padding: 44px 0 60px; }
+    .copy, .panelcol { grid-column: span 6; }
+    .actions .btn { flex-grow: 1; }
+  }
+</style>

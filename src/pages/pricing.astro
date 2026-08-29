@@ -1,0 +1,27 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+import PriceHero from "../components/PriceHero.astro";
+import PricePair from "../components/PricePair.astro";
+import Packages from "../components/Packages.astro";
+import Matrix from "../components/Matrix.astro";
+import Sizing from "../components/Sizing.astro";
+import PriceNotes from "../components/PriceNotes.astro";
+import Footer from "../components/Footer.astro";
+import { content } from "../i18n/content";
+
+const lang = "it" as const;
+const seo = content[lang].seo.pricing;
+---
+<Layout title={seo.title} description={seo.desc} lang={lang}>
+  <Nav lang={lang} />
+  <main id="main">
+    <PriceHero lang={lang} />
+    <PricePair lang={lang} />
+    <Packages lang={lang} />
+    <Matrix lang={lang} />
+    <Sizing lang={lang} />
+    <PriceNotes lang={lang} />
+  </main>
+  <Footer lang={lang} />
+</Layout>

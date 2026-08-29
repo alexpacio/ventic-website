@@ -1,0 +1,77 @@
+---
+import Icon from "./Icon.astro";
+import { content, type Lang } from "../i18n/content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const m = content[lang].pricingPage.matrix;
+const icon = { yes: "check", no: "cross", dash: "dash" } as const;
+const tone = { yes: "var(--jade)", no: "#7a7e82", dash: "#7a7e82" } as const;
+---
+<section class="mx-sec">
+  <div class="wrap">
+    <div class="head">
+      <h2 class="h3">{m.title}</h2>
+      <span class="mono meta">{m.meta}</span>
+    </div>
+
+    <div class="tablewrap">
+      <table class="tbl">
+        <thead>
+          <tr>
+            {m.cols.map((col, i) => (
+              <th class={`mono th ${i === 3 ? "th--own" : ""} ${i === 4 ? "th--warm" : ""}`} scope="col">{col}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {m.rows.map((row) => (
+            <tr>
+              <th class="rowlab" scope="row">{row.label}</th>
+              {row.cells.map((cell, i) => (
+                <td class={`cell ${i === 2 ? "cell--own" : ""} ${i === 3 ? "cell--warm" : ""}`}>
+                  <span class={`inner ${cell.mark === "yes" ? "on" : ""}`}>
+                    <Icon name={icon[cell.mark]} size={15} stroke={tone[cell.mark]} width={2.2} />
+                    <span>{cell.text}</span>
+                  </span>
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<style>
+  .mx-sec { padding-bottom: 60px; }
+  .head { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; margin-bottom: 28px; }
+  .meta { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--fg-ghost); white-space: nowrap; }
+
+  .tablewrap { border: 1px solid var(--line-soft); border-radius: 3px; overflow-x: auto; }
+  .tbl { width: 100%; min-width: 900px; border-collapse: collapse; text-align: left; }
+
+  .th {
+    padding: 16px 18px; background: var(--raise); vertical-align: bottom;
+    font-size: 10px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--fg-faint);
+  }
+  .th:first-child { padding-left: 22px; width: 292px; }
+  .th--own { background: #1d1f22; color: #a9a7a1; }
+  .th--warm { background: var(--warm-head); color: var(--accent); }
+
+  .tbl tbody tr > * { border-top: 1px solid var(--line-soft); }
+  .rowlab {
+    padding: 20px 22px; background: var(--cell); vertical-align: top;
+    font-size: 15px; font-weight: 600; line-height: 1.4; color: #d4d2cc;
+  }
+  .cell { padding: 20px 18px; background: var(--panel-b); vertical-align: top; }
+  .cell--own { background: #1a1d20; }
+  .cell--warm { background: var(--warm-cell); }
+  .inner { display: flex; align-items: flex-start; gap: 9px; font-size: 13px; line-height: 1.45; color: var(--fg-mute); }
+  .inner :global(svg) { flex-shrink: 0; margin-top: 1px; }
+  .inner.on { color: #c5c3bd; }
+
+  @media (max-width: 900px) {
+    .head { flex-direction: column; align-items: flex-start; gap: 14px; }
+  }
+</style>

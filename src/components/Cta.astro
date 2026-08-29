@@ -1,0 +1,37 @@
+---
+import { content, type Lang } from "../i18n/content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const c = content[lang].cta;
+const mail = content[lang].footer.mail;
+---
+<section id="contatto" class="sec band">
+  <span class="grain" aria-hidden="true"></span>
+  <div class="wrap inner">
+    <div>
+      <span class="plate plate--accent">{c.plate}</span>
+      <h2 class="h2-big">{c.title[0]}<br />{c.title[1]}</h2>
+      <p class="lead measure">{c.body}</p>
+    </div>
+    <div class="actions">
+      <a class="btn btn--a" href={`mailto:${mail}`}>{c.btn}</a>
+      <a class="btn btn--b" href={`mailto:${mail}`}>{c.mail}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .band {
+    position: relative; overflow: hidden;
+    background: linear-gradient(180deg, #14171b 0%, var(--deck) 100%);
+    border-top: 1px solid var(--line-dim);
+  }
+  .inner { position: relative; display: flex; align-items: flex-end; justify-content: space-between; gap: 60px; }
+  .plate { margin-bottom: 24px; }
+  .measure { margin-top: 26px; max-width: 52ch; }
+  .actions { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; flex-shrink: 0; }
+  @media (max-width: 1080px) {
+    .inner { flex-direction: column; align-items: flex-start; gap: 34px; }
+    .actions { flex-direction: row; flex-wrap: wrap; }
+  }
+</style>

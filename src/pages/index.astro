@@ -1,34 +1,31 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Navbar from "../components/Navbar.tsx";
-import Hero from "../components/Hero.tsx";
-import WorkBanner from "../components/WorkBanner.tsx";
-import Modes from "../components/Modes.tsx";
-import Why from "../components/Why.tsx";
-import How from "../components/How.tsx";
-import ModelsSection from "../components/Models.tsx";
-import Features from "../components/Features.tsx";
-import Pricing from "../components/Pricing.tsx";
-import Footer from "../components/Footer.tsx";
-import { ui } from "../i18n/ui";
-import { getLangFromUrl } from "../i18n/utils";
-import "../styles/global.css";
+import Nav from "../components/Nav.astro";
+import Hero from "../components/Hero.astro";
+import Problem from "../components/Problem.astro";
+import Modes from "../components/Modes.astro";
+import How from "../components/How.astro";
+import Capabilities from "../components/Capabilities.astro";
+import Models from "../components/Models.astro";
+import PricingStrip from "../components/PricingStrip.astro";
+import Cta from "../components/Cta.astro";
+import Footer from "../components/Footer.astro";
+import { content } from "../i18n/content";
 
-const lang = getLangFromUrl(Astro.url);
-const t = (key: string) => (ui[lang] as Record<string, string>)[key] ?? (ui["it"] as Record<string, string>)[key] ?? key;
+const lang = "it" as const;
+const seo = content[lang].seo.home;
 ---
-
-<Layout title={t("seo.home.title")} description={t("seo.home.desc")} lang={lang}>
-  <Navbar client:load lang={lang} currentPath={Astro.url.pathname} />
-  <main>
-    <Hero client:load lang={lang} />
-    <WorkBanner client:load lang={lang} />
+<Layout title={seo.title} description={seo.desc} lang={lang}>
+  <Nav lang={lang} />
+  <main id="main">
+    <Hero lang={lang} />
+    <Problem lang={lang} />
     <Modes lang={lang} />
-    <Why lang={lang} />
     <How lang={lang} />
-    <ModelsSection lang={lang} />
-    <Features lang={lang} />
-    <Pricing lang={lang} />
+    <Capabilities lang={lang} />
+    <Models lang={lang} />
+    <PricingStrip lang={lang} />
+    <Cta lang={lang} />
   </main>
-  <Footer client:load lang={lang} />
+  <Footer lang={lang} />
 </Layout>

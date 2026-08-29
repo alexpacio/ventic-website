@@ -1,0 +1,30 @@
+---
+import Logo from "./Logo.astro";
+import { content, type Lang } from "../i18n/content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const c = content[lang].pricingPage;
+---
+<section class="phero">
+  <div class="wrap inner">
+    <div>
+      <span class="brand"><Logo size={26} /><span class="word">Ventic</span></span>
+      <span class="plate">{c.plate}</span>
+      <h1 class="h2-big">{c.title[0]}<br />{c.title[1]}</h1>
+    </div>
+    <p class="body measure">{c.lead}</p>
+  </div>
+</section>
+
+<style>
+  .phero { padding: 68px 0 44px; }
+  .inner { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; }
+  .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 26px; }
+  .word { font-family: var(--display); font-size: 24px; font-weight: 800; letter-spacing: .02em; text-transform: uppercase; color: var(--fg-mute); }
+  .plate { margin-bottom: 22px; }
+  .measure { max-width: 34ch; }
+  @media (max-width: 900px) {
+    .phero { padding: 44px 0 32px; }
+    .inner { flex-direction: column; align-items: flex-start; gap: 24px; }
+  }
+</style>

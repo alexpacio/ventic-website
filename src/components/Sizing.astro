@@ -1,0 +1,57 @@
+---
+import { content, type Lang } from "../i18n/content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const s = content[lang].pricingPage.sizing;
+---
+<section class="sz-sec">
+  <div class="wrap">
+    <div class="panel box">
+      <div class="grid">
+        <div class="left">
+          <span class="plate">{s.plate}</span>
+          <h2 class="h3">{s.title[0]}<br />{s.title[1]}</h2>
+          <p class="cell-b body-w">{s.body}</p>
+        </div>
+        <dl class="right">
+          {s.items.map((it, i) => (
+            <div class={`row ${i > 0 ? "row--sep" : ""}`}>
+              <dt class="mono key">{it.label}</dt>
+              <dd class="val">{it.body}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .sz-sec { padding-bottom: 60px; }
+  .box { padding: 38px 40px 40px; }
+  .grid { gap: 44px; }
+  .left { grid-column: span 5; }
+  .right { grid-column: span 7; margin: 0; display: flex; flex-direction: column; }
+  .plate { margin-bottom: 20px; }
+  .body-w { margin-top: 16px; }
+
+  .row { display: flex; align-items: flex-start; gap: 24px; padding: 20px 0; }
+  .row:first-child { padding-top: 0; }
+  .row:last-child { padding-bottom: 0; }
+  .row--sep { border-top: 1px solid var(--line); }
+  .key {
+    width: 120px; flex-shrink: 0; padding-top: 3px;
+    font-size: 10px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--fg-faint);
+  }
+  .val { margin: 0; font-size: 15px; line-height: 1.6; color: var(--fg-dim); }
+
+  @media (max-width: 1080px) {
+    .left, .right { grid-column: span 12; }
+    .box { padding: 30px 26px 32px; }
+  }
+  @media (max-width: 860px) {
+    .left, .right { grid-column: span 6; }
+    .row { flex-direction: column; gap: 8px; }
+    .key { width: auto; padding-top: 0; }
+  }
+</style>

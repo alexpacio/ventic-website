@@ -1,0 +1,38 @@
+---
+import { content, type Lang } from "../i18n/content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const c = content[lang].footer;
+---
+<footer class="foot">
+  <div class="wrap inner">
+    <div class="left">
+      <span class="word">Ventic</span>
+      <span class="mono meta">{c.legal}</span>
+    </div>
+    <div class="right">
+      <span class="mono meta">{c.region}</span>
+      <a class="mono link" href={`mailto:${c.mail}`}>{c.mail}</a>
+      {c.links.map((l) => <a class="mono link" href={l.href}>{l.label}</a>)}
+    </div>
+  </div>
+</footer>
+
+<style>
+  .foot { background: var(--ink); border-top: 1px solid var(--line-dim); }
+  .inner {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 28px; padding-top: 34px; padding-bottom: 40px;
+  }
+  .left, .right { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+  .word {
+    font-family: var(--display); font-size: 20px; font-weight: 800;
+    letter-spacing: .02em; text-transform: uppercase; color: var(--fg-mute);
+  }
+  .meta { font-size: 11px; letter-spacing: .08em; color: var(--fg-ghost); }
+  .link { font-size: 11px; letter-spacing: .08em; color: var(--fg-mute); }
+  .link:hover { color: var(--fg-strong); }
+  @media (max-width: 900px) {
+    .inner { flex-direction: column; align-items: flex-start; gap: 20px; }
+  }
+</style>
