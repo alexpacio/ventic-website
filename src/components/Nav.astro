@@ -26,12 +26,13 @@ const otherHref = alternatePath(Astro.url.pathname, other);
         <Icon name="globe" size={15} stroke="currentColor" width={1.4} />
         {other.toUpperCase()}
       </a>
-      <a class="btn btn--b btn--sm cta" href="#contatto">{c.cta}</a>
+      <a class="btn btn--a btn--sm cta" href="#contatto">{c.cta}</a>
       <details class="menu">
         <summary aria-label="Menu"><Icon name="menu" size={22} stroke="var(--fg-mute)" width={1.6} /></summary>
         <div class="drawer panel">
           {c.links.map((l) => <a class="drawerlink" href={l.href}>{l.label}</a>)}
           <a class="drawerlink" href={otherHref} hreflang={other}>{other.toUpperCase()}</a>
+          <a class="drawerlink drawerlink--cta" href="#contatto">{c.cta}</a>
         </div>
       </details>
     </div>
@@ -52,18 +53,19 @@ const otherHref = alternatePath(Astro.url.pathname, other);
     background: #0e0f11e6;
     backdrop-filter: blur(10px);
   }
-  .inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 78px; }
+  .inner { display: flex; align-items: center; justify-content: space-between; gap: 18px; height: 64px; }
 
-  .brand { display: flex; align-items: center; color: var(--fg-strong); }
+  .brand { display: flex; align-items: center; color: var(--fg-strong); flex-shrink: 0; }
   .brand:hover { color: var(--fg-strong); }
 
-  .links { display: flex; align-items: center; gap: 32px; }
-  .right { display: flex; align-items: center; gap: 20px; }
+  .links { display: flex; align-items: center; gap: 26px; flex-wrap: nowrap; }
+  .right { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
 
   .navlink {
     display: inline-flex; align-items: center; gap: 7px; height: 44px;
     font-family: var(--mono); font-size: 12px; font-weight: 500;
-    letter-spacing: .1em; text-transform: uppercase; color: var(--fg-mute);
+    letter-spacing: .09em; text-transform: uppercase; color: var(--fg-mute);
+    white-space: nowrap;
   }
   .navlink:hover { color: var(--fg-strong); }
 
@@ -72,7 +74,7 @@ const otherHref = alternatePath(Astro.url.pathname, other);
   .menu > summary::-webkit-details-marker { display: none; }
   .drawer {
     position: absolute; right: 0; top: 50px; z-index: 40;
-    display: flex; flex-direction: column; min-width: 220px; padding: 8px 0;
+    display: flex; flex-direction: column; min-width: 240px; padding: 8px 0;
   }
   .drawerlink {
     padding: 13px 20px;
@@ -80,14 +82,20 @@ const otherHref = alternatePath(Astro.url.pathname, other);
     letter-spacing: .1em; text-transform: uppercase; color: var(--fg-dim);
   }
   .drawerlink:hover { color: var(--fg-strong); background: #ffffff08; }
+  .drawerlink--cta { color: var(--accent); border-top: 1px solid var(--line-soft); margin-top: 6px; padding-top: 16px; }
 
-  @media (max-width: 1080px) {
-    .links { gap: 22px; }
+  @media (max-width: 1160px) {
+    .links { gap: 18px; }
+  }
+  @media (max-width: 980px) {
+    .links { gap: 14px; }
+    .links .navlink { font-size: 11px; letter-spacing: .07em; }
   }
   @media (max-width: 900px) {
-    .inner { height: 66px; }
+    .inner { height: 60px; }
     .links, .lang { display: none; }
     .menu { display: block; }
+    .cta { display: inline-flex; }
   }
   @media (max-width: 520px) {
     .cta { display: none; }

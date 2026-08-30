@@ -1,0 +1,96 @@
+---
+import { content, type Lang } from "../i18n/content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const f = content[lang].infraFlow;
+---
+<figure class="flowfig">
+  <figcaption class="head">
+    <span class="plate">{f.plate}</span>
+    <h3 class="flowtitle">{f.title}</h3>
+    <p class="body lead">{f.lead}</p>
+  </figcaption>
+
+  <div class="track" role="list">
+    {f.steps.map((s, i) => (
+      <div class="node" role="listitem">
+        <div class="kcol">
+          <span class="mono knum">{s.k}</span>
+          {i < f.steps.length - 1 && <span class="vline" aria-hidden="true"><span class="vdot"></span></span>}
+        </div>
+        <div class="panel card">
+          <span class="mono klabel">{s.label}</span>
+          <p class="cell-b desc">{s.desc}</p>
+        </div>
+        {i < f.steps.length - 1 && <span class="arrow" aria-hidden="true">→</span>}
+      </div>
+    ))}
+  </div>
+
+  <!-- desktop horizontal connectors, mobile vertical handled by vline -->
+  <div class="mono note">{f.note}</div>
+
+  <!-- Minimal request path diagram (inline SVG) -->
+  <div class="diagram" aria-hidden="true">
+    <svg viewBox="0 0 960 92" width="100%" height="92" role="img">
+      <defs>
+        <marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#32373d"/></marker>
+      </defs>
+      <!-- lane -->
+      <rect x="0.5" y="0.5" width="959" height="91" rx="3" fill="#101215" stroke="#262a2f"/>
+      <!-- boxes -->
+      <g font-family="IBM Plex Mono, monospace" font-size="10" text-anchor="middle">
+        <rect x="18" y="24" width="138" height="44" rx="2" fill="#16181b" stroke="#32373d"/><text x="87" y="42" fill="#f2f0eb" font-weight="600">APP</text><text x="87" y="54" fill="#6f7276" font-size="8">SDK invariato</text>
+        <rect x="202" y="24" width="138" height="44" rx="2" fill="#16181b" stroke="#32373d"/><text x="271" y="42" fill="#f2f0eb" font-weight="600">PROXY</text><text x="271" y="54" fill="#6f7276" font-size="8">RBAC · quote</text>
+        <rect x="386" y="24" width="158" height="44" rx="2" fill="#1d2126" stroke="#f5a83f" stroke-dasharray="5 4"/><text x="465" y="42" fill="#f5a83f" font-weight="600">OVERLAY mTLS</text><text x="465" y="54" fill="#8a8d92" font-size="8">NAT traversal</text>
+        <rect x="590" y="24" width="138" height="44" rx="2" fill="#16181b" stroke="#32373d"/><text x="659" y="42" fill="#f2f0eb" font-weight="600">AGENT</text><text x="659" y="54" fill="#6f7276" font-size="8">fair queue</text>
+        <rect x="774" y="24" width="138" height="44" rx="2" fill="#16181b" stroke="#32373d"/><text x="843" y="42" fill="#f2f0eb" font-weight="600">vLLM</text><text x="843" y="54" fill="#6f7276" font-size="8">2× GPU</text>
+      </g>
+      <!-- arrows -->
+      <g stroke="#32373d" stroke-width="1.2" fill="none" marker-end="url(#ah)">
+        <path d="M156 46 H200"/><path d="M340 46 H384"/><path d="M544 46 H588"/><path d="M728 46 H772"/>
+        <!-- return dashed -->
+        <path d="M843 72 C 843 82, 271 82, 271 72" stroke="#3a3f45" stroke-dasharray="5 4" marker-end="none"/>
+        <path d="M271 68 L267 72 L271 76" stroke="#3a3f45" fill="none" marker-end="none"/>
+      </g>
+      <text x="485" y="84" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="8" letter-spacing="0.08em" fill="#5c5f63">RISPOSTA — STESSA STRADA AL CONTRARIO</text>
+    </svg>
+  </div>
+</figure>
+
+<style>
+  .flowfig { margin: 46px 0 0; }
+  .head { max-width: 760px; margin-bottom: 28px; }
+  .plate { margin-bottom: 16px; }
+  .flowtitle { font-family: var(--display); font-size: clamp(22px, 2.2vw, 28px); font-weight: 700; line-height: 1.05; text-transform: uppercase; color: var(--fg-strong); margin-top: 6px; }
+  .lead { margin-top: 12px; max-width: 68ch; color: var(--fg-mid); font-size: 16px; line-height: 1.6; }
+
+  .track { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; align-items: start; }
+  .node { position: relative; display: flex; flex-direction: column; gap: 0; }
+  .kcol { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .knum { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #14161a; font-size: 11px; font-weight: 700; letter-spacing: .04em; }
+  .vline { display: none; }
+  .card { padding: 16px 16px 18px; min-height: 112px; }
+  .klabel { font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-strong); }
+  .desc { margin-top: 8px; font-size: 13px; line-height: 1.55; }
+  .arrow { position: absolute; right: -10px; top: 74px; color: var(--line); font-size: 14px; }
+  .note { margin-top: 16px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-ghost); }
+  .diagram { margin-top: 18px; overflow-x: auto; border-radius: 3px; }
+
+  @media (max-width: 1080px) {
+    .track { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .node:nth-child(4), .node:nth-child(5) { grid-column: span 1; }
+    .arrow { display: none; }
+  }
+  @media (max-width: 860px) {
+    .track { grid-template-columns: 1fr; gap: 0; }
+    .node { flex-direction: row; gap: 14px; align-items: stretch; }
+    .kcol { flex-direction: column; align-items: center; width: 28px; flex-shrink: 0; margin-bottom: 0; }
+    .vline { display: block; width: 1px; flex-grow: 1; background: var(--line-soft); margin-top: 6px; position: relative; min-height: 24px; }
+    .vdot { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 6px; height: 6px; border-radius: 50%; background: var(--line); }
+    .node:last-child .vline { display: none; }
+    .card { flex: 1; min-height: auto; margin-bottom: 14px; }
+    .arrow { display: none; }
+    .diagram { display: none; }
+  }
+</style>

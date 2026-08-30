@@ -1,5 +1,6 @@
 ---
 import Icon from "./Icon.astro";
+import InfraFlow from "./InfraFlow.astro";
 import { content, type Lang } from "../i18n/content";
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
@@ -29,11 +30,13 @@ const icons = ["discovery", "provisioning", "overlay", "ops"];
         </li>
       ))}
     </ol>
+
+    <InfraFlow lang={lang} />
   </div>
 </section>
 
 <style>
-  .top { align-items: end; margin-bottom: 52px; }
+  .top { align-items: end; margin-bottom: 44px; }
   .tcol, .lcol { grid-column: span 6; }
   .plate { margin-bottom: 22px; }
   .strip {
