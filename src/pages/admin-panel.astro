@@ -1,0 +1,26 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+import AdminHero from "../components/AdminHero.astro";
+import AdminPanel from "../components/AdminPanel.astro";
+import AdminFeature from "../components/AdminFeature.astro";
+import AdminWhiteLabel from "../components/AdminWhiteLabel.astro";
+import Cta from "../components/Cta.astro";
+import Footer from "../components/Footer.astro";
+import { content } from "../i18n/content";
+
+const lang = "it" as const;
+const seo = content[lang].seo.adminPanel;
+const sections = content[lang].adminPanelPage.sections;
+---
+<Layout title={seo.title} description={seo.desc} lang={lang}>
+  <Nav lang={lang} />
+  <main id="main">
+    <AdminHero lang={lang} />
+    <AdminPanel lang={lang} />
+    {sections.map((_, i) => <AdminFeature lang={lang} index={i} tint={i % 2 === 1} />)}
+    <AdminWhiteLabel lang={lang} />
+    <Cta lang={lang} />
+  </main>
+  <Footer lang={lang} />
+</Layout>

@@ -1,41 +1,53 @@
 ---
-import { getLangFromUrl } from "../i18n/utils";
+import { getLangFromUrl, alternatePath, type Lang } from "../i18n/content";
+import "../styles/global.css";
 
 interface Props {
   title: string;
-  description?: string;
-  lang?: string;
+  description: string;
+  lang?: Lang;
 }
-const { title, description = "We deploy private AI on dedicated GPUs. Turnkey. Your hardware, your data, our know-how." } = Astro.props;
-const lang = Astro.props.lang ?? getLangFromUrl(Astro.url);
-const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://ventic.it").toString();
-// alternate URLs
-const pathname = Astro.url.pathname;
-// strip /en prefix for alternate computation
-const isEn = pathname.startsWith("/en");
-const itPath = isEn ? pathname.replace(/^\/en/, "") || "/" : pathname;
-const enPath = isEn ? pathname : `/en${pathname === "/" ? "/" : pathname}`;
-const siteBase = (Astro.site ?? "https://ventic.it").toString().replace(/\/$/, "");
+const { title, description } = Astro.props;
+const lang: Lang = Astro.props.lang ?? getLangFromUrl(Astro.url);
+
+const site = (Astro.site ?? new URL("https://ventic.it")).toString().replace(/\/$/, "");
+const path = Astro.url.pathname;
+const canonical = `${site}${path}`;
+const itHref = `${site}${alternatePath(path, "it")}`;
+const enHref = `${site}${alternatePath(path, "en")}`;
 ---
 
 <!doctype html>
 <html lang={lang}>
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="description" content={description} />
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="canonical" href={canonical} />
-    <link rel="alternate" hreflang="it" href={`${siteBase}${itPath}`} />
-    <link rel="alternate" hreflang="en" href={`${siteBase}${enPath}`} />
-    <link rel="alternate" hreflang="x-default" href={`${siteBase}${itPath}`} />
+    <link rel="alternate" hreflang="it" href={itHref} />
+    <link rel="alternate" hreflang="en" href={enHref} />
+    <link rel="alternate" hreflang="x-default" href={itHref} />
+    <meta name="theme-color" content="#0e0f11" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Ventic" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={lang === "it" ? "it_IT" : "en_GB"} />
+    <meta name="twitter:card" content="summary" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+    />
   </head>
-  <body class="bg-white text-[#161616] antialiased">
+  <body>
     <slot />
   </body>
 </html>

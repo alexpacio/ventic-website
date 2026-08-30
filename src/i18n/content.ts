@@ -1,0 +1,1225 @@
+/* Site copy, IT + EN. One structure, two dictionaries. */
+
+export const languages = { it: "Italiano", en: "English" } as const;
+export type Lang = keyof typeof languages;
+export const defaultLang: Lang = "it";
+
+export type Mark = "yes" | "no" | "dash";
+export interface Cell {
+  mark: Mark;
+  text: string;
+}
+
+const it = {
+  seo: {
+    home: {
+      title: "Ventic — LLM privati su GPU dedicate",
+      desc: "Il tuo endpoint LLM privato, compatibile OpenAI e Anthropic. Gira sulle tue GPU — dati in UE o US — con modelli open-weight, vLLM ottimizzato e assistenza inclusa.",
+    },
+    pricing: {
+      title: "Prezzi e confronto — Ventic",
+      desc: "BYOH su offerta, PaaS da 1 €/h tutto incluso. Costi per utente e confronto con subscription e pagamento a token.",
+    },
+    adminPanel: {
+      title: "Admin panel Ventic — utenti, ruoli, modelli, white label",
+      desc: "Il pannello Ventic: utenti e accessi, RBAC per endpoint, gestione modelli e scaling, RAG e harness agentici, white label multi-tenant.",
+    },
+  },
+
+  nav: {
+    links: [
+      { label: "Perché Ventic", href: "/#perche" },
+      { label: "Come funziona", href: "/#come-funziona" },
+      { label: "Piattaforma", href: "/#stack" },
+      { label: "Prezzi", href: "/pricing" },
+      { label: "Pannello", href: "/admin-panel" },
+    ],
+    cta: "Prenota una call",
+    skip: "Vai al contenuto",
+    langLabel: "Lingua",
+  },
+
+  hero: {
+    plate: "LLM privati · GPU dedicate · Dati in UE / US",
+    title: ["I tuoi modelli,", "sulle tue GPU,", "dentro la tua rete."],
+    lead: "Trasformiamo un server con GPU — tuo o noleggiato da noi — in un endpoint privato compatibile con le API OpenAI e Anthropic. Il tuo team lo usa come le API pubbliche, ma i dati non lasciano mai la tua infrastruttura.",
+    sub: "Modelli open-weight allo stato dell'arte, motore vLLM già ottimizzato per quell’hardware, assistenza inclusa. Paghi le ore macchina, non i token.",
+    cta1: "Prenota una call tecnica",
+    cta2: "Vedi come funziona",
+    micro: "Setup in giornata · Da 1 €/h tutto incluso · Nessun costo a token",
+    trust: ["Dati in UE o US, a tua scelta", "Nessun IP pubblico", "Compatibile OpenAI & Anthropic"],
+  },
+
+  panel: {
+    title: "Ventic Agent",
+    status: "ONLINE",
+    node: "node-01 · eu-central · spot · 2× GPU",
+    gauges: [
+      { label: "GPU 0", value: "94%", pct: 94, warm: true },
+      { label: "GPU 1", value: "91%", pct: 91, warm: true },
+      { label: "VRAM", value: "71G", pct: 89, warm: false },
+    ],
+    stats: [
+      { label: "Prefill", value: "12.4k", unit: "tok/s" },
+      { label: "Decode", value: "1.86k", unit: "tok/s" },
+      { label: "Sessioni", value: "37", unit: "in coda 0" },
+    ],
+    chips: ["qwen3.8-27b", "vLLM · TP 2", "embed · bge-m3"],
+    chipLive: "overlay cifrato attivo",
+    sample: "dati di esempio · anteprima live",
+  },
+
+  heroShots: {
+    label: "Admin panel",
+    host: "admin.ventic.local",
+    note: "Pannello reale — dati di esempio",
+  },
+
+  problem: {
+    id: "perche",
+    plate: "Perché Ventic",
+    title: ["Le API pubbliche", "non sono infrastruttura."],
+    lead: "Perfette per provare. Rischiose quando ci costruisci un prodotto o ci fai lavorare agenti autonomi tutta la notte.",
+    cards: [
+      { tag: "01 — Subscription", title: "Finestre strette", body: "Quota finita, lavoro fermo. Per una persona è attesa; per un agente notturno è un guasto che scopri al mattino." },
+      { tag: "02 — Subscription", title: "Outage a monte", body: "Se il provider va giù, va giù anche il tuo prodotto. Nessun failover ti salva se il modello vive solo da loro." },
+      { tag: "03 — Subscription", title: "Modelli che cambiano", body: "Gli stessi prompt danno risultati diversi nel tempo. Aggiornamenti silenziosi, poca trasparenza, nessuna riproducibilità." },
+      { tag: "04 — A token", title: "Prezzo per token", body: "Sui modelli di frontiera USA il costo per token è alto e cresce proprio quando il tuo prodotto ha successo." },
+      { tag: "05 — A token", title: "Compliance", body: "Le alternative economiche girano su server cinesi. Se i tuoi dati devono restare in UE, quella strada è chiusa." },
+      { tag: "06 — A token", title: "Budget imprevedibile", body: "Il consumo LLM è imprevedibile per natura. In azienda diventa una voce che nessuno riesce a chiudere a budget." },
+    ],
+  },
+
+  modes: {
+    id: "modelli-di-ingaggio",
+    plate: "Due modi di iniziare",
+    title: ["Usi il tuo server,", "oppure lo troviamo noi."],
+    lead: "In entrambi i casi ottieni la stessa cosa: un endpoint privato compatibile OpenAI e Anthropic, su una macchina a cui accedi quando vuoi.",
+    byoh: {
+      tag: "BYOH",
+      title: "Porti il server tu",
+      desc: "Hai già le GPU o le compri tu. Noi installiamo lo stack: verifica di compatibilità, motore vLLM ottimizzato per la tua GPU, Ventic Agent, rete overlay cifrata, pannello e observability.",
+      priceLabel: "Consulenza una tantum",
+      price: "Su offerta",
+      unit: "",
+      ticks: [
+        "Verifica server e compatibilità — max 1 ora",
+        "Installazione completa dello stack di inferenza",
+        "Ventic Agent per accesso remoto cifrato",
+      ],
+      note: "Dopo l’installazione il server è tuo. Nessun costo ricorrente verso Ventic.",
+    },
+    paas: {
+      tag: "PaaS",
+      title: "Te lo forniamo noi",
+      desc: "Troviamo il server giusto al prezzo giusto nel nostro catalogo, lo mettiamo in produzione e te lo fatturiamo insieme al servizio. Tutto incluso — hardware compreso.",
+      priceLabel: "Tutto incluso, a ore",
+      price: "da 1 €",
+      unit: "/ ora + IVA",
+      ticks: [
+        "Scelta su tuoi criteri: spot o dedicato, UE o US, datacenter o no",
+        "Acquisto con bonifico SEPA immediato",
+        "Spegnimento automatico quando nessuno lo usa",
+        "Multicloud per ridondanza o failover, se il servizio è critico",
+      ],
+      note: "Paghi solo le ore in cui il server è acceso. Mai a token.",
+    },
+  },
+
+  how: {
+    id: "come-funziona",
+    plate: "Come funziona",
+    title: ["Un agent sul server.", "Fa tutto lui."],
+    lead: "Sul tuo server gira Ventic Agent, il nostro software. Tiene in piedi il modello, lo espone in modo sicuro e lo condivide in modo equo fra i tuoi utenti — senza farvi toccare driver, kernel o flag di vLLM.",
+    steps: [
+      { title: "Troviamo il server", body: "Cerchiamo la macchina giusta al prezzo giusto, secondo i criteri che scegli. Acquisto con bonifico SEPA immediato.", tag: "solo PaaS" },
+      { title: "Lo accendiamo già pronto", body: "Motore vLLM configurato per quel modello su quell’hardware — LLM ed embedding insieme. Automatizzato: a noleggio orario, ogni minuto risparmiato è denaro.", tag: "in pochi minuti" },
+      { title: "Lo raggiungiamo senza aprire porte", body: "Rete overlay privata e cifrata che si autoconfigura e attraversa i NAT. Niente IP pubblico, niente VPN da mantenere, nessuna porta esposta.", tag: "zero esposizione" },
+      { title: "Lo teniamo in piedi", body: "Scheduling equo fra utenti, ripristino automatico dopo outage spot, spegnimento nei momenti morti, metriche e allarmi. Con la nostra assistenza.", tag: "continuo" },
+    ],
+  },
+
+  stackDiagram: {
+    label: "Dove gira ogni pezzo",
+    clients: { label: "Postazioni di lavoro", items: ["Agenti di coding", "App e servizi interni", "Client OpenAI / Anthropic"] },
+    infra: { label: "Tua infrastruttura Docker", items: ["LLM proxy", "Admin panel", "Observability (LGTM)"] },
+    nodesLabel: "Nodi GPU",
+    nodes: [
+      { name: "gpu-node-01", meta: "2×H100 80GB", filled: 2 },
+      { name: "gpu-node-02", meta: "2×MI300X", filled: 1 },
+    ],
+    autoNode: { name: "gpu-node-03", meta: "si accende al bisogno", tag: "auto" },
+    flowA: "API OpenAI / Anthropic",
+    flowB: "Overlay cifrato · attraversa i NAT",
+    replicaLabel: "repliche",
+    scale: {
+      label: "Autoscaling & scale-to-zero",
+      rules: [
+        "Oltre 80% di carico: aggiunge una replica.",
+        "Sotto 25% per 10 minuti: ne toglie una.",
+        "0 richieste per 15 minuti: spegne il nodo. Si riaccende alla prima chiamata.",
+      ],
+    },
+  },
+
+  infraFlow: {
+    plate: "Flusso di una richiesta",
+    title: "Dalla tua app al modello, senza uscire dalla tua rete",
+    lead: "La tua app parla al proxy come se fosse OpenAI. Il proxy inoltra sull’overlay cifrato fino al Ventic Agent sul nodo GPU. La risposta torna dalla stessa strada — nessun hop pubblico.",
+    steps: [
+      { k: "01", label: "La tua app", desc: "SDK OpenAI / Anthropic invariato. Cambia solo l’URL dell’endpoint." },
+      { k: "02", label: "LLM proxy", desc: "Un unico endpoint. Autentica, applica RBAC e quote, poi inoltra." },
+      { k: "03", label: "Overlay cifrato", desc: "Canale mTLS che attraversa i NAT. I nodi non espongono porte." },
+      { k: "04", label: "Ventic Agent", desc: "Riceve, accoda in modo equo, alimenta vLLM." },
+      { k: "05", label: "vLLM", desc: "Inferenza ottimizzata per quel modello su quella GPU. Risponde al proxy, il proxy a te." },
+    ],
+    note: "Senza IP pubblico. Senza VPN manuale. Il relay può stare in rete pubblica; i tuoi nodi restano chiusi.",
+  },
+
+  lifecycle: {
+    plate: "Ciclo di vita",
+    title: "Si adatta al carico. Si spegne quando non serve.",
+    rules: [
+      { label: "> 80% carico", body: "Aggiunge una replica GPU per assorbire il picco." },
+      { label: "< 25% per 10 min", body: "Rimuove una replica. Paghi solo ciò che usi." },
+      { label: "0 richieste per 15 min", body: "Spegne il nodo. Si riaccende da solo alla prima chiamata." },
+      { label: "Spot revocato", body: "L’agent rischedula su un altro provider senza intervento manuale." },
+    ],
+    foot: "Tutto automatico. Nessun intervento notturno.",
+  },
+
+  stack: {
+    id: "stack",
+    plate: "Piattaforma",
+    title: ["Uno stack che installi,", "non un servizio a cui invii i dati."],
+    lead: "Pannello, proxy e observability girano sulla tua infrastruttura Docker — i dati restano da te. Sui nodi GPU gira solo il nostro agent. In mezzo, una rete overlay cifrata che si autoconfigura e attraversa i NAT senza IP pubblici né VPN da mantenere.",
+    legend: { own: "Sempre incluso", opt: "Opzionale — attivi solo se ti serve" },
+    planes: [
+      {
+        idx: "01",
+        title: "Le tue postazioni",
+        where: "Sui desktop del team",
+        items: [
+          { name: "Coding Agent wiring tool", body: "Configura da solo l’agente di coding che già usate. Nessun endpoint da incollare a mano.", opt: false },
+        ],
+      },
+      {
+        idx: "02",
+        title: "La tua infrastruttura Docker",
+        where: "Dove decidi tu — on-prem o cloud",
+        items: [
+          { name: "Admin panel", body: "Utenti, ruoli, modelli, quote e policy. È il pannello che vedi qui sotto.", opt: false },
+          { name: "LLM proxy", body: "Un endpoint solo, compatibile OpenAI e Anthropic. I client esistenti non cambiano.", opt: false },
+          { name: "Observability (LGTM + Grafana)", body: "Log, metriche e tracce. I dati di utilizzo restano sulla tua infra.", opt: false },
+          { name: "OpenRAG", body: "Pipeline di retrieval sui tuoi documenti.", opt: true },
+          { name: "Qdrant", body: "Database vettoriale per le collection RAG.", opt: true },
+          { name: "Embedding model", body: "Indicizzazione servita dallo stesso stack di inferenza.", opt: true },
+          { name: "Deepseek harness", body: "Harness agentico pronto da collegare a un modello.", opt: true },
+          { name: "Openclaw", body: "Harness agentico alternativo, stessa procedura.", opt: true },
+        ],
+      },
+      {
+        idx: "03",
+        title: "Rete overlay cifrata",
+        where: "Relay in rete pubblica, nodi chiusi",
+        items: [
+          { name: "Relay node", body: "Instrada il traffico verso host che non espongono nulla su internet. I tuoi nodi restano chiusi anche dietro NAT.", opt: false },
+        ],
+      },
+      {
+        idx: "04",
+        title: "I nodi di inferenza",
+        where: "Sulle GPU — tue o dal catalogo",
+        items: [
+          { name: "Ventic host agent", body: "Tiene in piedi il modello, lo espone sull’overlay e lo condivide equamente. È l’unico pezzo sul nodo.", opt: false },
+          { name: "Runtime vLLM", body: "Ottimizzato per quel modello su quella GPU. Serve LLM ed embedding insieme.", opt: false },
+        ],
+      },
+    ],
+    links: [
+      "Endpoint compatibile OpenAI e Anthropic",
+      "Overlay cifrato autoconfigurante — nessun IP pubblico",
+      "Dopo uno spot reclaim l’agent si riconnette da solo",
+    ],
+    note: "Parti dal minimo (agent + overlay + proxy) e aggiungi solo ciò che ti serve.",
+  },
+
+  adminPanel: {
+    id: "pannello",
+    plate: "Admin panel",
+    title: ["Chi usa cosa,", "lo decidi tu."],
+    lead: "Gira accanto al proxy, sulla tua infrastruttura. Da qui installi i modelli, emetti e revochi le chiavi, decidi chi può parlare con quale modello e vedi quanto consuma ciascuno — in tempo reale.",
+    chrome: "admin.ventic.local",
+    shots: [
+      {
+        id: "users", tab: "Utenti e chiavi", src: "/admin/users.webp", w: 1440, h: 1450,
+        title: "Utenti e accessi",
+        body: "Utenti attivi, scadenze e revoche per gruppo, dominio e tenant. Ogni API key ha proprietario, scope e scadenza — si revoca da qui. Auth dal tuo provider (Google Workspace, Entra ID, Okta, OIDC qualsiasi) con 2FA.",
+        alt: "Utenti e accessi: utenti con tenant, ruolo, scadenza e consumo token, pannello provider di autenticazione e tabella API key.",
+      },
+      {
+        id: "rbac", tab: "Ruoli", src: "/admin/rbac.webp", w: 1440, h: 1350,
+        title: "Ruoli e permessi (RBAC)",
+        body: "Quattro livelli — utente, developer, admin, superadmin — e una matrice endpoint-per-endpoint su chi può fare cosa. Sotto, le regole che legano utenti, gruppi, domini e tenant ai singoli modelli, con quota annessa.",
+        alt: "Ruoli e RBAC: matrice permessi per endpoint sui quattro ruoli e regole che legano soggetti ai modelli.",
+      },
+      {
+        id: "telemetry", tab: "Telemetria", src: "/admin/telemetry.webp", w: 1440, h: 1293,
+        title: "Telemetria",
+        body: "Token al minuto ultime 24h, occupazione GPU/VRAM/potenza per nodo, consumo per utente. Allarmi sul canale che preferisci quando una soglia scatta o uno spot viene revocato.",
+        alt: "Telemetria: grafico token al minuto, gauge GPU/VRAM per nodo, consumo per utente e allarmi recenti.",
+      },
+      {
+        id: "wirings", tab: "Wiring", src: "/admin/wirings.webp", w: 1440, h: 1133,
+        title: "Wiring esterni",
+        body: "I componenti opzionali si collegano da qui: OpenRAG e Qdrant con collection e modello di embedding, harness agentici con il modello a cui sono legati, wiring tool che spinge l’endpoint sui desktop del team.",
+        alt: "Wiring esterni: connettori RAG, stato componenti, harness agentici e configurazione coding agent.",
+      },
+    ],
+  },
+
+  selfServicePanel: {
+    id: "self-service",
+    plate: "Self-service",
+    title: ["La chat, le chiavi,", "il wiring in un click."],
+    lead: "L'utente finale non apre ticket: parla con i modelli in chat multimodale, ruota le proprie API key e incolla il wiring per Cursor, Cline, Continue o Muse — tutto sull'overlay cifrato, con le stesse quote dell'admin.",
+    chrome: "llm.ventic.local",
+    shots: [
+      {
+        id: "chat", tab: "Chat harness", src: "/selfservice/chat.webp", w: 1440, h: 900,
+        title: "Chat harness multimodale",
+        body: "Harness in stile ChatGPT con streaming, allegati image/file, picker modello e tool cards che aprono chiavi, wiring o quote senza uscire dalla conversazione. Vision via Qwen3-VL 32B.",
+        alt: "Self-service chat: harness multimodale con selezione modello, suggerimenti e pannello conversazioni, su sfondo scuro Ventic.",
+      },
+      {
+        id: "keys", tab: "API keys", src: "/selfservice/keys.webp", w: 1440, h: 900,
+        title: "Le tue API key",
+        body: "Chiavi personali tenant-scoped, create e ruotate in un click con preview sk-…xxxx. Stessa chiave per OpenAI e Anthropic, revoca immediata e rotazione zero-downtime di 5 minuti.",
+        alt: "Self-service API keys: lista chiavi personali con scope, scadenza e pulsanti ruota, revoca, elimina.",
+      },
+      {
+        id: "wiring", tab: "Wiring", src: "/selfservice/wiring.webp", w: 1440, h: 1951,
+        title: "Wiring per coding agent",
+        body: "Un copia-incolla per Cursor, Continue, Cline, Copilot, Codex, Muse e Windsurf: inietta OPENAI_BASE_URL / ANTHROPIC_BASE_URL e la tua chiave sull'overlay 10.88.0.0/16, QUIC + mTLS, nessun IP pubblico.",
+        alt: "Self-service wiring: selettore tool, modello e chiave, snippet copiabile e griglia preset per IDE.",
+      },
+      {
+        id: "playground", tab: "Playground", src: "/selfservice/playground.webp", w: 1440, h: 1309,
+        title: "Playground modelli",
+        body: "Prova al volo ogni modello con system prompt, temperature e file: stesso proxy e stesse quote della chat, risposta in streaming mock pronta per la produzione.",
+        alt: "Playground: form richiesta con modello, system prompt e allegati, e pannello risposta in streaming.",
+      },
+      {
+        id: "usage", tab: "Usage", src: "/selfservice/usage.webp", w: 1440, h: 1441,
+        title: "Quota e consumo",
+        body: "Grafico a barre per ora, quote per modello e stima costi giornaliera — tutto tenant-wide, con reset a mezzanotte Europe/Rome.",
+        alt: "Usage self-service: barre consumo orario, quote per modello e stima costo giornaliera.",
+      },
+    ],
+  },
+
+  caps: {
+    id: "cosa-ottieni",
+    plate: "Cosa ottieni",
+    title: ["Tutto ciò che serve", "per non doverci pensare."],
+    cta: "Prenota una call tecnica",
+    items: [
+      { title: "Sempre in piedi", body: "Se l’istanza spot viene revocata, Ventic rischedula e ripristina da solo — anche su un altro provider." },
+      { title: "Multi-utente equo", body: "Una macchina condivisa fra più persone: finestre di contesto prevedibili, workload schedulato in modo esatto." },
+      { title: "Nessun IP pubblico", body: "L’overlay cifrato attraversa i NAT e raggiunge il server anche se non è esposto. Si autoconfigura: niente porte aperte." },
+      { title: "Observability", body: "GPU, CPU e OS sotto controllo, consumo token per utente in tempo reale, allarmi sul canale che preferisci." },
+      { title: "Account e API key", body: "Crei, ruoti e revochi utenti e chiavi dal pannello. 2FA e integrazione con provider esterni." },
+      { title: "Scale to zero", body: "Se nessuno usa l’LLM, l’istanza si spegne e riparte alla prima richiesta. Zero ore bruciate." },
+      { title: "Policy sui contenuti", body: "Vedi come sono usate le sessioni e applichi filtri per utente o per chiave." },
+      { title: "Modelli uncensored", body: "Quando i filtri commerciali bloccano il lavoro: hardening, red teaming, bug bounty." },
+      { title: "Multicloud", body: "Stesso modello su più provider, in ridondanza o failover: se uno si ferma, il servizio no." },
+    ],
+  },
+
+  models: {
+    id: "modelli",
+    plate: "Modelli",
+    title: ["Il meglio dell’open-weight,", "per coding e agenti."],
+    lead: "Tre fasce di costo e intelligenza. Scegliamo il modello insieme, in base al lavoro e alla GPU che hai davanti.",
+    th: ["Modello", "Fascia", "Ideale per"],
+    rows: [
+      { name: "Qwen 3.8 27B", tier: "Efficiente", use: "Volumi alti e coding assistito, al costo per risposta più basso.", top: false },
+      { name: "Qwen 3.8 Flash Next", tier: "Veloce", use: "Agenti con molti passi: dove la latenza pesa più della profondità.", top: false },
+      { name: "Deepseek v4 Flash 0731", tier: "Bilanciata", use: "Il compromesso di riferimento fra qualità sul codice e throughput.", top: false },
+      { name: "Kimi K3", tier: "Frontier", use: "Lavoro agentico più difficile, quando serve il massimo dell’open-weight.", top: true },
+    ],
+    note: "VRAM, finestra di contesto e configurazione vLLM li fissiamo insieme durante l’analisi del server.",
+    china: {
+      title: ["Pesi cinesi,", "server europeo."],
+      p1: "Oggi i migliori open-weight arrivano dalla Cina. Usarli via API significa mandare i dati sui loro server — per molte aziende è inaccettabile.",
+      p2: "Con Ventic scarichi i pesi e li fai girare sulla tua macchina, dove hai deciso tu. Il modello viene dalla Cina; i tuoi dati non ci vanno mai.",
+      tags: ["UE", "US", "on-prem"],
+    },
+    stable: {
+      label: "Pesi bloccati, risultati stabili",
+      body: "Il modello installato oggi è identico fra sei mesi, byte per byte. Nessun aggiornamento silenzioso: le valutazioni restano valide, i prompt si comportano allo stesso modo.",
+    },
+  },
+
+  pricing: {
+    id: "prezzi",
+    plate: "Prezzi",
+    title: ["Tre numeri.", "Nessuna sorpresa."],
+    lead: "Non fatturiamo a token. Il conto dipende dalle ore in cui il server è acceso e da quante persone ci lavorano — non da quanto scrive il modello.",
+    link: "Confronto e costi per utente",
+    cards: [
+      { tag: "BYOH · consulenza una tantum", price: "Su offerta", unit: "", body: "Analisi, setup dello stack e Ventic Agent sul tuo hardware. Poi nessun costo ricorrente.", warm: false },
+      { tag: "PaaS · Ventic 16", price: "1 €", unit: "/ h + IVA", body: "Qwen 3.8 27B. 16 utenti attivi, fino a 100 in organico. 160 €/mese su orario d’ufficio.", warm: true },
+      { tag: "PaaS · Ventic 64", price: "6 €", unit: "/ h + IVA", body: "Deepseek v4 Flash 0731. 64 utenti attivi, fino a 500 in organico. 960 €/mese su orario d’ufficio.", warm: true },
+    ],
+    foot: "Prezzi di lancio, IVA esclusa · orario d’ufficio = 8 h × 20 gg = 160 h/mese · hardware, setup e assistenza inclusi",
+  },
+
+  cta: {
+    plate: "Primo passo",
+    title: ["Un’ora per sapere", "se il tuo server è pronto."],
+    body: "Guardiamo il tuo hardware e ti diciamo quale modello ci gira davvero e a che velocità. Se non basta, te lo diciamo prima — non dopo.",
+    btn: "Prenota una call tecnica",
+    mail: "Scrivici: info@ventic.it",
+  },
+
+  footer: {
+    legal: "Netter srl · P.IVA IT03569900545 · Via Indipendenza, 06081 Assisi (PG), Italy",
+    region: "Dati in UE o US, a tua scelta",
+    mail: "info@ventic.it",
+    links: [
+      { label: "Pannello", href: "/admin-panel" },
+      { label: "Prezzi", href: "/pricing" },
+      { label: "Privacy", href: "#" },
+      { label: "Termini", href: "#" },
+    ],
+  },
+  pricingPage: {
+    plate: "Prezzi e confronto",
+    title: ["Quanto costa,", "e rispetto a cosa."],
+    lead: "Ventic non fattura a token. Paghi le ore di consulenza, oppure una tariffa oraria fissa per pacchetto. Quanto lavora il modello non cambia il conto.",
+    byoh: {
+      head: "BYOH · il server è tuo",
+      price: "Su offerta",
+      unit: "",
+      desc: "Consulenza specialistica, fatturata a ore effettive.",
+      ticks: [
+        "Analisi server e compatibilità — max 1 h",
+        "Setup stack di inferenza ottimizzato su modello e hardware",
+        "Ventic Agent per accesso remoto cifrato",
+      ],
+      note: "Dopo il setup il server resta tuo. Nessun ricorrente Ventic. Assistenza successiva a ore, quando serve.",
+    },
+    paas: {
+      head: "PaaS · tutto incluso",
+      price: "1 €",
+      unit: "/ ora + IVA · a partire da",
+      desc: "Hardware, provisioning e assistenza in un’unica tariffa oraria. Scegli il pacchetto in base a quante persone ci lavorano.",
+      ticks: [
+        "Scelta server sui tuoi criteri, acquisto con bonifico SEPA immediato",
+        "Provisioning, rete overlay, pannello e observability inclusi",
+        "Scale to zero: se nessuno lo usa, si spegne e smette di costare",
+        "Multicloud per ridondanza o failover, quando il servizio è critico",
+      ],
+      note: "Due pacchetti disponibili oggi, qui sotto. Prezzi di lancio bloccati per la durata del contratto.",
+    },
+    packages: {
+      plate: "Pacchetti PaaS",
+      title: "Due tagli, tariffa oraria fissa",
+      meta: "prezzi di lancio · IVA esclusa",
+      labels: {
+        model: "Modello",
+        unit: "/ h + IVA",
+        active: "utenti attivi insieme",
+        seats: "utenti in organico (uso intermedio)",
+        cost: "Costo",
+        h1: "8 h × 20 gg",
+        h2: "24 / 7",
+        month: "al mese",
+        perActive: "per utente attivo",
+        perSeat: "per utente in organico",
+      },
+      items: [
+        {
+          name: "Ventic 16", model: "Qwen 3.8 27B", price: "1 €", active: "16", seats: "100",
+          month: ["160 €", "720 €"], perActive: ["10,00 €", "45,00 €"], perSeat: ["1,60 €", "7,20 €"],
+        },
+        {
+          name: "Ventic 64", model: "Deepseek v4 Flash 0731", price: "6 €", active: "64", seats: "500",
+          month: ["960 €", "4.320 €"], perActive: ["15,00 €", "67,50 €"], perSeat: ["1,92 €", "8,64 €"],
+        },
+      ],
+      foot1: "Orario d’ufficio = 8 h × 20 giorni = 160 h/mese · continuo = 24 h × 30 giorni = 720 h/mese.",
+      foot2: "Hardware, provisioning, rete overlay, pannello, observability e assistenza inclusi nella tariffa.",
+    },
+    matrix: {
+      title: "Ventic contro le alternative",
+      meta: "stesso lavoro, quattro modi di pagarlo",
+      cols: ["Criterio", "Subscription frontier", "Pagamento a token", "Ventic BYOH", "Ventic PaaS"],
+      rows: [
+        { label: "Costo prevedibile a fine mese", cells: [
+          { mark: "yes", text: "Canone fisso" }, { mark: "no", text: "Dipende dal consumo" },
+          { mark: "yes", text: "Zero ricorrente" }, { mark: "yes", text: "Ore × tariffa" }] },
+        { label: "Tetto di token o rate limit", cells: [
+          { mark: "no", text: "Finestra stretta, poi ti fermi" }, { mark: "dash", text: "Nessun tetto, ma paghi tutto" },
+          { mark: "yes", text: "Solo il limite della GPU" }, { mark: "yes", text: "Solo il limite della GPU" }] },
+        { label: "Continuità durante un outage", cells: [
+          { mark: "no", text: "Ti fermi con loro" }, { mark: "no", text: "Ti fermi con loro" },
+          { mark: "yes", text: "Dipende solo dal tuo server" }, { mark: "yes", text: "Si rischedula da solo, anche su altro provider" }] },
+        { label: "Ridondanza multicloud", cells: [
+          { mark: "no", text: "Non prevista" }, { mark: "no", text: "Non prevista" },
+          { mark: "dash", text: "Se hai più di un server" }, { mark: "yes", text: "Sì, ridondanza o failover" }] },
+        { label: "Stabilità del modello nel tempo", cells: [
+          { mark: "no", text: "Cambia senza preavviso" }, { mark: "dash", text: "Dipende dal provider" },
+          { mark: "yes", text: "Pesi fissi, aggiorni quando vuoi" }, { mark: "yes", text: "Pesi fissi, aggiorni quando vuoi" }] },
+        { label: "Dove risiedono i dati", cells: [
+          { mark: "no", text: "Sui server del provider" }, { mark: "no", text: "Server del provider, Cina inclusa" },
+          { mark: "yes", text: "Sulla tua macchina" }, { mark: "yes", text: "Regione scelta da te: UE o US" }] },
+        { label: "Accesso alla macchina", cells: [
+          { mark: "no", text: "Nessuno" }, { mark: "no", text: "Nessuno" },
+          { mark: "yes", text: "Console, SSH, come preferisci" }, { mark: "yes", text: "Console, SSH, come preferisci" }] },
+        { label: "Modelli uncensored per security research", cells: [
+          { mark: "no", text: "No" }, { mark: "no", text: "No" },
+          { mark: "yes", text: "Sì, sul tuo hardware" }, { mark: "yes", text: "Sì, sul server dedicato" }] },
+        { label: "Hardware", cells: [
+          { mark: "dash", text: "Non serve" }, { mark: "dash", text: "Non serve" },
+          { mark: "dash", text: "Tuo, già in casa o da comprare" }, { mark: "dash", text: "Dal nostro catalogo, fatturato da noi" }] },
+        { label: "Quanto paghi a Ventic", cells: [
+          { mark: "dash", text: "—" }, { mark: "dash", text: "—" },
+          { mark: "yes", text: "Su offerta" }, { mark: "yes", text: "da 1 €/h + IVA, tutto incluso" }] },
+      ] as { label: string; cells: Cell[] }[],
+    },
+    sizing: {
+      plate: "Come si dimensiona",
+      title: ["Non un contatore.", "Un banco di lavoro."],
+      body: "Il pacchetto si sceglie sulle persone che lavorano insieme nello stesso momento, non sui token. Quando servono più posti aggiungi un nodo: un numero in più sul contratto, non una sorpresa in fattura.",
+      items: [
+        { label: "Istanza", body: "Dedicata al tuo tenant. Su spot la tariffa scende ancora e la revoca la gestisce l’agent senza che tu te ne accorga." },
+        { label: "Ridondanza", body: "Nodo singolo o stesso modello su più cloud: ridondanza attiva per reggere il carico, o failover per riprendere dove il provider si è fermato." },
+        { label: "SLA", body: "Dipende da servizio e ridondanza scelta: lo fissiamo insieme prima della firma." },
+        { label: "Inattività", body: "Le ore in cui nessuno usa l’LLM non le paghi: la macchina si spegne e riparte alla prima richiesta." },
+      ],
+    },
+    notes: {
+      plate: "Da tenere presente",
+      items: [
+        "Pacchetti su istanza dedicata. Su spot la tariffa scende ancora, con revoca gestita da Ventic.",
+        "In multicloud lo stesso modello resta raggiungibile su un secondo provider (ridondanza attiva o failover).",
+        "Prezzi al netto di IVA. SLA in base a servizio e ridondanza scelti.",
+      ],
+      ctaTitle: "Partiamo dall’analisi.",
+      ctaBody: "Un’ora per capire cosa gira davvero sul tuo hardware, e a che velocità.",
+      ctaBtn: "Prenota una call tecnica",
+    },
+    foot: {
+      left: "Ventic — Netter srl · P.IVA IT03569900545 · Via Indipendenza, 06081 Assisi (PG) · info@ventic.it",
+      right: "Prezzi di lancio · valori in euro, IVA esclusa",
+    },
+  },
+
+  adminPanelPage: {
+    plate: "Guida al pannello",
+    title: ["Il pannello di controllo,", "spiegato riga per riga."],
+    lead: "Tutto ciò che il tuo team gestisce da qui: chi entra, chi parla con quale modello, come scala l’inventario — e come lo rivendi con il tuo brand se fai da provider.",
+    sections: [
+      {
+        id: "utenti",
+        icon: "users",
+        plate: "Utenti e accessi",
+        title: "Chi entra, e con quale chiave",
+        lead: "L’anagrafica di chi può usare i tuoi modelli, organizzata come è fatta la tua azienda — o quella dei tuoi clienti.",
+        points: [
+          { title: "Utenti", body: "Stato attivo, scadenza e revoca immediata — uno per uno o in blocco." },
+          { title: "Gruppi", body: "Team o funzione: RBAC e quote si applicano al gruppo, non persona per persona." },
+          { title: "Domini", body: "Accesso legato al dominio email: chi arriva da @tuaazienda.com entra con le regole già pronte." },
+          { title: "Tenant", body: "Separazione completa fra organizzazioni sullo stesso pannello: dati, quote e modelli non si mescolano." },
+          { title: "API token", body: "Ogni chiave ha proprietario, scope e scadenza. Si crea, ruota e revoca da qui, senza toccare codice." },
+          { title: "OAuth e SSO", body: "Dal tuo provider — Google Workspace, Entra ID, Okta o OIDC qualsiasi — con 2FA applicabile in policy." },
+        ],
+      },
+      {
+        id: "ruoli",
+        icon: "shield",
+        plate: "Ruoli e permessi",
+        title: "Chi può fare cosa, endpoint per endpoint",
+        lead: "Non solo “chi entra”: decidi cosa può toccare, una volta dentro.",
+        points: [
+          { title: "Quattro livelli", body: "Utente, developer, admin e superadmin: ruoli per l’uso dei modelli e per l’amministrazione del pannello." },
+          { title: "Permessi per endpoint", body: "Matrice che dice, endpoint per endpoint, chi può leggere, scrivere o amministrare." },
+          { title: "Regole di binding", body: "Utenti, gruppi, domini e tenant legati ai singoli modelli con allow/deny espliciti." },
+          { title: "Quota ereditata", body: "Ogni regola porta una quota: il limite si applica a chiunque rientri in quel gruppo o tenant." },
+        ],
+      },
+      {
+        id: "modelli",
+        icon: "provisioning",
+        plate: "Gestione modelli",
+        title: "L’inventario che decide cosa gira, e come",
+        lead: "Chat, multimodale ed embedding in un solo posto: dall’installazione alla messa a riposo.",
+        points: [
+          { title: "Catalogo Ventic", body: "Nuovo modello dai template pronti, già ottimizzati per l’hardware disponibile." },
+          { title: "Inventario installato", body: "Elenco modelli attivi con nodo, finestra di contesto, quota e repliche." },
+          { title: "Quote e allow/deny", body: "Limiti per utente/gruppo/tenant e liste esplicite di chi può chiamare un modello." },
+          { title: "Scaling out e in", body: "Repliche aggiunte o tolte a mano o su soglia, per assorbire picchi senza tenere GPU accese a vuoto." },
+          { title: "Auto shutdown e start", body: "Spegnimento quando nessuno lo usa, riavvio automatico alla prima richiesta." },
+          { title: "Restrizioni semantiche", body: "Parole e concetti vietati per modello, per policy di contenuto senza toccare il prompt." },
+          { title: "Sorgenti RAG", body: "Collection e basi di conoscenza collegate al modello direttamente da qui." },
+        ],
+      },
+      {
+        id: "telemetria",
+        icon: "ops",
+        plate: "Telemetria",
+        title: "Tutto il consumo, sotto gli occhi",
+        lead: "Non dashboard decorative: i numeri per capire se stai spendendo bene o stai per saturare.",
+        points: [
+          { title: "Token al minuto", body: "Andamento ultime 24 ore, per modello e in aggregato." },
+          { title: "GPU, VRAM e potenza", body: "Occupazione per nodo: dove spingi e dove hai margine." },
+          { title: "Consumo per utente", body: "Chi usa quanto — per addebitare o individuare abusi." },
+          { title: "Allarmi in tempo reale", body: "Notifica sul canale che preferisci quando una soglia scatta o uno spot viene revocato." },
+        ],
+      },
+      {
+        id: "wiring",
+        icon: "overlay",
+        plate: "Wiring esterni",
+        title: "I componenti opzionali, collegati da qui",
+        lead: "RAG e harness agentici non sono a parte: si agganciano al pannello come il resto.",
+        points: [
+          { title: "OpenRAG e Qdrant", body: "Collection sorgenti e modello di embedding che le indicizza, configurati dal pannello." },
+          { title: "Harness agentici", body: "Agenti e harness legati al modello a cui devono parlare, con le stesse regole RBAC." },
+          { title: "Wiring tool", body: "L’endpoint giusto arriva sui desktop del team — niente URL o chiavi da distribuire a mano." },
+        ],
+      },
+    ],
+    whiteLabel: {
+      icon: "cloud",
+      plate: "White label",
+      title: ["Il tuo brand,", "la nostra piattaforma."],
+      lead: "Separazione per tenant fin dal primo giorno: amministri la tua azienda, oppure rivendi l’accesso ai tuoi clienti come fosse tuo.",
+      points: [
+        { title: "Multi-tenant nativo", body: "Ogni cliente è un tenant isolato: dati, utenti, modelli e consumi non si vedono fra tenant." },
+        { title: "Rivendita come provider", body: "Offri subscription o pacchetti a consumo usando la capacità che hai già comprato una volta." },
+        { title: "Ruoli per il tuo supporto", body: "Il tuo staff amministra tenant e clienti con ruoli admin, senza toccare il superadmin di piattaforma." },
+        { title: "Fatturazione per tenant", body: "Consumo e quote tracciati per tenant: la base per fatturare ogni cliente è già pronta." },
+      ],
+      note: "Non serve un’infra separata per cliente: un pool di GPU, tanti tenant quanto servono.",
+    },
+  },
+};
+
+const en: typeof it = {
+  seo: {
+    home: {
+      title: "Ventic — private LLMs on dedicated GPUs",
+      desc: "Your private LLM endpoint, OpenAI- and Anthropic-compatible. Runs on your GPUs — data in the EU or US — with open-weight models, tuned vLLM and support included.",
+    },
+    pricing: {
+      title: "Pricing and comparison — Ventic",
+      desc: "BYOH on request, PaaS from €1/h all-in. Per-user costs vs frontier subscriptions and pay-per-token.",
+    },
+    adminPanel: {
+      title: "Ventic admin panel — users, roles, models, white label",
+      desc: "The Ventic panel: users and access, endpoint RBAC, model management and scaling, RAG and harness wiring, multi-tenant white label.",
+    },
+  },
+
+  nav: {
+    links: [
+      { label: "Why Ventic", href: "/en/#why" },
+      { label: "How it works", href: "/en/#how-it-works" },
+      { label: "Platform", href: "/en/#stack" },
+      { label: "Pricing", href: "/en/pricing" },
+      { label: "Panel", href: "/en/admin-panel" },
+    ],
+    cta: "Book a call",
+    skip: "Skip to content",
+    langLabel: "Language",
+  },
+
+  hero: {
+    plate: "Private LLMs · Dedicated GPUs · Data in EU / US",
+    title: ["Your models.", "On your GPUs.", "Inside your network."],
+    lead: "We turn a GPU server — yours or rented through us — into a private endpoint compatible with the OpenAI and Anthropic APIs. Your team uses it like the public APIs, but data never leaves your infrastructure.",
+    sub: "State-of-the-art open-weight models, vLLM already tuned to that hardware, support included. You pay for machine hours, not tokens.",
+    cta1: "Book a technical call",
+    cta2: "See how it works",
+    micro: "Live in a day · From €1/h all-in · Never per-token",
+    trust: ["Data in EU or US, your choice", "No public IP", "OpenAI & Anthropic compatible"],
+  },
+
+  panel: {
+    title: "Ventic Agent",
+    status: "ONLINE",
+    node: "node-01 · eu-central · spot · 2× GPU",
+    gauges: [
+      { label: "GPU 0", value: "94%", pct: 94, warm: true },
+      { label: "GPU 1", value: "91%", pct: 91, warm: true },
+      { label: "VRAM", value: "71G", pct: 89, warm: false },
+    ],
+    stats: [
+      { label: "Prefill", value: "12.4k", unit: "tok/s" },
+      { label: "Decode", value: "1.86k", unit: "tok/s" },
+      { label: "Sessions", value: "37", unit: "0 queued" },
+    ],
+    chips: ["qwen3.8-27b", "vLLM · TP 2", "embed · bge-m3"],
+    chipLive: "encrypted overlay up",
+    sample: "sample data · live preview",
+  },
+
+  heroShots: {
+    label: "Admin panel",
+    host: "admin.ventic.local",
+    note: "Real panel — sample data",
+  },
+
+  problem: {
+    id: "why",
+    plate: "Why Ventic",
+    title: ["Public APIs", "are not infrastructure."],
+    lead: "Great for trying things. Risky when you build a product on them — or leave agents working all night.",
+    cards: [
+      { tag: "01 — Subscription", title: "Narrow windows", body: "Quota spent, work stopped. For a person it’s a wait; for a night agent it’s a failure you discover in the morning." },
+      { tag: "02 — Subscription", title: "Upstream outages", body: "When the provider goes down, your product goes with it. No failover helps if the model only lives there." },
+      { tag: "03 — Subscription", title: "Moving targets", body: "The same prompts give different results over time. Silent updates, little transparency, no reproducibility." },
+      { tag: "04 — Per token", title: "Price per token", body: "On US frontier models the cost per token is high — and grows exactly as your product succeeds." },
+      { tag: "05 — Per token", title: "Compliance", body: "Cheap alternatives run on Chinese servers. If your data must stay in the EU, that’s a dead end." },
+      { tag: "06 — Per token", title: "Open-ended budget", body: "LLM usage is unpredictable by nature. Inside a company it becomes a line no one can close at budget time." },
+    ],
+  },
+
+  modes: {
+    id: "engagement-models",
+    plate: "Two ways to start",
+    title: ["You bring the server,", "or we source it."],
+    lead: "Either way you get the same: a private OpenAI- and Anthropic-compatible endpoint on a machine you can log into anytime.",
+    byoh: {
+      tag: "BYOH",
+      title: "You bring the server",
+      desc: "You already have GPUs or prefer to buy them. We install the stack: compatibility check, vLLM tuned to your GPU, Ventic Agent, encrypted overlay, panel and observability.",
+      priceLabel: "One-off consulting",
+      price: "On request",
+      unit: "",
+      ticks: [
+        "Server and compatibility check — max 1 hour",
+        "Full inference stack install",
+        "Ventic Agent for encrypted remote access",
+      ],
+      note: "Once installed the server is yours. No recurring fee to Ventic.",
+    },
+    paas: {
+      tag: "PaaS",
+      title: "We provide it",
+      desc: "We find the right server at the right price in our catalogue, put it into production and invoice it with the service. All-in — hardware included.",
+      priceLabel: "All-in, by the hour",
+      price: "from €1",
+      unit: "/ hour + VAT",
+      ticks: [
+        "Sourced to your criteria: spot or dedicated, EU or US, datacentre or not",
+        "Bought with an instant SEPA transfer",
+        "Auto-shutdown when nobody needs it",
+        "Multicloud for redundancy or failover when critical",
+      ],
+      note: "You pay only for hours the server is on. Never per token.",
+    },
+  },
+
+  how: {
+    id: "how-it-works",
+    plate: "How it works",
+    title: ["One agent on the server.", "It does the rest."],
+    lead: "Ventic Agent runs on your server. It keeps the model up, exposes it securely and shares it fairly between users — without anyone touching drivers, kernels or vLLM flags.",
+    steps: [
+      { title: "We find the server", body: "We source the right machine at the right price on your criteria. Bought with an instant SEPA transfer.", tag: "PaaS only" },
+      { title: "We boot it ready", body: "vLLM configured for that model on that hardware — LLM and embedding together. Automated: on hourly rental, every minute saved is money.", tag: "in minutes" },
+      { title: "We reach it with no open ports", body: "Private encrypted overlay that self-configures and traverses NAT. No public IP, no hand-rolled VPN, no ports open to the world.", tag: "zero exposure" },
+      { title: "We keep it up", body: "Fair scheduling, auto-recovery after spot reclaim, shutdown in quiet hours, metrics and alerts. With our support behind it.", tag: "continuous" },
+    ],
+  },
+
+  stackDiagram: {
+    label: "Where each piece runs",
+    clients: { label: "Workstations", items: ["Coding agents", "Internal apps & services", "OpenAI / Anthropic clients"] },
+    infra: { label: "Your Docker infra", items: ["LLM proxy", "Admin panel", "Observability (LGTM)"] },
+    nodesLabel: "GPU nodes",
+    nodes: [
+      { name: "gpu-node-01", meta: "2×H100 80GB", filled: 2 },
+      { name: "gpu-node-02", meta: "2×MI300X", filled: 1 },
+    ],
+    autoNode: { name: "gpu-node-03", meta: "started on demand", tag: "auto" },
+    flowA: "OpenAI / Anthropic API",
+    flowB: "Encrypted overlay · NAT traversal",
+    replicaLabel: "replicas",
+    scale: {
+      label: "Autoscaling & scale-to-zero",
+      rules: [
+        "Above 80% load: adds a replica.",
+        "Below 25% for 10 minutes: removes one.",
+        "No requests for 15 minutes: powers the node off. Wakes on next call.",
+      ],
+    },
+  },
+
+  infraFlow: {
+    plate: "Request flow",
+    title: "From your app to the model, without leaving your network",
+    lead: "Your app talks to the proxy as if it were OpenAI. The proxy forwards over the encrypted overlay to Ventic Agent on the GPU node. The answer comes back the same way — no public hop.",
+    steps: [
+      { k: "01", label: "Your app", desc: "OpenAI / Anthropic SDK unchanged. Only the endpoint URL changes." },
+      { k: "02", label: "LLM proxy", desc: "Single endpoint. Authenticates, enforces RBAC and quotas, then forwards." },
+      { k: "03", label: "Encrypted overlay", desc: "mTLS channel that traverses NAT. Nodes expose no ports." },
+      { k: "04", label: "Ventic Agent", desc: "Receives, queues fairly, feeds vLLM." },
+      { k: "05", label: "vLLM", desc: "Inference tuned for that model on that GPU. Replies to the proxy, proxy to you." },
+    ],
+    note: "No public IP. No manual VPN. The relay may be public; your nodes stay closed.",
+  },
+
+  lifecycle: {
+    plate: "Lifecycle",
+    title: "Scales with load. Shuts down when idle.",
+    rules: [
+      { label: "> 80% load", body: "Adds a GPU replica to absorb the spike." },
+      { label: "< 25% for 10 min", body: "Removes a replica. You pay only for what you use." },
+      { label: "0 requests for 15 min", body: "Powers the node off. Wakes on the next call." },
+      { label: "Spot reclaimed", body: "Agent reschedules to another provider with no hands on keyboard." },
+    ],
+    foot: "All automatic. No night ops.",
+  },
+
+  stack: {
+    id: "stack",
+    plate: "Platform",
+    title: ["A stack you install,", "not a service you ship data to."],
+    lead: "Panel, proxy and observability run on your Docker infra — data stays with you. Only our agent runs on the GPU nodes. Between them, an encrypted overlay that self-configures and traverses NAT with no public IPs or VPN to maintain.",
+    legend: { own: "Always included", opt: "Optional — enable only if needed" },
+    planes: [
+      {
+        idx: "01",
+        title: "Your workstations",
+        where: "On the desktops doing the work",
+        items: [
+          { name: "Coding Agent wiring tool", body: "Configures the coding agent your team already uses. No hand procedure, no endpoint to paste.", opt: false },
+        ],
+      },
+      {
+        idx: "02",
+        title: "Your Docker infrastructure",
+        where: "Wherever you decide — on-prem or cloud",
+        items: [
+          { name: "Admin panel", body: "Users, roles, models, quotas and policy. The panel shown below.", opt: false },
+          { name: "LLM proxy", body: "One endpoint, OpenAI- and Anthropic-compatible. Existing clients stay as they are.", opt: false },
+          { name: "LGTM stack", body: "Logs, metrics and traces with Grafana in front. Usage data never leaves you.", opt: false },
+          { name: "OpenRAG", body: "Retrieval pipelines over your own documents.", opt: true },
+          { name: "Qdrant", body: "Vector database backing the RAG collections.", opt: true },
+          { name: "Embedding model", body: "Indexing served by the same inference stack.", opt: true },
+          { name: "Deepseek harness", body: "Agentic harness, ready to wire to a model.", opt: true },
+          { name: "Openclaw", body: "Alternative agentic harness, same wiring.", opt: true },
+        ],
+      },
+      {
+        idx: "03",
+        title: "Encrypted overlay network",
+        where: "Relays public, nodes closed",
+        items: [
+          { name: "Relay node", body: "Routes traffic to hosts that expose nothing to the internet. Relay may be public; your nodes stay closed behind NAT.", opt: false },
+        ],
+      },
+      {
+        idx: "04",
+        title: "The inference nodes",
+        where: "On the GPUs — yours or from the catalogue",
+        items: [
+          { name: "Ventic host agent", body: "Keeps the LLM up, exposes it over the overlay and shares it fairly. The only piece on the node.", opt: false },
+          { name: "vLLM runtime", body: "Tuned for that model on that GPU, serving LLM and embedding together.", opt: false },
+        ],
+      },
+    ],
+    links: [
+      "OpenAI- and Anthropic-compatible endpoint",
+      "Self-configuring encrypted overlay — no public IPs",
+      "After a spot reclaim the agent reconnects itself",
+    ],
+    note: "Optional parts are switched on only if you need them: the minimum stack is agent, overlay and proxy.",
+  },
+
+  adminPanel: {
+    id: "panel",
+    plate: "Admin panel",
+    title: ["Who uses what,", "decided by you."],
+    lead: "Runs next to the proxy on your infra. From there you install models, issue and revoke keys, set who may talk to which model, and see what each is consuming — live.",
+    chrome: "admin.ventic.local",
+    shots: [
+      {
+        id: "users", tab: "Users and keys", src: "/admin/users.webp", w: 1440, h: 1450,
+        title: "Users and access",
+        body: "Active users, expiries and revocations by group, domain and tenant. Every API key has owner, scope and expiry — revoked here. Auth from your provider (Google Workspace, Entra ID, Okta, any OIDC) with 2FA.",
+        alt: "Users and access: users with tenant, role, expiry and token usage, auth provider panel and API token table.",
+      },
+      {
+        id: "rbac", tab: "Roles", src: "/admin/rbac.webp", w: 1440, h: 1350,
+        title: "Roles and RBAC",
+        body: "Four tiers — user, developer, admin, superadmin — and a matrix for who may do what endpoint by endpoint. Below, rules binding users, groups, domains and tenants to models, each with its quota.",
+        alt: "Roles and RBAC: endpoint permission matrix across four roles and rules binding subjects to models.",
+      },
+      {
+        id: "telemetry", tab: "Telemetry", src: "/admin/telemetry.webp", w: 1440, h: 1293,
+        title: "Telemetry",
+        body: "Tokens per minute last 24h, GPU/VRAM/power per node, consumption per user. Alerts on the channel you choose when a threshold fires or a spot is reclaimed.",
+        alt: "Telemetry: tokens-per-minute chart, GPU/VRAM gauges per node, per-user consumption and recent alerts.",
+      },
+      {
+        id: "wirings", tab: "Wiring", src: "/admin/wirings.webp", w: 1440, h: 1133,
+        title: "External wirings",
+        body: "Optional components connect here: OpenRAG and Qdrant with collections and indexing model, agentic harnesses with their bound model, and the wiring tool that pushes the right endpoint to team desktops.",
+        alt: "External wirings: RAG connectors, platform health, agentic harnesses and coding agent config.",
+      },
+    ],
+  },
+
+  selfServicePanel: {
+    id: "self-service",
+    plate: "Self-service",
+    title: ["Chat, keys,", "wiring in one paste."],
+    lead: "No tickets: end users chat with models multimodally, rotate their own API keys and paste wiring for Cursor, Cline, Continue or Muse — all over the encrypted overlay, under the same quotas as admin.",
+    chrome: "llm.ventic.local",
+    shots: [
+      {
+        id: "chat", tab: "Chat harness", src: "/selfservice/chat.webp", w: 1440, h: 900,
+        title: "Multimodal chat harness",
+        body: "ChatGPT-style with streaming, image/file attachments, model picker and tool cards that open keys, wiring or quotas without leaving the conversation. Vision via Qwen3-VL 32B.",
+        alt: "Self-service chat: multimodal harness with model picker, suggestions and conversation panel on Ventic dark background.",
+      },
+      {
+        id: "keys", tab: "API keys", src: "/selfservice/keys.webp", w: 1440, h: 900,
+        title: "Your API keys",
+        body: "Personal tenant-scoped keys, created and rotated in one click with sk-…xxxx preview. Same key for OpenAI and Anthropic, instant revoke and 5-minute zero-downtime rotation.",
+        alt: "Self-service API keys: list of personal keys with scope, expiry and rotate/revoke/delete buttons.",
+      },
+      {
+        id: "wiring", tab: "Wiring", src: "/selfservice/wiring.webp", w: 1440, h: 1951,
+        title: "Coding agent wiring",
+        body: "One paste for Cursor, Continue, Cline, Copilot, Codex, Muse and Windsurf: injects OPENAI_BASE_URL / ANTHROPIC_BASE_URL and your key on the 10.88.0.0/16 overlay, QUIC + mTLS, no public IP.",
+        alt: "Self-service wiring: tool, model and key selectors, copyable snippet and preset grid for IDEs.",
+      },
+      {
+        id: "playground", tab: "Playground", src: "/selfservice/playground.webp", w: 1440, h: 1309,
+        title: "Model playground",
+        body: "Try any model on the fly with system prompt, temperature and files: same proxy and same quotas as chat, mock streaming response ready for production.",
+        alt: "Playground: request form with model, system prompt and attachments, and streaming response panel.",
+      },
+      {
+        id: "usage", tab: "Usage", src: "/selfservice/usage.webp", w: 1440, h: 1441,
+        title: "Quota and usage",
+        body: "Hourly bar chart, per-model quotas and daily cost estimate — all tenant-wide, reset at midnight Europe/Rome.",
+        alt: "Self-service usage: hourly consumption bars, per-model quotas and daily cost estimate.",
+      },
+    ],
+  },
+
+  caps: {
+    id: "what-you-get",
+    plate: "What you get",
+    title: ["Everything you need,", "so you stop thinking about it."],
+    cta: "Book a technical call",
+    items: [
+      { title: "Always up", body: "If the spot is reclaimed, Ventic reschedules and restores on its own — on another provider if needed." },
+      { title: "Multi-user, fair", body: "One machine shared fairly: predictable context windows and exactly scheduled workload." },
+      { title: "No public IP", body: "Encrypted overlay traverses NAT to reach the server even if it’s not exposed. Self-configuring: no fragile config." },
+      { title: "Observability", body: "GPU, CPU and OS in view, per-user token usage live, alerts on any channel you choose." },
+      { title: "Accounts and API keys", body: "Panel to create, rotate and revoke users and keys. 2FA and external auth providers." },
+      { title: "Scale to zero", body: "If nobody uses the LLM the instance powers off and wakes on the next request. No hours burned idle." },
+      { title: "Session policies", body: "See how sessions are used and apply content restrictions per user or key." },
+      { title: "Uncensored models", body: "For when commercial filters block the work: hardening, red teaming, bug bounty." },
+      { title: "Multicloud", body: "Same model across providers, in redundancy or failover: if one stops, the service doesn’t." },
+    ],
+  },
+
+  models: {
+    id: "models",
+    plate: "Models",
+    title: ["The best open weights,", "for coding and agents."],
+    lead: "State of the art across three tiers of cost and intelligence. We choose the model with you, based on the job and the GPU in front of you.",
+    th: ["Model", "Tier", "Best for"],
+    rows: [
+      { name: "Qwen 3.8 27B", tier: "Efficient", use: "High volume and assisted coding, at the lowest cost per answer.", top: false },
+      { name: "Qwen 3.8 Flash Next", tier: "Fast", use: "Agents with many steps: where latency matters more than depth.", top: false },
+      { name: "Deepseek v4 Flash 0731", tier: "Balanced", use: "The reference trade-off between code quality and throughput.", top: false },
+      { name: "Kimi K3", tier: "Frontier", use: "The hardest agentic work, when you need the best open weights.", top: true },
+    ],
+    note: "VRAM, context window and vLLM settings are decided together during server analysis.",
+    china: {
+      title: ["Chinese weights,", "European server."],
+      p1: "Today’s best open weights come from China. Using them via their APIs means sending data to their servers — a non-starter for many companies.",
+      p2: "With Ventic you download the weights and run them on your machine, where you chose to put it. The model comes from China; your data never goes there.",
+      tags: ["EU", "US", "on-prem"],
+    },
+    stable: {
+      label: "Fixed weights, fixed results",
+      body: "The model installed today is the same in six months, byte for byte. No silent updates: evals stay valid, prompts keep behaving the same.",
+    },
+  },
+
+  pricing: {
+    id: "pricing",
+    plate: "Pricing",
+    title: ["Three numbers.", "No surprises."],
+    lead: "We don’t bill per token. The bill depends on hours the server is on and how many people use it — not how much the model writes.",
+    link: "Comparison and per-user cost",
+    cards: [
+      { tag: "BYOH · one-off consulting", price: "On request", unit: "", body: "Analysis, stack setup and Ventic Agent on your hardware. Then no recurring fee.", warm: false },
+      { tag: "PaaS · Ventic 16", price: "€1", unit: "/ h + VAT", body: "Qwen 3.8 27B. 16 active users, up to 100 on roster. €160/month on business hours.", warm: true },
+      { tag: "PaaS · Ventic 64", price: "€6", unit: "/ h + VAT", body: "Deepseek v4 Flash 0731. 64 active users, up to 500 on roster. €960/month on business hours.", warm: true },
+    ],
+    foot: "Launch pricing, VAT excluded · business hours = 8 h × 20 days = 160 h/month · hardware, setup and support included",
+  },
+
+  cta: {
+    plate: "First step",
+    title: ["One hour to know", "if your server is ready."],
+    body: "We look at your hardware and tell you which model actually runs on it, and how fast. If it’s not enough we say so before — not after.",
+    btn: "Book a technical call",
+    mail: "Email us: info@ventic.it",
+  },
+
+  footer: {
+    legal: "Netter srl · VAT IT03569900545 · Via Indipendenza, 06081 Assisi (PG), Italy",
+    region: "Data in the EU or the US, your choice",
+    mail: "info@ventic.it",
+    links: [
+      { label: "Panel", href: "/en/admin-panel" },
+      { label: "Pricing", href: "/en/pricing" },
+      { label: "Privacy", href: "#" },
+      { label: "Terms", href: "#" },
+    ],
+  },
+  pricingPage: {
+    plate: "Pricing and comparison",
+    title: ["What it costs,", "and compared to what."],
+    lead: "Ventic doesn’t bill per token. You pay consulting hours, or a fixed hourly rate per package. How hard the model works doesn’t change the bill.",
+    byoh: {
+      head: "BYOH · the server is yours",
+      price: "On request",
+      unit: "",
+      desc: "Specialist consulting, billed on hours actually worked.",
+      ticks: [
+        "Server and compatibility check — max 1 h",
+        "Inference stack optimized for model and hardware",
+        "Ventic Agent for encrypted remote access",
+      ],
+      note: "After setup the server stays yours. No Ventic recurring fee. Further support hourly, when needed.",
+    },
+    paas: {
+      head: "PaaS · all included",
+      price: "€1",
+      unit: "/ hour + VAT · starting from",
+      desc: "Hardware, provisioning and support in one hourly rate. Choose the package by how many people use it.",
+      ticks: [
+        "Server sourced to your criteria, bought with instant SEPA transfer",
+        "Provisioning, encrypted overlay, panel and observability included",
+        "Scale to zero: if nobody uses it, it powers off and stops costing",
+        "Multicloud for redundancy or failover when critical",
+      ],
+      note: "Two packages available today, below. Launch pricing locked for the contract duration.",
+    },
+    packages: {
+      plate: "PaaS packages",
+      title: "Two sizes, one fixed hourly rate",
+      meta: "launch pricing · VAT excluded",
+      labels: {
+        model: "Model",
+        unit: "/ h + VAT",
+        active: "concurrent active users",
+        seats: "users on roster (intermediate use)",
+        cost: "Cost",
+        h1: "8 h × 20 days",
+        h2: "24 / 7",
+        month: "per month",
+        perActive: "per active user",
+        perSeat: "per user on roster",
+      },
+      items: [
+        {
+          name: "Ventic 16", model: "Qwen 3.8 27B", price: "€1", active: "16", seats: "100",
+          month: ["€160", "€720"], perActive: ["€10.00", "€45.00"], perSeat: ["€1.60", "€7.20"],
+        },
+        {
+          name: "Ventic 64", model: "Deepseek v4 Flash 0731", price: "€6", active: "64", seats: "500",
+          month: ["€960", "€4,320"], perActive: ["€15.00", "€67.50"], perSeat: ["€1.92", "€8.64"],
+        },
+      ],
+      foot1: "Business hours = 8 h × 20 days = 160 h/month · continuous = 24 h × 30 days = 720 h/month.",
+      foot2: "Hardware, provisioning, overlay, panel, observability and support included in the hourly rate.",
+    },
+    matrix: {
+      title: "Ventic vs the alternatives",
+      meta: "same work, four ways to pay",
+      cols: ["Criterion", "Frontier subscription", "Pay per token", "Ventic BYOH", "Ventic PaaS"],
+      rows: [
+        { label: "Predictable cost at month end", cells: [
+          { mark: "yes", text: "Flat fee" }, { mark: "no", text: "Depends on usage" },
+          { mark: "yes", text: "Nothing recurring" }, { mark: "yes", text: "Hours × rate" }] },
+        { label: "Token cap or rate limit", cells: [
+          { mark: "no", text: "Narrow window, then you stop" }, { mark: "dash", text: "No cap, but you pay for all" },
+          { mark: "yes", text: "Only the GPU limit" }, { mark: "yes", text: "Only the GPU limit" }] },
+        { label: "Continuity during an outage", cells: [
+          { mark: "no", text: "You stop when they do" }, { mark: "no", text: "You stop when they do" },
+          { mark: "yes", text: "Depends only on your server" }, { mark: "yes", text: "Reschedules itself, even to another provider" }] },
+        { label: "Multicloud redundancy", cells: [
+          { mark: "no", text: "Not available" }, { mark: "no", text: "Not available" },
+          { mark: "dash", text: "If you own more than one server" }, { mark: "yes", text: "Yes, active or failover" }] },
+        { label: "Model stability over time", cells: [
+          { mark: "no", text: "Changes without notice" }, { mark: "dash", text: "Up to the provider" },
+          { mark: "yes", text: "Fixed weights, you update when you want" }, { mark: "yes", text: "Fixed weights, you update when you want" }] },
+        { label: "Where the data lives", cells: [
+          { mark: "no", text: "On the provider’s servers" }, { mark: "no", text: "Provider servers, China included" },
+          { mark: "yes", text: "On your machine" }, { mark: "yes", text: "Region you choose: EU or US" }] },
+        { label: "Access to the machine", cells: [
+          { mark: "no", text: "None" }, { mark: "no", text: "None" },
+          { mark: "yes", text: "Console, SSH, however you like" }, { mark: "yes", text: "Console, SSH, however you like" }] },
+        { label: "Uncensored models for security research", cells: [
+          { mark: "no", text: "No" }, { mark: "no", text: "No" },
+          { mark: "yes", text: "Yes, on your hardware" }, { mark: "yes", text: "Yes, on the dedicated server" }] },
+        { label: "Hardware", cells: [
+          { mark: "dash", text: "Not needed" }, { mark: "dash", text: "Not needed" },
+          { mark: "dash", text: "Yours, in house or to buy" }, { mark: "dash", text: "From our catalogue, invoiced by us" }] },
+        { label: "What you pay Ventic", cells: [
+          { mark: "dash", text: "—" }, { mark: "dash", text: "—" },
+          { mark: "yes", text: "On request" }, { mark: "yes", text: "from €1/h + VAT, all-in" }] },
+      ] as { label: string; cells: Cell[] }[],
+    },
+    sizing: {
+      plate: "How it is sized",
+      title: ["Not a meter.", "A workbench."],
+      body: "Sized by people working at the same time, not tokens burned. Need more seats? Add a node: one more number on the contract, not a surprise on the invoice.",
+      items: [
+        { label: "Instance", body: "Dedicated to your tenant. On spot the rate drops further and reclaims are handled by the agent." },
+        { label: "Redundancy", body: "Single node or same model across clouds: active to carry load, or failover to resume where the provider stopped." },
+        { label: "SLA", body: "Vary by service and redundancy: agreed together before signing." },
+        { label: "Idle time", body: "Hours nobody uses the LLM cost nothing: the machine powers off and wakes on the next request." },
+      ],
+    },
+    notes: {
+      plate: "Worth knowing",
+      items: [
+        "Packages run on dedicated instances. On spot the rate drops further, reclaims handled by Ventic.",
+        "In multicloud the same model stays reachable on a second provider (active or failover).",
+        "Prices excl. VAT. SLAs depend on service and redundancy.",
+      ],
+      ctaTitle: "Start with the analysis.",
+      ctaBody: "One hour to know what actually runs on your hardware, and how fast.",
+      ctaBtn: "Book a technical call",
+    },
+    foot: {
+      left: "Ventic — Netter srl · VAT IT03569900545 · Via Indipendenza, 06081 Assisi (PG) · info@ventic.it",
+      right: "Launch pricing · values in euro, excl. VAT",
+    },
+  },
+
+  adminPanelPage: {
+    plate: "Panel guide",
+    title: ["The control panel,", "line by line."],
+    lead: "Everything your team manages here: who gets in, who may talk to which model, how inventory scales — and how you resell it under your brand if you’re a provider.",
+    sections: [
+      {
+        id: "users",
+        icon: "users",
+        plate: "Users and access",
+        title: "Who gets in, and with which key",
+        lead: "The roster of who may talk to your models, shaped like your org — or your customers’.",
+        points: [
+          { title: "Users", body: "Active state, access expiry and instant revocation — one by one or in bulk." },
+          { title: "Groups", body: "By team or function: RBAC and quotas apply to the group, not person by person." },
+          { title: "Domains", body: "Tied to the org email domain: anyone from @company.com enters with rules already set." },
+          { title: "Tenants", body: "Full separation between orgs on the same panel: data, quotas and visible models never mix." },
+          { title: "API tokens", body: "Every key has owner, scope and expiry. Create, rotate and revoke here without touching client code." },
+          { title: "OAuth & SSO", body: "From your provider — Google Workspace, Entra ID, Okta or any OIDC — with 2FA enforceable by policy." },
+        ],
+      },
+      {
+        id: "roles",
+        icon: "shield",
+        plate: "Roles & RBAC",
+        title: "Who may do what, endpoint by endpoint",
+        lead: "Access control doesn’t stop at “who gets in”: it decides what they may touch once inside.",
+        points: [
+          { title: "Four tiers", body: "User, developer, admin and superadmin: distinct roles for model use and for panel administration." },
+          { title: "Endpoint permissions", body: "A matrix saying, endpoint by endpoint, which role may read, write or administer that resource." },
+          { title: "Binding rules", body: "Users, groups, domains and tenants bound to individual models with explicit allow or deny." },
+          { title: "Inherited quota", body: "Each rule carries a quota: the limit applies automatically to anyone in that group, domain or tenant." },
+        ],
+      },
+      {
+        id: "models",
+        icon: "provisioning",
+        plate: "Model management",
+        title: "The inventory that decides what runs — and how",
+        lead: "Chat, multimodal and embedding in one place: from install to retirement.",
+        points: [
+          { title: "Ventic catalogue", body: "Deploy a new model from ready templates, already tuned for available hardware." },
+          { title: "Installed inventory", body: "List of active models with node, context window, quota and replica count." },
+          { title: "Quotas & allow/deny", body: "Usage limits per user/group/tenant and explicit lists of who may or may not call a model." },
+          { title: "Scaling out and in", body: "Replicas added or removed by hand or on threshold, to absorb peaks without idling GPUs." },
+          { title: "Auto shutdown & start", body: "Powers down when idle, restarts automatically on the first queued request." },
+          { title: "Semantic restrictions", body: "Banned words and concepts per model, to enforce content policy without touching the system prompt." },
+          { title: "RAG sources", body: "Collections and knowledge bases wired to the model directly from here." },
+        ],
+      },
+      {
+        id: "telemetry",
+        icon: "ops",
+        plate: "Telemetry",
+        title: "All consumption, in view",
+        lead: "Not vanity dashboards: the numbers you need to know if you’re spending well or about to saturate.",
+        points: [
+          { title: "Tokens per minute", body: "Last 24 hours, per model and aggregated." },
+          { title: "GPU, VRAM & power", body: "Per node — where you’re pushing and where you have headroom." },
+          { title: "Per-user consumption", body: "Who uses how much — to bill correctly or spot anomalies." },
+          { title: "Real-time alerts", body: "On the channel you choose when a threshold trips or a spot is reclaimed." },
+        ],
+      },
+      {
+        id: "wiring",
+        icon: "overlay",
+        plate: "External wiring",
+        title: "Optional components, wired from here",
+        lead: "RAG and agentic harnesses aren’t separate — they plug into the panel like everything else.",
+        points: [
+          { title: "OpenRAG & Qdrant", body: "Source collections and the embedding model indexing them, configured from the panel." },
+          { title: "Agentic harnesses", body: "Coding agents and harnesses bound to the model they must talk to, under the same RBAC." },
+          { title: "Wiring tool", body: "The right endpoint lands on team desktops automatically — no URL or key to hand out." },
+        ],
+      },
+    ],
+    whiteLabel: {
+      icon: "cloud",
+      plate: "White label",
+      title: ["Your brand,", "our platform."],
+      lead: "Tenant separation from day one: run your own company, or resell access to your customers as if it were yours.",
+      points: [
+        { title: "Native multi-tenant", body: "Each customer is an isolated tenant: data, users, assigned models and usage never show across tenants." },
+        { title: "Resell as a cloud provider", body: "Offer subscriptions or pay-as-you-go to end customers using capacity you bought once." },
+        { title: "Support roles", body: "Your staff administers customer tenants and users with dedicated admin roles, without touching platform superadmin." },
+        { title: "Per-tenant billing", body: "Usage and quotas tracked per tenant: the dataset to bill each customer correctly is already there." },
+      ],
+      note: "No separate infra per customer: one panel, one GPU pool, as many tenants as needed.",
+    },
+  },
+};
+
+export const content = { it, en } as const;
+
+export function getLangFromUrl(url: URL): Lang {
+  const seg = url.pathname.split("/").filter(Boolean)[0];
+  return seg === "en" ? "en" : "it";
+}
+
+export function alternatePath(pathname: string, target: Lang): string {
+  const isEn = pathname.startsWith("/en");
+  const base = isEn ? pathname.replace(/^\/en/, "") || "/" : pathname;
+  if (target === "en") return base === "/" ? "/en/" : `/en${base}`;
+  return base;
+}
+
+export function alternateLang(lang: Lang): Lang {
+  return lang === "it" ? "en" : "it";
+}

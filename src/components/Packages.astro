@@ -1,0 +1,119 @@
+---
+import { content, type Lang } from "../i18n/content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const p = content[lang].pricingPage.packages;
+const L = p.labels;
+---
+<section class="pkg-sec">
+  <div class="wrap">
+    <div class="head">
+      <div>
+        <span class="plate">{p.plate}</span>
+        <h2 class="h3">{p.title}</h2>
+      </div>
+      <span class="mono meta">{p.meta}</span>
+    </div>
+
+    <div class="pair">
+      {p.items.map((it) => (
+        <article class="panel panel--warm card">
+          <div class="panel-head panel-head--warm">
+            <span class="mono tag">{it.name}</span>
+            <span class="rivet"></span>
+          </div>
+          <div class="body-in">
+            <div class="topline">
+              <div>
+                <span class="mono klabel">{L.model}</span>
+                <span class="mono model">{it.model}</span>
+              </div>
+              <span class="prow">
+                <span class="price pval">{it.price}</span>
+                <span class="mono punit">{L.unit}</span>
+              </span>
+            </div>
+
+            <div class="caps">
+              <div class="sunk cap">
+                <span class="mono capnum num accent">{it.active}</span>
+                <span class="capdesc">{L.active}</span>
+              </div>
+              <div class="sunk cap">
+                <span class="mono capnum num">{it.seats}</span>
+                <span class="capdesc">{L.seats}</span>
+              </div>
+            </div>
+
+            <div class="tablewrap">
+              <table class="tbl">
+                <thead>
+                  <tr>
+                    <th class="mono th">{L.cost}</th>
+                    <th class="mono th right">{L.h1}</th>
+                    <th class="mono th right">{L.h2}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="rl">{L.month}</td>
+                    <td class="mono val num strong">{it.month[0]}</td>
+                    <td class="mono val num strong">{it.month[1]}</td>
+                  </tr>
+                  <tr>
+                    <td class="rl">{L.perActive}</td>
+                    <td class="mono val num">{it.perActive[0]}</td>
+                    <td class="mono val num">{it.perActive[1]}</td>
+                  </tr>
+                  <tr>
+                    <td class="rl">{L.perSeat}</td>
+                    <td class="mono val num accent">{it.perSeat[0]}</td>
+                    <td class="mono val num accent">{it.perSeat[1]}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <p class="mono foot">{p.foot1}<br />{p.foot2}</p>
+  </div>
+</section>
+
+<style>
+  .pkg-sec { padding-bottom: 40px; }
+  .head { margin-bottom: 20px; }
+  .plate { margin-bottom: 16px; }
+  .meta { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--fg-ghost); }
+  .pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .card { display: flex; flex-direction: column; padding: 0; overflow: hidden; }
+  .tag { font-size: 11px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); }
+  .body-in { display: flex; flex-direction: column; gap: 16px; padding: 24px 22px; }
+
+  .topline { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+  .klabel { display: block; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--fg-faint); }
+  .model { display: block; margin-top: 8px; font-size: 17px; font-weight: 500; color: var(--fg-strong); }
+  .prow { display: flex; align-items: baseline; gap: 7px; }
+  .pval { font-size: clamp(32px, 3.4vw, 42px); }
+  .punit { font-size: 13px; color: var(--fg-mute); }
+
+  .caps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .cap { display: flex; flex-direction: column; gap: 6px; padding: 16px 18px; }
+  .capnum { font-size: 26px; font-weight: 500; color: #d4d2cc; }
+  .accent { color: var(--accent); }
+  .capdesc { font-size: 13px; line-height: 1.4; color: var(--fg-mute); }
+
+  .tablewrap { border: 1px solid var(--line-soft); border-radius: 2px; overflow-x: auto; }
+  .tbl { width: 100%; border-collapse: collapse; text-align: left; }
+  .th { padding: 12px 16px; background: var(--raise); font-size: 10px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--fg-faint); white-space: nowrap; }
+  .right { text-align: right; }
+  .tbl td { border-top: 1px solid var(--line-soft); }
+  .rl { padding: 14px 16px; background: var(--cell); font-size: 14px; color: var(--fg-dim); }
+  .val { padding: 14px; background: var(--panel-b); text-align: right; font-size: 15px; color: #c5c3bd; white-space: nowrap; }
+  .strong { font-weight: 500; color: var(--fg-strong); }
+
+  .foot { margin-top: 18px; font-size: 12px; line-height: 1.7; letter-spacing: .03em; color: var(--fg-faint); }
+  @media (max-width: 900px) { .pair { grid-template-columns: 1fr; } }
+</style>

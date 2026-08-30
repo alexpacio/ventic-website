@@ -1,0 +1,55 @@
+---
+import Icon from "./Icon.astro";
+import InfraFlow from "./InfraFlow.astro";
+import { content, type Lang } from "../i18n/content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const c = content[lang].how;
+const icons = ["discovery", "provisioning", "overlay", "ops"];
+---
+<section id={c.id} class="sec sec--tint">
+  <div class="wrap">
+    <div class="grid top">
+      <div class="tcol">
+        <span class="plate">{c.plate}</span>
+        <h2 class="h2">{c.title[0]}<br />{c.title[1]}</h2>
+      </div>
+      <p class="body lcol">{c.lead}</p>
+    </div>
+
+    <ol class="strip">
+      {c.steps.map((s, i) => (
+        <li class="step">
+          <div class="srow">
+            <Icon name={icons[i]} size={26} />
+            <span class="idx">{String(i + 1).padStart(2, "0")}</span>
+          </div>
+          <h3 class="cell-t">{s.title}</h3>
+          <p class="cell-b">{s.body}</p>
+          <span class="plate plate--sm tag">{s.tag}</span>
+        </li>
+      ))}
+    </ol>
+
+    <InfraFlow lang={lang} />
+  </div>
+</section>
+
+<style>
+  .top { align-items: end; margin-bottom: 32px; }
+  .tcol, .lcol { grid-column: span 6; }
+  .plate { margin-bottom: 16px; }
+  .strip {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px;
+    background: var(--line-soft); border: 1px solid var(--line-soft); border-radius: 3px; overflow: hidden;
+  }
+  .step { display: flex; flex-direction: column; gap: 12px; padding: 22px 20px; background: var(--panel-b); }
+  .srow { display: flex; align-items: center; justify-content: space-between; }
+  .tag { align-self: flex-start; margin-top: auto; }
+  @media (max-width: 1080px) { .strip { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 860px) {
+    .tcol, .lcol { grid-column: span 6; }
+    .strip { grid-template-columns: 1fr; }
+  }
+</style>

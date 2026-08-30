@@ -1,0 +1,26 @@
+---
+import { content, type Lang } from "../i18n/content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const c = content[lang].adminPanelPage;
+---
+<section class="ahero">
+  <div class="wrap inner">
+    <div>
+      <span class="plate">{c.plate}</span>
+      <h1 class="h2-big">{c.title[0]}<br />{c.title[1]}</h1>
+    </div>
+    <p class="body measure">{c.lead}</p>
+  </div>
+</section>
+
+<style>
+  .ahero { padding: 48px 0 32px; }
+  .inner { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; }
+  .plate { margin-bottom: 16px; }
+  .measure { max-width: 34ch; }
+  @media (max-width: 900px) {
+    .ahero { padding: 32px 0 24px; }
+    .inner { flex-direction: column; align-items: flex-start; gap: 20px; }
+  }
+</style>

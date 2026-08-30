@@ -1,0 +1,67 @@
+---
+import PlatformShots from "./PlatformShots.astro";
+import { content, type Lang } from "../i18n/content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const h = content[lang].hero;
+const how = lang === "it" ? "/#come-funziona" : "/en/#how-it-works";
+---
+<section class="hero rules">
+  <span class="grain" aria-hidden="true"></span>
+  <div class="wrap grid inner">
+    <div class="copy">
+      <span class="plate plate--accent">
+        <span class="dot" style="width:6px;height:6px;box-shadow:none"></span>
+        {h.plate}
+      </span>
+      <h1 class="h1">
+        {h.title[0]}<br />{h.title[1]}<br /><span class="hl">{h.title[2]}</span>
+      </h1>
+      <p class="lead measure">{h.lead}</p>
+      <p class="sub measure">{h.sub}</p>
+      <div class="actions">
+        <a class="btn btn--a" href="#contatto">{h.cta1}</a>
+        <a class="btn btn--b" href={how}>{h.cta2}</a>
+      </div>
+      <div class="trustbar">
+        {h.trust.map((t) => <span class="mono trustpill"><span class="dot dot--live" style="width:6px;height:6px"></span>{t}</span>)}
+      </div>
+      <p class="mono micro">{h.micro}</p>
+    </div>
+    <div class="slidecol"><PlatformShots lang={lang} /></div>
+  </div>
+</section>
+
+<style>
+  .hero { position: relative; overflow: hidden; padding: 48px 0 44px; }
+  .inner { position: relative; align-items: start; }
+  .copy { grid-column: span 6; }
+  .slidecol { grid-column: span 6; min-width: 0; }
+
+  .plate { margin-bottom: 16px; }
+  .h1 { margin: 0; }
+  .hl { color: var(--accent); }
+  .measure { max-width: 48ch; }
+  .lead { margin-top: 18px; font-size: clamp(18px, 1.5vw, 20px); line-height: 1.6; }
+  .sub { margin-top: 10px; font-size: 15px; line-height: 1.6; color: var(--fg-mute); max-width: 48ch; }
+  .actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 24px; }
+  .trustbar { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .trustpill {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--fg-mute); background: var(--sunk);
+    border: 1px solid var(--line-soft); border-radius: 999px;
+    padding: 7px 12px;
+  }
+  .micro { margin-top: 14px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-faint); }
+
+  @media (max-width: 1080px) {
+    .copy { grid-column: span 12; }
+    .slidecol { grid-column: span 12; }
+  }
+  @media (max-width: 860px) {
+    .hero { padding: 32px 0 36px; }
+    .copy, .slidecol { grid-column: span 6; }
+    .actions .btn { flex-grow: 1; }
+  }
+</style>

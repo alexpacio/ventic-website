@@ -1,0 +1,47 @@
+---
+import Icon from "./Icon.astro";
+import { content, type Lang } from "../i18n/content";
+interface Props { lang: Lang; index: number; tint?: boolean }
+const { lang, index, tint = false } = Astro.props;
+const s = content[lang].adminPanelPage.sections[index];
+---
+<section id={s.id} class={`sec ${tint ? "sec--tint" : ""}`}>
+  <div class="wrap">
+    <div class="grid feat">
+      <div class="fcol">
+        <span class="plate"><Icon name={s.icon} size={14} width={1.8} />{s.plate}</span>
+        <h2 class="h3">{s.title}</h2>
+        <p class="body lead-w">{s.lead}</p>
+      </div>
+      <div class="pcol">
+        {s.points.map((p) => (
+          <div class="point">
+            <h3 class="cell-t">{p.title}</h3>
+            <p class="cell-b">{p.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .feat { align-items: start; }
+  .fcol { grid-column: span 4; }
+  .pcol { grid-column: span 8; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 20px; align-content: start; }
+  .plate { margin-bottom: 16px; }
+  .lead-w { margin-top: 14px; max-width: 40ch; }
+  .point { padding: 16px 0; border-top: 1px solid var(--line-soft); display: flex; flex-direction: column; gap: 8px; }
+  .point:nth-child(-n+2) { border-top: none; }
+
+  @media (max-width: 1080px) {
+    .fcol { grid-column: span 12; }
+    .pcol { grid-column: span 12; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 8px; }
+  }
+  @media (max-width: 860px) {
+    .fcol, .pcol { grid-column: span 6; }
+    .pcol { grid-template-columns: 1fr; }
+    .point:nth-child(-n+2) { border-top: 1px solid var(--line-soft); }
+    .point:first-child { border-top: none; }
+  }
+</style>

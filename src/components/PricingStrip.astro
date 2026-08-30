@@ -1,0 +1,59 @@
+---
+import Icon from "./Icon.astro";
+import { content, type Lang } from "../i18n/content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const c = content[lang].pricing;
+const href = lang === "it" ? "/pricing" : "/en/pricing";
+---
+<section id={c.id} class="sec">
+  <div class="wrap">
+    <div class="grid top">
+      <div class="tcol">
+        <span class="plate">{c.plate}</span>
+        <h2 class="h2">{c.title[0]}<br />{c.title[1]}</h2>
+      </div>
+      <div class="lcol">
+        <p class="body">{c.lead}</p>
+        <a class="arrowlink" href={href}>
+          {c.link}
+          <Icon name="arrow" size={16} width={2} />
+        </a>
+      </div>
+    </div>
+
+    <div class="cards">
+      {c.cards.map((card) => (
+        <article class={`panel card ${card.warm ? "panel--warm" : ""}`}>
+          <span class={`mono tag ${card.warm ? "tag--warm" : ""}`}>{card.tag}</span>
+          <span class="prow">
+            <span class="price pval">{card.price}</span>
+            <span class="mono punit">{card.unit}</span>
+          </span>
+          <span class="seam"></span>
+          <p class="cell-b">{card.body}</p>
+        </article>
+      ))}
+    </div>
+    <p class="mono foot">{c.foot}</p>
+  </div>
+</section>
+
+<style>
+  .top { align-items: end; margin-bottom: 32px; }
+  .tcol { grid-column: span 7; }
+  .lcol { grid-column: span 5; }
+  .plate { margin-bottom: 16px; }
+  .arrowlink { margin-top: 16px; }
+  .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .card { display: flex; flex-direction: column; padding: 24px 22px; }
+  .tag { font-size: 11px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--fg-mute); }
+  .tag--warm { color: var(--accent); }
+  .prow { display: flex; align-items: baseline; gap: 8px; margin-top: 14px; }
+  .pval { font-size: clamp(34px, 3.4vw, 46px); }
+  .punit { font-size: 14px; color: var(--fg-mute); }
+  .seam { margin: 16px 0; }
+  .foot { margin-top: 18px; font-size: 12px; letter-spacing: .04em; line-height: 1.7; color: var(--fg-faint); }
+  @media (max-width: 1080px) { .cards { grid-template-columns: 1fr; } }
+  @media (max-width: 860px) { .tcol, .lcol { grid-column: span 6; } }
+</style>

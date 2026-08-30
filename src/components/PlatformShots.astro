@@ -1,0 +1,163 @@
+---
+import { content, type Lang } from "../i18n/content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const c = content[lang].heroShots;
+const shots = content[lang].adminPanel.shots;
+---
+<div class="slide">
+  <span class="glow" aria-hidden="true"></span>
+
+  <div class="stage">
+    {shots.map((s, i) => (
+      <img
+        class={`shot i${i + 1}`}
+        src={s.src}
+        alt={s.alt}
+        width={s.w}
+        height={s.h}
+        loading={i === 0 ? "eager" : "lazy"}
+        decoding="async"
+      />
+    ))}
+    <span class="sheen" aria-hidden="true"></span>
+  </div>
+
+  <div class="metarow">
+    <div class="names" aria-hidden="true">
+      {shots.map((s, i) => <span class={`name i${i + 1} mono`}>{s.tab}</span>)}
+    </div>
+    <div class="right">
+      <div class="dots" aria-hidden="true">
+        {shots.map((s, i) => (
+          <span class="pipdot"><span class={`fill i${i + 1}`}></span></span>
+        ))}
+      </div>
+      <span class="mono cap">{c.note}</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .slide { position: relative; }
+
+  /* ambient light instead of a frame */
+  .glow {
+    position: absolute; left: 22%; top: -10%;
+    width: 78%; height: 66%;
+    background: radial-gradient(ellipse at center, #f5a83f1f 0%, transparent 68%);
+    filter: blur(48px);
+    pointer-events: none;
+    animation: breathe 11s ease-in-out infinite;
+  }
+
+  /* runs from the column's left edge off the right of the viewport, so the
+     screenshot can sit near 1:1 and stay readable beside the headline */
+  .stage {
+    position: relative;
+    height: 648px;
+    width: calc(100% + (100vw - min(100vw, var(--wrap))) / 2 + var(--gut));
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, #000 68%, #0000005c 88%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 68%, #0000005c 88%, transparent 100%);
+  }
+
+  .shot {
+    position: absolute; top: 0; left: 0;
+    width: clamp(1040px, 88vw, 1440px);
+    max-width: none;   /* global img rule would otherwise clamp this to the column */
+    height: auto;
+    opacity: 0;
+    transform: scale(1.035);
+    transform-origin: top left;
+    animation: cycle 18s cubic-bezier(.25, .5, .25, 1) infinite;
+  }
+
+  .sheen {
+    position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(100deg, transparent 42%, #f5a83f0a 48%, #f5a83f17 51%, transparent 58%);
+    opacity: 0;
+    animation: sheen 18s linear infinite;
+  }
+
+  .metarow {
+    position: relative;
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    margin-top: 14px;
+  }
+
+  .names { position: relative; flex-grow: 1; height: 17px; }
+  .name {
+    position: absolute; left: 0; top: 0; white-space: nowrap;
+    font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--accent);
+    opacity: 0;
+    animation: label 18s cubic-bezier(.4, 0, .2, 1) infinite;
+  }
+
+  .right { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+  .dots { display: flex; align-items: center; gap: 7px; }
+  .pipdot { width: 20px; height: 3px; border-radius: 1px; background: #2b3036; overflow: hidden; }
+  .fill { display: block; width: 100%; height: 100%; background: var(--accent); opacity: 0; animation: label 18s linear infinite; }
+  .cap { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-ghost); }
+
+  /* 5 screens × 3.6s */
+  .i1 { animation-delay: 0s; }
+  .i2 { animation-delay: 3.6s; }
+  .i3 { animation-delay: 7.2s; }
+  .i4 { animation-delay: 10.8s; }
+  .i5 { animation-delay: 14.4s; }
+
+  /* settles to 1:1 by 12% and holds there, so nothing stays clipped */
+  @keyframes cycle {
+    0%   { opacity: 0; transform: scale(1.035); }
+    4%   { opacity: 1; }
+    12%  { transform: scale(1); }
+    18%  { opacity: 1; transform: scale(1); }
+    22%  { opacity: 0; transform: scale(1); }
+    100% { opacity: 0; transform: scale(1); }
+  }
+  /* text must not crossfade over text: clear out before the next slot begins at 20% */
+  @keyframes label {
+    0%   { opacity: 0; }
+    3%   { opacity: 1; }
+    17%  { opacity: 1; }
+    19%  { opacity: 0; }
+    100% { opacity: 0; }
+  }
+  @keyframes sheen {
+    0%   { opacity: 0; transform: translateX(-26%); }
+    3%   { opacity: 1; }
+    9%   { opacity: 0; transform: translateX(26%); }
+    100% { opacity: 0; transform: translateX(26%); }
+  }
+  @keyframes breathe {
+    0%, 100% { opacity: .65; }
+    50%      { opacity: 1; }
+  }
+
+  /* stacked: the slide goes full-bleed and shows each screen whole */
+  @media (max-width: 1080px) {
+    .stage {
+      height: auto; aspect-ratio: 1440 / 820;
+      width: 100vw; margin-left: calc(50% - 50vw);
+    }
+    .shot {
+      width: 100%; max-width: 100%; height: 100%;
+      object-fit: cover; object-position: top center;
+    }
+    .glow { left: 11%; }
+  }
+  @media (max-width: 860px) {
+    .stage { aspect-ratio: 1440 / 900; }
+    .cap { display: none; }
+    .name { font-size: 11px; letter-spacing: .12em; }
+  }
+
+  /* hold on the first screen when motion is unwelcome */
+  @media (prefers-reduced-motion: reduce) {
+    .stage .shot, .names .name, .dots .fill, .stage .sheen, .slide .glow { animation: none !important; }
+    .stage .shot.i1, .names .name.i1, .dots .fill.i1 { opacity: 1 !important; }
+    .stage .shot.i1 { transform: scale(1) !important; }
+  }
+</style>
