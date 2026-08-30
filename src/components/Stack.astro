@@ -1,0 +1,136 @@
+---
+import Icon from "./Icon.astro";
+import StackDiagram from "./StackDiagram.astro";
+import { content, type Lang } from "../i18n/content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const c = content[lang].stack;
+const icons = ["terminal", "provisioning", "overlay", "ops"];
+---
+<section id={c.id} class="sec">
+  <div class="wrap">
+    <div class="grid top">
+      <div class="tcol">
+        <span class="plate">{c.plate}</span>
+        <h2 class="h2">{c.title[0]}<br />{c.title[1]}</h2>
+      </div>
+      <div class="lcol">
+        <p class="body">{c.lead}</p>
+        <div class="legend">
+          <span class="key"><span class="swatch"></span>{c.legend.own}</span>
+          <span class="key"><span class="swatch swatch--opt"></span>{c.legend.opt}</span>
+        </div>
+      </div>
+    </div>
+
+    <StackDiagram lang={lang} />
+
+    <div class="planes">
+      {c.planes.map((p, i) => (
+        <>
+          <div class="panel plane">
+            <div class="pmeta">
+              <div class="mrow">
+                <Icon name={icons[i]} size={22} />
+                <span class="idx">{p.idx}</span>
+              </div>
+              <h3 class="card-title ptitle">{p.title}</h3>
+              <span class="mono where">{p.where}</span>
+            </div>
+            <div class="pcells">
+              {p.items.map((it) => (
+                <div class={`sunk cell ${it.opt ? "cell--opt" : ""}`}>
+                  <div class="crow">
+                    <span class="cname">{it.name}</span>
+                    {it.opt && <span class="plate plate--sm optag">{c.legend.opt}</span>}
+                  </div>
+                  <p class="cell-b">{it.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {i < c.links.length && (
+            <div class="link">
+              <span class="lseam"></span>
+              <span class="lbadge">
+                <Icon name="arrow" size={15} stroke="var(--accent)" width={1.8} />
+                <span class="mono ltext">{c.links[i]}</span>
+              </span>
+              <span class="lseam"></span>
+            </div>
+          )}
+        </>
+      ))}
+    </div>
+
+    <p class="mono note">{c.note}</p>
+  </div>
+</section>
+
+<style>
+  .top { align-items: end; margin-bottom: 46px; }
+  .tcol, .lcol { grid-column: span 6; }
+  .plate { margin-bottom: 22px; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 20px; }
+  .key {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--fg-faint);
+  }
+  .swatch { width: 11px; height: 11px; border-radius: 2px; background: var(--sunk); border: 1px solid var(--line); }
+  .swatch--opt { border-style: dashed; border-color: #3d4349; background: transparent; }
+
+  .planes { display: flex; flex-direction: column; }
+
+  .plane { display: grid; grid-template-columns: 268px minmax(0, 1fr); overflow: hidden; }
+
+  .pmeta {
+    display: flex; flex-direction: column; gap: 12px;
+    padding: 26px 24px 28px;
+    background: var(--raise);
+    border-right: 1px solid var(--line-soft);
+  }
+  .mrow { display: flex; align-items: center; justify-content: space-between; }
+  .ptitle { font-size: 23px; }
+  .where { font-size: 11px; line-height: 1.5; letter-spacing: .08em; color: var(--fg-faint); }
+
+  .pcells {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(232px, 1fr)); gap: 14px;
+    padding: 22px;
+  }
+  .cell { display: flex; flex-direction: column; gap: 9px; padding: 16px 16px 18px; }
+  .cell--opt { background: transparent; border-style: dashed; border-color: #3d4349; box-shadow: none; }
+  .crow { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+  .cname { font-size: 15px; font-weight: 600; line-height: 1.3; color: var(--fg-strong); }
+  .optag { flex-shrink: 0; }
+  .cell--opt .cname { color: var(--fg-dim); }
+
+  .link { display: flex; align-items: center; gap: 18px; padding: 14px 0; }
+  .lseam { flex-grow: 1; height: 1px; background: var(--line-dim); }
+  .lbadge { display: inline-flex; align-items: center; gap: 10px; }
+  .lbadge :global(svg) { transform: rotate(90deg); flex-shrink: 0; }
+  .ltext {
+    font-size: 11px; font-weight: 600; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--fg-mute);
+  }
+
+  .note {
+    margin-top: 26px;
+    font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--fg-ghost);
+  }
+
+  @media (max-width: 1080px) {
+    .plane { grid-template-columns: 216px minmax(0, 1fr); }
+    .pcells { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); padding: 18px; }
+  }
+  @media (max-width: 860px) {
+    .tcol, .lcol { grid-column: span 6; }
+    .plane { grid-template-columns: 1fr; }
+    .pmeta { border-right: 0; border-bottom: 1px solid var(--line-soft); }
+    .pcells { grid-template-columns: 1fr; }
+    .link { gap: 12px; }
+    .ltext { font-size: 10px; letter-spacing: .1em; }
+  }
+</style>

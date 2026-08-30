@@ -1,0 +1,63 @@
+{
+  "artboards": [
+    {
+      "file": "Main.dc.html",
+      "x": 0,
+      "y": 0,
+      "w": 1440,
+      "h": 1340,
+      "title": "Model inventory"
+    },
+    {
+      "file": "Users.dc.html",
+      "x": 1560,
+      "y": 0,
+      "w": 1440,
+      "h": 1560,
+      "title": "Users & access"
+    },
+    {
+      "file": "Roles.dc.html",
+      "x": 3120,
+      "y": 0,
+      "w": 1440,
+      "h": 1450,
+      "title": "Roles & RBAC"
+    },
+    {
+      "file": "Telemetry.dc.html",
+      "x": 0,
+      "y": 1700,
+      "w": 1440,
+      "h": 1300,
+      "title": "Telemetry"
+    },
+    {
+      "file": "Wirings.dc.html",
+      "x": 1560,
+      "y": 1700,
+      "w": 1440,
+      "h": 1180,
+      "title": "External wirings"
+    }
+  ],
+  "annotations": [
+    {
+      "id": "source",
+      "x": 0,
+      "y": -196,
+      "w": 700,
+      "text": "Ventic Admin Panel — five screens covering the feature set in docs/handwritten/admin-panel.md.\nChrome is lifted from the live site: src/styles/global.css tokens, the AgentPanel gauge/stat blocks, the Matrix check/cross cells, and the real Logo.astro mark."
+    },
+    {
+      "id": "sample-data",
+      "x": 1560,
+      "y": -196,
+      "w": 620,
+      "text": "All names, nodes, quotas and figures are sample data for layout. Model names, node hardware and component versions come from the handwritten docs; tenant and user identities are invented — swap them before this goes in front of anyone."
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  }
+}

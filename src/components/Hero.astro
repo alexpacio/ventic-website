@@ -1,5 +1,5 @@
 ---
-import AgentPanel from "./AgentPanel.astro";
+import PlatformShots from "./PlatformShots.astro";
 import { content, type Lang } from "../i18n/content";
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
@@ -25,15 +25,15 @@ const how = lang === "it" ? "/#come-funziona" : "/en/#how-it-works";
       </div>
       <p class="mono micro">{h.micro}</p>
     </div>
-    <div class="panelcol"><AgentPanel lang={lang} /></div>
+    <div class="slidecol"><PlatformShots lang={lang} /></div>
   </div>
 </section>
 
 <style>
-  .hero { position: relative; overflow: hidden; padding: 88px 0 96px; }
+  .hero { position: relative; overflow: hidden; padding: 88px 0 80px; }
   .inner { position: relative; align-items: start; }
-  .copy { grid-column: span 7; }
-  .panelcol { grid-column: span 5; }
+  .copy { grid-column: span 6; }
+  .slidecol { grid-column: span 6; min-width: 0; }
 
   .plate { margin-bottom: 26px; }
   .h1 { margin: 0; }
@@ -46,11 +46,11 @@ const how = lang === "it" ? "/#come-funziona" : "/en/#how-it-works";
 
   @media (max-width: 1080px) {
     .copy { grid-column: span 12; }
-    .panelcol { grid-column: span 12; max-width: 560px; }
+    .slidecol { grid-column: span 12; }
   }
   @media (max-width: 860px) {
-    .hero { padding: 44px 0 60px; }
-    .copy, .panelcol { grid-column: span 6; }
+    .hero { padding: 44px 0 48px; }
+    .copy, .slidecol { grid-column: span 6; }
     .actions .btn { flex-grow: 1; }
   }
 </style>

@@ -26,6 +26,7 @@ const it = {
     links: [
       { label: "Perché", href: "/#perche" },
       { label: "Come funziona", href: "/#come-funziona" },
+      { label: "Architettura", href: "/#stack" },
       { label: "Modelli", href: "/#modelli" },
       { label: "Prezzi", href: "/pricing" },
     ],
@@ -59,8 +60,14 @@ const it = {
       { label: "Sessioni", value: "37", unit: "in coda 0" },
     ],
     chips: ["qwen3.8-27b", "vLLM · TP 2", "embed · bge-m3"],
-    chipLive: "mesh up",
+    chipLive: "overlay up",
     sample: "dati di esempio",
+  },
+
+  heroShots: {
+    label: "Admin panel",
+    host: "admin.ventic.local",
+    note: "Screenshot piattaforma",
   },
 
   problem: {
@@ -86,7 +93,7 @@ const it = {
     byoh: {
       tag: "BYOH",
       title: "Il ferro è tuo",
-      desc: "Hai già i server, o preferisci comprarli tu. Noi portiamo lo stack: verifica di compatibilità, vLLM tunato sulla tua GPU, Ventic Agent, mesh cifrata, pannello e observability.",
+      desc: "Hai già i server, o preferisci comprarli tu. Noi portiamo lo stack: verifica di compatibilità, vLLM tunato sulla tua GPU, Ventic Agent, rete overlay cifrata, pannello e observability.",
       priceLabel: "Consulenza tecnica specializzata",
       price: "80 €",
       unit: "/ ora + IVA",
@@ -122,9 +129,129 @@ const it = {
     steps: [
       { title: "Discovery", body: "Cerchiamo la macchina giusta al prezzo giusto sui marketplace, secondo i criteri che hai scelto. Acquisto con bonifico SEPA immediato.", tag: "solo PaaS" },
       { title: "Provisioning", body: "vLLM configurato e ottimizzato per quel modello su quell'hardware, LLM ed embedding model insieme. Automatizzato: a noleggio orario, ogni minuto risparmiato è denaro.", tag: "in pochi minuti" },
-      { title: "Mesh cifrata", body: "Una rete overlay raggiunge server ed endpoint anche senza IPv4 pubblico statico. Niente VPN da configurare a mano, niente porte aperte sul mondo.", tag: "zero esposizione" },
+      { title: "Rete overlay cifrata", body: "Una rete privata e cifrata che si autoconfigura, attraversa i NAT e raggiunge server ed endpoint senza IP pubblico. Niente VPN da configurare a mano, niente porte aperte sul mondo.", tag: "zero esposizione" },
       { title: "Esercizio", body: "Scheduling equo fra utenti, ripristino automatico dopo un outage spot, spegnimento nei momenti morti, metriche e allarmi. Con la nostra assistenza dietro.", tag: "continuo" },
     ],
+  },
+
+  stackDiagram: {
+    label: "Schema",
+    clients: { label: "Postazioni", items: ["Agenti di coding", "App e servizi interni", "Client OpenAI / Anthropic"] },
+    infra: { label: "La tua infrastruttura", items: ["LLM proxy", "Admin panel", "Observability"] },
+    nodesLabel: "Nodi GPU",
+    nodes: [
+      { name: "gpu-node-01", meta: "2×H100 80GB", filled: 2 },
+      { name: "gpu-node-02", meta: "2×MI300X", filled: 1 },
+    ],
+    autoNode: { name: "gpu-node-03", meta: "acceso al bisogno", tag: "auto" },
+    flowA: "API OpenAI / Anthropic",
+    flowB: "Overlay cifrato · NAT traversal",
+    replicaLabel: "repliche",
+    scale: {
+      label: "Autoscaling",
+      rules: [
+        "Sopra l'80% di utilizzo Ventic aggiunge una replica.",
+        "Sotto il 25% per 10 minuti ne toglie una.",
+        "Nessuna richiesta per 15 minuti: il nodo si spegne, e riparte da solo alla prima chiamata.",
+      ],
+    },
+  },
+
+  stack: {
+    id: "stack",
+    plate: "Architettura",
+    title: ["Il Ventic", "Inference Stack."],
+    lead: "Ventic non è un servizio a cui spedisci i dati: è uno stack che si installa. Pannello, proxy e observability girano sulla tua infrastruttura Docker; sui nodi GPU gira il nostro agent; in mezzo una rete overlay cifrata che si autoconfigura, attraversa i NAT e non chiede IP pubblici né VPN da mantenere a mano.",
+    legend: { own: "Sempre incluso", opt: "Opzionale" },
+    planes: [
+      {
+        idx: "01",
+        title: "Le tue postazioni",
+        where: "Sui desktop di chi lavora",
+        items: [
+          { name: "Coding Agent wiring tool", body: "Configura da solo l'agente di coding che il team già usa. Nessuna procedura da seguire a mano, nessun endpoint da incollare.", opt: false },
+        ],
+      },
+      {
+        idx: "02",
+        title: "La tua infrastruttura Docker",
+        where: "Dove decidi tu — on-prem o cloud",
+        items: [
+          { name: "Admin panel", body: "Utenti, ruoli, modelli, quote e policy. È il pannello che vedi qui sotto.", opt: false },
+          { name: "LLM proxy", body: "Un endpoint solo, compatibile con le API OpenAI e Anthropic. I client esistenti non cambiano.", opt: false },
+          { name: "Stack LGTM", body: "Log, metriche e tracce, con Grafana davanti. I dati di utilizzo restano da te.", opt: false },
+          { name: "OpenRAG", body: "Pipeline di retrieval sui tuoi documenti.", opt: true },
+          { name: "Qdrant", body: "Database vettoriale per le collection RAG.", opt: true },
+          { name: "Embedding model", body: "Indicizzazione servita dallo stesso stack di inferenza.", opt: true },
+          { name: "Deepseek harness", body: "Harness agentico pronto da agganciare a un modello.", opt: true },
+          { name: "Openclaw", body: "Harness agentico alternativo, stessa procedura di wiring.", opt: true },
+        ],
+      },
+      {
+        idx: "03",
+        title: "Rete overlay cifrata",
+        where: "Relay in rete pubblica, nodi no",
+        items: [
+          { name: "Relay node", body: "Instrada il traffico verso host che non espongono niente su internet. Il relay può stare in rete pubblica; i tuoi nodi restano chiusi, anche dietro NAT.", opt: false },
+        ],
+      },
+      {
+        idx: "04",
+        title: "I nodi di inferenza",
+        where: "Sulle GPU, tue o del catalogo",
+        items: [
+          { name: "Ventic host agent", body: "Tiene in piedi l'LLM, lo espone sull'overlay e lo divide in modo equo fra gli utenti. È l'unico pezzo che gira sul nodo.", opt: false },
+          { name: "Runtime vLLM", body: "Tunato su quel modello e su quella GPU, con LLM ed embedding model serviti insieme.", opt: false },
+        ],
+      },
+    ],
+    links: [
+      "Endpoint compatibile OpenAI e Anthropic",
+      "Overlay cifrato e autoconfigurante — nessun IP pubblico",
+      "Dopo un outage spot l'agent si riconnette da solo",
+    ],
+    note: "Le parti opzionali si accendono solo se servono: lo stack minimo è agent, overlay e proxy.",
+  },
+
+  adminPanel: {
+    id: "pannello",
+    plate: "Admin panel",
+    title: ["Chi usa cosa,", "lo decidi tu."],
+    lead: "Il pannello gira accanto al proxy, sulla tua infrastruttura. Da lì si installano i modelli, si aprono e si revocano le chiavi, si stabilisce quale utente può parlare con quale modello e si guarda quanto sta consumando ognuno.",
+    chrome: "admin.ventic.local",
+    shots: [
+      {
+        id: "inventory", tab: "Modelli", src: "/admin/inventory.webp", w: 1440, h: 1331,
+        title: "Inventario modelli",
+        body: "Chat, multimodale ed embedding in una lista sola, con nodo, finestra di contesto, quota e repliche. Da qui installi un modello nuovo dal catalogo Ventic, scali le repliche e imposti spegnimento automatico, quote per utente, allow e deny, restrizioni semantiche e sorgenti RAG.",
+        alt: "Schermata dell'inventario modelli: tabella dei modelli installati con nodo, contesto, quota e stato, catalogo dei template a destra, pannelli di scaling, quote e restrizioni semantiche in basso.",
+      },
+      {
+        id: "users", tab: "Utenti e chiavi", src: "/admin/users.webp", w: 1440, h: 1450,
+        title: "Utenti e accessi",
+        body: "Utenti attivi, scadenze e revoche, divisi per gruppo, dominio e tenant. Ogni API key ha un proprietario, uno scope e una scadenza, e si revoca da qui. L'autenticazione può arrivare dal tuo provider — Google Workspace, Entra ID, Okta o un OIDC qualsiasi — con 2FA obbligatoria.",
+        alt: "Schermata utenti e accessi: elenco degli utenti con tenant, ruolo, scadenza e consumo token, pannello dei provider di autenticazione esterni e tabella delle API key.",
+      },
+      {
+        id: "rbac", tab: "Ruoli", src: "/admin/rbac.webp", w: 1440, h: 1350,
+        title: "Ruoli e RBAC",
+        body: "Quattro livelli — utente, developer, admin, superadmin — e una matrice che dice endpoint per endpoint chi può fare cosa. Sotto, le regole che legano utenti, gruppi, domini e tenant ai singoli modelli, con la quota che si portano dietro.",
+        alt: "Schermata ruoli e RBAC: matrice dei permessi per endpoint sui quattro ruoli e tabella delle regole che legano utenti, gruppi, domini e tenant ai modelli.",
+      },
+      {
+        id: "telemetry", tab: "Telemetria", src: "/admin/telemetry.webp", w: 1440, h: 1293,
+        title: "Telemetria",
+        body: "Token al minuto sulle ultime 24 ore, occupazione di GPU, VRAM e potenza nodo per nodo, e il consumo per singolo utente. Gli allarmi partono sul canale che preferisci quando una soglia viene superata o un'istanza spot viene revocata.",
+        alt: "Schermata telemetria: grafico dei token al minuto nelle ultime 24 ore, indicatori di GPU e VRAM per nodo, consumo per utente e lista degli allarmi recenti.",
+      },
+      {
+        id: "wirings", tab: "Wiring", src: "/admin/wirings.webp", w: 1440, h: 1133,
+        title: "Wiring esterni",
+        body: "I componenti opzionali si collegano da qui: OpenRAG e Qdrant con le collection e il modello che le indicizza, gli harness agentici con il modello a cui sono agganciati, e il wiring tool che spinge l'endpoint giusto sui desktop del team.",
+        alt: "Schermata dei wiring esterni: connettori RAG con le collection sorgenti, stato dei componenti di piattaforma, harness agentici e configurazione degli agenti di coding.",
+      },
+    ],
+    note: "Mockup dell'interfaccia: numeri, nomi e nodi mostrati sono di esempio.",
   },
 
   caps: {
@@ -135,7 +262,7 @@ const it = {
     items: [
       { title: "Sempre in piedi", body: "Se l'istanza spot viene revocata, Ventic rischedula il workload e ripristina l'operatività da solo, anche su un altro provider." },
       { title: "Multi-utente, equo", body: "Una macchina condivisa fra più persone: finestre di contesto prevedibili e workload schedulato in modo esatto." },
-      { title: "Nessun IP pubblico", body: "La mesh overlay cifrata arriva al server anche se non è esposto su internet. Nessuna configurazione fragile da mantenere." },
+      { title: "Nessun IP pubblico", body: "La rete overlay cifrata attraversa i NAT e arriva al server anche se non è esposto su internet. Si autoconfigura: nessuna configurazione fragile da mantenere." },
       { title: "Observability", body: "GPU, CPU e sistema operativo sotto controllo, consumo token per utente in tempo reale, allarmi sul canale che preferisci." },
       { title: "Account e API key", body: "Pannello per creare utenti e chiavi, revocarle e ruotarle. Autenticazione a due fattori e integrazione con provider auth esterni." },
       { title: "Scale to zero", body: "Se nessuno sta usando l'LLM l'istanza si spegne, e riparte alla prima richiesta che arriva. Niente ore bruciate nel vuoto." },
@@ -225,7 +352,7 @@ const it = {
       desc: "Hardware, provisioning e assistenza in un'unica tariffa oraria. Il pacchetto si sceglie in base a quante persone devono lavorarci.",
       ticks: [
         "Discovery del server su criteri tuoi, acquisto con bonifico SEPA immediato",
-        "Provisioning, mesh cifrata, pannello e observability inclusi",
+        "Provisioning, rete overlay cifrata, pannello e observability inclusi",
         "Scale to zero: se nessuno lo usa, la macchina si spegne e smette di costare",
         "Multicloud per ridondanza o failover, quando il servizio è critico",
       ],
@@ -258,7 +385,7 @@ const it = {
         },
       ],
       foot1: "Orario lavorativo = 8 h × 20 giorni = 160 h/mese · continuo = 24 h × 30 giorni = 720 h/mese.",
-      foot2: "Hardware, provisioning, mesh, pannello, observability e assistenza sono compresi nella tariffa oraria.",
+      foot2: "Hardware, provisioning, rete overlay, pannello, observability e assistenza sono compresi nella tariffa oraria.",
     },
     matrix: {
       title: "Ventic contro le alternative",
@@ -342,6 +469,7 @@ const en: typeof it = {
     links: [
       { label: "Why", href: "/en/#why" },
       { label: "How it works", href: "/en/#how-it-works" },
+      { label: "Architecture", href: "/en/#stack" },
       { label: "Models", href: "/en/#models" },
       { label: "Pricing", href: "/en/pricing" },
     ],
@@ -375,8 +503,14 @@ const en: typeof it = {
       { label: "Sessions", value: "37", unit: "0 queued" },
     ],
     chips: ["qwen3.8-27b", "vLLM · TP 2", "embed · bge-m3"],
-    chipLive: "mesh up",
+    chipLive: "overlay up",
     sample: "sample data",
+  },
+
+  heroShots: {
+    label: "Admin panel",
+    host: "admin.ventic.local",
+    note: "Platform screenshots",
   },
 
   problem: {
@@ -402,7 +536,7 @@ const en: typeof it = {
     byoh: {
       tag: "BYOH",
       title: "The metal is yours",
-      desc: "You already have the servers, or you would rather buy them yourself. We bring the stack: compatibility check, vLLM tuned to your GPU, Ventic Agent, encrypted mesh, dashboard and observability.",
+      desc: "You already have the servers, or you would rather buy them yourself. We bring the stack: compatibility check, vLLM tuned to your GPU, Ventic Agent, encrypted overlay network, dashboard and observability.",
       priceLabel: "Specialist technical consulting",
       price: "€80",
       unit: "/ hour + VAT",
@@ -438,9 +572,129 @@ const en: typeof it = {
     steps: [
       { title: "Discovery", body: "We find the right machine at the right price across marketplaces, on the criteria you chose. Bought with an instant SEPA transfer.", tag: "PaaS only" },
       { title: "Provisioning", body: "vLLM configured and tuned for that model on that hardware, LLM and embedding model together. Automated: on hourly rental, every minute saved is money.", tag: "in minutes" },
-      { title: "Encrypted mesh", body: "An overlay network reaches the server and the endpoint with no static public IPv4. No VPN to wire up by hand, no ports open to the world.", tag: "zero exposure" },
+      { title: "Encrypted overlay network", body: "A private, encrypted network that configures itself, traverses NAT and reaches server and endpoint with no public IP. No VPN to wire up by hand, no ports open to the world.", tag: "zero exposure" },
       { title: "Operations", body: "Fair scheduling between users, automatic recovery after a spot outage, shutdown in the quiet hours, metrics and alerts. With our support behind it.", tag: "continuous" },
     ],
+  },
+
+  stackDiagram: {
+    label: "Schematic",
+    clients: { label: "Workstations", items: ["Coding agents", "Internal apps and services", "OpenAI / Anthropic clients"] },
+    infra: { label: "Your infrastructure", items: ["LLM proxy", "Admin panel", "Observability"] },
+    nodesLabel: "GPU nodes",
+    nodes: [
+      { name: "gpu-node-01", meta: "2×H100 80GB", filled: 2 },
+      { name: "gpu-node-02", meta: "2×MI300X", filled: 1 },
+    ],
+    autoNode: { name: "gpu-node-03", meta: "started on demand", tag: "auto" },
+    flowA: "OpenAI / Anthropic API",
+    flowB: "Encrypted overlay · NAT traversal",
+    replicaLabel: "replicas",
+    scale: {
+      label: "Autoscaling",
+      rules: [
+        "Above 80% utilisation Ventic adds a replica.",
+        "Below 25% for 10 minutes it takes one away.",
+        "No requests for 15 minutes: the node shuts down, and comes back by itself on the first call.",
+      ],
+    },
+  },
+
+  stack: {
+    id: "stack",
+    plate: "Architecture",
+    title: ["The Ventic", "Inference Stack."],
+    lead: "Ventic is not a service you ship your data to: it is a stack you install. The panel, the proxy and the observability run on your own Docker infrastructure; our agent runs on the GPU nodes; between them sits an encrypted overlay network that configures itself, traverses NAT and asks for no public IPs and no VPN to hand-maintain.",
+    legend: { own: "Always included", opt: "Optional" },
+    planes: [
+      {
+        idx: "01",
+        title: "Your workstations",
+        where: "On the desktops doing the work",
+        items: [
+          { name: "Coding Agent wiring tool", body: "Configures the coding agent your team already uses, on its own. No procedure to follow by hand, no endpoint to paste.", opt: false },
+        ],
+      },
+      {
+        idx: "02",
+        title: "Your Docker infrastructure",
+        where: "Wherever you decide — on-prem or cloud",
+        items: [
+          { name: "Admin panel", body: "Users, roles, models, quotas and policy. It is the panel shown below.", opt: false },
+          { name: "LLM proxy", body: "One endpoint, compatible with the OpenAI and Anthropic APIs. Existing clients stay as they are.", opt: false },
+          { name: "LGTM stack", body: "Logs, metrics and traces with Grafana in front. Usage data never leaves your side.", opt: false },
+          { name: "OpenRAG", body: "Retrieval pipelines over your own documents.", opt: true },
+          { name: "Qdrant", body: "Vector database backing the RAG collections.", opt: true },
+          { name: "Embedding model", body: "Indexing served by the same inference stack.", opt: true },
+          { name: "Deepseek harness", body: "Agentic harness, ready to wire to a model.", opt: true },
+          { name: "Openclaw", body: "Alternative agentic harness, same wiring procedure.", opt: true },
+        ],
+      },
+      {
+        idx: "03",
+        title: "Encrypted overlay network",
+        where: "Relays on the public network, nodes not",
+        items: [
+          { name: "Relay node", body: "Routes traffic to hosts that expose nothing to the internet. The relay may sit on a public network; your nodes stay closed, NAT included.", opt: false },
+        ],
+      },
+      {
+        idx: "04",
+        title: "The inference nodes",
+        where: "On the GPUs — yours or from the catalogue",
+        items: [
+          { name: "Ventic host agent", body: "Keeps the LLM up, exposes it over the overlay and shares it fairly between users. It is the only piece running on the node.", opt: false },
+          { name: "vLLM runtime", body: "Tuned for that model on that GPU, serving the LLM and the embedding model together.", opt: false },
+        ],
+      },
+    ],
+    links: [
+      "OpenAI and Anthropic compatible endpoint",
+      "Self-configuring encrypted overlay — no public IPs",
+      "After a spot outage the agent reconnects itself",
+    ],
+    note: "Optional parts are switched on only if you need them: the minimum stack is agent, overlay and proxy.",
+  },
+
+  adminPanel: {
+    id: "panel",
+    plate: "Admin panel",
+    title: ["Who uses what,", "decided by you."],
+    lead: "The panel runs next to the proxy, on your own infrastructure. From there you install models, issue and revoke keys, set which user may talk to which model, and watch what each of them is consuming.",
+    chrome: "admin.ventic.local",
+    shots: [
+      {
+        id: "inventory", tab: "Models", src: "/admin/inventory.webp", w: 1440, h: 1331,
+        title: "Model inventory",
+        body: "Chat, multimodal and embedding in a single list, with node, context window, quota and replicas. From here you install a new model from the Ventic catalogue, scale replicas, and set auto-shutdown, per-user quotas, allows and denies, semantic restrictions and RAG sources.",
+        alt: "Model inventory screen: table of installed models with node, context, quota and state, template catalogue on the right, and scaling, quota and semantic restriction panels below.",
+      },
+      {
+        id: "users", tab: "Users and keys", src: "/admin/users.webp", w: 1440, h: 1450,
+        title: "Users and access",
+        body: "Active users, expiries and revocations, split by group, domain and tenant. Every API key carries an owner, a scope and an expiry, and is revoked from here. Authentication can come from your own provider — Google Workspace, Entra ID, Okta or any OIDC — with 2FA enforced.",
+        alt: "Users and access screen: user list with tenant, role, expiry and token consumption, external authentication providers panel, and API token table.",
+      },
+      {
+        id: "rbac", tab: "Roles", src: "/admin/rbac.webp", w: 1440, h: 1350,
+        title: "Roles and RBAC",
+        body: "Four tiers — user, developer, admin, superadmin — and a matrix saying, endpoint by endpoint, who may do what. Below it, the rules binding users, groups, domains and tenants to individual models, each carrying its own quota.",
+        alt: "Roles and RBAC screen: endpoint permission matrix across the four roles, and a table of rules binding users, groups, domains and tenants to models.",
+      },
+      {
+        id: "telemetry", tab: "Telemetry", src: "/admin/telemetry.webp", w: 1440, h: 1293,
+        title: "Telemetry",
+        body: "Tokens per minute over the last 24 hours, GPU, VRAM and power draw node by node, and consumption per individual user. Alerts go out on the channel you prefer when a threshold is crossed or a spot instance is reclaimed.",
+        alt: "Telemetry screen: tokens-per-minute chart over the last 24 hours, GPU and VRAM gauges per node, per-user consumption and a list of recent alerts.",
+      },
+      {
+        id: "wirings", tab: "Wiring", src: "/admin/wirings.webp", w: 1440, h: 1133,
+        title: "External wirings",
+        body: "The optional components connect here: OpenRAG and Qdrant with their collections and the model indexing them, the agentic harnesses with the model they are bound to, and the wiring tool that pushes the right endpoint to the team's desktops.",
+        alt: "External wirings screen: RAG connectors with source collections, platform component health, agentic harnesses and coding agent configuration.",
+      },
+    ],
+    note: "Interface mockup: the numbers, names and nodes shown are sample data.",
   },
 
   caps: {
@@ -451,7 +705,7 @@ const en: typeof it = {
     items: [
       { title: "Always up", body: "If the spot instance is reclaimed, Ventic reschedules the workload and brings the service back on its own — on another provider if it has to." },
       { title: "Multi-user, fair", body: "One machine shared between many people: predictable context windows and workload scheduled exactly." },
-      { title: "No public IP", body: "The encrypted overlay mesh reaches the server even when it is not exposed to the internet. No fragile configuration to keep alive." },
+      { title: "No public IP", body: "The encrypted overlay network traverses NAT and reaches the server even when it is not exposed to the internet. It configures itself: no fragile configuration to keep alive." },
       { title: "Observability", body: "GPU, CPU and OS under control, per-user token consumption in real time, alerts on whatever channel you prefer." },
       { title: "Accounts and API keys", body: "A panel to create users and keys, revoke and rotate them. Two-factor authentication and integration with external auth providers." },
       { title: "Scale to zero", body: "If nobody is using the LLM the instance shuts down, and comes back on the first request. No hours burned on an idle box." },
@@ -542,7 +796,7 @@ const en: typeof it = {
       desc: "Hardware, provisioning and support in a single hourly rate. The package is chosen on how many people need to work on it.",
       ticks: [
         "Server discovery on your criteria, bought with an instant SEPA transfer",
-        "Provisioning, encrypted mesh, dashboard and observability included",
+        "Provisioning, encrypted overlay network, dashboard and observability included",
         "Scale to zero: if nobody uses it, the machine shuts down and stops costing",
         "Multicloud for redundancy or failover, when the service is critical",
       ],
@@ -575,7 +829,7 @@ const en: typeof it = {
         },
       ],
       foot1: "Business hours = 8 h × 20 days = 160 h/month · continuous = 24 h × 30 days = 720 h/month.",
-      foot2: "Hardware, provisioning, mesh, dashboard, observability and support are all included in the hourly rate.",
+      foot2: "Hardware, provisioning, overlay network, dashboard, observability and support are all included in the hourly rate.",
     },
     matrix: {
       title: "Ventic against the alternatives",
