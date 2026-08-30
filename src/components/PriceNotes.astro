@@ -21,13 +21,6 @@ const mail = content[lang].footer.mail;
   </div>
 </section>
 
-<div class="wrap">
-  <div class="foot">
-    <span class="mono meta">{c.foot.left}</span>
-    <span class="mono meta">{c.foot.right}</span>
-  </div>
-</div>
-
 <style>
   .notes-sec { padding-bottom: 40px; }
   .inner { align-items: end; }
@@ -36,10 +29,6 @@ const mail = content[lang].footer.mail;
   .plate { margin-bottom: 16px; }
   ul.list { list-style: none; margin: 0; padding: 0; gap: 14px; }
   .right .btn { margin-top: 6px; }
-  .foot {
-    display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
-    padding: 20px 0 28px; border-top: 1px solid var(--line-dim);
-  }
   .meta { font-size: 11px; letter-spacing: .08em; color: var(--fg-ghost); }
   @media (max-width: 860px) { .left, .right { grid-column: span 6; } }
 </style>

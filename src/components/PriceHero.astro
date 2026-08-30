@@ -1,5 +1,4 @@
 ---
-import Wordmark from "./Wordmark.astro";
 import { content, type Lang } from "../i18n/content";
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
@@ -8,7 +7,6 @@ const c = content[lang].pricingPage;
 <section class="phero">
   <div class="wrap inner">
     <div>
-      <span class="brand"><Wordmark height={19} /></span>
       <span class="plate">{c.plate}</span>
       <h1 class="h2-big">{c.title[0]}<br />{c.title[1]}</h1>
     </div>
@@ -19,7 +17,6 @@ const c = content[lang].pricingPage;
 <style>
   .phero { padding: 48px 0 32px; }
   .inner { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; }
-  .brand { display: flex; align-items: center; margin-bottom: 20px; }
   .plate { margin-bottom: 16px; }
   .measure { max-width: 34ch; }
   @media (max-width: 900px) {
