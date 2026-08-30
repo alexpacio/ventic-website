@@ -25,8 +25,9 @@ const enHref = `${site}${alternatePath(path, "en")}`;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="canonical" href={canonical} />
     <link rel="alternate" hreflang="it" href={itHref} />
     <link rel="alternate" hreflang="en" href={enHref} />
