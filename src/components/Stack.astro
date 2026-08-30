@@ -79,8 +79,9 @@ const icons = ["terminal", "provisioning", "overlay", "ops"];
   .legend { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 14px; }
   .key {
     display: inline-flex; align-items: center; gap: 9px;
-    font-family: var(--mono); font-size: 11px; letter-spacing: .12em;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .08em;
     text-transform: uppercase; color: var(--fg-faint);
+    white-space: normal; line-height: 1.4;
   }
   .swatch { width: 11px; height: 11px; border-radius: 2px; background: var(--sunk); border: 1px solid var(--line); }
   .swatch--opt { border-style: dashed; border-color: #3d4349; background: transparent; }
@@ -105,9 +106,9 @@ const icons = ["terminal", "provisioning", "overlay", "ops"];
   }
   .cell { display: flex; flex-direction: column; gap: 9px; padding: 16px 16px 18px; }
   .cell--opt { background: transparent; border-style: dashed; border-color: #3d4349; box-shadow: none; }
-  .crow { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
-  .cname { font-size: 15px; font-weight: 600; line-height: 1.3; color: var(--fg-strong); }
-  .optag { flex-shrink: 0; }
+  .crow { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+  .cname { font-size: 15px; font-weight: 600; line-height: 1.3; color: var(--fg-strong); flex: 1; min-width: 0; }
+  .optag { flex-shrink: 0; max-width: 42%; white-space: normal; line-height: 1.3; text-align: right; letter-spacing: 0.08em; font-size: 9px; padding: 4px 7px; }
   .cell--opt .cname { color: var(--fg-dim); }
 
   .link { display: flex; align-items: center; gap: 18px; padding: 14px 0; }
