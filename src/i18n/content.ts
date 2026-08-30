@@ -43,7 +43,7 @@ const it = {
   hero: {
     plate: "Inferenza privata · GPU dedicate · UE / US",
     title: ["La tua AI.", "Privata,", "sotto il tuo controllo."],
-    lead: "Da una VM o un bare metal con GPU grezze a un endpoint compatibile OpenAI e Anthropic. Chiavi in mano: modelli open-weight allo stato dell'arte, vLLM tunato sul tuo hardware, assistenza continuativa.",
+    lead: "Da una VM o un bare metal con GPU grezze a un endpoint compatibile OpenAI e Anthropic, con la piattaforma per rilasciarlo ai tuoi utenti aziendali: ruoli, accessi, RBAC. Chiavi in mano: modelli open-weight allo stato dell'arte, vLLM tunato sul tuo hardware, assistenza continuativa.",
     sub: "Il tuo hardware, i tuoi dati. Il nostro know-how.",
     cta1: "Prenota una call tecnica",
     cta2: "Come funziona",
@@ -584,7 +584,7 @@ const en: typeof it = {
   hero: {
     plate: "Private inference · Dedicated GPUs · EU / US",
     title: ["Your AI.", "Private,", "under your control."],
-    lead: "From a bare VM or metal with raw GPUs to an OpenAI- and Anthropic-compatible endpoint. Turnkey: state-of-the-art open-weight models, vLLM tuned to your hardware, ongoing support.",
+    lead: "From a bare VM or metal with raw GPUs to an OpenAI- and Anthropic-compatible endpoint, with the platform to roll it out to your internal users: roles, access, RBAC. Turnkey: state-of-the-art open-weight models, vLLM tuned to your hardware, ongoing support.",
     sub: "Your hardware, your data. Our know-how.",
     cta1: "Book a technical call",
     cta2: "How it works",
