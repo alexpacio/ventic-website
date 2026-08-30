@@ -42,7 +42,7 @@ const it = {
 
   hero: {
     plate: "Inferenza privata · GPU dedicate · UE / US",
-    title: ["Spremi il tuo", "hardware.", "Fino all'osso."],
+    title: ["La tua AI.", "Privata,", "sotto il tuo controllo."],
     lead: "Da una VM o un bare metal con GPU grezze a un endpoint compatibile OpenAI e Anthropic. Chiavi in mano: modelli open-weight allo stato dell'arte, vLLM tunato sul tuo hardware, assistenza continuativa.",
     sub: "Il tuo hardware, i tuoi dati. Il nostro know-how.",
     cta1: "Prenota una call tecnica",
@@ -583,7 +583,7 @@ const en: typeof it = {
 
   hero: {
     plate: "Private inference · Dedicated GPUs · EU / US",
-    title: ["Squeeze your", "hardware.", "Down to the bone."],
+    title: ["Your AI.", "Private,", "under your control."],
     lead: "From a bare VM or metal with raw GPUs to an OpenAI- and Anthropic-compatible endpoint. Turnkey: state-of-the-art open-weight models, vLLM tuned to your hardware, ongoing support.",
     sub: "Your hardware, your data. Our know-how.",
     cta1: "Book a technical call",
