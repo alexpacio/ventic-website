@@ -37,10 +37,10 @@
   --warm-head: #201d1a;
   --warm-cell: #1c1a18;
 
-  /* type stacks — fallbacks chosen for close metrics */
-  --display: "Saira Condensed", "Oswald", "Arial Narrow", Helvetica, sans-serif;
-  --sans: "Archivo", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  /* type stacks — IBM Plex Sans everywhere, elegante senza effetto terminale */
+  --display: "IBM Plex Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --sans: "IBM Plex Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --mono: "IBM Plex Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
   --wrap: 1240px;
   --gut: 32px;
