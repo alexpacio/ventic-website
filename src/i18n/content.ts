@@ -278,6 +278,46 @@ const it = {
     ],
   },
 
+  selfServicePanel: {
+    id: "self-service",
+    plate: "Self-service",
+    title: ["La chat, le chiavi,", "il wiring in un click."],
+    lead: "L'utente finale non apre ticket: parla con i modelli in chat multimodale, ruota le proprie API key e incolla il wiring per Cursor, Cline, Continue o Muse — tutto sull'overlay cifrato, con le stesse quote dell'admin.",
+    chrome: "llm.ventic.local",
+    shots: [
+      {
+        id: "chat", tab: "Chat harness", src: "/selfservice/chat.webp", w: 1440, h: 900,
+        title: "Chat harness multimodale",
+        body: "Harness in stile ChatGPT con streaming, allegati image/file, picker modello e tool cards che aprono chiavi, wiring o quote senza uscire dalla conversazione. Vision via Qwen3-VL 32B.",
+        alt: "Self-service chat: harness multimodale con selezione modello, suggerimenti e pannello conversazioni, su sfondo scuro Ventic.",
+      },
+      {
+        id: "keys", tab: "API keys", src: "/selfservice/keys.webp", w: 1440, h: 900,
+        title: "Le tue API key",
+        body: "Chiavi personali tenant-scoped, create e ruotate in un click con preview sk-…xxxx. Stessa chiave per OpenAI e Anthropic, revoca immediata e rotazione zero-downtime di 5 minuti.",
+        alt: "Self-service API keys: lista chiavi personali con scope, scadenza e pulsanti ruota, revoca, elimina.",
+      },
+      {
+        id: "wiring", tab: "Wiring", src: "/selfservice/wiring.webp", w: 1440, h: 1951,
+        title: "Wiring per coding agent",
+        body: "Un copia-incolla per Cursor, Continue, Cline, Copilot, Codex, Muse e Windsurf: inietta OPENAI_BASE_URL / ANTHROPIC_BASE_URL e la tua chiave sull'overlay 10.88.0.0/16, QUIC + mTLS, nessun IP pubblico.",
+        alt: "Self-service wiring: selettore tool, modello e chiave, snippet copiabile e griglia preset per IDE.",
+      },
+      {
+        id: "playground", tab: "Playground", src: "/selfservice/playground.webp", w: 1440, h: 1309,
+        title: "Playground modelli",
+        body: "Prova al volo ogni modello con system prompt, temperature e file: stesso proxy e stesse quote della chat, risposta in streaming mock pronta per la produzione.",
+        alt: "Playground: form richiesta con modello, system prompt e allegati, e pannello risposta in streaming.",
+      },
+      {
+        id: "usage", tab: "Usage", src: "/selfservice/usage.webp", w: 1440, h: 1441,
+        title: "Quota e consumo",
+        body: "Grafico a barre per ora, quote per modello e stima costi giornaliera — tutto tenant-wide, con reset a mezzanotte Europe/Rome.",
+        alt: "Usage self-service: barre consumo orario, quote per modello e stima costo giornaliera.",
+      },
+    ],
+  },
+
   caps: {
     id: "cosa-ottieni",
     plate: "Cosa ottieni",
@@ -832,6 +872,46 @@ const en: typeof it = {
         title: "External wirings",
         body: "Optional components connect here: OpenRAG and Qdrant with collections and indexing model, agentic harnesses with their bound model, and the wiring tool that pushes the right endpoint to team desktops.",
         alt: "External wirings: RAG connectors, platform health, agentic harnesses and coding agent config.",
+      },
+    ],
+  },
+
+  selfServicePanel: {
+    id: "self-service",
+    plate: "Self-service",
+    title: ["Chat, keys,", "wiring in one paste."],
+    lead: "No tickets: end users chat with models multimodally, rotate their own API keys and paste wiring for Cursor, Cline, Continue or Muse — all over the encrypted overlay, under the same quotas as admin.",
+    chrome: "llm.ventic.local",
+    shots: [
+      {
+        id: "chat", tab: "Chat harness", src: "/selfservice/chat.webp", w: 1440, h: 900,
+        title: "Multimodal chat harness",
+        body: "ChatGPT-style with streaming, image/file attachments, model picker and tool cards that open keys, wiring or quotas without leaving the conversation. Vision via Qwen3-VL 32B.",
+        alt: "Self-service chat: multimodal harness with model picker, suggestions and conversation panel on Ventic dark background.",
+      },
+      {
+        id: "keys", tab: "API keys", src: "/selfservice/keys.webp", w: 1440, h: 900,
+        title: "Your API keys",
+        body: "Personal tenant-scoped keys, created and rotated in one click with sk-…xxxx preview. Same key for OpenAI and Anthropic, instant revoke and 5-minute zero-downtime rotation.",
+        alt: "Self-service API keys: list of personal keys with scope, expiry and rotate/revoke/delete buttons.",
+      },
+      {
+        id: "wiring", tab: "Wiring", src: "/selfservice/wiring.webp", w: 1440, h: 1951,
+        title: "Coding agent wiring",
+        body: "One paste for Cursor, Continue, Cline, Copilot, Codex, Muse and Windsurf: injects OPENAI_BASE_URL / ANTHROPIC_BASE_URL and your key on the 10.88.0.0/16 overlay, QUIC + mTLS, no public IP.",
+        alt: "Self-service wiring: tool, model and key selectors, copyable snippet and preset grid for IDEs.",
+      },
+      {
+        id: "playground", tab: "Playground", src: "/selfservice/playground.webp", w: 1440, h: 1309,
+        title: "Model playground",
+        body: "Try any model on the fly with system prompt, temperature and files: same proxy and same quotas as chat, mock streaming response ready for production.",
+        alt: "Playground: request form with model, system prompt and attachments, and streaming response panel.",
+      },
+      {
+        id: "usage", tab: "Usage", src: "/selfservice/usage.webp", w: 1440, h: 1441,
+        title: "Quota and usage",
+        body: "Hourly bar chart, per-model quotas and daily cost estimate — all tenant-wide, reset at midnight Europe/Rome.",
+        alt: "Self-service usage: hourly consumption bars, per-model quotas and daily cost estimate.",
       },
     ],
   },
