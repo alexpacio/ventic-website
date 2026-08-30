@@ -43,7 +43,7 @@
   --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
   --wrap: 1240px;
-  --gut: 100px;
+  --gut: 32px;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -85,13 +85,13 @@ img, svg { max-width: 100%; }
 /* ── layout ────────────────────────────────────────────────── */
 
 .wrap { width: 100%; max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gut); }
-.sec { padding: 96px 0 100px; }
+.sec { padding: 56px 0 64px; }
 .sec--tint { background: var(--deck); border-top: 1px solid var(--line-dim); border-bottom: 1px solid var(--line-dim); }
 .sec--tint-top { background: var(--deck); border-top: 1px solid var(--line-dim); }
 
-.grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 40px; }
+.grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 28px; }
 
-.head { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; margin-bottom: 50px; }
+.head { display: flex; align-items: flex-end; justify-content: space-between; gap: 28px; margin-bottom: 32px; }
 
 /* ── type ──────────────────────────────────────────────────── */
 
@@ -207,24 +207,24 @@ img, svg { max-width: 100%; }
 
 /* ── bulleted feature lists ────────────────────────────────── */
 
-.ticks { display: flex; flex-direction: column; gap: 13px; }
-.tick { display: flex; align-items: flex-start; gap: 12px; font-size: 15px; line-height: 1.55; color: var(--fg-dim); }
+.ticks { display: flex; flex-direction: column; gap: 10px; }
+.tick { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; line-height: 1.55; color: var(--fg-dim); }
 .tick::before { content: ""; flex-shrink: 0; margin-top: 7px; width: 6px; height: 6px; background: var(--accent); }
 .tick--mute::before { background: #4f5357; }
 
 /* ── responsive ────────────────────────────────────────────── */
 
 @media (max-width: 1080px) {
-  :root { --gut: 56px; }
-  .sec { padding: 76px 0 80px; }
-  .grid { gap: 32px; }
+  :root { --gut: 24px; }
+  .sec { padding: 48px 0 52px; }
+  .grid { gap: 24px; }
 }
 
 @media (max-width: 860px) {
-  :root { --gut: 24px; }
-  .sec { padding: 60px 0 64px; }
-  .grid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 28px; }
-  .head { flex-direction: column; align-items: flex-start; gap: 24px; margin-bottom: 36px; }
+  :root { --gut: 20px; }
+  .sec { padding: 40px 0 44px; }
+  .grid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 20px; }
+  .head { flex-direction: column; align-items: flex-start; gap: 20px; margin-bottom: 24px; }
   .btn { height: 50px; }
   .rules { background-image: repeating-linear-gradient(90deg, #ffffff08 0 1px, transparent 1px 78px); }
 }

@@ -72,11 +72,11 @@ const icons = ["terminal", "provisioning", "overlay", "ops"];
 </section>
 
 <style>
-  .top { align-items: end; margin-bottom: 46px; }
+  .top { align-items: end; margin-bottom: 32px; }
   .tcol, .lcol { grid-column: span 6; }
-  .plate { margin-bottom: 22px; }
+  .plate { margin-bottom: 16px; }
 
-  .legend { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 20px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 14px; }
   .key {
     display: inline-flex; align-items: center; gap: 9px;
     font-family: var(--mono); font-size: 11px; letter-spacing: .12em;
@@ -85,13 +85,13 @@ const icons = ["terminal", "provisioning", "overlay", "ops"];
   .swatch { width: 11px; height: 11px; border-radius: 2px; background: var(--sunk); border: 1px solid var(--line); }
   .swatch--opt { border-style: dashed; border-color: #3d4349; background: transparent; }
 
-  .planes { display: flex; flex-direction: column; margin-top: 40px; }
+  .planes { display: flex; flex-direction: column; margin-top: 24px; }
 
   .plane { display: grid; grid-template-columns: 268px minmax(0, 1fr); overflow: hidden; }
 
   .pmeta {
     display: flex; flex-direction: column; gap: 12px;
-    padding: 26px 24px 28px;
+    padding: 22px 20px;
     background: var(--raise);
     border-right: 1px solid var(--line-soft);
   }
@@ -100,8 +100,8 @@ const icons = ["terminal", "provisioning", "overlay", "ops"];
   .where { font-size: 11px; line-height: 1.5; letter-spacing: .08em; color: var(--fg-faint); }
 
   .pcells {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(232px, 1fr)); gap: 14px;
-    padding: 22px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(232px, 1fr)); gap: 12px;
+    padding: 16px;
   }
   .cell { display: flex; flex-direction: column; gap: 9px; padding: 16px 16px 18px; }
   .cell--opt { background: transparent; border-style: dashed; border-color: #3d4349; box-shadow: none; }

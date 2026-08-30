@@ -60,9 +60,9 @@ const c = content[lang].selfServicePanel;
 </section>
 
 <style>
-  .top { align-items: end; margin-bottom: 44px; }
+  .top { align-items: end; margin-bottom: 32px; }
   .tcol, .lcol { grid-column: span 6; }
-  .plate { margin-bottom: 22px; }
+  .plate { margin-bottom: 16px; }
 
   .pick {
     position: absolute; width: 1px; height: 1px;
@@ -70,7 +70,7 @@ const c = content[lang].selfServicePanel;
     clip: rect(0 0 0 0); clip-path: inset(50%); overflow: hidden; white-space: nowrap;
   }
 
-  .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+  .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
   .tab {
     display: inline-flex; align-items: center; height: 44px; padding: 0 18px;
     border: 1px solid var(--line); border-radius: 2px;
@@ -83,9 +83,10 @@ const c = content[lang].selfServicePanel;
   }
   .tab:hover { color: var(--fg-strong); border-color: #4a5158; }
 
-  .frames { display: grid; }
+  .frames { display: grid; position: relative; }
   .frame {
     grid-area: 1 / 1; margin: 0;
+    position: absolute; inset: 0 auto auto 0; width: 100%; pointer-events: none;
     visibility: hidden; opacity: 0;
     transform: translateY(10px) scale(.994);
     transition:
@@ -101,7 +102,7 @@ const c = content[lang].selfServicePanel;
 
   .shot img { display: block; width: 100%; height: auto; border-top: 1px solid var(--line-soft); }
 
-  .cap { display: flex; flex-direction: column; gap: 10px; max-width: 780px; margin-top: 26px; }
+  .cap { display: flex; flex-direction: column; gap: 6px; max-width: 780px; margin-top: 14px; }
 
   .pick:nth-of-type(1):checked ~ .tabs .tab:nth-child(1),
   .pick:nth-of-type(2):checked ~ .tabs .tab:nth-child(2),
@@ -121,7 +122,7 @@ const c = content[lang].selfServicePanel;
   .pick:nth-of-type(5):checked ~ .frames .frame:nth-child(5) {
     visibility: visible; opacity: 1;
     transform: none;
-    position: relative; z-index: 1;
+    position: relative; inset: auto; pointer-events: auto; z-index: 1;
     transition-delay: 0s, 0s, 0s;
   }
 
@@ -163,6 +164,6 @@ const c = content[lang].selfServicePanel;
   @media (max-width: 860px) {
     .tcol, .lcol { grid-column: span 6; }
     .tab { height: 42px; padding: 0 14px; font-size: 11px; letter-spacing: .06em; }
-    .cap { margin-top: 20px; }
+    .cap { margin-top: 14px; }
   }
 </style>

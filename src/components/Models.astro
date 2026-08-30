@@ -47,29 +47,29 @@ const c = content[lang].models;
 
 <style>
   .left { grid-column: span 7; }
-  .right { grid-column: span 5; display: flex; flex-direction: column; gap: 20px; padding-top: 62px; }
-  .plate { margin-bottom: 22px; }
-  .lead-w { margin-top: 22px; max-width: 52ch; }
+  .right { grid-column: span 5; display: flex; flex-direction: column; gap: 16px; padding-top: 0; }
+  .plate { margin-bottom: 16px; }
+  .lead-w { margin-top: 16px; max-width: 52ch; }
 
-  .tablewrap { margin-top: 34px; border: 1px solid var(--line-soft); border-radius: 3px; overflow-x: auto; }
+  .tablewrap { margin-top: 20px; border: 1px solid var(--line-soft); border-radius: 3px; overflow-x: auto; }
   .tbl { width: 100%; min-width: 520px; border-collapse: collapse; text-align: left; }
   .th {
-    padding: 13px 20px; background: var(--raise);
+    padding: 10px 16px; background: var(--raise);
     font-size: 10px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--fg-faint);
   }
-  .tbl td { padding: 20px; background: var(--panel-b); border-top: 1px solid var(--line-soft); vertical-align: top; }
+  .tbl td { padding: 14px 16px; background: var(--panel-b); border-top: 1px solid var(--line-soft); vertical-align: top; }
   .name { font-size: 15px; font-weight: 500; color: var(--fg-strong); white-space: nowrap; }
   .tier { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-mute); }
   .tier--top { color: var(--accent); }
   .use { font-size: 15px; line-height: 1.5; color: var(--fg-mid); }
   .note { margin-top: 16px; font-size: 12px; line-height: 1.6; color: var(--fg-faint); }
 
-  .china { padding: 32px 30px 34px; }
+  .china { padding: 24px 22px; }
   .ctitle { font-family: var(--display); font-size: clamp(26px, 2.6vw, 34px); font-weight: 700; line-height: 1.05; text-transform: uppercase; color: var(--fg-strong); }
   .hl { color: var(--accent); }
   .china .p { margin-top: 16px; font-size: 16px; line-height: 1.62; color: var(--fg-dim); }
   .tags { display: flex; gap: 8px; margin-top: 22px; flex-wrap: wrap; }
-  .stable { display: flex; flex-direction: column; gap: 12px; padding: 24px 26px; }
+  .stable { display: flex; flex-direction: column; gap: 12px; padding: 20px 20px; }
   .slabel { font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--fg-faint); }
 
   @media (max-width: 1080px) {
