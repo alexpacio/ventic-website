@@ -5,7 +5,6 @@ const { lang } = Astro.props;
 const c = content[lang].problem;
 ---
 <section id={c.id} class="sec prob">
-  <span class="hazard" aria-hidden="true"></span>
   <div class="wrap">
     <div class="grid top">
       <div class="tcol">
@@ -27,8 +26,7 @@ const c = content[lang].problem;
 </section>
 
 <style>
-  .prob { position: relative; background: var(--deck); }
-  .hazard { position: absolute; inset: 0 0 auto 0; }
+  .prob { background: var(--deck); }
   .top { align-items: end; margin-bottom: 32px; }
   .tcol { grid-column: span 7; }
   .lcol { grid-column: span 5; }
