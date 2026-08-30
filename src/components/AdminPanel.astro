@@ -58,6 +58,7 @@ const c = content[lang].adminPanel;
     </div>
 
     <p class="mono note">{c.note}</p>
+    <a class="arrowlink more" href={c.moreHref}>{c.more} →</a>
   </div>
 </section>
 
@@ -111,6 +112,8 @@ const c = content[lang].adminPanel;
     margin-top: 26px;
     font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--fg-ghost);
   }
+
+  .more { margin-top: 18px; }
 
   /* selected tab + matching frame, by position */
   .pick:nth-of-type(1):checked ~ .tabs .tab:nth-child(1),

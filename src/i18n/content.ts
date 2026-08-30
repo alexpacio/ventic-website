@@ -20,6 +20,10 @@ const it = {
       title: "Prezzi e confronto — Ventic",
       desc: "BYOH a 80 €/h di consulenza, pacchetti PaaS da 1 €/h tutto incluso. Costi per utente e confronto con subscription e pagamento a token.",
     },
+    adminPanel: {
+      title: "Admin panel Ventic — utenti, ruoli, modelli, white label",
+      desc: "Come funziona il pannello di amministrazione di Ventic: utenti e accessi, RBAC per endpoint, gestione modelli e scaling, wiring RAG e harness agentici, white label multi-tenant.",
+    },
   },
 
   nav: {
@@ -28,6 +32,7 @@ const it = {
       { label: "Come funziona", href: "/#come-funziona" },
       { label: "Architettura", href: "/#stack" },
       { label: "Modelli", href: "/#modelli" },
+      { label: "Admin panel", href: "/admin-panel" },
       { label: "Prezzi", href: "/pricing" },
     ],
     cta: "Prenota una call",
@@ -252,6 +257,8 @@ const it = {
       },
     ],
     note: "Mockup dell'interfaccia: numeri, nomi e nodi mostrati sono di esempio.",
+    more: "Guida completa al pannello",
+    moreHref: "/admin-panel",
   },
 
   caps: {
@@ -324,6 +331,7 @@ const it = {
     region: "Dati in UE o US, a tua scelta",
     mail: "info@ventic.it",
     links: [
+      { label: "Admin panel", href: "/admin-panel" },
       { label: "Prezzi", href: "/pricing" },
       { label: "Privacy", href: "#" },
       { label: "Termini", href: "#" },
@@ -451,6 +459,96 @@ const it = {
       right: "Prezzi di lancio · valori in euro, IVA esclusa",
     },
   },
+
+  adminPanelPage: {
+    plate: "Guida al pannello",
+    title: ["Il pannello di controllo,", "spiegato riga per riga."],
+    lead: "Tutto quello che il tuo team amministra da qui: chi entra, chi parla con quale modello, come scala l'inventario — e come lo rivendi sotto il tuo brand se fai da cloud provider.",
+    sections: [
+      {
+        id: "utenti",
+        icon: "users",
+        plate: "Utenti e accessi",
+        title: "Chi entra, e con che chiave",
+        lead: "L'anagrafica di chi può parlare con i tuoi modelli, organizzata per come è fatta davvero la tua azienda — o quella dei tuoi clienti.",
+        points: [
+          { title: "Utenti", body: "Stato attivo, data di scadenza dell'accesso e revoca immediata, uno per uno o in blocco." },
+          { title: "Gruppi", body: "Utenti raggruppati per team o funzione: RBAC e quote si applicano al gruppo, non persona per persona." },
+          { title: "Domini", body: "Accesso legato al dominio email dell'organizzazione: chi arriva da @tuaazienda.com entra con le regole già pronte." },
+          { title: "Tenant", body: "Separazione completa fra organizzazioni diverse sullo stesso pannello: dati, quote e modelli visibili non si mescolano mai." },
+          { title: "API token", body: "Ogni chiave ha un proprietario, uno scope e una scadenza. Si crea, ruota e revoca da qui, senza toccare il codice del cliente." },
+          { title: "OAuth e SSO", body: "Autenticazione dal tuo provider — Google Workspace, Microsoft Entra ID, Okta o un OIDC qualsiasi — con due fattori applicabili in policy." },
+        ],
+      },
+      {
+        id: "ruoli",
+        icon: "shield",
+        plate: "Ruoli e RBAC",
+        title: "Chi può fare cosa, endpoint per endpoint",
+        lead: "Il controllo degli accessi non si ferma a \"chi entra\": decide anche cosa può toccare, una volta dentro.",
+        points: [
+          { title: "Quattro livelli", body: "Utente, developer, admin e superadmin: ruoli distinti per l'uso dei modelli e per l'amministrazione del pannello stesso." },
+          { title: "Permessi per endpoint", body: "Una matrice dice, endpoint per endpoint, quale ruolo può leggere, scrivere o amministrare quella risorsa." },
+          { title: "Regole di binding", body: "Utenti, gruppi, domini e tenant si legano ai singoli modelli con regole esplicite di allow o deny." },
+          { title: "Quota ereditata", body: "Ogni regola porta con sé una quota: il limite si applica in automatico a chiunque rientri in quel gruppo, dominio o tenant." },
+        ],
+      },
+      {
+        id: "modelli",
+        icon: "provisioning",
+        plate: "Gestione modelli",
+        title: "L'inventario che decide cosa gira, e come",
+        lead: "Chat, multimodale ed embedding in un solo posto: dall'installazione alla messa a riposo.",
+        points: [
+          { title: "Catalogo Ventic", body: "Deploy di un modello nuovo scegliendolo dai template pronti, già tunati per l'hardware disponibile." },
+          { title: "Inventario installato", body: "Elenco dei modelli attivi con nodo, finestra di contesto, quota e numero di repliche." },
+          { title: "Quote e allow/deny", body: "Limiti di utilizzo per utente, gruppo o tenant, e liste esplicite di chi può o non può chiamare un modello." },
+          { title: "Scaling out e in", body: "Repliche aggiunte o tolte a mano o su soglia, per assorbire i picchi senza tenere GPU accese a vuoto." },
+          { title: "Auto shutdown e start", body: "Politiche di spegnimento quando nessuno lo usa, e riavvio automatico alla prima richiesta in coda." },
+          { title: "Restrizioni semantiche", body: "Wording e concetti vietati impostabili per modello, per applicare policy di contenuto senza toccare il prompt di sistema." },
+          { title: "Sorgenti RAG", body: "Collection e basi di conoscenza collegate al modello direttamente da qui, senza configurazione lato client." },
+        ],
+      },
+      {
+        id: "telemetria",
+        icon: "ops",
+        plate: "Telemetria",
+        title: "Tutto il consumo, sotto gli occhi",
+        lead: "Non solo dashboard estetiche: i numeri che servono per capire se stai spendendo bene o stai per andare in saturazione.",
+        points: [
+          { title: "Token al minuto", body: "Andamento sulle ultime 24 ore, per modello e in aggregato." },
+          { title: "GPU, VRAM e potenza", body: "Occupazione nodo per nodo, per capire dove stai spingendo e dove hai margine." },
+          { title: "Consumo per utente", body: "Chi sta usando quanto, per addebitare correttamente o individuare un uso anomalo." },
+          { title: "Allarmi in tempo reale", body: "Notifica sul canale che preferisci quando una soglia viene superata o un'istanza spot viene revocata." },
+        ],
+      },
+      {
+        id: "wiring",
+        icon: "overlay",
+        plate: "Wiring esterni",
+        title: "I componenti opzionali, collegati da qui",
+        lead: "RAG e harness agentici non sono a parte: si agganciano al pannello come tutto il resto.",
+        points: [
+          { title: "OpenRAG e Qdrant", body: "Collection sorgenti e modello di embedding che le indicizza, configurati e monitorati dal pannello." },
+          { title: "Harness agentici", body: "Gli agenti di coding e gli automated harness si legano al modello a cui devono parlare, con le stesse regole di RBAC." },
+          { title: "Wiring tool", body: "L'endpoint giusto arriva in automatico sui client del team — niente URL o chiavi da distribuire a mano." },
+        ],
+      },
+    ],
+    whiteLabel: {
+      icon: "cloud",
+      plate: "White label",
+      title: ["Il tuo brand,", "la nostra piattaforma."],
+      lead: "Il pannello supporta la separazione per tenant fin dal primo giorno: puoi usarlo per amministrare la tua azienda, oppure per rivendere l'accesso ai tuoi clienti come se fosse tuo.",
+      points: [
+        { title: "Multi-tenant nativo", body: "Ogni cliente è un tenant isolato: dati, utenti, modelli assegnati e consumi non si vedono fra tenant diversi." },
+        { title: "Rivendita come cloud provider", body: "Offri subscription o pacchetti a consumo ai tuoi clienti finali, usando la capacità che hai comprato o affittato una volta sola." },
+        { title: "Ruoli per il tuo team di supporto", body: "Il tuo staff amministra tenant e utenti dei clienti con ruoli admin dedicati, senza toccare il livello superadmin della piattaforma." },
+        { title: "Fatturazione per tenant", body: "Consumo e quote tracciati per singolo tenant: la base dati per fatturare ogni cliente in modo corretto è già pronta." },
+      ],
+      note: "Non serve un'infrastruttura separata per ogni cliente: un solo pannello, un solo pool di GPU, tanti tenant quanti servono.",
+    },
+  },
 };
 
 const en: typeof it = {
@@ -463,6 +561,10 @@ const en: typeof it = {
       title: "Pricing and comparison — Ventic",
       desc: "BYOH at €80/h of consulting, PaaS packages from €1/h all included. Per-user costs and a comparison with frontier subscriptions and pay-per-token.",
     },
+    adminPanel: {
+      title: "Ventic admin panel — users, roles, models, white label",
+      desc: "How the Ventic admin panel works: users and access, endpoint-level RBAC, model management and scaling, RAG and agentic harness wiring, multi-tenant white labeling.",
+    },
   },
 
   nav: {
@@ -471,6 +573,7 @@ const en: typeof it = {
       { label: "How it works", href: "/en/#how-it-works" },
       { label: "Architecture", href: "/en/#stack" },
       { label: "Models", href: "/en/#models" },
+      { label: "Admin panel", href: "/en/admin-panel" },
       { label: "Pricing", href: "/en/pricing" },
     ],
     cta: "Book a call",
@@ -695,6 +798,8 @@ const en: typeof it = {
       },
     ],
     note: "Interface mockup: the numbers, names and nodes shown are sample data.",
+    more: "Full admin panel guide",
+    moreHref: "/en/admin-panel",
   },
 
   caps: {
@@ -767,6 +872,7 @@ const en: typeof it = {
     region: "Data in the EU or the US, your choice",
     mail: "info@ventic.it",
     links: [
+      { label: "Admin panel", href: "/en/admin-panel" },
       { label: "Pricing", href: "/en/pricing" },
       { label: "Privacy", href: "#" },
       { label: "Terms", href: "#" },
@@ -893,6 +999,96 @@ const en: typeof it = {
     foot: {
       left: "Ventic — Netter srl · VAT IT03569900545 · Via Indipendenza, 06081 Assisi (PG), Italy · info@ventic.it",
       right: "Launch pricing · values in euro, VAT excluded",
+    },
+  },
+
+  adminPanelPage: {
+    plate: "Panel guide",
+    title: ["The control panel,", "explained line by line."],
+    lead: "Everything your team administers from here: who gets in, who talks to which model, how the inventory scales — and how you resell it under your own brand if you run it as a cloud provider.",
+    sections: [
+      {
+        id: "users",
+        icon: "users",
+        plate: "Users and access",
+        title: "Who gets in, and with what key",
+        lead: "The registry of who may talk to your models, organised the way your company — or your clients' companies — actually work.",
+        points: [
+          { title: "Users", body: "Active status, access expiry date and immediate revocation, one by one or in bulk." },
+          { title: "Groups", body: "Users grouped by team or function: RBAC and quotas apply to the group, not person by person." },
+          { title: "Domains", body: "Access tied to the organisation's email domain: whoever arrives from @yourcompany.com gets in with the rules already set." },
+          { title: "Tenants", body: "Full separation between different organisations on the same panel: data, quotas and visible models never mix." },
+          { title: "API tokens", body: "Every key carries an owner, a scope and an expiry. Created, rotated and revoked from here, without touching the client's code." },
+          { title: "OAuth and SSO", body: "Authentication from your own provider — Google Workspace, Microsoft Entra ID, Okta or any OIDC — with two-factor enforceable by policy." },
+        ],
+      },
+      {
+        id: "roles",
+        icon: "shield",
+        plate: "Roles and RBAC",
+        title: "Who can do what, endpoint by endpoint",
+        lead: "Access control does not stop at \"who gets in\": it also decides what they can touch once inside.",
+        points: [
+          { title: "Four tiers", body: "User, developer, admin and superadmin: distinct roles for using the models and for administering the panel itself." },
+          { title: "Per-endpoint permissions", body: "A matrix says, endpoint by endpoint, which role may read, write or administer that resource." },
+          { title: "Binding rules", body: "Users, groups, domains and tenants bind to individual models through explicit allow or deny rules." },
+          { title: "Inherited quota", body: "Every rule carries a quota with it: the limit applies automatically to anyone in that group, domain or tenant." },
+        ],
+      },
+      {
+        id: "models",
+        icon: "provisioning",
+        plate: "Model management",
+        title: "The inventory that decides what runs, and how",
+        lead: "Chat, multimodal and embedding in one place: from installation to standing down.",
+        points: [
+          { title: "Ventic catalogue", body: "Deploy a new model by picking it from ready-made templates, already tuned for the hardware available." },
+          { title: "Installed inventory", body: "List of active models with node, context window, quota and replica count." },
+          { title: "Quotas and allow/deny", body: "Usage limits per user, group or tenant, and explicit lists of who may or may not call a model." },
+          { title: "Scaling out and in", body: "Replicas added or removed by hand or on a threshold, to absorb spikes without idle GPUs burning hours." },
+          { title: "Auto shutdown and start", body: "Shutdown policies when nobody is using it, and automatic restart on the first request in queue." },
+          { title: "Semantic restrictions", body: "Banned wording and concepts set per model, to apply content policy without touching the system prompt." },
+          { title: "RAG sourcing", body: "Collections and knowledge bases wired to the model straight from here, with no client-side configuration." },
+        ],
+      },
+      {
+        id: "telemetry",
+        icon: "ops",
+        plate: "Telemetry",
+        title: "All the consumption, in plain sight",
+        lead: "Not just pretty dashboards: the numbers that tell you whether you are spending well or heading into saturation.",
+        points: [
+          { title: "Tokens per minute", body: "Trend over the last 24 hours, per model and in aggregate." },
+          { title: "GPU, VRAM and power", body: "Occupancy node by node, to see where you are pushing hard and where you have headroom." },
+          { title: "Per-user consumption", body: "Who is using how much, to bill correctly or spot anomalous usage." },
+          { title: "Real-time alerts", body: "Notification on the channel you prefer when a threshold is crossed or a spot instance is reclaimed." },
+        ],
+      },
+      {
+        id: "wiring",
+        icon: "overlay",
+        plate: "External wirings",
+        title: "The optional components, wired in from here",
+        lead: "RAG and agentic harnesses are not bolted on the side: they hook into the panel like everything else.",
+        points: [
+          { title: "OpenRAG and Qdrant", body: "Source collections and the embedding model that indexes them, configured and monitored from the panel." },
+          { title: "Agentic harnesses", body: "Coding agents and automated harnesses bind to the model they need to talk to, under the same RBAC rules." },
+          { title: "Wiring tool", body: "The right endpoint lands automatically on the team's clients — no URLs or keys to hand out by hand." },
+        ],
+      },
+    ],
+    whiteLabel: {
+      icon: "cloud",
+      plate: "White label",
+      title: ["Your brand,", "our platform."],
+      lead: "The panel supports tenant separation from day one: use it to administer your own company, or resell access to your clients as if it were your own.",
+      points: [
+        { title: "Native multi-tenancy", body: "Every client is an isolated tenant: data, users, assigned models and consumption never show across tenants." },
+        { title: "Resell as a cloud provider", body: "Offer subscriptions or pay-as-you-go packages to your own end clients, on capacity you bought or rented once." },
+        { title: "Roles for your support team", body: "Your staff administers client tenants and users with dedicated admin roles, without ever touching the platform's superadmin level." },
+        { title: "Per-tenant billing", body: "Consumption and quotas tracked per tenant: the data you need to bill each client correctly is already there." },
+      ],
+      note: "No need for a separate stack per client: one panel, one GPU pool, as many tenants as you need.",
     },
   },
 };
