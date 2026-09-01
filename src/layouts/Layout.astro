@@ -2,19 +2,180 @@
 import { getLangFromUrl, alternatePath, type Lang } from "../i18n/content";
 import "../styles/global.css";
 
+interface Breadcrumb {
+  name: string;
+  href: string;
+}
+
 interface Props {
   title: string;
   description: string;
   lang?: Lang;
+  /** Absolute URL or site-relative path (e.g. /og-image.png). Defaults to /og-image.png */
+  image?: string;
+  imageAlt?: string;
+  imageWidth?: number;
+  imageHeight?: number;
+  /** If true, page is excluded from indexing */
+  noindex?: boolean;
+  type?: "website" | "article";
+  breadcrumbs?: Breadcrumb[];
+  /** Extra JSON-LD graph nodes to merge */
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
-const { title, description } = Astro.props;
+
+const {
+  title,
+  description,
+  image = "/og-image.png",
+  imageAlt: rawImageAlt,
+  imageWidth = 1200,
+  imageHeight = 630,
+  noindex = false,
+  type = "website",
+  breadcrumbs,
+  jsonLd,
+} = Astro.props;
+
 const lang: Lang = Astro.props.lang ?? getLangFromUrl(Astro.url);
+const imageAlt = rawImageAlt ?? (lang === "it" ? "Ventic — LLM privati su GPU dedicate" : "Ventic — Private LLMs on dedicated GPUs");
 
 const site = (Astro.site ?? new URL("https://ventic.it")).toString().replace(/\/$/, "");
-const path = Astro.url.pathname;
+// Normalize pathname to ensure canonical consistency: directory URLs end with /
+const rawPath = Astro.url.pathname;
+// If path looks like a file (contains .), keep as-is; otherwise ensure trailing slash
+const path = rawPath.endsWith("/") || rawPath.includes(".") ? rawPath : `${rawPath}/`;
 const canonical = `${site}${path}`;
-const itHref = `${site}${alternatePath(path, "it")}`;
-const enHref = `${site}${alternatePath(path, "en")}`;
+
+// Build absolute alternates (normalized with trailing slash)
+function absAlt(target: Lang) {
+  const p = alternatePath(rawPath, target);
+  const normalized = p.endsWith("/") || p.includes(".") ? p : `${p}/`;
+  return `${site}${normalized}`;
+}
+const itHref = absAlt("it");
+const enHref = absAlt("en");
+
+// Absolute image URL
+const imageUrl = image.startsWith("http") ? image : `${site}${image.startsWith("/") ? image : `/${image}`}`;
+const ogLocale = lang === "it" ? "it_IT" : "en_GB";
+const ogLocaleAlt = lang === "it" ? "en_GB" : "it_IT";
+
+// Auto breadcrumbs if not provided
+function autoBreadcrumbs(): Breadcrumb[] {
+  if (breadcrumbs) return breadcrumbs;
+  const isEn = lang === "en";
+  const base = isEn ? "/en/" : "/";
+  if (path === "/" || path === "/en/") return [{ name: "Home", href: base }];
+  if (path.includes("/pricing")) {
+    return [
+      { name: "Home", href: base },
+      { name: isEn ? "Pricing" : "Prezzi", href: isEn ? "/en/pricing/" : "/pricing/" },
+    ];
+  }
+  if (path.includes("/admin-panel")) {
+    return [
+      { name: "Home", href: base },
+      { name: isEn ? "Admin Panel" : "Pannello", href: isEn ? "/en/admin-panel/" : "/admin-panel/" },
+    ];
+  }
+  // generic: split path
+  const parts = path.replace(/^\/en\//, "/").split("/").filter(Boolean);
+  const crumbs: Breadcrumb[] = [{ name: "Home", href: base }];
+  let acc = isEn ? "/en" : "";
+  for (const p of parts) {
+    acc += `/${p}`;
+    crumbs.push({ name: p.replace(/-/g, " "), href: `${acc}/` });
+  }
+  return crumbs;
+}
+
+const crumbs = autoBreadcrumbs();
+
+// JSON-LD @graph
+const organization = {
+  "@type": "Organization",
+  "@id": `${site}/#organization`,
+  name: "Ventic",
+  legalName: "Netter srl",
+  url: site,
+  logo: {
+    "@type": "ImageObject",
+    url: `${site}/ventic-logo-outlined.svg`,
+    width: 600,
+    height: 120,
+  },
+  image: imageUrl,
+  description:
+    lang === "it"
+      ? "LLM privati su GPU dedicate — endpoint OpenAI/Anthropic compatibile, dati in UE o US, vLLM ottimizzato."
+      : "Private LLMs on dedicated GPUs — OpenAI/Anthropic-compatible endpoint, data in EU or US, tuned vLLM.",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Via Indipendenza",
+    addressLocality: "Assisi",
+    addressRegion: "PG",
+    postalCode: "06081",
+    addressCountry: "IT",
+  },
+  contactPoint: {
+    "@type": "ContactPoint",
+    email: "info@ventic.it",
+    contactType: "customer support",
+    availableLanguage: ["it", "en"],
+  },
+  sameAs: ["https://ventic.it"],
+};
+
+const website = {
+  "@type": "WebSite",
+  "@id": `${site}/#website`,
+  url: site,
+  name: "Ventic",
+  alternateName: "Ventic — LLM privati",
+  description,
+  publisher: { "@id": `${site}/#organization` },
+  inLanguage: ogLocale,
+};
+
+const webpage = {
+  "@type": "WebPage",
+  "@id": `${canonical}#webpage`,
+  url: canonical,
+  name: title,
+  description,
+  isPartOf: { "@id": `${site}/#website` },
+  about: { "@id": `${site}/#organization` },
+  inLanguage: ogLocale,
+  primaryImageOfPage: {
+    "@type": "ImageObject",
+    url: imageUrl,
+  },
+  breadcrumb: { "@id": `${canonical}#breadcrumb` },
+};
+
+const breadcrumbList = {
+  "@type": "BreadcrumbList",
+  "@id": `${canonical}#breadcrumb`,
+  itemListElement: crumbs.map((c, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: c.name,
+    item: c.href.startsWith("http") ? c.href : `${site}${c.href}`,
+  })),
+};
+
+const graph: Record<string, unknown>[] = [organization, website, webpage, breadcrumbList];
+
+if (jsonLd) {
+  if (Array.isArray(jsonLd)) graph.push(...jsonLd);
+  else graph.push(jsonLd);
+}
+
+const jsonLdString = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": graph,
+});
 ---
 
 <!doctype html>
@@ -25,27 +186,67 @@ const enHref = `${site}${alternatePath(path, "en")}`;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="icon" href="/favicon.ico" sizes="any" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="author" content="Netter srl" />
+    <meta name="publisher" content="Ventic" />
+    <meta name="format-detection" content="telephone=no" />
+    {noindex ? (
+      <meta name="robots" content="noindex, nofollow" />
+      <meta name="googlebot" content="noindex, nofollow" />
+    ) : (
+      <>
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <meta name="bingbot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+      </>
+    )}
+
+    {/* Canonical & hreflang */}
     <link rel="canonical" href={canonical} />
     <link rel="alternate" hreflang="it" href={itHref} />
     <link rel="alternate" hreflang="en" href={enHref} />
     <link rel="alternate" hreflang="x-default" href={itHref} />
+
+    {/* Sitemap discovery */}
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    {/* Icons & manifest */}
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#0e0f11" />
-    <meta property="og:type" content="website" />
+
+    {/* Open Graph */}
+    <meta property="og:type" content={type} />
     <meta property="og:site_name" content="Ventic" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:locale" content={lang === "it" ? "it_IT" : "en_GB"} />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:locale:alternate" content={ogLocaleAlt} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:width" content={String(imageWidth)} />
+    <meta property="og:image:height" content={String(imageHeight)} />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta property="og:image:type" content="image/png" />
+
+    {/* Twitter */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+
+    {/* Preconnect for performance */}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
     />
+
+    {/* JSON-LD */}
+    <script type="application/ld+json" set:html={jsonLdString} />
   </head>
   <body>
     <slot />

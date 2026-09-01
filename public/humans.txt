@@ -1,0 +1,18 @@
+/* TEAM */
+Publisher: Netter srl
+Location: Via Indipendenza, 06081 Assisi (PG), Italy
+VAT: IT03569900545
+Contact: info@ventic.it
+URL: https://ventic.it
+
+/* SITE */
+Built with: Astro 7, React, Tailwind CSS
+Fonts: IBM Plex Sans (Google Fonts)
+Doctype: HTML5
+Language: it (default), en
+Standards: W3C HTML5, Schema.org, Open Graph, Twitter Cards
+Sitemap: https://ventic.it/sitemap-index.xml
+Robots: https://ventic.it/robots.txt
+
+/* THANKS */
+Thanks to open-weight community and vLLM.

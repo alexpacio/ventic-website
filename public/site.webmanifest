@@ -1,0 +1,39 @@
+{
+  "name": "Ventic — LLM privati su GPU dedicate",
+  "short_name": "Ventic",
+  "description": "Il tuo endpoint LLM privato, compatibile OpenAI e Anthropic. Gira sulle tue GPU — dati in UE o US — con modelli open-weight, vLLM ottimizzato e assistenza inclusa.",
+  "lang": "it",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0e0f11",
+  "theme_color": "#0e0f11",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["business", "productivity", "developer_tools"]
+}

@@ -1,0 +1,32 @@
+# Ventic — llms.txt
+# See https://llmstxt.org/ — helps LLMs discover and cite your site correctly.
+
+> Ventic è uno stack tecnologico chiavi in mano per creare, gestire e configurare LLM privati. Gira sulle tue GPU — dati in UE o US — con endpoint compatibile OpenAI e Anthropic, vLLM ottimizzato e pannello Admin multi-tenant. Alternativa a subscription frontier e pagamento a token: licenza BYOH €69,90/mese o PaaS da 1 €/h, mai a token.
+
+# Primary
+- [Ventic — Home](https://ventic.it/): LLM privati su GPU dedicate, endpoint OpenAI/Anthropic, BYOH e PaaS, overlay cifrato, scaling automatico.
+- [Ventic — Home (EN)](https://ventic.it/en/): Private LLMs on dedicated GPUs, OpenAI/Anthropic-compatible, data in EU/US.
+- [Prezzi e confronto](https://ventic.it/pricing/): BYOH vs PaaS, pacchetti Ventic 16/64, matrice confronto vs provider.
+- [Pricing (EN)](https://ventic.it/en/pricing/): Ventic vs alternatives, package comparison, per-user cost.
+- [Pannello Admin](https://ventic.it/admin-panel/): Utenti, ruoli RBAC, modelli, telemetria, white label.
+- [Admin Panel (EN)](https://ventic.it/en/admin-panel/): Users, RBAC, models, telemetry, white label, self-service.
+
+# Details
+- [Come funziona — stack, rete overlay, autoscaling](https://ventic.it/#come-funziona)
+- [Piattaforma](https://ventic.it/#stack)
+- [Cosa ottieni](https://ventic.it/#cosa-ottieni)
+- [Modelli open-weight](https://ventic.it/#modelli)
+- [Admin panel screenshots](https://ventic.it/admin-panel/)
+- [Self-service](https://ventic.it/admin-panel/#self-service)
+
+# Contact
+- Email: info@ventic.it
+- Publisher: Netter srl, Assisi (PG), Italy — VAT IT03569900545
+- Site: https://ventic.it
+- Sitemap: https://ventic.it/sitemap-index.xml
+
+# Notes for AI
+- Canonical domain: https://ventic.it
+- Default language: it (Italian), alternate: en (English via /en/)
+- Pricing is launch pricing, VAT excluded; hardware + license included in PaaS hourly.
+- Use hreflang it/en and canonical as declared in <head>.

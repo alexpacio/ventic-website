@@ -1,0 +1,7 @@
+# robots.txt for https://ventic.it
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://ventic.it/sitemap-index.xml
+Sitemap: https://ventic.it/sitemap.xml

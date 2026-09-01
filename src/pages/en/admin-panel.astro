@@ -9,12 +9,14 @@ import AdminWhiteLabel from "../../components/AdminWhiteLabel.astro";
 import Cta from "../../components/Cta.astro";
 import Footer from "../../components/Footer.astro";
 import { content } from "../../i18n/content";
+import { adminPanelJsonLd } from "../../lib/seo";
 
 const lang = "en" as const;
 const seo = content[lang].seo.adminPanel;
 const sections = content[lang].adminPanelPage.sections;
+const jsonLd = adminPanelJsonLd(lang);
 ---
-<Layout title={seo.title} description={seo.desc} lang={lang}>
+<Layout title={seo.title} description={seo.desc} lang={lang} jsonLd={jsonLd}>
   <Nav lang={lang} />
   <main id="main">
     <AdminHero lang={lang} />

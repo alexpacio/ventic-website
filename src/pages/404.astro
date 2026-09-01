@@ -1,0 +1,18 @@
+---
+import Layout from "../layouts/Layout.astro";
+const title = "Pagina non trovata — Ventic";
+const description = "La pagina che cerchi non esiste. Torna alla home di Ventic — LLM privati su GPU dedicate.";
+---
+<Layout title={title} description={description} noindex={true}>
+  <main id="main" class="min-h-[70vh] grid place-items-center bg-[#0e0f11] text-[#F2F0EB] px-6 py-24">
+    <div class="max-w-xl text-center">
+      <p class="text-[11px] tracking-[0.2em] uppercase text-white/50 mb-4">Errore 404</p>
+      <h1 class="text-[40px] font-semibold leading-none tracking-tight">Pagina non trovata.</h1>
+      <p class="mt-4 text-[16px] leading-6 text-white/70">{description}</p>
+      <div class="mt-8 flex gap-3 justify-center">
+        <a href="/" class="inline-flex items-center rounded-full bg-[#F5A83F] text-[#0e0f11] px-6 py-3 text-sm font-semibold">Torna alla home</a>
+        <a href="/pricing/" class="inline-flex items-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white">Vedi i prezzi</a>
+      </div>
+    </div>
+  </main>
+</Layout>

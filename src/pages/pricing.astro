@@ -9,11 +9,13 @@ import Sizing from "../components/Sizing.astro";
 import PriceNotes from "../components/PriceNotes.astro";
 import Footer from "../components/Footer.astro";
 import { content } from "../i18n/content";
+import { pricingJsonLd } from "../lib/seo";
 
 const lang = "it" as const;
 const seo = content[lang].seo.pricing;
+const jsonLd = pricingJsonLd(lang);
 ---
-<Layout title={seo.title} description={seo.desc} lang={lang}>
+<Layout title={seo.title} description={seo.desc} lang={lang} jsonLd={jsonLd}>
   <Nav lang={lang} />
   <main id="main">
     <PriceHero lang={lang} />

@@ -12,11 +12,13 @@ import PricingStrip from "../components/PricingStrip.astro";
 import Cta from "../components/Cta.astro";
 import Footer from "../components/Footer.astro";
 import { content } from "../i18n/content";
+import { serviceJsonLd } from "../lib/seo";
 
 const lang = "it" as const;
 const seo = content[lang].seo.home;
+const jsonLd = serviceJsonLd(lang);
 ---
-<Layout title={seo.title} description={seo.desc} lang={lang}>
+<Layout title={seo.title} description={seo.desc} lang={lang} jsonLd={jsonLd}>
   <Nav lang={lang} />
   <main id="main">
     <Hero lang={lang} />
