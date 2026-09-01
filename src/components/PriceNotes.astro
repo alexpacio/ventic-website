@@ -1,9 +1,9 @@
 ---
 import { content, type Lang } from "../i18n/content";
+import ObfuscatedEmail from "./ObfuscatedEmail.astro";
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const c = content[lang].pricingPage;
-const mail = content[lang].footer.mail;
 ---
 <section class="notes-sec">
   <div class="wrap grid inner">
@@ -16,7 +16,7 @@ const mail = content[lang].footer.mail;
     <div class="right">
       <h2 class="h3">{c.notes.ctaTitle}</h2>
       <p class="cell-b">{c.notes.ctaBody}</p>
-      <a class="btn btn--a" href={`mailto:${mail}`}>{c.notes.ctaBtn}</a>
+      <ObfuscatedEmail label={c.notes.ctaBtn} lang={lang} class="btn btn--a" />
     </div>
   </div>
 </section>

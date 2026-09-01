@@ -20,7 +20,7 @@
 - [Self-service](https://ventic.it/admin-panel/#self-service)
 
 # Contact
-- Email: info@ventic.it
+- Email: disponibile solo dopo verifica TrustCaptcha (clicca un bottone mailto sul sito per avviare la verifica — nessun indirizzo in chiaro prima)
 - Publisher: Netter srl, Assisi (PG), Italy — VAT IT03569900545
 - Site: https://ventic.it
 - Sitemap: https://ventic.it/sitemap-index.xml

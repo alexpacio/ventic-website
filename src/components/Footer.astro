@@ -1,5 +1,6 @@
 ---
 import Wordmark from "./Wordmark.astro";
+import ObfuscatedEmail from "./ObfuscatedEmail.astro";
 import { content, type Lang } from "../i18n/content";
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
@@ -13,7 +14,7 @@ const c = content[lang].footer;
     </div>
     <div class="right">
       <span class="mono meta">{c.region}</span>
-      <a class="mono link" href={`mailto:${c.mail}`}>{c.mail}</a>
+      <ObfuscatedEmail lang={lang} class="mono link" />
       {c.links.map((l) => <a class="mono link" href={l.href}>{l.label}</a>)}
     </div>
   </div>

@@ -386,13 +386,14 @@ const it = {
     title: ["Un’ora per sapere", "se il tuo server è pronto."],
     body: "Guardiamo il tuo hardware e ti diciamo quale modello ci gira davvero e a che velocità. Se non basta, te lo diciamo prima — non dopo.",
     btn: "Prenota una call tecnica",
-    mail: "Scrivici: info@ventic.it",
+    mail: "Scrivici: verifica per mostrare",
+    mailPrefix: "Scrivici: ",
   },
 
   footer: {
     legal: "Netter srl · P.IVA IT03569900545 · Via Indipendenza, 06081 Assisi (PG), Italy",
     region: "Dati in UE o US, a tua scelta",
-    mail: "info@ventic.it",
+    mail: "Mostra email",
     links: [
       { label: "Pannello", href: "/admin-panel/" },
       { label: "Prezzi", href: "/pricing/" },
@@ -520,7 +521,8 @@ const it = {
       ctaBtn: "Prenota una call tecnica",
     },
     foot: {
-      left: "Ventic — Netter srl · P.IVA IT03569900545 · Via Indipendenza, 06081 Assisi (PG) · info@ventic.it",
+      left: "Ventic — Netter srl · P.IVA IT03569900545 · Via Indipendenza, 06081 Assisi (PG) · verifica sul sito per contatti",
+      leftPrefix: "Ventic — Netter srl · P.IVA IT03569900545 · Via Indipendenza, 06081 Assisi (PG) · ",
       right: "Prezzi di lancio · licenza + hardware · IVA esclusa",
     },
   },
@@ -992,13 +994,14 @@ const en: typeof it = {
     title: ["One hour to know", "if your server is ready."],
     body: "We look at your hardware and tell you which model actually runs on it, and how fast. If it’s not enough we say so before — not after.",
     btn: "Book a technical call",
-    mail: "Email us: info@ventic.it",
+    mail: "Email us: verify to show",
+    mailPrefix: "Email us: ",
   },
 
   footer: {
     legal: "Netter srl · VAT IT03569900545 · Via Indipendenza, 06081 Assisi (PG), Italy",
     region: "Data in the EU or the US, your choice",
-    mail: "info@ventic.it",
+    mail: "Show email",
     links: [
       { label: "Panel", href: "/en/admin-panel/" },
       { label: "Pricing", href: "/en/pricing/" },
@@ -1126,7 +1129,8 @@ const en: typeof it = {
       ctaBtn: "Book a technical call",
     },
     foot: {
-      left: "Ventic — Netter srl · VAT IT03569900545 · Via Indipendenza, 06081 Assisi (PG) · info@ventic.it",
+      left: "Ventic — Netter srl · VAT IT03569900545 · Via Indipendenza, 06081 Assisi (PG) · verify on site for contacts",
+      leftPrefix: "Ventic — Netter srl · VAT IT03569900545 · Via Indipendenza, 06081 Assisi (PG) · ",
       right: "Launch pricing · license + hardware · excl. VAT",
     },
   },

@@ -1,5 +1,7 @@
 ---
 import { getLangFromUrl, alternatePath, type Lang } from "../i18n/content";
+import HumanChallenge from "../components/HumanChallenge.astro";
+import GlobalTrustCaptcha from "../components/GlobalTrustCaptcha.tsx";
 import "../styles/global.css";
 
 interface Breadcrumb {
@@ -39,6 +41,8 @@ const {
 
 const lang: Lang = Astro.props.lang ?? getLangFromUrl(Astro.url);
 const imageAlt = rawImageAlt ?? (lang === "it" ? "Ventic — LLM privati su GPU dedicate" : "Ventic — Private LLMs on dedicated GPUs");
+const turnstileSitekey = (import.meta.env.PUBLIC_TURNSTILE_SITEKEY as string | undefined) || undefined;
+const trustSitekey = (import.meta.env.PUBLIC_TRUSTCAPTCHA_SITEKEY as string | undefined) || undefined;
 
 const site = (Astro.site ?? new URL("https://ventic.it")).toString().replace(/\/$/, "");
 // Normalize pathname to ensure canonical consistency: directory URLs end with /
@@ -120,9 +124,9 @@ const organization = {
   },
   contactPoint: {
     "@type": "ContactPoint",
-    email: "info@ventic.it",
     contactType: "customer support",
     availableLanguage: ["it", "en"],
+    url: `${site}/#contatto`,
   },
   sameAs: ["https://ventic.it"],
 };
@@ -250,5 +254,147 @@ const jsonLdString = JSON.stringify({
   </head>
   <body>
     <slot />
+    {/* Global Human Challenge — TrustCaptcha (preferito) o fallback — visibile solo su click mailto */}
+    {trustSitekey ? (
+      <div id="ventic-trust-layer" style="position:fixed;right:16px;bottom:16px;z-index:9999;display:none;">
+        <GlobalTrustCaptcha sitekey={trustSitekey} lang={lang} client:only="react" />
+      </div>
+    ) : (
+      <div id="ventic-human-layer" style="position:fixed;right:16px;bottom:16px;z-index:9999;display:none;">
+        <HumanChallenge lang={lang} sitekey={turnstileSitekey} />
+      </div>
+    )}
+    <script is:inline define:vars={{ trustSitekey }}>
+      (() => {
+        // Email protetta — decodificata solo dopo verifica TrustCaptcha
+        const ENCODED = "=QXauMWa05WZ2B0bm5Wa";
+        const useTrustCaptcha = Boolean(trustSitekey);
+        const decode = (s) => {
+          try { const rev = s.split("").reverse().join(""); return atob(rev); }
+          catch { try { return atob(s); } catch { return ""; } }
+        };
+        const getEmail = () => decode(ENCODED);
+        let humanVerified = false;
+        let pendingTarget = null;
+        const isBotSignal = () => {
+          try {
+            if (navigator.webdriver) return true;
+            if (/HeadlessChrome|PhantomJS|bot|crawler|spider/i.test(navigator.userAgent)) return true;
+            return false;
+          } catch { return false; }
+        };
+
+        const markVerified = (provider = "js-challenge") => {
+          if (humanVerified) return;
+          if (isBotSignal()) return;
+          humanVerified = true;
+          window.__venticHumanVerified = true;
+          const email = getEmail();
+          if (!email) return;
+          const layer = document.getElementById("ventic-human-layer");
+          const trustLayer = document.getElementById("ventic-trust-layer");
+          const widget = document.querySelector("[data-cf-widget]");
+          if (widget) {
+            widget.dataset.verified = "1";
+            const msg = widget.querySelector(".cf-msg");
+            if (msg) msg.textContent = document.documentElement.lang === "en" ? "Verified ✓ — email unlocked" : "Verifica completata ✓ — email sbloccata";
+          }
+          // sblocca tutte le email — solo ora la mail appare nel DOM
+          document.querySelectorAll("a.obf-email").forEach((el) => {
+            if (el.dataset.decoded === "1") return;
+            const prefix = el.getAttribute("data-prefix") || "";
+            const label = el.getAttribute("data-label");
+            el.setAttribute("href", "mailto:" + email);
+            if (!label) el.textContent = prefix + email;
+            // per i bottoni con label manteniamo il testo label, ma href diventa mailto
+            el.dataset.decoded = "1";
+            el.classList.add("is-verified");
+          });
+          window.dispatchEvent(new CustomEvent("ventic:humanVerified", {detail:{provider, email}}));
+          if (pendingTarget) {
+            // pendingTarget è già stato sbloccato sopra, apri mailto
+            const targetHref = pendingTarget.getAttribute("href");
+            if (targetHref && targetHref.startsWith("mailto:")) {
+              setTimeout(() => { window.location.href = targetHref; }, 300);
+            } else if (pendingTarget.getAttribute("data-label")) {
+              // bottone con label: href ora è mailto
+              setTimeout(() => { window.location.href = "mailto:" + email; }, 300);
+            }
+            pendingTarget = null;
+          }
+          if (layer) setTimeout(() => { layer.style.display = "none"; }, 1800);
+          if (trustLayer && useTrustCaptcha) setTimeout(() => { trustLayer.style.opacity = "0.9"; }, 800);
+        };
+
+        const scrollToTrust = () => {
+          const trustLayer = document.getElementById("ventic-trust-layer");
+          if (trustLayer) {
+            trustLayer.style.display = "block";
+            trustLayer.scrollIntoView({behavior:"smooth", block:"center"});
+            trustLayer.style.outline = "2px solid #f5a83f";
+            setTimeout(() => { trustLayer.style.outline = "none"; }, 1500);
+          }
+        };
+
+        const onEmailActivate = (e) => {
+          const el = e.currentTarget;
+          if (el.dataset.decoded === "1") return; // già sbloccata → mailto normale
+          e.preventDefault();
+          if (humanVerified) {
+            // già verificato ma el non ancora sbloccata (caso race)
+            const email = getEmail();
+            const prefix = el.getAttribute("data-prefix") || "";
+            const label = el.getAttribute("data-label");
+            el.setAttribute("href", "mailto:" + email);
+            if (!label) el.textContent = prefix + email;
+            el.dataset.decoded = "1";
+            window.location.href = "mailto:" + email;
+            return;
+          }
+          // verifica parte SOLO su click del bottone mailto
+          pendingTarget = el;
+          if (useTrustCaptcha) {
+            scrollToTrust();
+            const gate = document.querySelector("[data-trustcaptcha-gate]");
+            if (gate) {
+              gate.style.transform = "scale(1.02)";
+              setTimeout(() => gate.style.transform = "", 300);
+            }
+            return; // attende solve TrustCaptcha → evento ventic:humanVerified → markVerified
+          }
+          // fallback mock: mostra widget e verifica dopo breve challenge
+          const layer = document.getElementById("ventic-human-layer");
+          if (layer) layer.style.display = "block";
+          const widget = document.querySelector("[data-cf-widget]");
+          if (widget) {
+            const msg = widget.querySelector(".cf-msg");
+            if (msg) msg.textContent = document.documentElement.lang === "en" ? "Verifying you are human…" : "Verifica che sei umano…";
+          }
+          setTimeout(() => markVerified("click-challenge"), 700);
+        };
+
+        const initEmails = () => {
+          document.querySelectorAll("a.obf-email").forEach((el) => {
+            el.addEventListener("click", onEmailActivate);
+            el.addEventListener("keydown", (e) => {
+              if (e.key === "Enter" || e.key === " ") onEmailActivate(e);
+            });
+          });
+        };
+
+        const boot = () => {
+          initEmails();
+          // TrustCaptcha / Turnstile dispatchano ventic:humanVerified → sblocca
+          window.addEventListener("ventic:humanVerified", (e) => {
+            if (!humanVerified) markVerified(e.detail?.provider || "trustcaptcha");
+          });
+          // nessun invisible challenge: verifica solo su click mailto
+        };
+
+        if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+        else boot();
+        window.__venticVerifyHuman = markVerified;
+      })();
+    </script>
   </body>
 </html>

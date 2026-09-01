@@ -2,7 +2,7 @@
 Publisher: Netter srl
 Location: Via Indipendenza, 06081 Assisi (PG), Italy
 VAT: IT03569900545
-Contact: info@ventic.it
+Contact: disponibile solo dopo verifica TrustCaptcha sul sito (clicca un bottone mailto)
 URL: https://ventic.it
 
 /* SITE */
