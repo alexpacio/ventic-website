@@ -15,12 +15,17 @@ const L = p.labels;
       <span class="mono meta">{p.meta}</span>
     </div>
 
+    <div class="lic-banner">
+      <span class="mono lic-badge"><span class="dot dot--live" style="width:6px;height:6px"></span>{lang === "it" ? "PaaS: licenza inclusa nella tariffa oraria" : "PaaS: license included in hourly rate"}</span>
+      <span class="mono lic-note">{lang === "it" ? "BYOH: licenza a parte → €69,90 / 5 posti + €39,99 ogni 10" : "BYOH: license separate → €69.90 / 5 seats + €39.99 per 10"}</span>
+    </div>
+
     <div class="pair">
       {p.items.map((it) => (
         <article class="panel panel--warm card">
           <div class="panel-head panel-head--warm">
             <span class="mono tag">{it.name}</span>
-            <span class="rivet"></span>
+            <span class="mono tag-lic">{lang === "it" ? "licenza inclusa" : "license included"}</span>
           </div>
           <div class="body-in">
             <div class="topline">
@@ -73,30 +78,41 @@ const L = p.labels;
                 </tbody>
               </table>
             </div>
+            <div class="sunk lic-hint">
+              <span class="mono lic-hint-k">{lang === "it" ? "Licenza" : "License"}</span>
+              <span class="mono lic-hint-v">{lang === "it" ? "inclusa — nessuna riga extra" : "included — no extra line"}</span>
+            </div>
           </div>
         </article>
       ))}
     </div>
 
-    <p class="mono foot">{p.foot1}<br />{p.foot2}</p>
+    <div class="sunk footbox">
+      <p class="mono foot">{p.foot1}</p>
+      <p class="mono foot foot--accent">{p.foot2}</p>
+    </div>
   </div>
 </section>
 
 <style>
   .pkg-sec { padding-bottom: 40px; }
-  .head { margin-bottom: 20px; }
+  .head { margin-bottom: 16px; }
   .plate { margin-bottom: 16px; }
   .meta { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--fg-ghost); }
+  .lic-banner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; padding: 12px 14px; background: var(--sunk); border: 1px solid var(--line-soft); border-radius: 3px; }
+  .lic-badge { display: inline-flex; align-items: center; gap: 7px; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--jade); background: rgba(53,207,164,.08); border: 1px solid rgba(53,207,164,.18); padding: 6px 10px; border-radius: 999px; }
+  .lic-note { font-size: 11px; letter-spacing: .04em; color: var(--fg-mute); }
   .pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
   .card { display: flex; flex-direction: column; padding: 0; overflow: hidden; }
-  .tag { font-size: 11px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); }
+  .tag { font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+  .tag-lic { font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--jade); background: rgba(53,207,164,.08); border: 1px solid rgba(53,207,164,.18); padding: 4px 8px; border-radius: 999px; }
   .body-in { display: flex; flex-direction: column; gap: 16px; padding: 24px 22px; }
 
   .topline { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
   .klabel { display: block; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--fg-faint); }
   .model { display: block; margin-top: 8px; font-size: 17px; font-weight: 500; color: var(--fg-strong); }
   .prow { display: flex; align-items: baseline; gap: 7px; }
-  .pval { font-size: clamp(32px, 3.4vw, 42px); }
+  .pval { font-size: clamp(32px, 3.4vw, 42px); color: var(--accent); }
   .punit { font-size: 13px; color: var(--fg-mute); }
 
   .caps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
@@ -113,7 +129,12 @@ const L = p.labels;
   .rl { padding: 14px 16px; background: var(--cell); font-size: 14px; color: var(--fg-dim); }
   .val { padding: 14px; background: var(--panel-b); text-align: right; font-size: 15px; color: #c5c3bd; white-space: nowrap; }
   .strong { font-weight: 500; color: var(--fg-strong); }
+  .lic-hint { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 14px; }
+  .lic-hint-k { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--fg-faint); }
+  .lic-hint-v { font-size: 11px; letter-spacing: .04em; color: var(--jade); font-weight: 500; }
 
-  .foot { margin-top: 18px; font-size: 12px; line-height: 1.7; letter-spacing: .03em; color: var(--fg-faint); }
-  @media (max-width: 900px) { .pair { grid-template-columns: 1fr; } }
+  .footbox { margin-top: 18px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; }
+  .foot { font-size: 11px; line-height: 1.7; letter-spacing: .03em; color: var(--fg-faint); }
+  .foot--accent { color: var(--fg-mute); }
+  @media (max-width: 900px) { .pair { grid-template-columns: 1fr; } .lic-banner { flex-direction: column; align-items: flex-start; } }
 </style>

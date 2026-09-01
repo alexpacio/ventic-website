@@ -4,7 +4,7 @@ import { content, type Lang } from "../i18n/content";
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const c = content[lang].caps;
-const icons = ["restart", "users", "lock", "bars", "key", "power", "shield", "terminal", "cloud"];
+const icons = ["restart", "users", "lock", "bars", "key", "power", "shield", "terminal", "cloud", "overlay", "provisioning", "ops"];
 ---
 <section id={c.id} class="sec">
   <div class="wrap">

@@ -3,6 +3,11 @@ import { content, type Lang } from "../i18n/content";
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const c = content[lang].problem;
+const subscriptionCards = c.cards.filter((cd) => cd.tag.toLowerCase().includes("subscription"));
+const tokenCards = c.cards.filter((cd) => cd.tag.toLowerCase().includes("token"));
+const labels = lang === "it"
+  ? { sub: "A subscription", tok: "A token" }
+  : { sub: "Subscription", tok: "Per token" };
 ---
 <section id={c.id} class="sec prob">
   <div class="wrap">
@@ -13,14 +18,39 @@ const c = content[lang].problem;
       </div>
       <p class="body lcol">{c.lead}</p>
     </div>
-    <div class="cards">
-      {c.cards.map((card) => (
-        <article class="panel card">
-          <span class="idx">{card.tag.toUpperCase()}</span>
-          <h3 class="card-title">{card.title}</h3>
-          <p class="cell-b">{card.body}</p>
-        </article>
-      ))}
+    <div class="groups">
+      <div class="group">
+        <div class="group-head">
+          <span class="mono group-label">{labels.sub}</span>
+          <span class="group-line"></span>
+          <span class="mono group-count">{subscriptionCards.length} limiti</span>
+        </div>
+        <div class="cards">
+          {subscriptionCards.map((card) => (
+            <article class="panel card card--sub">
+              <span class="idx">{card.tag.toUpperCase()}</span>
+              <h3 class="card-title">{card.title}</h3>
+              <p class="cell-b">{card.body}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+      <div class="group">
+        <div class="group-head">
+          <span class="mono group-label group-label--warm">{labels.tok}</span>
+          <span class="group-line group-line--warm"></span>
+          <span class="mono group-count">{tokenCards.length} limiti</span>
+        </div>
+        <div class="cards">
+          {tokenCards.map((card) => (
+            <article class="panel card card--tok">
+              <span class="idx idx--warm">{card.tag.toUpperCase()}</span>
+              <h3 class="card-title">{card.title}</h3>
+              <p class="cell-b">{card.body}</p>
+            </article>
+          ))}
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -31,12 +61,26 @@ const c = content[lang].problem;
   .tcol { grid-column: span 7; }
   .lcol { grid-column: span 5; }
   .plate { margin-bottom: 16px; }
+  .groups { display: flex; flex-direction: column; gap: 28px; }
+  .group-head { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+  .group-label {
+    font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
+    color: #a9a7a1; background: var(--sunk); border: 1px solid var(--line-soft);
+    border-radius: 999px; padding: 6px 12px; white-space: nowrap;
+  }
+  .group-label--warm { color: var(--accent); border-color: rgba(245,168,63,0.22); background: rgba(245,168,63,0.08); }
+  .group-line { flex: 1; height: 1px; background: var(--line-dim); }
+  .group-line--warm { background: rgba(245,168,63,0.22); }
+  .group-count { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--fg-ghost); white-space: nowrap; }
   .card { display: flex; flex-direction: column; padding: 22px 20px; }
+  .card--tok { border-color: rgba(245,168,63,0.16); }
+  .idx--warm { color: var(--accent); }
   .card-title { margin: 18px 0 12px; }
   .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
   @media (max-width: 1080px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (max-width: 860px) {
     .tcol, .lcol { grid-column: span 6; }
     .cards { grid-template-columns: 1fr; }
+    .group-head { flex-wrap: wrap; }
   }
 </style>

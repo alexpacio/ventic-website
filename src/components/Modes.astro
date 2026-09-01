@@ -1,9 +1,9 @@
 ---
+import Icon from "./Icon.astro";
 import { content, type Lang } from "../i18n/content";
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const c = content[lang].modes;
-const cards = [c.byoh, c.paas];
 ---
 <section id={c.id} class="sec">
   <div class="wrap">
@@ -16,29 +16,71 @@ const cards = [c.byoh, c.paas];
     </div>
 
     <div class="pair">
-      {cards.map((m, i) => (
-        <article class={`panel card ${i === 1 ? "panel--warm" : ""}`}>
-          <div class={`panel-head ${i === 1 ? "panel-head--warm" : ""}`}>
-            <span class={`mono tag ${i === 1 ? "tag--warm" : ""}`}>{m.tag}</span>
-            <span class="rivet"></span>
-          </div>
-          <div class="body-in">
-            <h3 class="ctitle">{m.title}</h3>
-            <p class="desc">{m.desc}</p>
-            <div class="sunk pricebox">
-              <span class="mono plabel">{m.priceLabel}</span>
-              <span class="prow">
-                <span class="price pval">{m.price}</span>
-                <span class="mono punit">{m.unit}</span>
-              </span>
+      <!-- BYOH — licenza a postazioni -->
+      <article class="panel card">
+        <div class="panel-head">
+          <span class="mono tag">{c.byoh.tag}</span>
+          <span class="rivet"></span>
+        </div>
+        <div class="body-in">
+          <h3 class="ctitle">{c.byoh.title}</h3>
+          <p class="desc">{c.byoh.desc}</p>
+          <div class="sunk pricebox pricebox--byoh">
+            <span class="mono plabel">{c.byoh.priceLabel}</span>
+            <span class="prow">
+              <span class="price pval">{c.byoh.price}</span>
+              <span class="mono punit">{c.byoh.unit}</span>
+            </span>
+            <span class="mono byoh-sub">{lang === "it" ? "per 5 postazioni incluse" : "for 5 seats included"}</span>
+            <div class="scale">
+              <div class="scale-row">
+                <span class="seat-dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+                <span class="mono scale-label">{lang === "it" ? "5 incluse" : "5 included"}</span>
+                <span class="mono scale-price">{lang === "it" ? "€69,90" : "€69.90"}</span>
+              </div>
+              <div class="scale-sep"><span></span><span class="mono plus">{lang === "it" ? "+ €39,99" : "+ €39.99"}</span><span></span></div>
+              <div class="scale-row scale-row--muted">
+                <span class="seat-dots seat-dots--muted" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+                <span class="mono scale-label">{lang === "it" ? "ogni 10 aggiuntive" : "per extra 10"}</span>
+                <span class="mono scale-price">{lang === "it" ? "€39,99" : "€39.99"}</span>
+              </div>
+              <p class="mono scale-foot">{lang === "it" ? "Es. 15 posti → €109,89/mese · 25 posti → €149,88/mese" : "E.g. 15 seats → €109.89/mo · 25 seats → €149.88/mo"}</p>
             </div>
-            <ul class="ticks">
-              {m.ticks.map((t) => <li class="tick">{t}</li>)}
-            </ul>
-            <p class="note">{m.note}</p>
           </div>
-        </article>
-      ))}
+          <ul class="ticks">
+            {c.byoh.ticks.map((t) => <li class="tick">{t}</li>)}
+          </ul>
+          <p class="note">{c.byoh.note}</p>
+        </div>
+      </article>
+
+      <!-- PaaS — tutto incluso -->
+      <article class="panel panel--warm card">
+        <div class="panel-head panel-head--warm">
+          <span class="mono tag tag--warm">{c.paas.tag}</span>
+          <span class="rivet"></span>
+        </div>
+        <div class="body-in">
+          <h3 class="ctitle">{c.paas.title}</h3>
+          <p class="desc">{c.paas.desc}</p>
+          <div class="sunk pricebox pricebox--paas">
+            <span class="mono plabel plabel--warm">{c.paas.priceLabel}</span>
+            <span class="prow">
+              <span class="price pval pval--warm">{c.paas.price}</span>
+              <span class="mono punit">{c.paas.unit}</span>
+            </span>
+            <span class="badge-lic mono"><span class="dot dot--live" style="width:6px;height:6px"></span>{lang === "it" ? "licenza inclusa" : "license included"}</span>
+            <div class="paas-meta">
+              <span class="mono paas-hw"><Icon name="provisioning" size={14} width={1.6} /> {lang === "it" ? "hardware + licenza" : "hardware + license"}</span>
+              <span class="mono paas-off">{lang === "it" ? "mai a token" : "never per-token"}</span>
+            </div>
+          </div>
+          <ul class="ticks">
+            {c.paas.ticks.map((t) => <li class="tick">{t}</li>)}
+          </ul>
+          <p class="note">{c.paas.note}</p>
+        </div>
+      </article>
     </div>
   </div>
 </section>
@@ -48,17 +90,44 @@ const cards = [c.byoh, c.paas];
   .lead-r { max-width: 38ch; }
   .pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
   .card { display: flex; flex-direction: column; padding: 0; overflow: hidden; }
-  .tag { font-size: 11px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: #a9a7a1; }
+  .tag { font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: #a9a7a1; line-height: 1.3; }
   .tag--warm { color: var(--accent); }
   .body-in { display: flex; flex-direction: column; gap: 16px; padding: 24px 22px; flex-grow: 1; }
   .ctitle { font-family: var(--display); font-size: clamp(30px, 3vw, 40px); font-weight: 700; line-height: 1; text-transform: uppercase; color: var(--fg-strong); }
   .desc { font-size: 16px; line-height: 1.62; color: var(--fg-dim); }
-  .pricebox { display: flex; flex-direction: column; gap: 8px; padding: 14px 16px; }
+  .pricebox { display: flex; flex-direction: column; gap: 10px; padding: 16px; }
+  .pricebox--byoh { gap: 8px; border-style: dashed; }
+  .pricebox--paas { gap: 10px; background: var(--warm-cell); border-color: #2e2a26; }
   .plabel { font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--fg-faint); }
+  .plabel--warm { color: var(--accent); opacity: .9; }
   .prow { display: flex; align-items: baseline; gap: 8px; }
   .pval { font-size: clamp(30px, 3vw, 38px); color: var(--accent); }
-  .punit { font-size: 14px; color: var(--fg-mute); }
+  .pval--warm { color: var(--accent); }
+  .punit { font-size: 13px; color: var(--fg-mute); }
+  .byoh-sub { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--fg-faint); margin-top: -2px; }
+  /* BYOH scale */
+  .scale { margin-top: 6px; padding-top: 14px; border-top: 1px solid var(--line-soft); display: flex; flex-direction: column; gap: 10px; }
+  .scale-row { display: flex; align-items: center; gap: 10px; }
+  .scale-row--muted { opacity: .95; }
+  .seat-dots { display: inline-flex; gap: 4px; }
+  .seat-dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); display: block; box-shadow: 0 0 6px rgba(245,168,63,.35); }
+  .seat-dots--muted i { background: #5a5e63; box-shadow: none; }
+  .scale-label { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-mute); flex: 1; }
+  .scale-price { font-size: 13px; font-weight: 600; color: var(--fg-strong); font-variant-numeric: tabular-nums; }
+  .scale-sep { display: flex; align-items: center; gap: 10px; }
+  .scale-sep span:first-child, .scale-sep span:last-child { flex: 1; height: 1px; background: var(--line-dim); }
+  .plus { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); background: rgba(245,168,63,.08); border: 1px solid rgba(245,168,63,.18); padding: 3px 8px; border-radius: 999px; }
+  .scale-foot { font-size: 11px; letter-spacing: .02em; color: var(--fg-ghost); line-height: 1.5; margin-top: 2px; }
+  .badge-lic {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--jade); background: rgba(53,207,164,.08); border: 1px solid rgba(53,207,164,.18);
+    border-radius: 999px; padding: 6px 10px; align-self: flex-start;
+  }
+  .paas-meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 2px; padding-top: 12px; border-top: 1px solid #2e2a26; }
+  .paas-hw { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-mute); }
+  .paas-off { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--fg-ghost); }
   ul.ticks { list-style: none; margin: 0; padding: 0; }
-  .note { margin-top: auto; padding-top: 6px; font-size: 14px; line-height: 1.5; color: var(--fg-faint); }
-  @media (max-width: 860px) { .pair { grid-template-columns: 1fr; } }
+  .note { margin-top: auto; padding-top: 6px; font-size: 13px; line-height: 1.55; color: var(--fg-faint); }
+  @media (max-width: 860px) { .pair { grid-template-columns: 1fr; } .tag { font-size: 9px; } }
 </style>

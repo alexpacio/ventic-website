@@ -41,13 +41,13 @@ const it = {
 
   hero: {
     plate: "LLM privati · GPU dedicate · Dati in UE / US",
-    title: ["I tuoi modelli,", "sulle tue GPU,", "dentro la tua rete."],
-    lead: "Trasformiamo un server con GPU — tuo o noleggiato da noi — in un endpoint privato compatibile con le API OpenAI e Anthropic. Il tuo team lo usa come le API pubbliche, ma i dati non lasciano mai la tua infrastruttura.",
-    sub: "Modelli open-weight allo stato dell'arte, motore vLLM già ottimizzato per quell’hardware, assistenza inclusa. Paghi le ore macchina, non i token.",
+    title: ["Crea il tuo", "LLM privato.", "Usalo come e quando vuoi."],
+    lead: "Ventic è uno stack tecnologico chiavi in mano che consente di creare, gestire e configurare LLM privati. Puoi installarlo nella tua infrastruttura IT e diventa un tuo componente privato. Non dipenderai più da nessuno.",
+    sub: "Pannello di controllo Admin e Self-service, gestione centralizzata, autotuning dei modelli. Fare da soli non conviene con Ventic!",
     cta1: "Prenota una call tecnica",
     cta2: "Vedi come funziona",
-    micro: "Setup in giornata · Da 1 €/h tutto incluso · Nessun costo a token",
-    trust: ["Dati in UE o US, a tua scelta", "Nessun IP pubblico", "Compatibile OpenAI & Anthropic"],
+    micro: "Setup in giornata · Licenza da €69,90/mese · Mai a token",
+    trust: ["Dati in UE o US, a tua scelta", "Compatibile OpenAI & Anthropic"],
   },
 
   panel: {
@@ -78,8 +78,8 @@ const it = {
   problem: {
     id: "perche",
     plate: "Perché Ventic",
-    title: ["Le API pubbliche", "non sono infrastruttura."],
-    lead: "Perfette per provare. Rischiose quando ci costruisci un prodotto o ci fai lavorare agenti autonomi tutta la notte.",
+    title: ["I provider di LLM", "sono inadeguati."],
+    lead: "Gli LLM dei Provider sono perfetti per attività estremamente specifiche e personali. Inadeguati per lavoro agentico e aziendale.",
     cards: [
       { tag: "01 — Subscription", title: "Finestre strette", body: "Quota finita, lavoro fermo. Per una persona è attesa; per un agente notturno è un guasto che scopri al mattino." },
       { tag: "02 — Subscription", title: "Outage a monte", body: "Se il provider va giù, va giù anche il tuo prodotto. Nessun failover ti salva se il modello vive solo da loro." },
@@ -96,23 +96,23 @@ const it = {
     title: ["Usi il tuo server,", "oppure lo troviamo noi."],
     lead: "In entrambi i casi ottieni la stessa cosa: un endpoint privato compatibile OpenAI e Anthropic, su una macchina a cui accedi quando vuoi.",
     byoh: {
-      tag: "BYOH",
+      tag: "BYOH — Bring Your Own Hardware",
       title: "Porti il server tu",
       desc: "Hai già le GPU o le compri tu. Noi installiamo lo stack: verifica di compatibilità, motore vLLM ottimizzato per la tua GPU, Ventic Agent, rete overlay cifrata, pannello e observability.",
-      priceLabel: "Consulenza una tantum",
-      price: "Su offerta",
-      unit: "",
+      priceLabel: "Licenza Ventic + setup",
+      price: "€69,90",
+      unit: "/ mese + IVA",
       ticks: [
         "Verifica server e compatibilità — max 1 ora",
         "Installazione completa dello stack di inferenza",
         "Ventic Agent per accesso remoto cifrato",
       ],
-      note: "Dopo l’installazione il server è tuo. Nessun costo ricorrente verso Ventic.",
+      note: "Licenza Ventic Stack solo su BYOH: €69,90/mese + IVA per 5 postazioni, €39,99 + IVA ogni 10 aggiuntive. Sconti per volumi. Setup iniziale su richiesta — puoi anche fare da solo.",
     },
     paas: {
       tag: "PaaS",
       title: "Te lo forniamo noi",
-      desc: "Troviamo il server giusto al prezzo giusto nel nostro catalogo, lo mettiamo in produzione e te lo fatturiamo insieme al servizio. Tutto incluso — hardware compreso.",
+      desc: "Troviamo il server giusto al prezzo giusto nel nostro catalogo, lo mettiamo in produzione e te lo fatturiamo insieme al servizio. Tutto incluso — hardware e licenza compresi.",
       priceLabel: "Tutto incluso, a ore",
       price: "da 1 €",
       unit: "/ ora + IVA",
@@ -122,7 +122,7 @@ const it = {
         "Spegnimento automatico quando nessuno lo usa",
         "Multicloud per ridondanza o failover, se il servizio è critico",
       ],
-      note: "Paghi solo le ore in cui il server è acceso. Mai a token.",
+      note: "Paghi solo le ore in cui il server è acceso, licenza inclusa. Mai a token.",
     },
   },
 
@@ -216,6 +216,9 @@ const it = {
           { name: "Embedding model", body: "Indicizzazione servita dallo stesso stack di inferenza.", opt: true },
           { name: "Deepseek harness", body: "Harness agentico pronto da collegare a un modello.", opt: true },
           { name: "Openclaw", body: "Harness agentico alternativo, stessa procedura.", opt: true },
+          { name: "Adapter LangChain", body: "Integrazione nativa con LangChain: i tuoi chain e tool chiamano Ventic come fosse OpenAI, con tracing OpenTelemetry completo.", opt: true },
+          { name: "Nodo n8n", body: "Workflow n8n con nodo Ventic: automazioni no-code che restano dentro la tua rete, senza inviare dati a provider esterni.", opt: true },
+          { name: "Observability agentica", body: "Tracciamento di ogni chiamata agente in Grafana/LGTM: latenza, token, errori e allarmi sul canale che preferisci.", opt: true },
         ],
       },
       {
@@ -333,6 +336,9 @@ const it = {
       { title: "Policy sui contenuti", body: "Vedi come sono usate le sessioni e applichi filtri per utente o per chiave." },
       { title: "Modelli uncensored", body: "Quando i filtri commerciali bloccano il lavoro: hardening, red teaming, bug bounty." },
       { title: "Multicloud", body: "Stesso modello su più provider, in ridondanza o failover: se uno si ferma, il servizio no." },
+      { title: "Agenti autonomi 24/7", body: "LangChain, n8n e harness OpenClaw/DeepSeek: i tuoi agenti girano tutta la notte sull'endpoint privato, senza finestre né rate limit del provider." },
+      { title: "Workflow n8n & automazioni", body: "Un nodo n8n che chiama Ventic come fosse OpenAI: pipeline no-code interne, senza webhook verso l’esterno né dati che lasciano la rete." },
+      { title: "Observability agentica", body: "Tracce OpenTelemetry su ogni chiamata agente — latenza, token ed errori in Grafana/LGTM, con allarmi sul canale che preferisci." },
     ],
   },
 
@@ -365,14 +371,14 @@ const it = {
     id: "prezzi",
     plate: "Prezzi",
     title: ["Tre numeri.", "Nessuna sorpresa."],
-    lead: "Non fatturiamo a token. Il conto dipende dalle ore in cui il server è acceso e da quante persone ci lavorano — non da quanto scrive il modello.",
+    lead: "Non fatturiamo a token. In BYOH (Bring Your Own Hardware) paghi la licenza a postazioni. In PaaS paghi a ore, licenza inclusa. Quanto scrive il modello non cambia il conto.",
     link: "Confronto e costi per utente",
     cards: [
-      { tag: "BYOH · consulenza una tantum", price: "Su offerta", unit: "", body: "Analisi, setup dello stack e Ventic Agent sul tuo hardware. Poi nessun costo ricorrente.", warm: false },
-      { tag: "PaaS · Ventic 16", price: "1 €", unit: "/ h + IVA", body: "Qwen 3.8 27B. 16 utenti attivi, fino a 100 in organico. 160 €/mese su orario d’ufficio.", warm: true },
-      { tag: "PaaS · Ventic 64", price: "6 €", unit: "/ h + IVA", body: "Deepseek v4 Flash 0731. 64 utenti attivi, fino a 500 in organico. 960 €/mese su orario d’ufficio.", warm: true },
+      { tag: "BYOH · Licenza Ventic Stack", price: "€69,90", unit: "/ mese + IVA", body: "Solo su BYOH: 5 postazioni incluse. Ogni blocco di 10 aggiuntive: €39,99 + IVA. Sconti per volumi. Setup su richiesta, fai-da-te possibile.", warm: false },
+      { tag: "PaaS · Ventic 16", price: "1 €", unit: "/ h + IVA", body: "Qwen 3.8 27B. 16 utenti attivi, fino a 100 in organico. 160 €/mese su orario d’ufficio, licenza inclusa.", warm: true },
+      { tag: "PaaS · Ventic 64", price: "6 €", unit: "/ h + IVA", body: "Deepseek v4 Flash 0731. 64 utenti attivi, fino a 500 in organico. 960 €/mese su orario d’ufficio, licenza inclusa.", warm: true },
     ],
-    foot: "Prezzi di lancio, IVA esclusa · orario d’ufficio = 8 h × 20 gg = 160 h/mese · hardware, setup e assistenza inclusi",
+    foot: "Prezzi di lancio, IVA esclusa · licenza solo su BYOH: €69,90/mese per 5 postazioni + €39,99 ogni 10 aggiuntive · orario d’ufficio = 8 h × 20 gg = 160 h/mese · PaaS: hardware e licenza inclusi nella tariffa oraria",
   },
 
   cta: {
@@ -397,35 +403,35 @@ const it = {
   pricingPage: {
     plate: "Prezzi e confronto",
     title: ["Quanto costa,", "e rispetto a cosa."],
-    lead: "Ventic non fattura a token. Paghi le ore di consulenza, oppure una tariffa oraria fissa per pacchetto. Quanto lavora il modello non cambia il conto.",
+    lead: "Ventic non fattura a token. In BYOH (Bring Your Own Hardware) paghi la licenza a postazioni; in PaaS paghi a ore, licenza inclusa. Quanto lavora il modello non cambia il conto.",
     byoh: {
-      head: "BYOH · il server è tuo",
-      price: "Su offerta",
-      unit: "",
-      desc: "Consulenza specialistica, fatturata a ore effettive.",
+      head: "BYOH — Bring Your Own Hardware",
+      price: "€69,90",
+      unit: "/ mese + IVA",
+      desc: "Licenza Ventic Stack per 5 postazioni incluse. Ogni blocco di 10 aggiuntive: €39,99 + IVA. Sconti per volumi.",
       ticks: [
         "Analisi server e compatibilità — max 1 h",
         "Setup stack di inferenza ottimizzato su modello e hardware",
         "Ventic Agent per accesso remoto cifrato",
       ],
-      note: "Dopo il setup il server resta tuo. Nessun ricorrente Ventic. Assistenza successiva a ore, quando serve.",
+      note: "Setup iniziale su richiesta — puoi anche fare da solo. Licenza solo su BYOH: €69,90/mese per 5 postazioni, €39,99 ogni 10 aggiuntive.",
     },
     paas: {
       head: "PaaS · tutto incluso",
       price: "1 €",
       unit: "/ ora + IVA · a partire da",
-      desc: "Hardware, provisioning e assistenza in un’unica tariffa oraria. Scegli il pacchetto in base a quante persone ci lavorano.",
+      desc: "Hardware, provisioning e assistenza in un’unica tariffa oraria, licenza inclusa. Un’unica fattura: hardware + licenza Ventic.",
       ticks: [
         "Scelta server sui tuoi criteri, acquisto con bonifico SEPA immediato",
         "Provisioning, rete overlay, pannello e observability inclusi",
         "Scale to zero: se nessuno lo usa, si spegne e smette di costare",
         "Multicloud per ridondanza o failover, quando il servizio è critico",
       ],
-      note: "Due pacchetti disponibili oggi, qui sotto. Prezzi di lancio bloccati per la durata del contratto.",
+      note: "Licenza inclusa nella tariffa oraria. Due pacchetti disponibili oggi, qui sotto. Prezzi di lancio bloccati per la durata del contratto.",
     },
     packages: {
       plate: "Pacchetti PaaS",
-      title: "Due tagli, tariffa oraria fissa",
+      title: "Due tagli, tariffa oraria — licenza inclusa",
       meta: "prezzi di lancio · IVA esclusa",
       labels: {
         model: "Modello",
@@ -449,8 +455,8 @@ const it = {
           month: ["960 €", "4.320 €"], perActive: ["15,00 €", "67,50 €"], perSeat: ["1,92 €", "8,64 €"],
         },
       ],
-      foot1: "Orario d’ufficio = 8 h × 20 giorni = 160 h/mese · continuo = 24 h × 30 giorni = 720 h/mese.",
-      foot2: "Hardware, provisioning, rete overlay, pannello, observability e assistenza inclusi nella tariffa.",
+      foot1: "Orario d’ufficio = 8 h × 20 giorni = 160 h/mese · continuo = 24 h × 30 giorni = 720 h/mese. Tariffa oraria PaaS include hardware + licenza.",
+      foot2: "BYOH: licenza a parte €69,90/mese per 5 posti + €39,99 ogni 10 (IVA escl.) — es. 15 posti = €109,89/mese, 25 posti = €149,88/mese. Sconti per volumi.",
     },
     matrix: {
       title: "Ventic contro le alternative",
@@ -459,7 +465,7 @@ const it = {
       rows: [
         { label: "Costo prevedibile a fine mese", cells: [
           { mark: "yes", text: "Canone fisso" }, { mark: "no", text: "Dipende dal consumo" },
-          { mark: "yes", text: "Zero ricorrente" }, { mark: "yes", text: "Ore × tariffa" }] },
+          { mark: "yes", text: "Licenza fissa a postazioni" }, { mark: "yes", text: "Ore × tariffa, licenza inclusa" }] },
         { label: "Tetto di token o rate limit", cells: [
           { mark: "no", text: "Finestra stretta, poi ti fermi" }, { mark: "dash", text: "Nessun tetto, ma paghi tutto" },
           { mark: "yes", text: "Solo il limite della GPU" }, { mark: "yes", text: "Solo il limite della GPU" }] },
@@ -486,7 +492,7 @@ const it = {
           { mark: "dash", text: "Tuo, già in casa o da comprare" }, { mark: "dash", text: "Dal nostro catalogo, fatturato da noi" }] },
         { label: "Quanto paghi a Ventic", cells: [
           { mark: "dash", text: "—" }, { mark: "dash", text: "—" },
-          { mark: "yes", text: "Su offerta" }, { mark: "yes", text: "da 1 €/h + IVA, tutto incluso" }] },
+          { mark: "yes", text: "€69,90/mese + €39,99 ogni 10 posti" }, { mark: "yes", text: "da 1 €/h + IVA, tutto incluso" }] },
       ] as { label: string; cells: Cell[] }[],
     },
     sizing: {
@@ -503,7 +509,9 @@ const it = {
     notes: {
       plate: "Da tenere presente",
       items: [
-        "Pacchetti su istanza dedicata. Su spot la tariffa scende ancora, con revoca gestita da Ventic.",
+        "Licenza: €69,90/mese + IVA per 5 postazioni, €39,99 + IVA ogni 10 aggiuntive. Sconti per volumi.",
+        "Setup iniziale su richiesta — puoi anche installare da solo. Assistenza successiva a ore, quando serve.",
+        "Pacchetti PaaS su istanza dedicata. Su spot la tariffa oraria scende ancora, con revoca gestita da Ventic.",
         "In multicloud lo stesso modello resta raggiungibile su un secondo provider (ridondanza attiva o failover).",
         "Prezzi al netto di IVA. SLA in base a servizio e ridondanza scelti.",
       ],
@@ -513,7 +521,7 @@ const it = {
     },
     foot: {
       left: "Ventic — Netter srl · P.IVA IT03569900545 · Via Indipendenza, 06081 Assisi (PG) · info@ventic.it",
-      right: "Prezzi di lancio · valori in euro, IVA esclusa",
+      right: "Prezzi di lancio · licenza + hardware · IVA esclusa",
     },
   },
 
@@ -639,13 +647,13 @@ const en: typeof it = {
 
   hero: {
     plate: "Private LLMs · Dedicated GPUs · Data in EU / US",
-    title: ["Your models.", "On your GPUs.", "Inside your network."],
-    lead: "We turn a GPU server — yours or rented through us — into a private endpoint compatible with the OpenAI and Anthropic APIs. Your team uses it like the public APIs, but data never leaves your infrastructure.",
-    sub: "State-of-the-art open-weight models, vLLM already tuned to that hardware, support included. You pay for machine hours, not tokens.",
+    title: ["Create your", "private LLM.", "Use it as you want."],
+    lead: "Ventic is a turnkey technology stack that lets you create, manage and configure private LLMs. You can install it in your IT infrastructure and it becomes your own private component. You will no longer depend on anyone.",
+    sub: "Admin and Self-service control panel, centralized management, model autotuning. Doing it alone doesn't pay off with Ventic!",
     cta1: "Book a technical call",
     cta2: "See how it works",
-    micro: "Live in a day · From €1/h all-in · Never per-token",
-    trust: ["Data in EU or US, your choice", "No public IP", "OpenAI & Anthropic compatible"],
+    micro: "Live in a day · License from €69.90/month · Never per-token",
+    trust: ["Data in EU or US, your choice", "OpenAI & Anthropic compatible"],
   },
 
   panel: {
@@ -676,8 +684,8 @@ const en: typeof it = {
   problem: {
     id: "why",
     plate: "Why Ventic",
-    title: ["Public APIs", "are not infrastructure."],
-    lead: "Great for trying things. Risky when you build a product on them — or leave agents working all night.",
+    title: ["LLM providers", "are inadequate."],
+    lead: "Provider LLMs are perfect for very specific, personal tasks. Inadequate for agentic and business work.",
     cards: [
       { tag: "01 — Subscription", title: "Narrow windows", body: "Quota spent, work stopped. For a person it’s a wait; for a night agent it’s a failure you discover in the morning." },
       { tag: "02 — Subscription", title: "Upstream outages", body: "When the provider goes down, your product goes with it. No failover helps if the model only lives there." },
@@ -694,23 +702,23 @@ const en: typeof it = {
     title: ["You bring the server,", "or we source it."],
     lead: "Either way you get the same: a private OpenAI- and Anthropic-compatible endpoint on a machine you can log into anytime.",
     byoh: {
-      tag: "BYOH",
+      tag: "BYOH — Bring Your Own Hardware",
       title: "You bring the server",
       desc: "You already have GPUs or prefer to buy them. We install the stack: compatibility check, vLLM tuned to your GPU, Ventic Agent, encrypted overlay, panel and observability.",
-      priceLabel: "One-off consulting",
-      price: "On request",
-      unit: "",
+      priceLabel: "Ventic Stack license + setup",
+      price: "€69.90",
+      unit: "/ month + VAT",
       ticks: [
         "Server and compatibility check — max 1 hour",
         "Full inference stack install",
         "Ventic Agent for encrypted remote access",
       ],
-      note: "Once installed the server is yours. No recurring fee to Ventic.",
+      note: "Ventic Stack license only for BYOH: €69.90/month + VAT for 5 seats, €39.99 + VAT for each extra block of 10 seats. Volume discounts. Initial setup on request — you can also install yourself.",
     },
     paas: {
       tag: "PaaS",
       title: "We provide it",
-      desc: "We find the right server at the right price in our catalogue, put it into production and invoice it with the service. All-in — hardware included.",
+      desc: "We find the right server at the right price in our catalogue, put it into production and invoice it with the service. All-in — hardware and license included.",
       priceLabel: "All-in, by the hour",
       price: "from €1",
       unit: "/ hour + VAT",
@@ -720,7 +728,7 @@ const en: typeof it = {
         "Auto-shutdown when nobody needs it",
         "Multicloud for redundancy or failover when critical",
       ],
-      note: "You pay only for hours the server is on. Never per token.",
+      note: "You pay only for hours the server is on, license included. Never per token.",
     },
   },
 
@@ -814,6 +822,9 @@ const en: typeof it = {
           { name: "Embedding model", body: "Indexing served by the same inference stack.", opt: true },
           { name: "Deepseek harness", body: "Agentic harness, ready to wire to a model.", opt: true },
           { name: "Openclaw", body: "Alternative agentic harness, same wiring.", opt: true },
+          { name: "LangChain adapter", body: "Native LangChain integration: your chains and tools call Ventic as OpenAI, with full OpenTelemetry tracing.", opt: true },
+          { name: "n8n node", body: "n8n workflow node for Ventic: internal no-code automations that stay inside your network, no data to external providers.", opt: true },
+          { name: "Agentic observability", body: "Every agent call traced in Grafana/LGTM: latency, tokens, errors and alerts on the channel you choose.", opt: true },
         ],
       },
       {
@@ -931,6 +942,9 @@ const en: typeof it = {
       { title: "Session policies", body: "See how sessions are used and apply content restrictions per user or key." },
       { title: "Uncensored models", body: "For when commercial filters block the work: hardening, red teaming, bug bounty." },
       { title: "Multicloud", body: "Same model across providers, in redundancy or failover: if one stops, the service doesn’t." },
+      { title: "Autonomous agents 24/7", body: "LangChain, n8n and OpenClaw/DeepSeek harnesses: your agents run all night on the private endpoint, with no provider windows or rate limits." },
+      { title: "n8n workflows & automation", body: "An n8n node that calls Ventic as if it were OpenAI: internal no-code pipelines with no webhooks to the outside and no data leaving your network." },
+      { title: "Agentic observability", body: "OpenTelemetry traces on every agent call — latency, tokens and errors in Grafana/LGTM, with alerts on the channel you choose." },
     ],
   },
 
@@ -963,14 +977,14 @@ const en: typeof it = {
     id: "pricing",
     plate: "Pricing",
     title: ["Three numbers.", "No surprises."],
-    lead: "We don’t bill per token. The bill depends on hours the server is on and how many people use it — not how much the model writes.",
+    lead: "We don’t bill per token. BYOH (Bring Your Own Hardware) pays per-seat license. PaaS pays by the hour, license included. How much the model writes doesn’t change the bill.",
     link: "Comparison and per-user cost",
     cards: [
-      { tag: "BYOH · one-off consulting", price: "On request", unit: "", body: "Analysis, stack setup and Ventic Agent on your hardware. Then no recurring fee.", warm: false },
-      { tag: "PaaS · Ventic 16", price: "€1", unit: "/ h + VAT", body: "Qwen 3.8 27B. 16 active users, up to 100 on roster. €160/month on business hours.", warm: true },
-      { tag: "PaaS · Ventic 64", price: "€6", unit: "/ h + VAT", body: "Deepseek v4 Flash 0731. 64 active users, up to 500 on roster. €960/month on business hours.", warm: true },
+      { tag: "BYOH · Ventic Stack license", price: "€69.90", unit: "/ month + VAT", body: "BYOH only: 5 seats included. Each extra block of 10 seats: €39.99 + VAT. Volume discounts. Setup on request, self-install possible.", warm: false },
+      { tag: "PaaS · Ventic 16", price: "€1", unit: "/ h + VAT", body: "Qwen 3.8 27B. 16 active users, up to 100 on roster. €160/month business hours, license included.", warm: true },
+      { tag: "PaaS · Ventic 64", price: "€6", unit: "/ h + VAT", body: "Deepseek v4 Flash 0731. 64 active users, up to 500 on roster. €960/month business hours, license included.", warm: true },
     ],
-    foot: "Launch pricing, VAT excluded · business hours = 8 h × 20 days = 160 h/month · hardware, setup and support included",
+    foot: "Launch pricing, VAT excluded · license only on BYOH: €69.90/month for 5 seats + €39.99 every 10 extra · business hours = 8 h × 20 days = 160 h/month · PaaS: hardware and license included in hourly rate",
   },
 
   cta: {
@@ -995,47 +1009,47 @@ const en: typeof it = {
   pricingPage: {
     plate: "Pricing and comparison",
     title: ["What it costs,", "and compared to what."],
-    lead: "Ventic doesn’t bill per token. You pay consulting hours, or a fixed hourly rate per package. How hard the model works doesn’t change the bill.",
+    lead: "Ventic doesn’t bill per token. BYOH (Bring Your Own Hardware) pays per-seat license. PaaS pays by the hour, license included. How hard the model works doesn’t change the bill.",
     byoh: {
-      head: "BYOH · the server is yours",
-      price: "On request",
-      unit: "",
-      desc: "Specialist consulting, billed on hours actually worked.",
+      head: "BYOH — Bring Your Own Hardware",
+      price: "€69.90",
+      unit: "/ month + VAT",
+      desc: "Ventic Stack license for 5 seats included. Each extra block of 10 seats: €39.99 + VAT. Volume discounts.",
       ticks: [
         "Server and compatibility check — max 1 h",
         "Inference stack optimized for model and hardware",
         "Ventic Agent for encrypted remote access",
       ],
-      note: "After setup the server stays yours. No Ventic recurring fee. Further support hourly, when needed.",
+      note: "Initial setup on request — you can also install yourself. Recurring license: €69.90/month for 5 seats, €39.99 per extra 10.",
     },
     paas: {
       head: "PaaS · all included",
       price: "€1",
       unit: "/ hour + VAT · starting from",
-      desc: "Hardware, provisioning and support in one hourly rate. Choose the package by how many people use it.",
+      desc: "Hardware, provisioning and support in one hourly rate, license included. The PaaS hourly covers hardware + Ventic license.",
       ticks: [
         "Server sourced to your criteria, bought with instant SEPA transfer",
         "Provisioning, encrypted overlay, panel and observability included",
         "Scale to zero: if nobody uses it, it powers off and stops costing",
         "Multicloud for redundancy or failover when critical",
       ],
-      note: "Two packages available today, below. Launch pricing locked for the contract duration.",
+      note: "Hardware by the hour, license included. Launch pricing locked for the contract duration.",
     },
     packages: {
       plate: "PaaS packages",
-      title: "Two sizes, one fixed hourly rate",
+      title: "Two sizes, one fixed hourly rate — license included",
       meta: "launch pricing · VAT excluded",
       labels: {
         model: "Model",
         unit: "/ h + VAT",
         active: "concurrent active users",
         seats: "users on roster (intermediate use)",
-        cost: "Cost",
+        cost: "Hardware cost",
         h1: "8 h × 20 days",
         h2: "24 / 7",
-        month: "per month",
-        perActive: "per active user",
-        perSeat: "per user on roster",
+        month: "per month (hw)",
+        perActive: "per active user (hw)",
+        perSeat: "per user on roster (hw)",
       },
       items: [
         {
@@ -1047,8 +1061,8 @@ const en: typeof it = {
           month: ["€960", "€4,320"], perActive: ["€15.00", "€67.50"], perSeat: ["€1.92", "€8.64"],
         },
       ],
-      foot1: "Business hours = 8 h × 20 days = 160 h/month · continuous = 24 h × 30 days = 720 h/month.",
-      foot2: "Hardware, provisioning, overlay, panel, observability and support included in the hourly rate.",
+      foot1: "Business hours = 8 h × 20 days = 160 h/month · continuous = 24 h × 30 days = 720 h/month. Hardware costs above; license included.",
+      foot2: "BYOH license separate: €69.90/month for 5 seats + €39.99 per extra 10 (VAT excl.). E.g. 15 seats = €109.89/month, 25 seats = €149.88/month. Volume discounts. Setup on request.",
     },
     matrix: {
       title: "Ventic vs the alternatives",
@@ -1057,7 +1071,7 @@ const en: typeof it = {
       rows: [
         { label: "Predictable cost at month end", cells: [
           { mark: "yes", text: "Flat fee" }, { mark: "no", text: "Depends on usage" },
-          { mark: "yes", text: "Nothing recurring" }, { mark: "yes", text: "Hours × rate" }] },
+          { mark: "yes", text: "Flat license per seats" }, { mark: "yes", text: "Hours × rate, license included" }] },
         { label: "Token cap or rate limit", cells: [
           { mark: "no", text: "Narrow window, then you stop" }, { mark: "dash", text: "No cap, but you pay for all" },
           { mark: "yes", text: "Only the GPU limit" }, { mark: "yes", text: "Only the GPU limit" }] },
@@ -1084,7 +1098,7 @@ const en: typeof it = {
           { mark: "dash", text: "Yours, in house or to buy" }, { mark: "dash", text: "From our catalogue, invoiced by us" }] },
         { label: "What you pay Ventic", cells: [
           { mark: "dash", text: "—" }, { mark: "dash", text: "—" },
-          { mark: "yes", text: "On request" }, { mark: "yes", text: "from €1/h + VAT, all-in" }] },
+          { mark: "yes", text: "€69.90/mo + €39.99 per 10 seats" }, { mark: "yes", text: "from €1/h + VAT, license included" }] },
       ] as { label: string; cells: Cell[] }[],
     },
     sizing: {
@@ -1101,7 +1115,9 @@ const en: typeof it = {
     notes: {
       plate: "Worth knowing",
       items: [
-        "Packages run on dedicated instances. On spot the rate drops further, reclaims handled by Ventic.",
+        "License: €69.90/month + VAT for 5 seats, €39.99 + VAT per extra 10. Volume discounts.",
+        "Initial setup on request — you can also install yourself. Further support hourly when needed.",
+        "PaaS packages on dedicated instances. On spot the hourly rate drops further, reclaims handled by Ventic, license still included.",
         "In multicloud the same model stays reachable on a second provider (active or failover).",
         "Prices excl. VAT. SLAs depend on service and redundancy.",
       ],
@@ -1111,7 +1127,7 @@ const en: typeof it = {
     },
     foot: {
       left: "Ventic — Netter srl · VAT IT03569900545 · Via Indipendenza, 06081 Assisi (PG) · info@ventic.it",
-      right: "Launch pricing · values in euro, excl. VAT",
+      right: "Launch pricing · license + hardware · excl. VAT",
     },
   },
 

@@ -23,13 +23,45 @@ const href = lang === "it" ? "/pricing" : "/en/pricing";
     </div>
 
     <div class="cards">
-      {c.cards.map((card) => (
-        <article class={`panel card ${card.warm ? "panel--warm" : ""}`}>
-          <span class={`mono tag ${card.warm ? "tag--warm" : ""}`}>{card.tag}</span>
+      <!-- BYOH license -->
+      <article class="panel card card--byoh">
+        <div class="card-head">
+          <span class="mono tag">{c.cards[0].tag}</span>
+          <span class="mono badge badge--lic">{lang === "it" ? "solo BYOH" : "BYOH only"}</span>
+        </div>
+        <span class="prow">
+          <span class="price pval">{c.cards[0].price}</span>
+          <span class="mono punit">{c.cards[0].unit}</span>
+        </span>
+        <div class="mini-scale">
+          <div class="mini-row">
+            <span class="dots"><i></i><i></i><i></i><i></i><i></i></span>
+            <span class="mono mini-label">5 {lang === "it" ? "incluse" : "included"}</span>
+            <span class="mono mini-price">{lang === "it" ? "€69,90" : "€69.90"}</span>
+          </div>
+          <div class="mini-sep"><span class="mono mini-plus">{lang === "it" ? "+ €39,99 / 10" : "+ €39.99 / 10"}</span></div>
+          <p class="mono mini-foot">{lang === "it" ? "Es. 15 → €109,89 · 25 → €149,88" : "E.g. 15 → €109.89 · 25 → €149.88"}</p>
+        </div>
+        <span class="seam"></span>
+        <p class="cell-b">{c.cards[0].body}</p>
+      </article>
+
+      <!-- PaaS cards -->
+      {c.cards.slice(1).map((card) => (
+        <article class="panel panel--warm card card--paas">
+          <div class="card-head">
+            <span class="mono tag tag--warm">{card.tag}</span>
+            <span class="mono badge badge--incl"><span class="dot dot--live" style="width:5px;height:5px"></span>{lang === "it" ? "licenza inclusa" : "license included"}</span>
+          </div>
           <span class="prow">
             <span class="price pval">{card.price}</span>
             <span class="mono punit">{card.unit}</span>
           </span>
+          <div class="hw-hint">
+            <span class="mono hw-pill"><Icon name="provisioning" size={13} width={1.6} /> {lang === "it" ? "hardware" : "hardware"}</span>
+            <span class="mono hw-pill hw-pill--accent">+ {lang === "it" ? "licenza" : "license"}</span>
+            <span class="mono hw-pill hw-pill--ghost">{lang === "it" ? "a ore" : "hourly"}</span>
+          </div>
           <span class="seam"></span>
           <p class="cell-b">{card.body}</p>
         </article>
@@ -46,14 +78,33 @@ const href = lang === "it" ? "/pricing" : "/en/pricing";
   .plate { margin-bottom: 16px; }
   .arrowlink { margin-top: 16px; }
   .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-  .card { display: flex; flex-direction: column; padding: 24px 22px; }
-  .tag { font-size: 11px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--fg-mute); }
+  .card { display: flex; flex-direction: column; padding: 22px 20px; gap: 10px; }
+  .card--byoh { border-style: dashed; }
+  .card--paas { position: relative; }
+  .card-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .tag { font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-mute); line-height: 1.3; }
   .tag--warm { color: var(--accent); }
-  .prow { display: flex; align-items: baseline; gap: 8px; margin-top: 14px; }
-  .pval { font-size: clamp(34px, 3.4vw, 46px); }
-  .punit { font-size: 14px; color: var(--fg-mute); }
-  .seam { margin: 16px 0; }
-  .foot { margin-top: 18px; font-size: 12px; letter-spacing: .04em; line-height: 1.7; color: var(--fg-faint); }
+  .badge { font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: 4px 8px; border-radius: 999px; border: 1px solid; white-space: nowrap; }
+  .badge--lic { color: var(--fg-mute); border-color: var(--line-soft); background: var(--sunk); }
+  .badge--incl { display: inline-flex; align-items: center; gap: 6px; color: var(--jade); border-color: rgba(53,207,164,.18); background: rgba(53,207,164,.08); }
+  .prow { display: flex; align-items: baseline; gap: 8px; margin-top: 6px; }
+  .pval { font-size: clamp(32px, 3.4vw, 44px); color: var(--accent); }
+  .punit { font-size: 13px; color: var(--fg-mute); }
+  .mini-scale { margin-top: 6px; padding: 12px; background: var(--sunk); border: 1px solid var(--line-soft); border-radius: 3px; display: flex; flex-direction: column; gap: 8px; }
+  .mini-row { display: flex; align-items: center; gap: 8px; }
+  .dots { display: inline-flex; gap: 3px; }
+  .dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); display: block; }
+  .mini-label { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--fg-mute); flex: 1; }
+  .mini-price { font-size: 12px; font-weight: 600; color: var(--fg-strong); }
+  .mini-sep { display: flex; justify-content: center; }
+  .mini-plus { font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); background: rgba(245,168,63,.08); border: 1px solid rgba(245,168,63,.18); padding: 3px 7px; border-radius: 999px; }
+  .mini-foot { font-size: 11px; color: var(--fg-ghost); text-align: center; }
+  .hw-hint { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .hw-pill { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; padding: 5px 8px; border-radius: 999px; border: 1px solid var(--line-soft); color: var(--fg-mute); background: var(--sunk); }
+  .hw-pill--accent { color: var(--accent); border-color: rgba(245,168,63,.18); background: rgba(245,168,63,.08); }
+  .hw-pill--ghost { color: var(--fg-ghost); }
+  .seam { margin: 10px 0 2px; }
+  .foot { margin-top: 18px; font-size: 11px; letter-spacing: .04em; line-height: 1.7; color: var(--fg-faint); }
   @media (max-width: 1080px) { .cards { grid-template-columns: 1fr; } }
   @media (max-width: 860px) { .tcol, .lcol { grid-column: span 6; } }
 </style>
