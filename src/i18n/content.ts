@@ -28,6 +28,10 @@ const it = {
       title: "Privacy policy — Ventic",
       desc: "Informativa privacy GDPR di Ventic (Netter srl): dati trattati, finalità, basi giuridiche, cookie, diritti e contatti del titolare.",
     },
+    termini: {
+      title: "Termini — Early Access Alpha — Ventic",
+      desc: "Termini Early Access Alpha di Ventic (Netter srl): servizio sperimentale su invito, limitazioni, assenza di SLA, prezzi di lancio, garanzie e responsabilità in fase alpha.",
+    },
   },
 
   nav: {
@@ -490,10 +494,11 @@ const it = {
     links: [
       { label: "Pannello", href: "/admin-panel/" },
       { label: "Prezzi", href: "/pricing/" },
+      { label: "Termini", href: "/termini/" },
       { label: "Privacy", href: "/privacy/" },
       { label: "Cookie", href: "/privacy/#cookie" },
     ],
-    disclaimer: "OpenAI e Anthropic sono marchi registrati dei rispettivi proprietari. Ogni diritto è riservato ai legittimi titolari. Ventic non è affiliato ad OpenAI, Inc. né ad Anthropic PBC.",
+    disclaimer: "OpenAI e Anthropic sono marchi registrati dei rispettivi proprietari. Ogni diritto è riservato ai legittimi titolari. Ventic non è affiliato ad OpenAI, Inc. né ad Anthropic PBC. Servizio in Early Access Alpha — funzionalità e prezzi soggetti a modifica senza preavviso.",
   },
   pricingPage: {
     plate: "Prezzi e confronto",
@@ -813,6 +818,113 @@ const it = {
       mailLabel: "Scrivi a info@ventic.it",
     },
   },
+  termini: {
+    hero: {
+      plate: "Termini di servizio — Early Access Alpha",
+      title: ["Termini", "Early Access Alpha"],
+      lead: "Ventic è in Early Access Alpha su invito: servizio sperimentale, incompleto e instabile per definizione. Funzionalità, API, modelli, prestazioni e prezzi possono cambiare senza preavviso. Nessuna promessa di continuità, nessuna SLA. Usalo sapendo che stai testando, non comprando un prodotto finito.",
+      updatedLabel: "Ultimo aggiornamento",
+      updatedDate: "2 settembre 2026",
+      tocTitle: "Indice",
+      printLabel: "Stampa / Salva PDF",
+    },
+    intro: {
+      note: "Questi Termini regolano l’accesso e l’uso del sito ventic.it e della piattaforma Ventic in fase Early Access Alpha, fornita da Netter srl. L’accesso alla fase Alpha è su invito, revocabile e non trasferibile. Se hai firmato un’offerta, ordine o contratto specifico con Netter srl, quel documento prevale sulle parti economiche e operative ivi regolate; per il resto restano applicabili questi Termini.",
+      also: "Leggi anche l’Informativa privacy su ventic.it/privacy/ e, se sei cliente PaaS/BYOH, il relativo DPA. In caso di conflitto tra versione italiana e traduzione inglese, prevale la versione italiana per gli utenti soggetti alla normativa italiana/UE.",
+    },
+    sections: [
+      {
+        id: "oggetto",
+        title: "1. Oggetto, parti e natura Alpha",
+        html: "<p><strong>Fornitore:</strong> <strong>Netter srl</strong>, Via Indipendenza, 06081 Assisi (PG), Italia — P.IVA <strong>IT03569900545</strong> (“<strong>Netter</strong>”, “<strong>noi</strong>”). <strong>Utente/Cliente Alpha:</strong> persona fisica o giuridica invitata a testare Ventic (“<strong>tu</strong>”).</p><p><strong>Ventic</strong> è uno stack per LLM privati (proxy, pannello Admin/Self-service, Ventic Agent, overlay mTLS, motori vLLM/SGLang, moduli opzionali RAG/Qdrant/harness) reso disponibile in due forme: <strong>BYOH</strong> (sulle tue GPU, licenza software) e <strong>PaaS</strong> (su GPU dal nostro catalogo, hardware + licenza inclusi nella tariffa oraria).</p><p><strong>Natura Early Access Alpha:</strong> il servizio è sperimentale, non rifinito, con funzionalità mancanti, bug noti e ignoti, interruzioni frequenti, breaking change senza preavviso, possibili perdite di dati/configurazione e migrazioni manuali. Lo fornisci in Alpha proprio per aiutarci a renderlo prodotto: ci aspettiamo feedback, pazienza e uso non critico. <strong>Non è un servizio di produzione con garanzie di continuità.</strong></p><p class='note-alpha' style='border-left:3px solid var(--accent);padding:10px 14px;background:#f5a83f0f;margin:12px 0;font-size:13px;color:var(--fg-mute)'><strong>Regola d’oro Alpha:</strong> non appoggiare su Ventic Alpha carichi critici senza un piano B esterno. Se il caso d’uso non tollera fermi, aspetta la Beta/GA o concorda per iscritto condizioni diverse.</p>",
+      },
+      {
+        id: "invito",
+        title: "2. Accesso su invito, account e requisiti",
+        html: "<ul><li><strong>Invito personale e revocabile.</strong> L’accesso Alpha è concesso a valle di candidatura/call e può essere sospeso o revocato in qualsiasi momento, anche senza motivo, con preavviso ragionevole quando possibile.</li><li><strong>Non trasferibile.</strong> Invito, credenziali, API key e overlay non sono cedibili a terzi senza consenso scritto di Netter.</li><li><strong>Account e chiavi.</strong> Crei utenti, gruppi, tenant e API key dal pannello. Sei responsabile di custodire le chiavi, ruotarle, revocare chi lascia il team e di ogni uso fatto con le tue credenziali.</li><li><strong>Requisiti tecnici.</strong> BYOH: hardware compatibile e connettività come da verifica (max 1 h). PaaS: disponibilità GPU spot/dedicata variabile per regione. L’overlay richiede connettività uscente; i nodi non devono esporre IP pubblico.</li><li><strong>Età e capacità.</strong> Dichiari di avere poteri per impegnare l’ente che rappresenti e di avere almeno 18 anni.</li></ul>",
+      },
+      {
+        id: "servizio",
+        title: "3. Cosa forniamo (e cosa no) in Alpha",
+        html: "<h4 class='h4'>3.1 Incluso</h4><ul><li>Licenza d’uso dello stack Ventic per la durata dell’Alpha, come da offerta (BYOH a postazioni; PaaS a ore, licenza inclusa).</li><li>Pannello Admin e Self-service, LLM proxy compatibile OpenAI/Anthropic, overlay mTLS, Ventic Agent sul nodo, motori di inferenza ottimizzati.</li><li>Assistenza best-effort su canale concordato (es. email/chat dedicata Alpha) in orario lavorativo CET, senza tempi garantiti.</li><li>Observability LGTM/Grafana dove attivata; telemetria e log sull’infrastruttura che ospita lo stack.</li></ul><h4 class='h4'>3.2 Opzionale / su richiesta</h4><ul><li>Moduli RAG (OpenRAG, Qdrant), embedding, harness agentici (DeepSeek/OpenClaw), adapter LangChain, nodo n8n, INP on-prem.</li><li>Multicloud/ridondanza/failover, spot dedicato, region pinning UE/US.</li><li>Setup iniziale BYOH (puoi fare da solo) e attività a ore successive.</li></ul><h4 class='h4'>3.3 Fuori perimetro</h4><p>Non forniamo: garanzie su output dei modelli, moderazione o filtraggio custom oltre le restrizioni semantiche di pannello, backup gestiti dei tuoi dati applicativi, conformità certificata per settori regolati (es. medicale, finanziario critico) — salvo diverso accordo scritto.</p>",
+      },
+      {
+        id: "disponibilita",
+        title: "4. Disponibilità, manutenzione e assenza di SLA",
+        html: "<p><strong>Nessuna SLA in Alpha.</strong> Non promettiamo uptime, latenza, throughput né RTO/RPO. Il servizio è fornito <em>best effort</em>.</p><ul><li><strong>Interruzioni e breaking change.</strong> Aggiornamenti dell’agent, del proxy, dell’overlay, dei modelli e dei motori possono interrompere il servizio o cambiare API/payload senza preavviso.</li><li><strong>Manutenzione.</strong> Finestre senza avviso in Alpha; cercheremo avvisi ragionevoli dove possibile.</li><li><strong>Spot e auto-scaling.</strong> Su PaaS spot la revoca è fisiologica: l’agent tenta il rescheduling automatico su altro provider, ma non è garantito né immediato.</li><li><strong>Scale-to-zero.</strong> Inattività &gt;15 min può spegnere il nodo; la riaccensione avviene alla prima chiamata con breve attesa.</li><li><strong>Beta/GA futura.</strong> Eventuali SLA saranno concordati per iscritto fuori dall’Alpha.</li></ul>",
+      },
+      {
+        id: "prezzi",
+        title: "5. Prezzi di lancio e fatturazione in Alpha",
+        html: "<p>I prezzi esposti sul sito sono <strong>di lancio e riservati all’Early Access Alpha</strong>, IVA esclusa, e possono cambiare in Beta/GA.</p><table class='legal-table'><thead><tr><th>Voce</th><th>Importo Alpha</th><th>Note</th></tr></thead><tbody><tr><td>BYOH — Licenza Ventic Stack</td><td><strong>€69,90/mese</strong> per 5 postazioni incluse + <strong>€39,99</strong> ogni 10 aggiuntive</td><td>Solo su BYOH. Sconti volumi. Setup su richiesta o fai-da-te.</td></tr><tr><td>PaaS — Ventic 16 (Qwen 3.8 27B)</td><td><strong>1 €/h</strong> + IVA</td><td>16 utenti attivi, fino a 100 in organico. 160 € / 720 € al mese (160 h / 720 h).</td></tr><tr><td>PaaS — Ventic 64 (DeepSeek v4 Flash)</td><td><strong>6 €/h</strong> + IVA</td><td>64 utenti attivi, fino a 500. 960 € / 4.320 € al mese.</td></tr></tbody></table><ul><li><strong>Tutto incluso in PaaS:</strong> hardware + licenza nella tariffa oraria. Paghi solo le ore a nodo acceso (scale-to-zero).</li><li><strong>Blocco prezzo Alpha:</strong> per chi entra in Alpha i prezzi di lancio restano bloccati per la <strong>durata del contratto Alpha</strong> sottoscritto; rinnovi post-Alpha a condizioni GA.</li><li><strong>Fatturazione.</strong> BYOH: mensile anticipata. PaaS: a ore consuntivate, conguaglio mensile. Pagamento via bonifico SEPA immediato (PaaS) o come da offerta. Ritardi: interessi legali ex D.Lgs. 231/2002.</li><li><strong>Tasse.</strong> IVA e altri oneri esclusi.</li><li><strong>Nessun costo a token.</strong> Il consumo LLM non genera addebiti a token; contano solo postazioni/ore.</li></ul><p>Netter può correggere errori materiali di prezzo con preavviso. Se non accetti il nuovo prezzo GA, puoi recedere prima del rinnovo.</p>",
+      },
+      {
+        id: "licenza",
+        title: "6. Licenza d’uso e proprietà intellettuale",
+        html: "<ul><li><strong>Licenza.</strong> Licenza non esclusiva, non trasferibile, non sublicenziabile, limitata alla durata dell’Alpha e all’uso interno (o, se provider white-label, alla rivendita ai tuoi tenant finali come da contratto). Nessun trasferimento di proprietà.</li><li><strong>Componenti.</strong> Lo stack include o richiama software open-source (es. vLLM, SGLang) e pesi open-weight con le rispettive licenze: le rispetti integralmente.</li><li><strong>Divieti.</strong> Non decompilare, aggirare misure tecniche, rimuovere loghi/avvisi, né usare Ventic per addestrare modelli concorrenti in violazione di licenze a monte.</li><li><strong>Marchi.</strong> Ventic e Netter srl restano di Netter; OpenAI/Anthropic e altri marchi citati restano dei rispettivi titolari (nessuna affiliazione).</li></ul>",
+      },
+      {
+        id: "feedback",
+        title: "7. Feedback, telemetria e contributi",
+        html: "<p>Ci aiuti a migliorare Ventic con feedback, bug report, log anonimizzati, prompt di test e suggerimenti (“<strong>Feedback</strong>”). Ci concedi licenza irrevocabile, perpetua, mondiale, gratuita e sublicenziabile per usare, riprodurre e integrare il Feedback nel prodotto senza obbligo di menzione o compenso. Non inviare Feedback che non puoi licenziare.</p><p>Telemetria di servizio (utilizzo, errori, performance) può essere raccolta in forma aggregata per migliorare stabilità e sicurezza. I contenuti dei tuoi prompt/dati applicativi restano tuoi e non sono usati per addestrare modelli di terzi; vedi §9 e DPA.</p>",
+      },
+      {
+        id: "obblighi",
+        title: "8. Obblighi dell’utente e uso accettabile",
+        html: "<p>Usi Ventic in modo lecito, proporzionato e senza abusare dell’Alpha. In particolare ti impegni a non:</p><ul><li>violare leggi, diritti di terzi o sanzioni applicabili; generare o diffondere contenuti illegali;</li><li>tentare accessi non autorizzati, attacchi, scraping aggressivo, bypass di RBAC/quote/overlay, o uso oltre le postazioni/ore acquistate;</li><li>condividere chiavi o accessi fuori dal perimetro autorizzato, né esporre il proxy/overlay su rete pubblica senza controllo;</li><li>usare modelli uncensored per scopi illeciti: se sbloccati per hardening/red-teaming, resti unico responsabile dell’uso conforme alla legge;</li><li>caricare dati di cui non hai diritto o categorie particolari/sensibili senza base giuridica, né dati di minori.</li></ul><p>Possiamo applicare rate limit, blocchi automatici e sospensioni per tutelare la piattaforma e gli altri tester Alpha. Segnali abusi a <a href='mailto:info@ventic.it'>info@ventic.it</a>.</p>",
+      },
+      {
+        id: "privacy",
+        title: "9. Dati, privacy e sicurezza",
+        html: "<p><strong>Sito vetrina:</strong> vedi <a href='/privacy/'>Informativa privacy</a> (titolare Netter srl).</p><p><strong>Dati del servizio (BYOH/PaaS):</strong> prompt, documenti RAG, log di inferenza, collection Qdrant e dati dei tuoi utenti finali sono trattati <strong>sulla tua infrastruttura / nodo dedicato</strong>. Netter fornisce lo stack e, rispetto a quei dati, opera come <strong>responsabile ex art. 28 GDPR</strong> solo dove previsto dal contratto/DPA; per il resto non accede ai contenuti se non su tua richiesta per supporto.</p><ul><li>Overlay mTLS, isolamento per tenant, RBAC/quote e revoca chiavi come misure di base.</li><li>Sei titolare dei dati che carichi; garantisci base giuridica, informativa ai tuoi interessati e, se necessario, nomina a responsabile/DPA.</li><li>Incidenti: ci avvisiamo senza ritardo secondo DPA e obblighi di legge.</li></ul><p>Replica/DR multicloud solo se acquistata e configurata; altrimenti resta su singolo nodo/regione.</p>",
+      },
+      {
+        id: "modelli",
+        title: "10. Modelli AI, output e responsabilità sui contenuti",
+        html: "<p>I modelli sono <strong>open-weight</strong> (Qwen, DeepSeek, Kimi, ecc.) eseguiti localmente: pesi bloccati, non aggiornati silenziosamente. L’output è generato probabilisticamente e può essere errato, incompleto o inappropriato.</p><ul><li><strong>Nessuna garanzia sull’output.</strong> Validazione, fact-checking e supervisione umana restano a tuo carico, specie per decisioni con effetti su persone o sistemi.</li><li><strong>Policy contenuti.</strong> Puoi applicare restrizioni semantiche e filtri per utente/chiave; resti responsabile dei contenuti generati e del loro uso.</li><li><strong>Uncensored.</strong> Modelli con filtri attenuati sono offerti solo per usi leciti (security research, hardening): li usi a tuo rischio e nel rispetto della legge.</li></ul>",
+      },
+      {
+        id: "garanzie",
+        title: "11. Assenza di garanzie (As-Is)",
+        html: "<p><strong>Ventic Alpha è fornito “così com’è” e “come disponibile” (as-is / as-available)</strong>, senza garanzie espresse o implicite di commerciabilità, idoneità a scopo particolare, non violazione, accuratezza, completezza, disponibilità, sicurezza o assenza di errori — nei limiti consentiti dalla legge.</p><p>Non garantiamo che il servizio soddisfi le tue esigenze, sia ininterrotto, privo di bug, compatibile con ogni hardware, o che gli output siano corretti. Ogni affidamento è a tuo rischio. Le descrizioni sul sito sono illustrative dell’intento di prodotto, non promesse contrattuali di Alpha.</p>",
+      },
+      {
+        id: "responsabilita",
+        title: "12. Limitazione di responsabilità",
+        html: "<p>Nei limiti massimi consentiti dalla legge e salvo dolo o colpa grave di Netter:</p><ul><li><strong>Esclusione danni indiretti.</strong> In nessun caso Netter risponde di lucro cessante, perdita di dati/ricavi/avviamento, costi di sostituzione, danni consequenziali, indiretti o punitivi, anche se avvisata della possibilità.</li><li><strong>Tetto economico Alpha.</strong> La responsabilità complessiva di Netter per tutte le pretese relative all’Alpha è limitata all’importo <strong>effettivamente pagato da te a Netter nei 3 mesi precedenti l’evento</strong> che ha dato origine alla pretesa (o a <strong>€500</strong> se non hai pagato nulla in Alpha gratuita/POC). Se hai più contratti, vale il contratto rilevante.</li><li><strong>Eccezioni inderogabili.</strong> Nulla limita la responsabilità che la legge dichiara inderogabile (es. diritti inderogabili del consumatore ove applicabili).</li></ul><p>Sei tenuto a mitigare i danni (es. backup, ridondanza, non uso critico in Alpha). La limitazione riflette la natura sperimentale e i prezzi di lancio.</p>",
+      },
+      {
+        id: "durata",
+        title: "13. Durata, sospensione e recesso",
+        html: "<ul><li><strong>Durata Alpha.</strong> Dalla concessione dell’invito fino a chiusura dell’Alpha, scadenza dell’offerta/contratto Alpha o recesso. Netter può chiudere o sospendere l’Alpha con preavviso ragionevole (anche 7 giorni via email/avviso in pannello), salvo urgenze di sicurezza.</li><li><strong>Sospensione.</strong> Possiamo sospendere o limitare l’accesso per sicurezza, abuso, mancato pagamento, violazione dei Termini o ordini dell’autorità.</li><li><strong>Tuo recesso.</strong> Puoi smettere di usare Ventic in qualsiasi momento; per BYOH disdici la licenza a fine periodo; per PaaS spegni i nodi e saldi le ore maturate.</li><li><strong>Effetti.</strong> Alla cessazione cessa la licenza, revochiamo overlay/chiavi e puoi esportare configurazioni/dati presenti sull’infrastruttura che controlli. Log/telemetria aggregata anonima può restare per finalità legittime. Eventuali importi già maturati restano dovuti.</li></ul>",
+      },
+      {
+        id: "modifiche",
+        title: "14. Modifiche al servizio e ai Termini",
+        html: "<p>Essendo Alpha, <strong>servizio e Termini cambieranno spesso</strong>.</p><ul><li><strong>Servizio:</strong> possiamo aggiungere, rimuovere o modificare funzionalità, API, modelli, requisiti hardware e prezzi futuri, anche con breaking change.</li><li><strong>Termini:</strong> la versione vigente è quella pubblicata su <a href='/termini/'>ventic.it/termini/</a> con data di aggiornamento. Modifiche sostanziali saranno comunicate con avviso sul sito e/o email. Se continui a usare Ventic dopo l’entrata in vigore, accetti i Termini aggiornati; se non accetti, cessa l’uso prima della data indicata.</li></ul><p>Se hai un contratto firmato con clausole difformi, quelle clausole prevalgono per il loro oggetto fino a scadenza.</p>",
+      },
+      {
+        id: "legge",
+        title: "15. Legge applicabile e foro competente",
+        html: "<p>I Termini sono regolati dalla <strong>legge italiana</strong>, senza riguardo a conflitti di legge. Per ogni controversia relativa a Ventic Alpha e a questi Termini, comprese quelle su validità, interpretazione ed esecuzione, è competente in via esclusiva il <strong>Foro di Perugia</strong>, salvo norme inderogabili a tutela del consumatore (ove qualificabile) che prevedano foro diverso.</p><p>Eventuale invalidità di una clausola non travolge le altre; la clausola sarà sostituita con altra valida più vicina all’intento originario.</p><p>Lingua: in caso di contrasto tra italiano e traduzione inglese, prevale l’italiano per i rapporti soggetti alla legge italiana/UE.</p>",
+      },
+      {
+        id: "contatti",
+        title: "16. Contatti, comunicazioni e reclami",
+        html: "<p><strong>Titolare e fornitore:</strong> Netter srl, Via Indipendenza, 06081 Assisi (PG), Italia — P.IVA IT03569900545. <strong>Email:</strong> <a href='mailto:info@ventic.it'>info@ventic.it</a> (oggetto: “Termini — Ventic Alpha”). Rispondiamo di norma entro 10 giorni lavorativi.</p><p><strong>Comunicazioni formali:</strong> sede legale all’attenzione “Ventic — Termini Alpha” o PEC se comunicata in offerta.</p><p>Per contestazioni: scrivici descrivendo l’evento e il danno asserito; cercheremo soluzione bonaria. Resta fermo il diritto di adire l’autorità/giudice competente. Per utenti consumatori: informazioni su ADR/ODR disponibili su richiesta.</p>",
+      },
+    ],
+    footerNote: {
+      title: "Nota operativa Alpha",
+      body: "Stai usando un prodotto in costruzione. Prezzi, funzionalità, modelli e persino questi Termini cambieranno. Se qualcosa non ti torna o ti serve una garanzia specifica per andare in produzione, parlane prima con noi: in Alpha preferiamo un “no, non ancora” onesto a una promessa che non possiamo mantenere.",
+    },
+    cta: {
+      title: "Domande sui Termini Alpha?",
+      body: "Scrivici a info@ventic.it — oggetto “Termini — Ventic Alpha”. Per entrare in Alpha o discutere un caso d’uso, prenota una call tecnica.",
+      btn: "Prenota una call tecnica",
+      mailLabel: "Scrivi a info@ventic.it",
+    },
+  },
 
 };
 
@@ -833,6 +945,10 @@ const en: typeof it = {
     privacy: {
       title: "Privacy policy — Ventic",
       desc: "GDPR privacy notice for Ventic (Netter srl): data processed, purposes, legal bases, cookies, your rights and controller contact.",
+    },
+    termini: {
+      title: "Terms — Early Access Alpha — Ventic",
+      desc: "Early Access Alpha Terms for Ventic (Netter srl): experimental invite-only service, no SLA, launch pricing, warranties and liability in alpha stage.",
     },
   },
 
@@ -1296,10 +1412,11 @@ const en: typeof it = {
     links: [
       { label: "Panel", href: "/en/admin-panel/" },
       { label: "Pricing", href: "/en/pricing/" },
+      { label: "Terms", href: "/en/termini/" },
       { label: "Privacy", href: "/en/privacy/" },
       { label: "Cookie", href: "/en/privacy/#cookie" },
     ],
-    disclaimer: "OpenAI and Anthropic are registered trademarks of their respective owners. All rights reserved to their legitimate owners. Ventic is not affiliated with OpenAI, Inc. or Anthropic PBC.",
+    disclaimer: "OpenAI and Anthropic are registered trademarks of their respective owners. All rights reserved to their legitimate owners. Ventic is not affiliated with OpenAI, Inc. or Anthropic PBC. Early Access Alpha — features and pricing subject to change without notice.",
   },
   pricingPage: {
     plate: "Pricing and comparison",
@@ -1619,6 +1736,113 @@ const en: typeof it = {
       mailLabel: "Email info@ventic.it",
     },
   },
+  termini: {
+    hero: {
+      plate: "Terms of Service — Early Access Alpha",
+      title: ["Early Access Alpha", "Terms"],
+      lead: "Ventic is in invite-only Early Access Alpha: an experimental, incomplete and by definition unstable service. Features, APIs, models, performance and pricing may change without notice. No promise of continuity, no SLA. Use it knowing you are testing, not buying a finished product.",
+      updatedLabel: "Last updated",
+      updatedDate: "2 September 2026",
+      tocTitle: "Contents",
+      printLabel: "Print / Save as PDF",
+    },
+    intro: {
+      note: "These Terms govern access to and use of ventic.it and the Ventic platform in Early Access Alpha, provided by Netter srl. Access to the Alpha is invite-only, revocable and non-transferable. If you signed a specific offer, order or contract with Netter srl, that document prevails for the economic and operational parts it regulates; for the rest these Terms apply.",
+      also: "Also read the Privacy notice at ventic.it/en/privacy/ and, if you are a PaaS/BYOH customer, the relevant DPA. If there is a conflict between the Italian version and the English translation, the Italian version prevails for users subject to Italian/EU law.",
+    },
+    sections: [
+      {
+        id: "scope",
+        title: "1. Scope, parties and Alpha nature",
+        html: "<p><strong>Provider:</strong> <strong>Netter srl</strong>, Via Indipendenza, 06081 Assisi (PG), Italy — VAT <strong>IT03569900545</strong> (“<strong>Netter</strong>”, “<strong>we</strong>”). <strong>Alpha User/Customer:</strong> natural or legal person invited to test Ventic (“<strong>you</strong>”).</p><p><strong>Ventic</strong> is a stack for private LLMs (proxy, Admin/Self-service panel, Ventic Agent, mTLS overlay, vLLM/SGLang engines, optional RAG/Qdrant/harness modules) offered as <strong>BYOH</strong> (on your GPUs, software license) and <strong>PaaS</strong> (on GPUs from our catalogue, hardware + license included in the hourly rate).</p><p><strong>Early Access Alpha nature:</strong> the service is experimental, unfinished, with missing features, known and unknown bugs, frequent interruptions, breaking changes without notice, possible loss of data/configuration and manual migrations. We run it as Alpha precisely to make it a product with your help: we expect feedback, patience and non-critical use. <strong>It is not a production service with continuity guarantees.</strong></p><p style='border-left:3px solid var(--accent);padding:10px 14px;background:#f5a83f0f;margin:12px 0;font-size:13px;color:var(--fg-mute)'><strong>Alpha golden rule:</strong> do not put critical workloads on Ventic Alpha without an external fallback. If your use case cannot tolerate downtime, wait for Beta/GA or agree different terms in writing.</p>",
+      },
+      {
+        id: "invite",
+        title: "2. Invite-only access, accounts and requirements",
+        html: "<ul><li><strong>Personal, revocable invite.</strong> Alpha access follows application/call and may be suspended or revoked at any time, even without cause, with reasonable notice when possible.</li><li><strong>Non-transferable.</strong> Invite, credentials, API keys and overlay are not assignable to third parties without Netter’s written consent.</li><li><strong>Accounts and keys.</strong> You create users, groups, tenants and API keys in the panel. You are responsible for safeguarding keys, rotating them, revoking departing members and any use made with your credentials.</li><li><strong>Technical requirements.</strong> BYOH: compatible hardware and connectivity as per check (max 1 h). PaaS: variable spot/dedicated GPU availability by region. The overlay needs outbound connectivity; nodes must not expose a public IP.</li><li><strong>Eligibility.</strong> You represent you have authority to bind the entity you represent and are at least 18 years old.</li></ul>",
+      },
+      {
+        id: "service",
+        title: "3. What we provide (and what we don’t) in Alpha",
+        html: "<h4 class='h4'>3.1 Included</h4><ul><li>License to use the Ventic stack for the Alpha period as per offer (BYOH per-seat; PaaS by the hour, license included).</li><li>Admin and Self-service panels, OpenAI/Anthropic-compatible LLM proxy, mTLS overlay, Ventic Agent on the node, tuned inference engines.</li><li>Best-effort support on the agreed channel (e.g. dedicated Alpha email/chat) during CET business hours, no guaranteed response times.</li><li>LGTM/Grafana observability where enabled; telemetry and logs on the infra hosting the stack.</li></ul><h4 class='h4'>3.2 Optional / on request</h4><ul><li>RAG modules (OpenRAG, Qdrant), embeddings, agentic harnesses (DeepSeek/OpenClaw), LangChain adapter, n8n node, on-prem INP.</li><li>Multicloud/redundancy/failover, dedicated spot, EU/US region pinning.</li><li>Initial BYOH setup (self-install possible) and follow-on hourly work.</li></ul><h4 class='h4'>3.3 Out of scope</h4><p>No guarantees on model output, custom moderation beyond panel semantic restrictions, managed backups of your app data, certified compliance for regulated sectors (e.g. medical, critical finance) — unless separately agreed in writing.</p>",
+      },
+      {
+        id: "availability",
+        title: "4. Availability, maintenance and no SLA",
+        html: "<p><strong>No SLA in Alpha.</strong> We promise no uptime, latency, throughput or RTO/RPO. The service is <em>best effort</em>.</p><ul><li><strong>Interruptions and breaking changes.</strong> Agent, proxy, overlay, model and engine updates may interrupt service or change APIs/payloads without notice.</li><li><strong>Maintenance.</strong> Windows without notice in Alpha; we will try to give reasonable heads-up where feasible.</li><li><strong>Spot and auto-scaling.</strong> On PaaS spot, reclaim is normal: the agent tries automatic rescheduling to another provider, but it is not guaranteed or instant.</li><li><strong>Scale-to-zero.</strong> Idle &gt;15 min may power the node off; wake on first call with a short wait.</li><li><strong>Future Beta/GA.</strong> Any SLAs will be agreed in writing outside Alpha.</li></ul>",
+      },
+      {
+        id: "pricing",
+        title: "5. Launch pricing and billing in Alpha",
+        html: "<p>Prices shown on the site are <strong>launch prices reserved for Early Access Alpha</strong>, VAT excluded, and may change in Beta/GA.</p><table class='legal-table'><thead><tr><th>Item</th><th>Alpha price</th><th>Notes</th></tr></thead><tbody><tr><td>BYOH — Ventic Stack license</td><td><strong>€69.90/month</strong> for 5 seats incl. + <strong>€39.99</strong> per extra 10</td><td>BYOH only. Volume discounts. Setup on request or self-install.</td></tr><tr><td>PaaS — Ventic 16 (Qwen 3.8 27B)</td><td><strong>€1/h</strong> + VAT</td><td>16 active users, up to 100 on roster. €160 / €720 per month (160 h / 720 h).</td></tr><tr><td>PaaS — Ventic 64 (DeepSeek v4 Flash)</td><td><strong>€6/h</strong> + VAT</td><td>64 active users, up to 500. €960 / €4,320 per month.</td></tr></tbody></table><ul><li><strong>All-in on PaaS:</strong> hardware + license in the hourly rate. You pay only hours the node is on (scale-to-zero).</li><li><strong>Alpha price lock:</strong> for Alpha entrants launch prices stay locked for the <strong>duration of the signed Alpha contract</strong>; post-Alpha renewals at GA terms.</li><li><strong>Billing.</strong> BYOH: monthly in advance. PaaS: hourly metered, monthly settlement. Payment via instant SEPA transfer (PaaS) or as per offer. Late payment: statutory interest under Italian law (Leg. Decree 231/2002).</li><li><strong>Taxes.</strong> VAT and other duties excluded.</li><li><strong>Never per-token.</strong> LLM consumption never creates per-token charges; only seats/hours matter.</li></ul><p>Netter may correct material pricing errors with notice. If you do not accept the new GA price, you may terminate before renewal.</p>",
+      },
+      {
+        id: "license",
+        title: "6. License and intellectual property",
+        html: "<ul><li><strong>License.</strong> Non-exclusive, non-transferable, non-sublicensable license limited to the Alpha period and internal use (or, if a white-label provider, resale to your end tenants as per contract). No transfer of ownership.</li><li><strong>Components.</strong> The stack includes or pulls open-source software (e.g. vLLM, SGLang) and open-weight weights under their respective licenses: you must comply with them.</li><li><strong>Prohibitions.</strong> No decompilation, circumvention of technical measures, removal of logos/notices, or use of Ventic to train competing models in breach of upstream licenses.</li><li><strong>Trademarks.</strong> Ventic and Netter srl remain Netter’s; OpenAI/Anthropic and other marks remain their owners’ (no affiliation).</li></ul>",
+      },
+      {
+        id: "feedback",
+        title: "7. Feedback, telemetry and contributions",
+        html: "<p>You help us improve Ventic with feedback, bug reports, anonymised logs, test prompts and suggestions (“<strong>Feedback</strong>”). You grant us an irrevocable, perpetual, worldwide, royalty-free, sublicensable license to use, reproduce and incorporate Feedback into the product with no attribution or compensation. Do not send Feedback you cannot license.</p><p>Service telemetry (usage, errors, performance) may be collected in aggregated form to improve stability and security. Your prompt/app data contents remain yours and are not used to train third-party models; see §9 and DPA.</p>",
+      },
+      {
+        id: "acceptable",
+        title: "8. User obligations and acceptable use",
+        html: "<p>You use Ventic lawfully, proportionally and without abusing the Alpha. In particular you will not:</p><ul><li>violate laws, third-party rights or applicable sanctions; generate or disseminate illegal content;</li><li>attempt unauthorised access, attacks, aggressive scraping, bypass of RBAC/quotas/overlay, or use beyond purchased seats/hours;</li><li>share keys or access outside the authorised perimeter, or expose proxy/overlay to the public internet without control;</li><li>use uncensored models for unlawful ends: if unlocked for hardening/red-teaming, you remain solely responsible for lawful use;</li><li>upload data you have no right to, or special-category/sensitive data without lawful basis, or data about children.</li></ul><p>We may apply rate limits, automatic blocks and suspensions to protect the platform and other Alpha testers. Report abuse to <a href='mailto:info@ventic.it'>info@ventic.it</a>.</p>",
+      },
+      {
+        id: "privacy",
+        title: "9. Data, privacy and security",
+        html: "<p><strong>Showcase site:</strong> see <a href='/en/privacy/'>Privacy notice</a> (controller Netter srl).</p><p><strong>Service data (BYOH/PaaS):</strong> prompts, RAG documents, inference logs, Qdrant collections and your end-user data are processed <strong>on your infra / dedicated node</strong>. Netter supplies the stack and, regarding that data, acts as <strong>processor under Art. 28 GDPR</strong> only where foreseen by contract/DPA; otherwise does not access content except at your request for support.</p><ul><li>mTLS overlay, per-tenant isolation, RBAC/quotas and key revocation as baseline.</li><li>You are controller for data you load; you warrant lawful basis, notices to your data subjects and, where needed, processor appointment/DPA.</li><li>Incidents: we notify each other without undue delay per DPA and legal duties.</li></ul><p>Multicloud/DR replication only if bought and configured; otherwise single node/region.</p>",
+      },
+      {
+        id: "models",
+        title: "10. AI models, output and content responsibility",
+        html: "<p>Models are <strong>open-weight</strong> (Qwen, DeepSeek, Kimi, etc.) run locally: frozen weights, not silently updated. Output is probabilistic and may be wrong, incomplete or inappropriate.</p><ul><li><strong>No output warranty.</strong> Validation, fact-checking and human oversight remain on you, especially for decisions affecting people or systems.</li><li><strong>Content policy.</strong> You can apply semantic restrictions and per-user/key filters; you remain responsible for generated content and its use.</li><li><strong>Uncensored.</strong> Models with attenuated filters are offered only for lawful uses (security research, hardening): you use them at your own risk and in compliance with law.</li></ul>",
+      },
+      {
+        id: "warranty",
+        title: "11. No warranties (As-Is)",
+        html: "<p><strong>Ventic Alpha is provided “as is” and “as available”</strong>, without express or implied warranties of merchantability, fitness for a particular purpose, non-infringement, accuracy, completeness, availability, security or lack of errors — to the fullest extent permitted by law.</p><p>We do not warrant the service will meet your requirements, be uninterrupted, bug-free, compatible with every hardware, or that outputs will be correct. Any reliance is at your own risk. Site descriptions are illustrative of product intent, not Alpha contractual promises.</p>",
+      },
+      {
+        id: "liability",
+        title: "12. Limitation of liability",
+        html: "<p>To the maximum extent permitted by law and except for wilful misconduct or gross negligence of Netter:</p><ul><li><strong>Exclusion of indirect damages.</strong> In no event is Netter liable for loss of profits, data/revenue/goodwill, replacement costs, consequential, indirect or punitive damages, even if advised of the possibility.</li><li><strong>Alpha cap.</strong> Netter’s aggregate liability for all claims relating to the Alpha is limited to the amount <strong>actually paid by you to Netter in the 3 months before the event</strong> giving rise to the claim (or <strong>€500</strong> if you paid nothing in a free Alpha/POC). If you have multiple contracts, the relevant contract governs.</li><li><strong>Mandatory exceptions.</strong> Nothing limits liability that the law declares non-limitable (e.g. non-waivable consumer rights where applicable).</li></ul><p>You must mitigate damages (e.g. backups, redundancy, no critical use in Alpha). The cap reflects the experimental nature and launch pricing.</p>",
+      },
+      {
+        id: "term",
+        title: "13. Term, suspension and termination",
+        html: "<ul><li><strong>Alpha term.</strong> From invite grant until Alpha closure, expiry of the Alpha offer/contract or termination. Netter may close or suspend the Alpha with reasonable notice (even 7 days via email/panel notice), save for security urgencies.</li><li><strong>Suspension.</strong> We may suspend or limit access for security, abuse, non-payment, breach or authority order.</li><li><strong>Your termination.</strong> You may stop using Ventic at any time; for BYOH cancel the license at period end; for PaaS power nodes off and settle accrued hours.</li><li><strong>Effects.</strong> On termination the license ends, we revoke overlay/keys and you can export configs/data on infra you control. Aggregated anonymised telemetry may remain for legitimate purposes. Amounts already accrued remain due.</li></ul>",
+      },
+      {
+        id: "changes",
+        title: "14. Changes to service and Terms",
+        html: "<p>Being Alpha, <strong>service and Terms will change often</strong>.</p><ul><li><strong>Service:</strong> we may add, remove or change features, APIs, models, hardware requirements and future pricing, even with breaking changes.</li><li><strong>Terms:</strong> the current version is at <a href='/en/termini/'>ventic.it/en/termini/</a> with update date. Material changes will be notified via site notice and/or email. If you keep using Ventic after the effective date, you accept the updated Terms; if you do not accept, stop use before the date.</li></ul><p>If you have a signed contract with differing clauses, those clauses prevail for their subject until expiry.</p>",
+      },
+      {
+        id: "law",
+        title: "15. Governing law and jurisdiction",
+        html: "<p>Terms are governed by <strong>Italian law</strong>, without regard to conflict-of-laws. For any dispute about Ventic Alpha and these Terms, including validity, interpretation and performance, the exclusive venue is the <strong>Court of Perugia</strong>, save for mandatory consumer-protection rules (where you qualify as consumer) providing a different venue.</p><p>Invalidity of one clause does not affect the others; it will be replaced with the valid clause closest to the original intent.</p><p>Language: if Italian and English conflict, Italian prevails for relationships subject to Italian/EU law.</p>",
+      },
+      {
+        id: "contact",
+        title: "16. Contact, notices and complaints",
+        html: "<p><strong>Controller/provider:</strong> Netter srl, Via Indipendenza, 06081 Assisi (PG), Italy — VAT IT03569900545. <strong>Email:</strong> <a href='mailto:info@ventic.it'>info@ventic.it</a> (subject: “Terms — Ventic Alpha”). We usually reply within 10 business days.</p><p><strong>Formal notices:</strong> registered office attn. “Ventic — Alpha Terms” or PEC if given in the offer.</p><p>For disputes: write describing the event and alleged damage; we will seek an amicable solution. Your right to go to the competent authority/court remains. For consumer users: ADR/ODR info available on request.</p>",
+      },
+    ],
+    footerNote: {
+      title: "Alpha operating note",
+      body: "You are using a product under construction. Pricing, features, models and even these Terms will change. If something does not add up or you need a specific guarantee to go to production, talk to us first: in Alpha we prefer an honest “not yet” to a promise we cannot keep.",
+    },
+    cta: {
+      title: "Questions about the Alpha Terms?",
+      body: "Write to info@ventic.it — subject “Terms — Ventic Alpha”. To join the Alpha or discuss a use case, book a technical call.",
+      btn: "Book a technical call",
+      mailLabel: "Email info@ventic.it",
+    },
+  },
 
 };
 
@@ -1631,7 +1855,9 @@ export function getLangFromUrl(url: URL): Lang {
 
 export function alternatePath(pathname: string, target: Lang): string {
   const isEn = pathname.startsWith("/en");
-  const base = isEn ? pathname.replace(/^\/en/, "") || "/" : pathname;
+  let base = isEn ? pathname.replace(/^\/en/, "") || "/" : pathname;
+  // Normalize alias: /terms <-> /termini (canonical is /termini)
+  if (base === "/terms/" || base === "/terms") base = "/termini/";
   if (target === "en") return base === "/" ? "/en/" : `/en${base}`;
   return base;
 }

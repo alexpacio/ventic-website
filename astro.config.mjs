@@ -16,7 +16,7 @@ export default defineConfig({
         defaultLocale: 'it',
         locales: { it: 'it-IT', en: 'en-GB' },
       },
-      // Exclude nothing — all pages are indexable; add filter here if needed
+      filter: (page) => !page.includes('/terms/'),
     }),
   ],
 

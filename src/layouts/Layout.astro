@@ -89,6 +89,12 @@ function autoBreadcrumbs(): Breadcrumb[] {
       { name: "Privacy", href: isEn ? "/en/privacy/" : "/privacy/" },
     ];
   }
+  if (path.includes("/termini") || path.includes("/terms")) {
+    return [
+      { name: "Home", href: base },
+      { name: isEn ? "Terms" : "Termini", href: isEn ? "/en/termini/" : "/termini/" },
+    ];
+  }
   // generic: split path
   const parts = path.replace(/^\/en\//, "/").split("/").filter(Boolean);
   const crumbs: Breadcrumb[] = [{ name: "Home", href: base }];
