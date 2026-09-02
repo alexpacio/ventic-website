@@ -88,6 +88,43 @@ const SLOTS = 4;
       {d.scale.rules.map((r) => <li class="pol">{r}</li>)}
     </ul>
   </figcaption>
+
+  {(d as any).provisioner && (
+    <div class="prov">
+      <div class="prov-head">
+        <Icon name="provisioning" size={16} />
+        <span class="mono prov-label">{(d as any).provisioner.label}</span>
+      </div>
+      <div class="prov-grid">
+        <div class="sunk prov-card prov-card--opt">
+          <div class="prov-top">
+            <span class="cname">{(d as any).provisioner.onPrem.title}</span>
+            <span class="plate plate--sm prov-badge prov-badge--opt">{(d as any).provisioner.onPrem.badge}</span>
+          </div>
+          <p class="cell-b">{(d as any).provisioner.onPrem.body}</p>
+        </div>
+        <div class="sunk prov-card">
+          <div class="prov-top">
+            <span class="cname">{(d as any).provisioner.paas.title}</span>
+            <span class="plate plate--sm prov-badge prov-badge--on">{(d as any).provisioner.paas.badge}</span>
+          </div>
+          <p class="cell-b">{(d as any).provisioner.paas.body}</p>
+        </div>
+        <div class="sunk prov-card prov-card--opt prov-card--billing">
+          <div class="prov-top">
+            <span class="cname">{(d as any).provisioner.billing.title}</span>
+            <span class="plate plate--sm prov-badge prov-badge--soon">{(d as any).provisioner.billing.badge}</span>
+          </div>
+          <p class="cell-b">{(d as any).provisioner.billing.body}</p>
+        </div>
+      </div>
+      <p class="mono prov-note">
+        {lang === "it"
+          ? "INP PaaS lato Ventic esiste sempre e può rifornire anche lo stack on-prem — INP on-prem è opzionale e vede solo le tue macchine. Billing in arrivo per resale subscription/token."
+          : "Ventic INP PaaS always exists and can supply even on-prem stacks — on-prem INP is optional and sees only your machines. Billing coming soon for subscription/token resale."}
+      </p>
+    </div>
+  )}
 </figure>
 
 <style>
@@ -186,6 +223,19 @@ const SLOTS = 4;
     width: 6px; height: 6px; background: var(--accent);
   }
 
+  .prov { margin-top: 16px; padding: 18px 18px 16px; background: #0f1214; border: 1px solid var(--line-soft); border-radius: 3px; }
+  .prov-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .prov-label { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-strong); }
+  .prov-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .prov-card { padding: 14px 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+  .prov-card--opt { background: transparent; border-style: dashed; border-color: #3d4349; box-shadow: none; }
+  .prov-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+  .prov-badge { flex-shrink: 0; font-size: 9px; letter-spacing: .08em; }
+  .prov-badge--opt { color: var(--fg-faint); }
+  .prov-badge--on { color: #35cfa4; border-color: rgba(53,207,164,.22); background: rgba(53,207,164,.08); }
+  .prov-badge--soon { color: var(--accent); border-color: rgba(245,168,63,.22); background: rgba(245,168,63,.08); }
+  .prov-note { margin-top: 12px; font-size: 10px; letter-spacing: .06em; color: var(--fg-ghost); line-height: 1.6; }
+
   @media (max-width: 1080px) {
     .diagram { grid-template-columns: minmax(0, 1fr) 112px minmax(0, 1fr); }
     .diagram > .flow:nth-of-type(2) { grid-column: 1 / -1; flex-direction: row; padding: 16px 0; }
@@ -193,6 +243,8 @@ const SLOTS = 4;
     .col--nodes { grid-column: 1 / -1; }
     .scale { grid-template-columns: 1fr; gap: 16px; }
     .policy { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .prov-grid { grid-template-columns: 1fr 1fr; }
+    .prov-card--billing { grid-column: 1 / -1; }
   }
   @media (max-width: 860px) {
     .diagram { grid-template-columns: 1fr; }
@@ -200,6 +252,8 @@ const SLOTS = 4;
     .col, .col--nodes { grid-column: 1; }
     .wire { width: 100%; }
     .policy { grid-template-columns: 1fr; gap: 12px; }
+    .prov-grid { grid-template-columns: 1fr; }
+    .prov-card--billing { grid-column: 1; }
   }
 
   @media (prefers-reduced-motion: reduce) {

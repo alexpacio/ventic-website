@@ -1,7 +1,7 @@
 # Ventic — llms.txt
 # See https://llmstxt.org/ — helps LLMs discover and cite your site correctly.
 
-> Ventic è uno stack tecnologico chiavi in mano per creare, gestire e configurare LLM privati. Gira sulle tue GPU — dati in UE o US — con endpoint compatibile OpenAI e Anthropic, vLLM ottimizzato e pannello Admin multi-tenant. Alternativa a subscription frontier e pagamento a token: licenza BYOH €69,90/mese o PaaS da 1 €/h, mai a token.
+> Ventic è uno stack tecnologico chiavi in mano per creare, gestire e configurare LLM privati. Gira sulle tue GPU — dati in UE o US — con endpoint compatibile OpenAI e Anthropic, motore di inferenza ottimizzato (vLLM, SGLang) e pannello Admin multi-tenant. Alternativa a subscription frontier e pagamento a token: licenza BYOH €69,90/mese o PaaS da 1 €/h, mai a token.
 
 # Primary
 - [Ventic — Home](https://ventic.it/): LLM privati su GPU dedicate, endpoint OpenAI/Anthropic, BYOH e PaaS, overlay cifrato, scaling automatico.

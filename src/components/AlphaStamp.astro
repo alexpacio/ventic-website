@@ -1,0 +1,69 @@
+---
+interface Props {
+  variant?: "stamp" | "badge" | "inline";
+  size?: "sm" | "md" | "lg";
+  rotate?: number;
+  lang?: "it" | "en";
+}
+const { variant = "stamp", size = "md", rotate = -12, lang = "it" } = Astro.props;
+const label = "ALPHA";
+const sub = lang === "en" ? "private alpha" : "alpha privata";
+---
+{variant === "stamp" ? (
+  <div class={`alpha-stamp alpha-stamp--${size}`} style={`--rot:${rotate}deg`} aria-label="Alpha — private alpha stage">
+    <span class="alpha-inner">
+      <span class="alpha-main">{label}</span>
+      <span class="alpha-sub">{sub}</span>
+    </span>
+  </div>
+) : variant === "badge" ? (
+  <span class={`alpha-badge alpha-badge--${size}`} aria-label="Alpha stage">ALPHA</span>
+) : (
+  <span class="alpha-inline" aria-label="Alpha stage"><span class="alpha-inline-dot"></span>ALPHA — {lang === "en" ? "private alpha" : "alpha privata"}</span>
+)}
+
+<style>
+  .alpha-stamp {
+    display: inline-flex; align-items: center; justify-content: center;
+    border: 3px solid #e53e3e; color: #e53e3e;
+    font-family: var(--mono, "IBM Plex Mono", monospace);
+    font-weight: 800; letter-spacing: .18em; text-transform: uppercase;
+    line-height: 1; transform: rotate(var(--rot));
+    background: rgba(229,62,62,0.06);
+    box-shadow: 0 0 0 1px rgba(229,62,62,0.15) inset, 0 2px 12px rgba(229,62,62,0.18);
+    user-select: none; pointer-events: none;
+    position: relative;
+  }
+  .alpha-stamp::before {
+    content: ""; position: absolute; inset: 3px;
+    border: 1px solid rgba(229,62,62,0.55); pointer-events: none;
+  }
+  .alpha-inner { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 18px; }
+  .alpha-main { font-size: 28px; letter-spacing: .22em; }
+  .alpha-sub { font-size: 8px; letter-spacing: .18em; opacity: .85; font-weight: 600; }
+  .alpha-stamp--sm .alpha-inner { padding: 6px 12px; }
+  .alpha-stamp--sm .alpha-main { font-size: 18px; }
+  .alpha-stamp--sm .alpha-sub { font-size: 7px; }
+  .alpha-stamp--lg .alpha-inner { padding: 14px 24px; }
+  .alpha-stamp--lg .alpha-main { font-size: 36px; }
+  .alpha-stamp--lg .alpha-sub { font-size: 9px; }
+
+  .alpha-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    border: 1.5px solid #e53e3e; color: #e53e3e;
+    background: rgba(229,62,62,0.08);
+    font-family: var(--mono); font-weight: 700;
+    letter-spacing: .14em; text-transform: uppercase; line-height: 1;
+    border-radius: 2px; user-select: none;
+  }
+  .alpha-badge--sm { font-size: 9px; padding: 3px 6px; }
+  .alpha-badge--md { font-size: 10px; padding: 4px 8px; }
+  .alpha-badge--lg { font-size: 11px; padding: 5px 10px; }
+
+  .alpha-inline {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--mono); font-size: 10px; font-weight: 600;
+    letter-spacing: .12em; text-transform: uppercase; color: #e53e3e;
+  }
+  .alpha-inline-dot { width: 6px; height: 6px; border-radius: 50%; background: #e53e3e; box-shadow: 0 0 8px rgba(229,62,62,0.6); flex-shrink: 0; }
+</style>

@@ -21,8 +21,8 @@ export function serviceJsonLd(lang: "it" | "en") {
       availableLanguage: ["it", "en"],
     },
     description: isIt
-      ? "Endpoint LLM privato compatibile OpenAI e Anthropic su GPU dedicate, dati in UE o US, modelli open-weight con vLLM ottimizzato."
-      : "Private LLM endpoint OpenAI/Anthropic-compatible on dedicated GPUs, data in EU or US, open-weight models with tuned vLLM.",
+      ? "Endpoint LLM privato compatibile OpenAI e Anthropic su GPU dedicate, dati in UE o US, modelli open-weight con motore di inferenza ottimizzato (vLLM, SGLang)."
+      : "Private LLM endpoint OpenAI/Anthropic-compatible on dedicated GPUs, data in EU or US, open-weight models with tuned inference engine (vLLM, SGLang).",
     offers: [
       {
         "@type": "Offer",
@@ -82,14 +82,14 @@ export function pricingJsonLd(lang: "it" | "en") {
           { q: "Quanto costa Ventic in BYOH?", a: "€69,90/mese + IVA per 5 postazioni, €39,99 + IVA ogni 10 aggiuntive. Sconti per volumi." },
           { q: "Cosa significa PaaS da 1 €/h?", a: "Hardware e licenza inclusi: paghi solo le ore in cui il server è acceso, con spegnimento automatico quando inutilizzato." },
           { q: "I costi dipendono dai token?", a: "No. Mai a token: il conto cambia solo con ore o postazioni, non con quanto scrive il modello." },
-          { q: "Dove risiedono i dati?", a: "Sulla tua macchina (BYOH) o nella regione che scegli tu, UE o US (PaaS). I pesi possono venire dalla Cina ma i dati non ci vanno mai." },
+          { q: "Dove risiedono i dati?", a: "Sulla tua macchina (BYOH) o nella regione che scegli tu, UE o US (PaaS). I pesi sono open-weight e i dati non lasciano mai la tua infrastruttura." },
           { q: "Come si dimensiona il servizio?", a: "Sulle persone che lavorano insieme nello stesso momento, non sui token. Aggiungi un nodo quando servono più posti." },
         ]
       : [
           { q: "How much does Ventic cost on BYOH?", a: "€69.90/month + VAT for 5 seats, €39.99 + VAT per extra 10. Volume discounts." },
           { q: "What does PaaS from €1/h mean?", a: "Hardware and license included: you pay only hours the server is on, with auto-shutdown when idle." },
           { q: "Does cost depend on tokens?", a: "No. Never per-token: the bill changes with hours or seats, not how much the model writes." },
-          { q: "Where does data reside?", a: "On your machine (BYOH) or EU/US region you choose (PaaS). Weights may come from China but your data never goes there." },
+          { q: "Where does data reside?", a: "On your machine (BYOH) or EU/US region you choose (PaaS). Weights are open-weight and your data never leaves your infrastructure." },
           { q: "How is the service sized?", a: "By people working at the same time, not tokens. Add a node when you need more seats." },
         ]
     ).map(({ q, a }) => ({

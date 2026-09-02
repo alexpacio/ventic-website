@@ -44,7 +44,7 @@ const f = content[lang].infraFlow;
         <rect x="202" y="24" width="138" height="44" rx="2" fill="#16181b" stroke="#32373d"/><text x="271" y="42" fill="#f2f0eb" font-weight="600">PROXY</text><text x="271" y="54" fill="#6f7276" font-size="8">RBAC · quote</text>
         <rect x="386" y="24" width="158" height="44" rx="2" fill="#1d2126" stroke="#f5a83f" stroke-dasharray="5 4"/><text x="465" y="42" fill="#f5a83f" font-weight="600">OVERLAY mTLS</text><text x="465" y="54" fill="#8a8d92" font-size="8">NAT traversal</text>
         <rect x="590" y="24" width="138" height="44" rx="2" fill="#16181b" stroke="#32373d"/><text x="659" y="42" fill="#f2f0eb" font-weight="600">AGENT</text><text x="659" y="54" fill="#6f7276" font-size="8">fair queue</text>
-        <rect x="774" y="24" width="138" height="44" rx="2" fill="#16181b" stroke="#32373d"/><text x="843" y="42" fill="#f2f0eb" font-weight="600">vLLM</text><text x="843" y="54" fill="#6f7276" font-size="8">2× GPU</text>
+        <rect x="774" y="24" width="138" height="44" rx="2" fill="#16181b" stroke="#32373d"/><text x="843" y="42" fill="#f2f0eb" font-weight="600">{lang === "it" ? "MOTORE" : "ENGINE"}</text><text x="843" y="54" fill="#6f7276" font-size="8">vLLM · SGLang</text>
       </g>
       <!-- arrows -->
       <g stroke="#32373d" stroke-width="1.2" fill="none" marker-end="url(#ah)">
@@ -53,7 +53,7 @@ const f = content[lang].infraFlow;
         <path d="M843 72 C 843 82, 271 82, 271 72" stroke="#3a3f45" stroke-dasharray="5 4" marker-end="none"/>
         <path d="M271 68 L267 72 L271 76" stroke="#3a3f45" fill="none" marker-end="none"/>
       </g>
-      <text x="485" y="84" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="8" letter-spacing="0.08em" fill="#5c5f63">RISPOSTA — STESSA STRADA AL CONTRARIO</text>
+      <text x="485" y="84" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="8" letter-spacing="0.08em" fill="#5c5f63">{lang === "it" ? "RISPOSTA — STESSA STRADA AL CONTRARIO" : "RESPONSE — SAME PATH BACK"}</text>
     </svg>
   </div>
 </figure>

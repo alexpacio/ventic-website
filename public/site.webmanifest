@@ -1,7 +1,7 @@
 {
   "name": "Ventic — LLM privati su GPU dedicate",
   "short_name": "Ventic",
-  "description": "Il tuo endpoint LLM privato, compatibile OpenAI e Anthropic. Gira sulle tue GPU — dati in UE o US — con modelli open-weight, vLLM ottimizzato e assistenza inclusa.",
+  "description": "Il tuo endpoint LLM privato, compatibile OpenAI e Anthropic. Gira sulle tue GPU — dati in UE o US — con modelli open-weight, motore di inferenza ottimizzato (vLLM, SGLang) e assistenza inclusa.",
   "lang": "it",
   "dir": "ltr",
   "start_url": "/",

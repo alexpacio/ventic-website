@@ -15,4 +15,4 @@ Sitemap: https://ventic.it/sitemap-index.xml
 Robots: https://ventic.it/robots.txt
 
 /* THANKS */
-Thanks to open-weight community and vLLM.
+Thanks to open-weight community and inference engine teams (vLLM, SGLang).

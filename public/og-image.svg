@@ -27,7 +27,7 @@
   <text x="48" y="400" font-family="IBM Plex Sans, system-ui, sans-serif" font-size="30" font-weight="500" fill="#F2F0EB">Il tuo endpoint LLM privato.</text>
   <text x="48" y="438" font-family="IBM Plex Sans, system-ui, sans-serif" font-size="30" font-weight="500" fill="#F2F0EB">Compatibile OpenAI e Anthropic.</text>
 
-  <text x="48" y="482" font-family="IBM Plex Sans, system-ui, sans-serif" font-size="16.5" font-weight="400" fill="rgba(242,240,235,0.68)">Open-weight su vLLM ottimizzato · Overlay cifrato · Dati in UE o US · Licenza da €69,90/mese</text>
+  <text x="48" y="482" font-family="IBM Plex Sans, system-ui, sans-serif" font-size="16.5" font-weight="400" fill="rgba(242,240,235,0.68)">Motore di inferenza ottimizzato (vLLM, SGLang) · Overlay cifrato · Dati in UE o US · Licenza da €69,90/mese</text>
 
   <!-- bottom trust row -->
   <g transform="translate(48, 544)">

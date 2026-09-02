@@ -1,5 +1,6 @@
 ---
 import Wordmark from "./Wordmark.astro";
+import AlphaStamp from "./AlphaStamp.astro";
 import Icon from "./Icon.astro";
 import { content, alternatePath, type Lang } from "../i18n/content";
 
@@ -15,6 +16,7 @@ const otherHref = alternatePath(Astro.url.pathname, other);
   <div class="wrap inner">
     <a class="brand" href={home} aria-label="Ventic">
       <Wordmark height={20} />
+      <span class="nav-alpha"><AlphaStamp variant="badge" size="sm" lang={lang} /></span>
     </a>
 
     <nav class="links" aria-label="Ventic">
@@ -55,8 +57,9 @@ const otherHref = alternatePath(Astro.url.pathname, other);
   }
   .inner { display: flex; align-items: center; justify-content: space-between; gap: 18px; height: 64px; }
 
-  .brand { display: flex; align-items: center; color: var(--fg-strong); flex-shrink: 0; }
+  .brand { display: flex; align-items: center; gap: 10px; color: var(--fg-strong); flex-shrink: 0; }
   .brand:hover { color: var(--fg-strong); }
+  .nav-alpha { display: inline-flex; margin-left: 2px; transform: translateY(1px); }
 
   .links { display: flex; align-items: center; gap: 26px; flex-wrap: nowrap; }
   .right { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }

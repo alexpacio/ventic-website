@@ -14,7 +14,7 @@ const it = {
   seo: {
     home: {
       title: "Ventic — LLM privati su GPU dedicate",
-      desc: "Il tuo endpoint LLM privato, compatibile OpenAI e Anthropic. Gira sulle tue GPU — dati in UE o US — con modelli open-weight, vLLM ottimizzato e assistenza inclusa.",
+      desc: "Il tuo endpoint LLM privato, compatibile OpenAI e Anthropic. Gira sulle tue GPU — dati in UE o US — con modelli open-weight, motore di inferenza ottimizzato (vLLM, SGLang) e assistenza inclusa.",
     },
     pricing: {
       title: "Prezzi e confronto — Ventic",
@@ -46,7 +46,7 @@ const it = {
     sub: "Pannello di controllo Admin e Self-service, gestione centralizzata, autotuning dei modelli. Fare da soli non conviene con Ventic!",
     cta1: "Prenota una call tecnica",
     cta2: "Vedi come funziona",
-    micro: "Setup in giornata · Licenza da €69,90/mese · Mai a token",
+    micro: "Setup in giornata · Licenza da €69,90/mese · Mai a token · Alpha privata — accesso su invito",
     trust: ["Dati in UE o US, a tua scelta", "Compatibile OpenAI & Anthropic"],
   },
 
@@ -64,7 +64,7 @@ const it = {
       { label: "Decode", value: "1.86k", unit: "tok/s" },
       { label: "Sessioni", value: "37", unit: "in coda 0" },
     ],
-    chips: ["qwen3.8-27b", "vLLM · TP 2", "embed · bge-m3"],
+    chips: ["qwen3.8-27b", "motore · TP 2", "embed · bge-m3"],
     chipLive: "overlay cifrato attivo",
     sample: "dati di esempio · anteprima live",
   },
@@ -85,7 +85,7 @@ const it = {
       { tag: "02 — Subscription", title: "Outage a monte", body: "Se il provider va giù, va giù anche il tuo prodotto. Nessun failover ti salva se il modello vive solo da loro." },
       { tag: "03 — Subscription", title: "Modelli che cambiano", body: "Gli stessi prompt danno risultati diversi nel tempo. Aggiornamenti silenziosi, poca trasparenza, nessuna riproducibilità." },
       { tag: "04 — A token", title: "Prezzo per token", body: "Sui modelli di frontiera USA il costo per token è alto e cresce proprio quando il tuo prodotto ha successo." },
-      { tag: "05 — A token", title: "Compliance", body: "Le alternative economiche girano su server cinesi. Se i tuoi dati devono restare in UE, quella strada è chiusa." },
+      { tag: "05 — A token", title: "Compliance", body: "Le alternative economiche girano su server fuori UE. Se i tuoi dati devono restare in UE, quella strada è chiusa." },
       { tag: "06 — A token", title: "Budget imprevedibile", body: "Il consumo LLM è imprevedibile per natura. In azienda diventa una voce che nessuno riesce a chiudere a budget." },
     ],
   },
@@ -97,8 +97,8 @@ const it = {
     lead: "In entrambi i casi ottieni la stessa cosa: un endpoint privato compatibile OpenAI e Anthropic, su una macchina a cui accedi quando vuoi.",
     byoh: {
       tag: "BYOH — Bring Your Own Hardware",
-      title: "Porti il server tu",
-      desc: "Hai già le GPU o le compri tu. Noi installiamo lo stack: verifica di compatibilità, motore vLLM ottimizzato per la tua GPU, Ventic Agent, rete overlay cifrata, pannello e observability.",
+      title: "Utilizza i tuoi server",
+      desc: "Hai già le GPU o le compri tu. Noi installiamo lo stack: verifica di compatibilità, motore di inferenza ottimizzato per la tua GPU (vLLM / SGLang), Ventic Agent, rete overlay cifrata, pannello e observability.",
       priceLabel: "Licenza Ventic + setup",
       price: "€69,90",
       unit: "/ mese + IVA",
@@ -111,7 +111,7 @@ const it = {
     },
     paas: {
       tag: "PaaS",
-      title: "Te lo forniamo noi",
+      title: "Utilizza i nostri server",
       desc: "Troviamo il server giusto al prezzo giusto nel nostro catalogo, lo mettiamo in produzione e te lo fatturiamo insieme al servizio. Tutto incluso — hardware e licenza compresi.",
       priceLabel: "Tutto incluso, a ore",
       price: "da 1 €",
@@ -129,18 +129,18 @@ const it = {
   how: {
     id: "come-funziona",
     plate: "Come funziona",
-    title: ["Un agent sul server.", "Fa tutto lui."],
-    lead: "Sul tuo server gira Ventic Agent, il nostro software. Tiene in piedi il modello, lo espone in modo sicuro e lo condivide in modo equo fra i tuoi utenti — senza farvi toccare driver, kernel o flag di vLLM.",
+    title: ["LLM per Aziende e Provider", "in uno stack."],
+    lead: "Una soluzione completa per rilasciare LLM a persone ed agenti in modo controllato. Come un Kubernetes enterprise per LLM: dichiari l'intento via GUI o manifest CLI, Ventic riconcilia lo stato desiderato — senza farti toccare driver, kernel o flag del motore di inferenza.",
     steps: [
       { title: "Troviamo il server", body: "Cerchiamo la macchina giusta al prezzo giusto, secondo i criteri che scegli. Acquisto con bonifico SEPA immediato.", tag: "solo PaaS" },
-      { title: "Lo accendiamo già pronto", body: "Motore vLLM configurato per quel modello su quell’hardware — LLM ed embedding insieme. Automatizzato: a noleggio orario, ogni minuto risparmiato è denaro.", tag: "in pochi minuti" },
+      { title: "Se non hai server, te lo diamo noi", body: "In pochi minuti configuriamo il tuo server. Oppure te lo forniamo noi, adeguato ai modelli che vuoi far girare con le caratteristiche che ti servono per il tuo workload — LLM ed embedding insieme su motore di inferenza ottimizzato (vLLM, SGLang).", tag: "in pochi minuti" },
       { title: "Lo raggiungiamo senza aprire porte", body: "Rete overlay privata e cifrata che si autoconfigura e attraversa i NAT. Niente IP pubblico, niente VPN da mantenere, nessuna porta esposta.", tag: "zero esposizione" },
-      { title: "Lo teniamo in piedi", body: "Scheduling equo fra utenti, ripristino automatico dopo outage spot, spegnimento nei momenti morti, metriche e allarmi. Con la nostra assistenza.", tag: "continuo" },
+      { title: "Gestiamo la lifecycle", body: "Scheduling equo fra utenti, ripristino automatico dopo outage spot, spegnimento nei momenti morti, metriche e allarmi. Con la nostra assistenza.", tag: "continuo" },
     ],
   },
 
   stackDiagram: {
-    label: "Dove gira ogni pezzo",
+    label: "Come interagiscono i componenti e dove sono",
     clients: { label: "Postazioni di lavoro", items: ["Agenti di coding", "App e servizi interni", "Client OpenAI / Anthropic"] },
     infra: { label: "Tua infrastruttura Docker", items: ["LLM proxy", "Admin panel", "Observability (LGTM)"] },
     nodesLabel: "Nodi GPU",
@@ -160,18 +160,24 @@ const it = {
         "0 richieste per 15 minuti: spegne il nodo. Si riaccende alla prima chiamata.",
       ],
     },
+    provisioner: {
+      label: "Inference Node Provisioner (INP)",
+      onPrem: { title: "INP on-premise (opzionale)", badge: "solo tue macchine", body: "Gira nella tua infra. Vede e gestisce solo le macchine del cliente: le accende/spegne secondo i manifest. Se non c'è, lo scaling è delegato al Provisioner Ventic." },
+      paas: { title: "INP PaaS — lato Ventic (sempre presente)", badge: "sempre attivo", body: "Gira sul control plane Ventic. Acquisisce GPU in cloud (spot/dedicato, UE/US) e le aggancia via overlay al tuo stack — anche quando parti da on-prem e devi scalare oltre le tue macchine." },
+      billing: { title: "Billing & Resale", badge: "in arrivo", body: "Contabilizza uso per tenant e prepara rivendita a subscription o a token. Architettura già predisposta — funzionalità in arrivo." },
+    },
   },
 
   infraFlow: {
     plate: "Flusso di una richiesta",
-    title: "Dalla tua app al modello, senza uscire dalla tua rete",
+    title: "Lifecycle di una richiesta",
     lead: "La tua app parla al proxy come se fosse OpenAI. Il proxy inoltra sull’overlay cifrato fino al Ventic Agent sul nodo GPU. La risposta torna dalla stessa strada — nessun hop pubblico.",
     steps: [
       { k: "01", label: "La tua app", desc: "SDK OpenAI / Anthropic invariato. Cambia solo l’URL dell’endpoint." },
       { k: "02", label: "LLM proxy", desc: "Un unico endpoint. Autentica, applica RBAC e quote, poi inoltra." },
       { k: "03", label: "Overlay cifrato", desc: "Canale mTLS che attraversa i NAT. I nodi non espongono porte." },
-      { k: "04", label: "Ventic Agent", desc: "Riceve, accoda in modo equo, alimenta vLLM." },
-      { k: "05", label: "vLLM", desc: "Inferenza ottimizzata per quel modello su quella GPU. Risponde al proxy, il proxy a te." },
+      { k: "04", label: "Ventic Agent", desc: "Riceve, accoda in modo equo, alimenta il motore di inferenza." },
+      { k: "05", label: "Motore di inferenza", desc: "Inferenza ottimizzata per quel modello su quella GPU (vLLM / SGLang). Risponde al proxy, il proxy a te." },
     ],
     note: "Senza IP pubblico. Senza VPN manuale. Il relay può stare in rete pubblica; i tuoi nodi restano chiusi.",
   },
@@ -191,8 +197,8 @@ const it = {
   stack: {
     id: "stack",
     plate: "Piattaforma",
-    title: ["Uno stack che installi,", "non un servizio a cui invii i dati."],
-    lead: "Pannello, proxy e observability girano sulla tua infrastruttura Docker — i dati restano da te. Sui nodi GPU gira solo il nostro agent. In mezzo, una rete overlay cifrata che si autoconfigura e attraversa i NAT senza IP pubblici né VPN da mantenere.",
+    title: ["Uno stack che possiedi,", "non un servizio a cui invii i dati."],
+    lead: "Pannello, proxy e observability girano sulla tua infrastruttura Docker — i dati restano da te. Sui nodi GPU gira solo il nostro agent. In mezzo, una rete overlay cifrata che si autoconfigura e attraversa i NAT senza IP pubblici né VPN da mantenere. Un Kubernetes enterprise per LLM: intent-based, gestisci tutto da GUI o via CLI con manifest file — dichiari lo stato desiderato, Ventic lo riconcilia.",
     legend: { own: "Sempre incluso", opt: "Opzionale — attivi solo se ti serve" },
     planes: [
       {
@@ -211,6 +217,7 @@ const it = {
           { name: "Admin panel", body: "Utenti, ruoli, modelli, quote e policy. È il pannello che vedi qui sotto.", opt: false },
           { name: "LLM proxy", body: "Un endpoint solo, compatibile OpenAI e Anthropic. I client esistenti non cambiano.", opt: false },
           { name: "Observability (LGTM + Grafana)", body: "Log, metriche e tracce. I dati di utilizzo restano sulla tua infra.", opt: false },
+          { name: "Inference Node Provisioner (on-prem)", body: "Opzionale. Gira nella tua infra e vede solo le tue macchine: le accende/spegne secondo i manifest. Se non c'è, lo scaling è delegato al Provisioner Ventic.", opt: true },
           { name: "OpenRAG", body: "Pipeline di retrieval sui tuoi documenti.", opt: true },
           { name: "Qdrant", body: "Database vettoriale per le collection RAG.", opt: true },
           { name: "Embedding model", body: "Indicizzazione servita dallo stesso stack di inferenza.", opt: true },
@@ -235,7 +242,16 @@ const it = {
         where: "Sulle GPU — tue o dal catalogo",
         items: [
           { name: "Ventic host agent", body: "Tiene in piedi il modello, lo espone sull’overlay e lo condivide equamente. È l’unico pezzo sul nodo.", opt: false },
-          { name: "Runtime vLLM", body: "Ottimizzato per quel modello su quella GPU. Serve LLM ed embedding insieme.", opt: false },
+          { name: "Motore di inferenza", body: "Basato su vLLM e SGLang, ottimizzato per quel modello su quella GPU. Serve LLM ed embedding insieme.", opt: false },
+        ],
+      },
+      {
+        idx: "05",
+        title: "Control Plane Ventic (remoto)",
+        where: "Gestito da noi — sempre presente",
+        items: [
+          { name: "Inference Node Provisioner (PaaS)", body: "Sempre attivo lato Ventic. Riceve l'intento dal tuo stack, acquisisce GPU in cloud (spot/dedicato, UE/US) e le aggancia via overlay — anche quando parti da on-prem e devi scalare oltre le tue macchine.", opt: false },
+          { name: "Billing & Resale — in arrivo", body: "Contabilizza uso per tenant e prepara rivendita a subscription o a token. Architettura già predisposta — funzionalità in arrivo.", opt: true },
         ],
       },
     ],
@@ -244,7 +260,7 @@ const it = {
       "Overlay cifrato autoconfigurante — nessun IP pubblico",
       "Dopo uno spot reclaim l’agent si riconnette da solo",
     ],
-    note: "Parti dal minimo (agent + overlay + proxy) e aggiungi solo ciò che ti serve.",
+    note: "Parti dal minimo (agent + overlay + proxy) e aggiungi solo ciò che ti serve. INP PaaS lato Ventic è sempre presente e può rifornire anche lo stack on-prem; INP on-prem è opzionale e vede solo le tue macchine.",
   },
 
   adminPanel: {
@@ -354,11 +370,11 @@ const it = {
       { name: "Deepseek v4 Flash 0731", tier: "Bilanciata", use: "Il compromesso di riferimento fra qualità sul codice e throughput.", top: false },
       { name: "Kimi K3", tier: "Frontier", use: "Lavoro agentico più difficile, quando serve il massimo dell’open-weight.", top: true },
     ],
-    note: "VRAM, finestra di contesto e configurazione vLLM li fissiamo insieme durante l’analisi del server.",
+    note: "VRAM, finestra di contesto e configurazione del motore di inferenza li fissiamo insieme durante l’analisi del server.",
     china: {
-      title: ["Pesi cinesi,", "server europeo."],
-      p1: "Oggi i migliori open-weight arrivano dalla Cina. Usarli via API significa mandare i dati sui loro server — per molte aziende è inaccettabile.",
-      p2: "Con Ventic scarichi i pesi e li fai girare sulla tua macchina, dove hai deciso tu. Il modello viene dalla Cina; i tuoi dati non ci vanno mai.",
+      title: ["Pesi open-weight,", "server tuo."],
+      p1: "I migliori open-weight sono disponibili pubblicamente. Usarli via API esterna significa mandare i dati sui server di terzi — per molte aziende è inaccettabile.",
+      p2: "Con Ventic scarichi i pesi e li fai girare sulla tua macchina, dove hai deciso tu. Il modello è aperto; i tuoi dati restano da te.",
       tags: ["UE", "US", "on-prem"],
     },
     stable: {
@@ -382,9 +398,9 @@ const it = {
   },
 
   cta: {
-    plate: "Primo passo",
-    title: ["Un’ora per sapere", "se il tuo server è pronto."],
-    body: "Guardiamo il tuo hardware e ti diciamo quale modello ci gira davvero e a che velocità. Se non basta, te lo diciamo prima — non dopo.",
+    plate: "Inizia ora",
+    title: ["Contattaci", "per cominciare subito."],
+    body: "Ti aiutiamo a scegliere il setup giusto — BYOH con i tuoi server o PaaS con i nostri — e partiamo direttamente dal workload che vuoi portare in produzione. Accesso in alpha privata su invito.",
     btn: "Prenota una call tecnica",
     mail: "Scrivici: verifica per mostrare",
     mailPrefix: "Scrivici: ",
@@ -400,10 +416,11 @@ const it = {
       { label: "Privacy", href: "#" },
       { label: "Termini", href: "#" },
     ],
+    disclaimer: "OpenAI e Anthropic sono marchi registrati dei rispettivi proprietari. Ogni diritto è riservato ai legittimi titolari. Ventic non è affiliato ad OpenAI, Inc. né ad Anthropic PBC. — Ventic è in alpha privata (accesso su invito): funzionalità e prezzi in evoluzione.",
   },
   pricingPage: {
     plate: "Prezzi e confronto",
-    title: ["Quanto costa,", "e rispetto a cosa."],
+    title: ["Risparmia e", "fai tuo l'LLM."],
     lead: "Ventic non fattura a token. In BYOH (Bring Your Own Hardware) paghi la licenza a postazioni; in PaaS paghi a ore, licenza inclusa. Quanto lavora il modello non cambia il conto.",
     byoh: {
       head: "BYOH — Bring Your Own Hardware",
@@ -480,7 +497,7 @@ const it = {
           { mark: "no", text: "Cambia senza preavviso" }, { mark: "dash", text: "Dipende dal provider" },
           { mark: "yes", text: "Pesi fissi, aggiorni quando vuoi" }, { mark: "yes", text: "Pesi fissi, aggiorni quando vuoi" }] },
         { label: "Dove risiedono i dati", cells: [
-          { mark: "no", text: "Sui server del provider" }, { mark: "no", text: "Server del provider, Cina inclusa" },
+          { mark: "no", text: "Sui server del provider" }, { mark: "no", text: "Sui server del provider, fuori UE" },
           { mark: "yes", text: "Sulla tua macchina" }, { mark: "yes", text: "Regione scelta da te: UE o US" }] },
         { label: "Accesso alla macchina", cells: [
           { mark: "no", text: "Nessuno" }, { mark: "no", text: "Nessuno" },
@@ -529,8 +546,8 @@ const it = {
 
   adminPanelPage: {
     plate: "Guida al pannello",
-    title: ["Il pannello di controllo,", "spiegato riga per riga."],
-    lead: "Tutto ciò che il tuo team gestisce da qui: chi entra, chi parla con quale modello, come scala l’inventario — e come lo rivendi con il tuo brand se fai da provider.",
+    title: ["Admin e Utenti", "interagiscono via UI."],
+    lead: "Admin e utenti interagiscono con lo stack mediante una UI — GUI o CLI con manifest: chi entra, chi parla con quale modello, come scala l'inventario — e come lo rivendi con il tuo brand se fai da provider.",
     sections: [
       {
         id: "utenti",
@@ -622,7 +639,7 @@ const en: typeof it = {
   seo: {
     home: {
       title: "Ventic — private LLMs on dedicated GPUs",
-      desc: "Your private LLM endpoint, OpenAI- and Anthropic-compatible. Runs on your GPUs — data in the EU or US — with open-weight models, tuned vLLM and support included.",
+      desc: "Your private LLM endpoint, OpenAI- and Anthropic-compatible. Runs on your GPUs — data in the EU or US — with open-weight models, tuned inference engine (vLLM, SGLang) and support included.",
     },
     pricing: {
       title: "Pricing and comparison — Ventic",
@@ -654,7 +671,7 @@ const en: typeof it = {
     sub: "Admin and Self-service control panel, centralized management, model autotuning. Doing it alone doesn't pay off with Ventic!",
     cta1: "Book a technical call",
     cta2: "See how it works",
-    micro: "Live in a day · License from €69.90/month · Never per-token",
+    micro: "Live in a day · License from €69.90/month · Never per-token · Private alpha — invite-only",
     trust: ["Data in EU or US, your choice", "OpenAI & Anthropic compatible"],
   },
 
@@ -672,7 +689,7 @@ const en: typeof it = {
       { label: "Decode", value: "1.86k", unit: "tok/s" },
       { label: "Sessions", value: "37", unit: "0 queued" },
     ],
-    chips: ["qwen3.8-27b", "vLLM · TP 2", "embed · bge-m3"],
+    chips: ["qwen3.8-27b", "engine · TP 2", "embed · bge-m3"],
     chipLive: "encrypted overlay up",
     sample: "sample data · live preview",
   },
@@ -693,7 +710,7 @@ const en: typeof it = {
       { tag: "02 — Subscription", title: "Upstream outages", body: "When the provider goes down, your product goes with it. No failover helps if the model only lives there." },
       { tag: "03 — Subscription", title: "Moving targets", body: "The same prompts give different results over time. Silent updates, little transparency, no reproducibility." },
       { tag: "04 — Per token", title: "Price per token", body: "On US frontier models the cost per token is high — and grows exactly as your product succeeds." },
-      { tag: "05 — Per token", title: "Compliance", body: "Cheap alternatives run on Chinese servers. If your data must stay in the EU, that’s a dead end." },
+      { tag: "05 — Per token", title: "Compliance", body: "Cheap alternatives run on servers outside the EU. If your data must stay in the EU, that’s a dead end." },
       { tag: "06 — Per token", title: "Open-ended budget", body: "LLM usage is unpredictable by nature. Inside a company it becomes a line no one can close at budget time." },
     ],
   },
@@ -705,8 +722,8 @@ const en: typeof it = {
     lead: "Either way you get the same: a private OpenAI- and Anthropic-compatible endpoint on a machine you can log into anytime.",
     byoh: {
       tag: "BYOH — Bring Your Own Hardware",
-      title: "You bring the server",
-      desc: "You already have GPUs or prefer to buy them. We install the stack: compatibility check, vLLM tuned to your GPU, Ventic Agent, encrypted overlay, panel and observability.",
+      title: "Use your own servers",
+      desc: "You already have GPUs or prefer to buy them. We install the stack: compatibility check, inference engine tuned to your GPU (vLLM / SGLang), Ventic Agent, encrypted overlay, panel and observability.",
       priceLabel: "Ventic Stack license + setup",
       price: "€69.90",
       unit: "/ month + VAT",
@@ -719,7 +736,7 @@ const en: typeof it = {
     },
     paas: {
       tag: "PaaS",
-      title: "We provide it",
+      title: "Use our servers",
       desc: "We find the right server at the right price in our catalogue, put it into production and invoice it with the service. All-in — hardware and license included.",
       priceLabel: "All-in, by the hour",
       price: "from €1",
@@ -737,18 +754,18 @@ const en: typeof it = {
   how: {
     id: "how-it-works",
     plate: "How it works",
-    title: ["One agent on the server.", "It does the rest."],
-    lead: "Ventic Agent runs on your server. It keeps the model up, exposes it securely and shares it fairly between users — without anyone touching drivers, kernels or vLLM flags.",
+    title: ["LLMs for Enterprises and Providers", "in one stack."],
+    lead: "A complete solution to deliver LLMs to people and agents in a controlled way. Like an enterprise Kubernetes for LLMs: declare intent via GUI or CLI manifests, Ventic reconciles desired state — without touching drivers, kernels or inference engine flags.",
     steps: [
-      { title: "We find the server", body: "We source the right machine at the right price on your criteria. Bought with an instant SEPA transfer.", tag: "PaaS only" },
-      { title: "We boot it ready", body: "vLLM configured for that model on that hardware — LLM and embedding together. Automated: on hourly rental, every minute saved is money.", tag: "in minutes" },
-      { title: "We reach it with no open ports", body: "Private encrypted overlay that self-configures and traverses NAT. No public IP, no hand-rolled VPN, no ports open to the world.", tag: "zero exposure" },
-      { title: "We keep it up", body: "Fair scheduling, auto-recovery after spot reclaim, shutdown in quiet hours, metrics and alerts. With our support behind it.", tag: "continuous" },
+      { title: "Server sourcing", body: "The right machine sourced at the right price on your criteria. Purchased with an instant SEPA transfer.", tag: "PaaS only" },
+      { title: "Provisioned ready", body: "Your server configured in minutes. Or provisioned from catalogue, sized for the models and workload characteristics you need — LLM and embedding together on a tuned inference engine (vLLM, SGLang).", tag: "in minutes" },
+      { title: "Zero-exposure reach", body: "Private encrypted overlay that self-configures and traverses NAT. No public IP, no hand-rolled VPN, no ports open to the world.", tag: "zero exposure" },
+      { title: "Lifecycle management", body: "Fair scheduling, auto-recovery after spot reclaim, shutdown in quiet hours, metrics and alerts. With support included.", tag: "continuous" },
     ],
   },
 
   stackDiagram: {
-    label: "Where each piece runs",
+    label: "How components interact and where they run",
     clients: { label: "Workstations", items: ["Coding agents", "Internal apps & services", "OpenAI / Anthropic clients"] },
     infra: { label: "Your Docker infra", items: ["LLM proxy", "Admin panel", "Observability (LGTM)"] },
     nodesLabel: "GPU nodes",
@@ -768,18 +785,24 @@ const en: typeof it = {
         "No requests for 15 minutes: powers the node off. Wakes on next call.",
       ],
     },
+    provisioner: {
+      label: "Inference Node Provisioner (INP)",
+      onPrem: { title: "INP on-prem (optional)", badge: "your machines only", body: "Runs in your infra. Sees and manages only customer machines: powers them on/off per manifests. If absent, scaling is delegated to Ventic's Provisioner." },
+      paas: { title: "INP PaaS — Ventic side (always present)", badge: "always on", body: "Runs on Ventic control plane. Acquires cloud GPUs (spot/dedicated, EU/US) and attaches them via overlay to your stack — even when you start on-prem and need to burst beyond your machines." },
+      billing: { title: "Billing & Resale", badge: "coming soon", body: "Will meter per-tenant usage for resale as subscription or per-token. Architecture ready — feature coming soon." },
+    },
   },
 
   infraFlow: {
     plate: "Request flow",
-    title: "From your app to the model, without leaving your network",
+    title: "Request lifecycle",
     lead: "Your app talks to the proxy as if it were OpenAI. The proxy forwards over the encrypted overlay to Ventic Agent on the GPU node. The answer comes back the same way — no public hop.",
     steps: [
       { k: "01", label: "Your app", desc: "OpenAI / Anthropic SDK unchanged. Only the endpoint URL changes." },
       { k: "02", label: "LLM proxy", desc: "Single endpoint. Authenticates, enforces RBAC and quotas, then forwards." },
       { k: "03", label: "Encrypted overlay", desc: "mTLS channel that traverses NAT. Nodes expose no ports." },
-      { k: "04", label: "Ventic Agent", desc: "Receives, queues fairly, feeds vLLM." },
-      { k: "05", label: "vLLM", desc: "Inference tuned for that model on that GPU. Replies to the proxy, proxy to you." },
+      { k: "04", label: "Ventic Agent", desc: "Receives, queues fairly, feeds the inference engine." },
+      { k: "05", label: "Inference engine", desc: "Inference tuned for that model on that GPU (vLLM / SGLang). Replies to the proxy, proxy to you." },
     ],
     note: "No public IP. No manual VPN. The relay may be public; your nodes stay closed.",
   },
@@ -799,8 +822,8 @@ const en: typeof it = {
   stack: {
     id: "stack",
     plate: "Platform",
-    title: ["A stack you install,", "not a service you ship data to."],
-    lead: "Panel, proxy and observability run on your Docker infra — data stays with you. Only our agent runs on the GPU nodes. Between them, an encrypted overlay that self-configures and traverses NAT with no public IPs or VPN to maintain.",
+    title: ["A stack you own,", "not a service you ship data to."],
+    lead: "Panel, proxy and observability run on your Docker infra — data stays with you. Only our agent runs on the GPU nodes. Between them, an encrypted overlay that self-configures and traverses NAT with no public IPs or VPN to maintain. An enterprise Kubernetes for LLMs: intent-based, manage everything from GUI or via CLI with manifest files — declare desired state, Ventic reconciles it.",
     legend: { own: "Always included", opt: "Optional — enable only if needed" },
     planes: [
       {
@@ -819,6 +842,7 @@ const en: typeof it = {
           { name: "Admin panel", body: "Users, roles, models, quotas and policy. The panel shown below.", opt: false },
           { name: "LLM proxy", body: "One endpoint, OpenAI- and Anthropic-compatible. Existing clients stay as they are.", opt: false },
           { name: "LGTM stack", body: "Logs, metrics and traces with Grafana in front. Usage data never leaves you.", opt: false },
+          { name: "Inference Node Provisioner (on-prem)", body: "Optional. Runs in your infra and sees only your machines: powers them on/off per manifests. If absent, scaling is delegated to Ventic's Provisioner.", opt: true },
           { name: "OpenRAG", body: "Retrieval pipelines over your own documents.", opt: true },
           { name: "Qdrant", body: "Vector database backing the RAG collections.", opt: true },
           { name: "Embedding model", body: "Indexing served by the same inference stack.", opt: true },
@@ -843,7 +867,16 @@ const en: typeof it = {
         where: "On the GPUs — yours or from the catalogue",
         items: [
           { name: "Ventic host agent", body: "Keeps the LLM up, exposes it over the overlay and shares it fairly. The only piece on the node.", opt: false },
-          { name: "vLLM runtime", body: "Tuned for that model on that GPU, serving LLM and embedding together.", opt: false },
+          { name: "Inference engine", body: "Based on vLLM and SGLang, tuned for that model on that GPU, serving LLM and embedding together.", opt: false },
+        ],
+      },
+      {
+        idx: "05",
+        title: "Ventic Control Plane (remote)",
+        where: "Managed by us — always present",
+        items: [
+          { name: "Inference Node Provisioner (PaaS)", body: "Always on, Ventic side. Receives intent from your stack, acquires cloud GPUs (spot/dedicated, EU/US) and attaches them via overlay — even when you start on-prem and need to burst beyond your machines.", opt: false },
+          { name: "Billing & Resale — coming soon", body: "Meters per-tenant usage and prepares resale as subscription or per-token. Architecture ready — feature coming soon.", opt: true },
         ],
       },
     ],
@@ -852,7 +885,7 @@ const en: typeof it = {
       "Self-configuring encrypted overlay — no public IPs",
       "After a spot reclaim the agent reconnects itself",
     ],
-    note: "Optional parts are switched on only if you need them: the minimum stack is agent, overlay and proxy.",
+    note: "Optional parts are switched on only if you need them: the minimum stack is agent, overlay and proxy. Ventic PaaS INP is always present and can supply even on-prem stacks; on-prem INP is optional and sees only your machines.",
   },
 
   adminPanel: {
@@ -962,11 +995,11 @@ const en: typeof it = {
       { name: "Deepseek v4 Flash 0731", tier: "Balanced", use: "The reference trade-off between code quality and throughput.", top: false },
       { name: "Kimi K3", tier: "Frontier", use: "The hardest agentic work, when you need the best open weights.", top: true },
     ],
-    note: "VRAM, context window and vLLM settings are decided together during server analysis.",
+    note: "VRAM, context window and inference engine settings are decided together during server analysis.",
     china: {
-      title: ["Chinese weights,", "European server."],
-      p1: "Today’s best open weights come from China. Using them via their APIs means sending data to their servers — a non-starter for many companies.",
-      p2: "With Ventic you download the weights and run them on your machine, where you chose to put it. The model comes from China; your data never goes there.",
+      title: ["Open weights,", "your server."],
+      p1: "The best open weights are publicly available. Using them via external APIs means sending data to third-party servers — a non-starter for many companies.",
+      p2: "With Ventic you download the weights and run them on your machine, where you chose to put it. The model is open; your data stays with you.",
       tags: ["EU", "US", "on-prem"],
     },
     stable: {
@@ -990,9 +1023,9 @@ const en: typeof it = {
   },
 
   cta: {
-    plate: "First step",
-    title: ["One hour to know", "if your server is ready."],
-    body: "We look at your hardware and tell you which model actually runs on it, and how fast. If it’s not enough we say so before — not after.",
+    plate: "Get started",
+    title: ["Get in touch", "to join the alpha."],
+    body: "We help you pick the right setup — BYOH with your servers or PaaS with ours — and start directly from the workload you want to put in production. Private alpha, invite-only.",
     btn: "Book a technical call",
     mail: "Email us: verify to show",
     mailPrefix: "Email us: ",
@@ -1008,10 +1041,11 @@ const en: typeof it = {
       { label: "Privacy", href: "#" },
       { label: "Terms", href: "#" },
     ],
+    disclaimer: "OpenAI and Anthropic are registered trademarks of their respective owners. All rights reserved to their legitimate owners. Ventic is not affiliated with OpenAI, Inc. or Anthropic PBC. — Ventic is in private alpha (invite-only): features and pricing subject to change.",
   },
   pricingPage: {
     plate: "Pricing and comparison",
-    title: ["What it costs,", "and compared to what."],
+    title: ["Save and", "own your LLM."],
     lead: "Ventic doesn’t bill per token. BYOH (Bring Your Own Hardware) pays per-seat license. PaaS pays by the hour, license included. How hard the model works doesn’t change the bill.",
     byoh: {
       head: "BYOH — Bring Your Own Hardware",
@@ -1088,7 +1122,7 @@ const en: typeof it = {
           { mark: "no", text: "Changes without notice" }, { mark: "dash", text: "Up to the provider" },
           { mark: "yes", text: "Fixed weights, you update when you want" }, { mark: "yes", text: "Fixed weights, you update when you want" }] },
         { label: "Where the data lives", cells: [
-          { mark: "no", text: "On the provider’s servers" }, { mark: "no", text: "Provider servers, China included" },
+          { mark: "no", text: "On the provider’s servers" }, { mark: "no", text: "Provider servers, outside EU" },
           { mark: "yes", text: "On your machine" }, { mark: "yes", text: "Region you choose: EU or US" }] },
         { label: "Access to the machine", cells: [
           { mark: "no", text: "None" }, { mark: "no", text: "None" },
@@ -1137,8 +1171,8 @@ const en: typeof it = {
 
   adminPanelPage: {
     plate: "Panel guide",
-    title: ["The control panel,", "line by line."],
-    lead: "Everything your team manages here: who gets in, who may talk to which model, how inventory scales — and how you resell it under your brand if you’re a provider.",
+    title: ["Admin and Users", "interact via UI."],
+    lead: "Admins and users interact with the stack via UI — GUI or CLI with manifests: who gets in, who may talk to which model, how inventory scales — and how you resell it under your brand as a provider.",
     sections: [
       {
         id: "users",
