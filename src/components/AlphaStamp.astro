@@ -7,10 +7,10 @@ interface Props {
 }
 const { variant = "stamp", size = "md", rotate = -12, lang = "it" } = Astro.props;
 const label = "ALPHA";
-const sub = lang === "en" ? "private alpha" : "alpha privata";
+const sub = "stage";
 ---
 {variant === "stamp" ? (
-  <div class={`alpha-stamp alpha-stamp--${size}`} style={`--rot:${rotate}deg`} aria-label="Alpha — private alpha stage">
+  <div class={`alpha-stamp alpha-stamp--${size}`} style={`--rot:${rotate}deg`} aria-label="Alpha stage">
     <span class="alpha-inner">
       <span class="alpha-main">{label}</span>
       <span class="alpha-sub">{sub}</span>
@@ -19,7 +19,7 @@ const sub = lang === "en" ? "private alpha" : "alpha privata";
 ) : variant === "badge" ? (
   <span class={`alpha-badge alpha-badge--${size}`} aria-label="Alpha stage">ALPHA</span>
 ) : (
-  <span class="alpha-inline" aria-label="Alpha stage"><span class="alpha-inline-dot"></span>ALPHA — {lang === "en" ? "private alpha" : "alpha privata"}</span>
+  <span class="alpha-inline" aria-label="Alpha stage"><span class="alpha-inline-dot"></span>Alpha stage</span>
 )}
 
 <style>

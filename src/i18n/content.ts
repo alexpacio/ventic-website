@@ -46,7 +46,7 @@ const it = {
     sub: "Pannello di controllo Admin e Self-service, gestione centralizzata, autotuning dei modelli. Fare da soli non conviene con Ventic!",
     cta1: "Prenota una call tecnica",
     cta2: "Vedi come funziona",
-    micro: "Setup in giornata · Licenza da €69,90/mese · Mai a token · Alpha privata — accesso su invito",
+    micro: "Setup in giornata · Licenza da €69,90/mese · Mai a token · Alpha stage — accesso su invito",
     trust: ["Dati in UE o US, a tua scelta", "Compatibile OpenAI & Anthropic"],
   },
 
@@ -82,8 +82,8 @@ const it = {
     lead: "Gli LLM dei Provider sono perfetti per attività estremamente specifiche e personali. Inadeguati per lavoro agentico e aziendale.",
     cards: [
       { tag: "01 — Subscription", title: "Finestre strette", body: "Quota finita, lavoro fermo. Per una persona è attesa; per un agente notturno è un guasto che scopri al mattino." },
-      { tag: "02 — Subscription", title: "Outage a monte", body: "Se il provider va giù, va giù anche il tuo prodotto. Nessun failover ti salva se il modello vive solo da loro." },
-      { tag: "03 — Subscription", title: "Modelli che cambiano", body: "Gli stessi prompt danno risultati diversi nel tempo. Aggiornamenti silenziosi, poca trasparenza, nessuna riproducibilità." },
+      { tag: "02 — Subscription", title: "Outage del provider", body: "Se il provider va giù, va giù anche il tuo prodotto. Nessun failover ti salva se il modello vive solo da loro." },
+      { tag: "03 — Subscription", title: "Modelli deprecati", body: "Gli stessi prompt danno risultati diversi nel tempo. Aggiornamenti silenziosi, poca trasparenza, nessuna riproducibilità." },
       { tag: "04 — A token", title: "Prezzo per token", body: "Sui modelli di frontiera USA il costo per token è alto e cresce proprio quando il tuo prodotto ha successo." },
       { tag: "05 — A token", title: "Compliance", body: "Le alternative economiche girano su server fuori UE. Se i tuoi dati devono restare in UE, quella strada è chiusa." },
       { tag: "06 — A token", title: "Budget imprevedibile", body: "Il consumo LLM è imprevedibile per natura. In azienda diventa una voce che nessuno riesce a chiudere a budget." },
@@ -467,13 +467,13 @@ const it = {
       { tag: "PaaS · Ventic 16", price: "1 €", unit: "/ h + IVA", body: "Qwen 3.8 27B. 16 utenti attivi, fino a 100 in organico. 160 €/mese su orario d’ufficio, licenza inclusa.", warm: true },
       { tag: "PaaS · Ventic 64", price: "6 €", unit: "/ h + IVA", body: "Deepseek v4 Flash 0731. 64 utenti attivi, fino a 500 in organico. 960 €/mese su orario d’ufficio, licenza inclusa.", warm: true },
     ],
-    foot: "Prezzi di lancio, IVA esclusa · licenza solo su BYOH: €69,90/mese per 5 postazioni + €39,99 ogni 10 aggiuntive · orario d’ufficio = 8 h × 20 gg = 160 h/mese · PaaS: hardware e licenza inclusi nella tariffa oraria",
+    foot: "Prezzi di lancio, IVA esclusa · licenza solo su BYOH: €69,90/mese per 5 postazioni + €39,99 ogni 10 aggiuntive · orario d’ufficio = 8 h × 20 gg = 160 h/mese · PaaS: hardware e licenza inclusi nella tariffa oraria · I prezzi indicati sono riservati alla early access alpha",
   },
 
   cta: {
     plate: "Inizia ora",
     title: ["Contattaci", "per cominciare subito."],
-    body: "Ti aiutiamo a scegliere il setup giusto — BYOH con i tuoi server o PaaS con i nostri — e partiamo direttamente dal workload che vuoi portare in produzione. Accesso in alpha privata su invito.",
+    body: "Ti aiutiamo a scegliere il setup giusto — BYOH con i tuoi server o PaaS con i nostri — e partiamo direttamente dal workload che vuoi portare in produzione. Accesso in Alpha stage su invito.",
     btn: "Prenota una call tecnica",
     mail: "Scrivici: verifica per mostrare",
     mailPrefix: "Scrivici: ",
@@ -489,7 +489,7 @@ const it = {
       { label: "Privacy", href: "#" },
       { label: "Termini", href: "#" },
     ],
-    disclaimer: "OpenAI e Anthropic sono marchi registrati dei rispettivi proprietari. Ogni diritto è riservato ai legittimi titolari. Ventic non è affiliato ad OpenAI, Inc. né ad Anthropic PBC. — Ventic è in alpha privata (accesso su invito): funzionalità e prezzi in evoluzione.",
+    disclaimer: "OpenAI e Anthropic sono marchi registrati dei rispettivi proprietari. Ogni diritto è riservato ai legittimi titolari. Ventic non è affiliato ad OpenAI, Inc. né ad Anthropic PBC.",
   },
   pricingPage: {
     plate: "Prezzi e confronto",
@@ -523,7 +523,7 @@ const it = {
     packages: {
       plate: "Pacchetti PaaS",
       title: "Due tagli, tariffa oraria — licenza inclusa",
-      meta: "prezzi di lancio · IVA esclusa",
+      meta: "prezzi di lancio · IVA esclusa · I prezzi indicati sono riservati alla early access alpha",
       labels: {
         model: "Modello",
         unit: "/ h + IVA",
@@ -605,6 +605,7 @@ const it = {
         "Pacchetti PaaS su istanza dedicata. Su spot la tariffa oraria scende ancora, con revoca gestita da Ventic.",
         "In multicloud lo stesso modello resta raggiungibile su un secondo provider (ridondanza attiva o failover).",
         "Prezzi al netto di IVA. SLA in base a servizio e ridondanza scelti.",
+        "I prezzi indicati sono riservati alla early access alpha.",
       ],
       ctaTitle: "Partiamo dall’analisi.",
       ctaBody: "Un’ora per capire cosa gira davvero sul tuo hardware, e a che velocità.",
@@ -613,7 +614,7 @@ const it = {
     foot: {
       left: "Ventic — Netter srl · P.IVA IT03569900545 · Via Indipendenza, 06081 Assisi (PG) · verifica sul sito per contatti",
       leftPrefix: "Ventic — Netter srl · P.IVA IT03569900545 · Via Indipendenza, 06081 Assisi (PG) · ",
-      right: "Prezzi di lancio · licenza + hardware · IVA esclusa",
+      right: "Prezzi di lancio · licenza + hardware · IVA esclusa · I prezzi indicati sono riservati alla early access alpha",
     },
   },
 
@@ -744,7 +745,7 @@ const en: typeof it = {
     sub: "Admin and Self-service control panel, centralized management, model autotuning. Doing it alone doesn't pay off with Ventic!",
     cta1: "Book a technical call",
     cta2: "See how it works",
-    micro: "Live in a day · License from €69.90/month · Never per-token · Private alpha — invite-only",
+    micro: "Live in a day · License from €69.90/month · Never per-token · Alpha stage — invite-only",
     trust: ["Data in EU or US, your choice", "OpenAI & Anthropic compatible"],
   },
 
@@ -780,8 +781,8 @@ const en: typeof it = {
     lead: "Provider LLMs are perfect for very specific, personal tasks. Inadequate for agentic and business work.",
     cards: [
       { tag: "01 — Subscription", title: "Narrow windows", body: "Quota spent, work stopped. For a person it’s a wait; for a night agent it’s a failure you discover in the morning." },
-      { tag: "02 — Subscription", title: "Upstream outages", body: "When the provider goes down, your product goes with it. No failover helps if the model only lives there." },
-      { tag: "03 — Subscription", title: "Moving targets", body: "The same prompts give different results over time. Silent updates, little transparency, no reproducibility." },
+      { tag: "02 — Subscription", title: "Provider outage", body: "When the provider goes down, your product goes with it. No failover helps if the model only lives there." },
+      { tag: "03 — Subscription", title: "Deprecated models", body: "The same prompts give different results over time. Silent updates, little transparency, no reproducibility." },
       { tag: "04 — Per token", title: "Price per token", body: "On US frontier models the cost per token is high — and grows exactly as your product succeeds." },
       { tag: "05 — Per token", title: "Compliance", body: "Cheap alternatives run on servers outside the EU. If your data must stay in the EU, that’s a dead end." },
       { tag: "06 — Per token", title: "Open-ended budget", body: "LLM usage is unpredictable by nature. Inside a company it becomes a line no one can close at budget time." },
@@ -1165,13 +1166,13 @@ const en: typeof it = {
       { tag: "PaaS · Ventic 16", price: "€1", unit: "/ h + VAT", body: "Qwen 3.8 27B. 16 active users, up to 100 on roster. €160/month business hours, license included.", warm: true },
       { tag: "PaaS · Ventic 64", price: "€6", unit: "/ h + VAT", body: "Deepseek v4 Flash 0731. 64 active users, up to 500 on roster. €960/month business hours, license included.", warm: true },
     ],
-    foot: "Launch pricing, VAT excluded · license only on BYOH: €69.90/month for 5 seats + €39.99 every 10 extra · business hours = 8 h × 20 days = 160 h/month · PaaS: hardware and license included in hourly rate",
+    foot: "Launch pricing, VAT excluded · license only on BYOH: €69.90/month for 5 seats + €39.99 every 10 extra · business hours = 8 h × 20 days = 160 h/month · PaaS: hardware and license included in hourly rate · Prices indicated are reserved for early access alpha",
   },
 
   cta: {
     plate: "Get started",
     title: ["Get in touch", "to join the alpha."],
-    body: "We help you pick the right setup — BYOH with your servers or PaaS with ours — and start directly from the workload you want to put in production. Private alpha, invite-only.",
+    body: "We help you pick the right setup — BYOH with your servers or PaaS with ours — and start directly from the workload you want to put in production. Alpha stage, invite-only.",
     btn: "Book a technical call",
     mail: "Email us: verify to show",
     mailPrefix: "Email us: ",
@@ -1187,7 +1188,7 @@ const en: typeof it = {
       { label: "Privacy", href: "#" },
       { label: "Terms", href: "#" },
     ],
-    disclaimer: "OpenAI and Anthropic are registered trademarks of their respective owners. All rights reserved to their legitimate owners. Ventic is not affiliated with OpenAI, Inc. or Anthropic PBC. — Ventic is in private alpha (invite-only): features and pricing subject to change.",
+    disclaimer: "OpenAI and Anthropic are registered trademarks of their respective owners. All rights reserved to their legitimate owners. Ventic is not affiliated with OpenAI, Inc. or Anthropic PBC.",
   },
   pricingPage: {
     plate: "Pricing and comparison",
@@ -1221,7 +1222,7 @@ const en: typeof it = {
     packages: {
       plate: "PaaS packages",
       title: "Two sizes, one fixed hourly rate — license included",
-      meta: "launch pricing · VAT excluded",
+      meta: "launch pricing · VAT excluded · Prices indicated are reserved for early access alpha",
       labels: {
         model: "Model",
         unit: "/ h + VAT",
@@ -1303,6 +1304,7 @@ const en: typeof it = {
         "PaaS packages on dedicated instances. On spot the hourly rate drops further, reclaims handled by Ventic, license still included.",
         "In multicloud the same model stays reachable on a second provider (active or failover).",
         "Prices excl. VAT. SLAs depend on service and redundancy.",
+        "Prices indicated are reserved for early access alpha.",
       ],
       ctaTitle: "Start with the analysis.",
       ctaBody: "One hour to know what actually runs on your hardware, and how fast.",
@@ -1311,7 +1313,7 @@ const en: typeof it = {
     foot: {
       left: "Ventic — Netter srl · VAT IT03569900545 · Via Indipendenza, 06081 Assisi (PG) · verify on site for contacts",
       leftPrefix: "Ventic — Netter srl · VAT IT03569900545 · Via Indipendenza, 06081 Assisi (PG) · ",
-      right: "Launch pricing · license + hardware · excl. VAT",
+      right: "Launch pricing · license + hardware · excl. VAT · Prices indicated are reserved for early access alpha",
     },
   },
 
