@@ -91,7 +91,6 @@ const states = [
         ))}
       </svg>
     </div>
-    <span class="mono shint">{n.hint}</span>
   </div>
 
   <p class="mono foot">{c.foot}</p>
@@ -108,15 +107,12 @@ const states = [
   .svgwrap { margin-top: 12px; background: var(--sunk); border: 1px solid var(--line-soft); border-radius: 3px; }
   .sscroll { overflow-x: auto; padding: 16px 18px 10px; }
   .state { display: block; width: 100%; min-width: 900px; height: auto; }
-  .shint { display: none; padding: 0 18px 12px; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-ghost); }
 
   .foot { margin-top: 12px; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--fg-ghost); }
 
   @media (max-width: 1080px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (max-width: 940px) { .shint { display: block; } }
   @media (max-width: 640px) {
     .grid { grid-template-columns: 1fr; }
     .sscroll { padding: 14px 14px 8px; }
-    .shint { padding: 0 14px 12px; }
   }
 </style>

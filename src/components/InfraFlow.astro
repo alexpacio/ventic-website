@@ -71,7 +71,6 @@ const hops = f.net.boxes.map((b, i) => ({ ...b, k: f.steps[i].k, x: 26 + i * 248
         <text x="744" y="176" text-anchor="middle" font-size="8.5" letter-spacing="0.08em" fill="#5c5f63">{f.net.back}</text>
       </svg>
     </div>
-    <span class="mono dhint">{f.net.hint}</span>
   </div>
 </figure>
 
@@ -95,10 +94,6 @@ const hops = f.net.boxes.map((b, i) => ({ ...b, k: f.steps[i].k, x: 26 + i * 248
   .diagram { margin-top: 16px; background: var(--sunk); border: 1px solid var(--line-soft); border-radius: 3px; }
   .dscroll { overflow-x: auto; padding: 16px 18px 10px; }
   .path { display: block; width: 100%; min-width: 900px; height: auto; }
-  .dhint {
-    display: none; padding: 0 18px 12px;
-    font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-ghost);
-  }
 
   @media (max-width: 1080px) {
     .track { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -115,6 +110,5 @@ const hops = f.net.boxes.map((b, i) => ({ ...b, k: f.steps[i].k, x: 26 + i * 248
     .card { flex: 1; min-height: auto; margin-bottom: 14px; }
     .arrow { display: none; }
     .dscroll { padding: 14px 14px 8px; }
-    .dhint { display: block; padding: 0 14px 12px; }
   }
 </style>

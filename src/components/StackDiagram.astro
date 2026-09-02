@@ -224,7 +224,6 @@ const gpu = [
       <span class="key"><span class="ln ln--mtls"></span>{n.legend.mtls}</span>
       <span class="key"><span class="ln ln--ctrl"></span>{n.legend.ctrl}</span>
       <span class="key"><span class="bx"></span>{n.legend.opt}</span>
-      <span class="key hint">{n.hint}</span>
     </div>
   </div>
 
@@ -301,7 +300,6 @@ const gpu = [
   .ln--mtls { border-top-color: var(--accent); }
   .ln--ctrl { border-top: 1.5px dashed var(--jade); }
   .bx { width: 16px; height: 11px; border: 1px dashed #3d4349; border-radius: 2px; }
-  .hint { display: none; margin-left: auto; color: var(--fg-ghost); }
 
   .scale {
     display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 26px; align-items: start;
@@ -335,11 +333,9 @@ const gpu = [
     .prov-grid { grid-template-columns: 1fr 1fr; }
     .prov-card--billing { grid-column: 1 / -1; }
   }
-  @media (max-width: 1040px) { .hint { display: inline-flex; } }
   @media (max-width: 860px) {
     .netscroll { padding: 14px 14px 6px; }
     .legend { gap: 10px 16px; padding: 12px 14px; }
-    .hint { margin-left: 0; }
     .policy { grid-template-columns: 1fr; gap: 12px; }
     .prov-grid { grid-template-columns: 1fr; }
     .prov-card--billing { grid-column: 1; }
