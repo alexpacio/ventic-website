@@ -4,19 +4,50 @@ interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const c = content[lang].heroShots;
 const shots = content[lang].adminPanel.shots;
+
+/* The timeline is generated from shots.length so it can never drift out of sync
+   with the content: one 3.6s slot per screen, keyframes scaled to that total. */
+const SLOT = 3.6;
+const total = shots.length * SLOT;
+const at = (t: number) => `${+((t / total) * 100).toFixed(4)}%`;
+const keyframes = `
+@keyframes psCycle {
+  0%          { opacity: 0; transform: scale(1.035); }
+  ${at(0.72)} { opacity: 1; }
+  ${at(2.16)} { transform: scale(1); }
+  ${at(3.24)} { opacity: 1; transform: scale(1); }
+  ${at(3.96)} { opacity: 0; transform: scale(1); }
+  100%        { opacity: 0; transform: scale(1); }
+}
+@keyframes psLabel {
+  0%          { opacity: 0; }
+  ${at(0.54)} { opacity: 1; }
+  ${at(3.06)} { opacity: 1; }
+  ${at(3.42)} { opacity: 0; }
+  100%        { opacity: 0; }
+}
+@keyframes psSheen {
+  0%          { opacity: 0; transform: translateX(-26%); }
+  ${at(0.54)} { opacity: 1; }
+  ${at(1.62)} { opacity: 0; transform: translateX(26%); }
+  100%        { opacity: 0; transform: translateX(26%); }
+}`;
 ---
-<div class="slide">
+<style is:global set:html={keyframes}></style>
+<div class="slide" data-shots style={`--ps-dur:${total}s`}>
   <span class="glow" aria-hidden="true"></span>
 
   <div class="stage">
     {shots.map((s, i) => (
       <img
         class={`shot i${i + 1}`}
+        style={`--ps-delay:${i * SLOT}s`}
         src={s.src}
         alt={s.alt}
         width={s.w}
         height={s.h}
-        loading={i === 0 ? "eager" : "lazy"}
+        loading="eager"
+        fetchpriority={i === 0 ? "high" : "low"}
         decoding="async"
       />
     ))}
@@ -25,12 +56,16 @@ const shots = content[lang].adminPanel.shots;
 
   <div class="metarow">
     <div class="names" aria-hidden="true">
-      {shots.map((s, i) => <span class={`name i${i + 1} mono`}>{s.tab}</span>)}
+      {shots.map((s, i) => (
+        <span class={`name i${i + 1} mono`} style={`--ps-delay:${i * SLOT}s`}>{s.tab}</span>
+      ))}
     </div>
     <div class="right">
       <div class="dots" aria-hidden="true">
         {shots.map((s, i) => (
-          <span class="pipdot"><span class={`fill i${i + 1}`}></span></span>
+          <span class="pipdot">
+            <span class={`fill i${i + 1}`} style={`--ps-delay:${i * SLOT}s`}></span>
+          </span>
         ))}
       </div>
       <span class="mono cap">{c.note}</span>
@@ -38,8 +73,42 @@ const shots = content[lang].adminPanel.shots;
   </div>
 </div>
 
+<script>
+  const slide = document.querySelector(".slide[data-shots]");
+  if (slide) {
+    const shots = Array.from(
+      slide.querySelectorAll<HTMLImageElement>("img.shot")
+    );
+    const decoded = Promise.all(
+      shots.map((img) =>
+        (img.decode ? img.decode() : Promise.resolve()).catch(() => {})
+      )
+    );
+    // never park the slideshow indefinitely on a failed or very slow fetch
+    const cap = new Promise((r) => setTimeout(r, 2500));
+    Promise.race([decoded, cap]).then(() => slide.classList.add("is-ready"));
+  }
+</script>
+
+<noscript>
+  <style>
+    .slide[data-shots] .shot,
+    .slide[data-shots] .name,
+    .slide[data-shots] .fill,
+    .slide[data-shots] .sheen { animation-play-state: running !important; }
+  </style>
+</noscript>
+
 <style>
   .slide { position: relative; }
+
+  /* the whole set stays parked at t=0 until every screenshot is decoded, so a
+     slot never comes up on an image the browser has not finished fetching */
+  .shot, .name, .fill, .sheen { animation-play-state: paused; }
+  .slide.is-ready .shot,
+  .slide.is-ready .name,
+  .slide.is-ready .fill,
+  .slide.is-ready .sheen { animation-play-state: running; }
 
   /* ambient light instead of a frame */
   .glow {
@@ -70,14 +139,14 @@ const shots = content[lang].adminPanel.shots;
     opacity: 0;
     transform: scale(1.035);
     transform-origin: top left;
-    animation: cycle 18s cubic-bezier(.25, .5, .25, 1) infinite;
+    animation: psCycle var(--ps-dur) cubic-bezier(.25, .5, .25, 1) var(--ps-delay, 0s) infinite;
   }
 
   .sheen {
     position: absolute; inset: 0; pointer-events: none;
     background: linear-gradient(100deg, transparent 42%, #f5a83f0a 48%, #f5a83f17 51%, transparent 58%);
     opacity: 0;
-    animation: sheen 18s linear infinite;
+    animation: psSheen var(--ps-dur) linear infinite;
   }
 
   .metarow {
@@ -92,45 +161,18 @@ const shots = content[lang].adminPanel.shots;
     font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
     color: var(--accent);
     opacity: 0;
-    animation: label 18s cubic-bezier(.4, 0, .2, 1) infinite;
+    animation: psLabel var(--ps-dur) cubic-bezier(.4, 0, .2, 1) var(--ps-delay, 0s) infinite;
   }
 
   .right { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
   .dots { display: flex; align-items: center; gap: 7px; }
   .pipdot { width: 20px; height: 3px; border-radius: 1px; background: #2b3036; overflow: hidden; }
-  .fill { display: block; width: 100%; height: 100%; background: var(--accent); opacity: 0; animation: label 18s linear infinite; }
+  .fill { display: block; width: 100%; height: 100%; background: var(--accent); opacity: 0; animation: psLabel var(--ps-dur) linear var(--ps-delay, 0s) infinite; }
   .cap { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-ghost); }
 
-  /* 5 screens × 3.6s */
-  .i1 { animation-delay: 0s; }
-  .i2 { animation-delay: 3.6s; }
-  .i3 { animation-delay: 7.2s; }
-  .i4 { animation-delay: 10.8s; }
-  .i5 { animation-delay: 14.4s; }
+  /* psCycle / psLabel / psSheen are generated above from shots.length:
+     each screen holds one 3.6s slot, the next fades in as it fades out. */
 
-  /* settles to 1:1 by 12% and holds there, so nothing stays clipped */
-  @keyframes cycle {
-    0%   { opacity: 0; transform: scale(1.035); }
-    4%   { opacity: 1; }
-    12%  { transform: scale(1); }
-    18%  { opacity: 1; transform: scale(1); }
-    22%  { opacity: 0; transform: scale(1); }
-    100% { opacity: 0; transform: scale(1); }
-  }
-  /* text must not crossfade over text: clear out before the next slot begins at 20% */
-  @keyframes label {
-    0%   { opacity: 0; }
-    3%   { opacity: 1; }
-    17%  { opacity: 1; }
-    19%  { opacity: 0; }
-    100% { opacity: 0; }
-  }
-  @keyframes sheen {
-    0%   { opacity: 0; transform: translateX(-26%); }
-    3%   { opacity: 1; }
-    9%   { opacity: 0; transform: translateX(26%); }
-    100% { opacity: 0; transform: translateX(26%); }
-  }
   @keyframes breathe {
     0%, 100% { opacity: .65; }
     50%      { opacity: 1; }
