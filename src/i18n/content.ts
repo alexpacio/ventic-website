@@ -24,6 +24,10 @@ const it = {
       title: "Admin panel Ventic — utenti, ruoli, modelli, white label",
       desc: "Il pannello Ventic: utenti e accessi, RBAC per endpoint, gestione modelli e scaling, RAG e harness agentici, white label multi-tenant.",
     },
+    privacy: {
+      title: "Privacy policy — Ventic",
+      desc: "Informativa privacy GDPR di Ventic (Netter srl): dati trattati, finalità, basi giuridiche, cookie, diritti e contatti del titolare.",
+    },
   },
 
   nav: {
@@ -486,8 +490,8 @@ const it = {
     links: [
       { label: "Pannello", href: "/admin-panel/" },
       { label: "Prezzi", href: "/pricing/" },
-      { label: "Privacy", href: "#" },
-      { label: "Termini", href: "#" },
+      { label: "Privacy", href: "/privacy/" },
+      { label: "Cookie", href: "/privacy/#cookie" },
     ],
     disclaimer: "OpenAI e Anthropic sono marchi registrati dei rispettivi proprietari. Ogni diritto è riservato ai legittimi titolari. Ventic non è affiliato ad OpenAI, Inc. né ad Anthropic PBC.",
   },
@@ -707,6 +711,109 @@ const it = {
       note: "Non serve un’infra separata per cliente: un pool di GPU, tanti tenant quanto servono.",
     },
   },
+  privacy: {
+    hero: {
+      plate: "Informativa privacy",
+      title: ["Privacy policy", "di ventic.it"],
+      lead: "Informativa resa ai sensi degli artt. 13–14 del Regolamento (UE) 2016/679 (GDPR), del D.Lgs. 196/2003 come modificato dal D.Lgs. 101/2018 e delle Linee Guida EDPB. Descrive come Netter srl tratta i dati personali degli utenti che visitano ventic.it e contattano Ventic.",
+      updatedLabel: "Ultimo aggiornamento",
+      updatedDate: "15 maggio 2026",
+      tocTitle: "Indice",
+      printLabel: "Stampa / Salva PDF",
+    },
+    intro: {
+      note: "Questa informativa riguarda esclusivamente il sito vetrina ventic.it. Non disciplina i trattamenti che avvengono dentro l’infrastruttura Ventic del cliente (BYOH / PaaS — modelli, prompt, dati caricati su GPU, collection RAG, log di inferenza): per quei trattamenti Netter opera come fornitore dello stack tecnologico e, rispetto ai dati del cliente finale, come responsabile del trattamento ex art. 28 GDPR quando previsto dal contratto; i relativi dettagli sono nel contratto e nel DPA dedicato.",
+      also: "Se sei già cliente Ventic, resta valido quanto concordato nell’accordo contrattuale e nell’eventuale Data Processing Agreement (DPA).",
+    },
+    sections: [
+      {
+        id: "titolare",
+        title: "1. Titolare del trattamento e contatti",
+        html: "<p><strong>Titolare:</strong> <strong>Netter srl</strong>, con sede legale in Via Indipendenza, 06081 Assisi (PG), Italia — P.IVA <strong>IT03569900545</strong>.</p><p><strong>Contatti privacy:</strong> email <a href=\"mailto:info@ventic.it\">info@ventic.it</a> (oggetto: “Privacy — Ventic”). Rispondiamo di norma entro 15 giorni lavorativi. Per comunicazioni formali puoi scrivere alla sede legale all’attenzione “Privacy — Ventic”.</p><p>Non è stato designato un Responsabile della Protezione dei Dati (DPO) ai sensi dell’art. 37 GDPR, non ricorrendone i presupposti; la valutazione viene riesaminata periodicamente. Se in futuro sarà nominato, i recapiti saranno pubblicati qui.</p>",
+      },
+      {
+        id: "ambito",
+        title: "2. Ambito di applicazione",
+        html: "<p>Questa informativa si applica alla navigazione del sito <strong>ventic.it</strong>, alle richieste di contatto e alla prenotazione di call tecniche effettuate tramite il sito (link Calendly/esterni e email). Si applica anche agli eventuali form, moduli o canali di contatto attivati sul dominio ventic.it e sui sottodomini funzionali (es. documentazione, status). Non si applica a siti terzi raggiungibili tramite link.</p><p>Lingua e versioni: in caso di contrasto tra versione italiana e traduzione inglese, prevale la versione italiana per gli utenti soggetti alla normativa italiana/UE.</p>",
+      },
+      {
+        id: "tipologie",
+        title: "3. Categorie di dati trattati",
+        html: "<h4 class=\"h4\">3.1 Dati di navigazione e log tecnici</h4><p>I sistemi informatici e le procedure software preposte al funzionamento del sito acquisiscono, nel corso del loro normale esercizio, alcuni dati personali la cui trasmissione è implicita nell’uso dei protocolli di comunicazione di Internet. Rientrano tra questi: indirizzo IP, tipo di browser e dispositivo, sistema operativo, pagine visitate, tempi di permanenza, referrer, eventuali errori, data/ora della richiesta e altri parametri del dispositivo o dell’ambiente (es. header HTTP).</p><p>Questi dati sono necessari per rendere fruibile il sito, garantirne la sicurezza e misurare in forma aggregata le performance.</p><h4 class=\"h4\">3.2 Dati forniti volontariamente dall’utente</h4><ul><li>contenuto di email e messaggi inviati a <strong>info@ventic.it</strong> o tramite i pulsanti “Prenota una call” / “Scrivici”;</li><li>nome, cognome, azienda, ruolo, recapiti e informazioni condivise volontariamente per richiedere demo, informazioni commerciali, supporto o selezione di configurazione (BYOH / PaaS);</li><li>quando prenoti una call via fornitore esterno (es. Calendly), i dati inseriti nel form del fornitore stesso (nome, email, messaggi, preferenze orario).</li></ul><h4 class=\"h4\">3.3 Dati anti-abuso e verifica umana</h4><p>Per proteggere l’indirizzo email e i form da scraping e spam utilizziamo soluzioni anti-bot (Cloudflare Turnstile e/o TrustCaptcha). Durante la verifica possono essere elaborati identificatori tecnici quali IP, header browser, segnali di interazione e il token di verifica; non elaboriamo fingerprint invasivi né dati biometrici.</p><h4 class=\"h4\">3.4 Dati dei cookie e tecnologie simili</h4><p>Vedi sezione 4 “Cookie e tecnologie simili”.</p><p><strong>Non raccogliamo</strong> tramite il sito categorie particolari di dati (art. 9 GDPR) né dati relativi a condanne penali. Ti invitiamo a non inviare dati non necessari o di terzi senza base giuridica.</p>",
+      },
+      {
+        id: "cookie",
+        title: "4. Cookie e tecnologie simili",
+        html: "<p>Il sito è volutamente leggero. <strong>Non utilizziamo cookie di profilazione né cookie di tracciamento pubblicitario</strong> di prima parte e non vendiamo dati a terzi.</p><h4 class=\"h4\">4.1 Cosa usiamo davvero</h4><table class=\"legal-table\"><thead><tr><th>Categoria</th><th>Nome / origine</th><th>Finalità</th><th>Durata</th><th>Base giuridica</th></tr></thead><tbody><tr><td>Cookie tecnici necessari</td><td>Eventuali cookie di bilanciamento o preferenza lingua (solo se attivati in futuro)</td><td>Mantenere lingua e preferenze essenziali</td><td>Sessione / 12 mesi</td><td>Necessità tecnica — non richiedono consenso (art. 122 Codice Privacy / ePrivacy)</td></tr><tr><td>Anti-abuso</td><td><code>__cf_turnstile</code>, <code>trustcaptcha_*</code> (Cloudflare / TrustCaptcha)</td><td>Verificare che la richiesta provenga da persona umana e prevenire abuso dei form/email</td><td>Sessione / fino a 24h</td><td>Legittimo interesse a proteggere il servizio (art. 6.1.f) + esecuzione di misure precontrattuali su tua richiesta</td></tr><tr><td>Font</td><td>Google Fonts (fonts.googleapis.com / fonts.gstatic.com)</td><td>Fornire il font IBM Plex Sans</td><td>Cache browser</td><td>Legittimo interesse a rendere il sito leggibile; caricamento con preconnect. IP visibile a Google come fornitore tecnico</td></tr></tbody></table><h4 class=\"h4\">4.2 Cookie di terze parti (eventuali)</h4><p>Se prenoti una call, verrai indirizzato a un fornitore esterno (es. Calendly). Quel fornitore può impostare propri cookie secondo la sua cookie policy. Prima del reindirizzamento non impostiamo cookie del fornitore.</p><h4 class=\"h4\">4.3 Come gestire i cookie</h4><p>Puoi bloccare o cancellare i cookie dalle impostazioni del browser (Chrome, Firefox, Safari, Edge). Il blocco dei cookie tecnici o anti-abuso può impedire il corretto funzionamento del sito (es. reveal dell’email o invio del form). Non è presente un banner di consenso perché non usiamo cookie che lo richiedano; se in futuro introdurremo cookie di misurazione o profilazione, mostreremo un banner conforme alle Linee Guida Garante Cookie 2021 e raccoglieremo il consenso preventivo.</p><p>Strumenti utili: <a href=\"https://www.garanteprivacy.it/cookie\" target=\"_blank\" rel=\"noopener\">guida Garante sui cookie</a>, <a href=\"https://www.youronlinechoices.com/it/\" target=\"_blank\" rel=\"noopener\">youronlinechoices.com</a>.</p>",
+      },
+      {
+        id: "finalita",
+        title: "5. Finalità e basi giuridiche",
+        html: "<p>Trattiamo i tuoi dati solo quando abbiamo una base giuridica. Di seguito le finalità principali:</p><table class=\"legal-table\"><thead><tr><th>Finalità</th><th>Dati</th><th>Base giuridica (GDPR)</th></tr></thead><tbody><tr><td>Rendere disponibile il sito, garantirne sicurezza e prevenire abusi (incluso anti-bot)</td><td>Dati di navigazione, IP, token anti-abuso, log</td><td>Legittimo interesse (art. 6.1.f) — proteggere e amministrare il sito; obbligo legale di sicurezza (art. 32)</td></tr><tr><td>Rispondere a richieste di informazioni, demo, preventivi e prenotazione call</td><td>Dati forniti volontariamente, contenuto messaggi</td><td>Esecuzione di misure precontrattuali su tua richiesta (art. 6.1.b); legittimo interesse a gestire le richieste</td></tr><tr><td>Gestione del rapporto precontrattuale / contrattuale (BYOH, PaaS, analisi server, offerte)</td><td>Dati anagrafici aziendali, referenti, contenuti tecnici condivisi</td><td>Esecuzione contratto / misure precontrattuali (art. 6.1.b); adempimento obblighi legali (art. 6.1.c) per fatturazione</td></tr><tr><td>Adempimenti amministrativi, contabili e fiscali</td><td>Dati di fatturazione e contrattuali</td><td>Obbligo legale (art. 6.1.c)</td></tr><tr><td>Tutela dei diritti e difesa in giudizio</td><td>Log, corrispondenza, dati contrattuali</td><td>Legittimo interesse (art. 6.1.f) e obbligo legale</td></tr><tr><td>Comunicazioni di servizio su Ventic richieste dall’utente (follow-up)</td><td>Email e contenuto richiesta</td><td>Esecuzione di misure precontrattuali / consenso se richiesto</td></tr></tbody></table><p>Non effettuiamo processi decisionali automatizzati che producano effetti giuridici né profilazione ai sensi dell’art. 22 GDPR tramite il sito vetrina.</p>",
+      },
+      {
+        id: "modalita",
+        title: "6. Modalità di trattamento e misure di sicurezza",
+        html: "<p>Il trattamento avviene con strumenti elettronici e, ove necessario, cartacei, con logiche strettamente correlate alle finalità e con misure tecniche e organizzative adeguate (art. 32 GDPR): cifratura in transito (TLS/HTTPS), minimizzazione, controllo degli accessi, logging, backup, aggiornamenti e segregazione dei ruoli. L’accesso ai dati è limitato al personale autorizzato di Netter srl e a responsabili/fornitori vincolati contrattualmente.</p><p>L’overlay cifrato mTLS e le GPU descritte nel sito riguardano il <em>prodotto</em> Ventic distribuito al cliente: quei sistemi non trattano dati dei visitatori del sito vetrina, salvo quanto necessario a erogare il servizio contrattuale e descritto nel relativo DPA.</p>",
+      },
+      {
+        id: "luogo",
+        title: "7. Luogo del trattamento",
+        html: "<p>I dati del sito sono trattati presso la sede del Titolare e, per erogazione tecnica, presso fornitori di hosting / CDN ed email situati in massima parte nello Spazio Economico Europeo (SEE). Alcuni servizi tecnici (es. Google Fonts, anti-bot Cloudflare/TrustCaptcha, schedulazione call) possono comportare contatti con server ubicati anche fuori dal SEE: vedi §10.</p>",
+      },
+      {
+        id: "conservazione",
+        title: "8. Periodi di conservazione",
+        html: "<table class=\"legal-table\"><thead><tr><th>Categoria</th><th>Conservazione</th></tr></thead><tbody><tr><td>Log tecnici di sicurezza e anti-abuso</td><td>fino a 12 mesi, salvo proroga per esigenze di sicurezza, esigenze difensive o richieste dell’autorità</td></tr><tr><td>Richieste di contatto / email / messaggi</td><td>24 mesi dall’ultimo contatto utile, salvo trasformazione in rapporto contrattuale</td></tr><tr><td>Dati precontrattuali e offerte</td><td>24 mesi o fino a revoca del tuo interesse</td></tr><tr><td>Dati contrattuali, fatture e adempimenti fiscali</td><td>10 anni ex art. 2220 c.c. e normativa fiscale</td></tr><tr><td>Corrispondenza necessaria a difesa in giudizio</td><td>fino a definizione del contenzioso e termini di prescrizione</td></tr></tbody></table><p>Alla scadenza i dati sono cancellati o anonimizzati. I tempi possono allungarsi solo per obblighi di legge o ordini dell’autorità.</p>",
+      },
+      {
+        id: "destinatari",
+        title: "9. Destinatari e responsabili del trattamento",
+        html: "<p>I dati possono essere comunicati a:</p><ul><li><strong>Fornitori tecnici nominati responsabili ex art. 28 GDPR</strong> quando trattano dati per nostro conto: fornitore di hosting/CDN del sito statico, fornitore email, fornitori anti-bot (Cloudflare — Turnstile; TrustCaptcha / TrustComponent), fornitore di schedulazione call (es. Calendly) se utilizzi il link di prenotazione, consulenti IT/legali vincolati a riservatezza.</li><li><strong>Titolari autonomi</strong>: autorità giudiziarie, amministrative o di controllo quando previsto dalla legge; Google LLC per la fornitura del font come titolare autonomo secondo la sua privacy policy.</li><li><strong>Personale autorizzato</strong> di Netter srl (art. 29 GDPR).</li></ul><p>L’elenco aggiornato dei responsabili può essere richiesto al contatto privacy. Non diffondiamo i dati.</p>",
+      },
+      {
+        id: "trasferimenti",
+        title: "10. Trasferimenti fuori dallo SEE",
+        html: "<p>Alcuni fornitori possono trattare dati in paesi fuori dallo SEE (es. Stati Uniti). In tali casi il trasferimento avviene solo verso paesi con decisione di adeguatezza della Commissione (art. 45 GDPR — es. US con Data Privacy Framework ove applicabile) o, in assenza, sulla base di <em>Clausole Contrattuali Standard</em> (art. 46) e di misure supplementari valutate caso per caso. Copia delle garanzie può essere richiesta al contatto privacy.</p><p>Per Google Fonts comunichiamo solo quanto tecnicamente necessario alla consegna del font (richiesta HTTP con IP e header): non trasmettiamo identificativi di profilazione al fornitore.</p>",
+      },
+      {
+        id: "natura",
+        title: "11. Natura del conferimento",
+        html: "<p>Il conferimento dei dati di navigazione è necessario alla fruizione del sito. Il conferimento dei dati per richieste di contatto è facoltativo: senza i dati indispensabili (almeno un recapito e il contenuto della richiesta) non potremo rispondere. Il consenso, quando richiesto (es. cookie non necessari futuri), è sempre revocabile senza pregiudizio per i trattamenti precedenti.</p>",
+      },
+      {
+        id: "diritti",
+        title: "12. Diritti dell’interessato (artt. 15–22 GDPR)",
+        html: "<p>Hai diritto di ottenere, nei casi previsti, l’accesso ai tuoi dati, la rettifica, la cancellazione, la limitazione, l’opposizione, la portabilità, la revoca del consenso e di non essere sottoposto a decisioni automatizzate.</p><ul><li><strong>Accesso</strong> — sapere se trattiamo dati che ti riguardano e riceverne copia (art. 15).</li><li><strong>Rettifica</strong> — correggere dati inesatti (art. 16).</li><li><strong>Cancellazione</strong> (“oblio”) — art. 17, nei casi previsti (es. revoca consenso, opposizione).</li><li><strong>Limitazione</strong> — art. 18.</li><li><strong>Portabilità</strong> — ricevere i dati forniti in formato strutturato quando il trattamento si basa su consenso o contratto (art. 20).</li><li><strong>Opposizione</strong> — art. 21, in particolare al trattamento per legittimo interesse; per marketing diretto puoi opporti in qualsiasi momento.</li><li><strong>Revoca del consenso</strong> — art. 7.3, in qualsiasi momento senza effetti retroattivi.</li></ul><p>Puoi inoltre proporre reclamo al Garante (vedi §13).</p>",
+      },
+      {
+        id: "esercizio",
+        title: "13. Come esercitare i diritti e reclamo al Garante",
+        html: "<p>Per esercitare i diritti scrivi a <a href=\"mailto:info@ventic.it\">info@ventic.it</a> con oggetto “Esercizio diritti privacy — Ventic” allegando copia di un documento utile a identificarti (comunque minimizzato). Riscontriamo senza ingiustificato ritardo, al più tardi entro un mese (prorogabile di due mesi nei casi complessi, art. 12.3).</p><p>Se ritieni che il trattamento violi il GDPR, hai diritto di <strong>proporre reclamo al Garante per la protezione dei dati personali</strong> — <a href=\"https://www.garanteprivacy.it\" target=\"_blank\" rel=\"noopener\">garanteprivacy.it</a> (art. 77 GDPR) — o di adire l’autorità giudiziaria (art. 79). Informazioni e modulistica sul sito del Garante.</p><p>Per contenziosi con consumatori resta ferma la possibilità di ricorrere a organismi di risoluzione extragiudiziale ove applicabili.</p>",
+      },
+      {
+        id: "minori",
+        title: "14. Minori",
+        html: "<p>Il sito non è destinato a minori di 14 anni (soglia del consenso digitale in Italia, art. 2-quinquies Codice Privacy). Non raccogliamo consapevolmente dati di minori. Se ritieni che un minore ci abbia fornito dati, contattaci per la cancellazione.</p>",
+      },
+      {
+        id: "modifiche",
+        title: "15. Modifiche a questa informativa",
+        html: "<p>Possiamo aggiornare questa informativa per adeguarla a novità normative, tecniche o a evoluzioni del sito/servizio. La versione vigente è quella pubblicata qui con data di “Ultimo aggiornamento”. Modifiche sostanziali saranno evidenziate con avviso sul sito. Ti invitiamo a consultare periodicamente questa pagina.</p><p>Per richieste di chiarimento o copia di estratti contrattuali (SCC, DPA) rilevanti per i trasferimenti, scrivi al contatto privacy.</p>",
+      },
+    ],
+    footerNote: {
+      title: "Nota legale",
+      body: "Questa informativa è stata redatta secondo il modello del Garante e le Linee Guida EDPB, con linguaggio semplificato senza rinunciare alla completezza. Non costituisce consulenza legale individuale; per casi particolari chiedi al tuo consulente. Se hai clausole contrattuali specifiche con Netter srl, prevalgono le pattuizioni contrattuali e il relativo DPA per i trattamenti come responsabile.",
+    },
+    cta: {
+      title: "Hai domande sulla privacy?",
+      body: "Scrivici a info@ventic.it — oggetto “Privacy — Ventic”. Per richieste di contatto commerciale usa invece il pulsante qui sotto.",
+      btn: "Prenota una call tecnica",
+      mailLabel: "Scrivi a info@ventic.it",
+    },
+  },
+
 };
 
 const en: typeof it = {
@@ -722,6 +829,10 @@ const en: typeof it = {
     adminPanel: {
       title: "Ventic admin panel — users, roles, models, white label",
       desc: "The Ventic panel: users and access, endpoint RBAC, model management and scaling, RAG and harness wiring, multi-tenant white label.",
+    },
+    privacy: {
+      title: "Privacy policy — Ventic",
+      desc: "GDPR privacy notice for Ventic (Netter srl): data processed, purposes, legal bases, cookies, your rights and controller contact.",
     },
   },
 
@@ -1185,8 +1296,8 @@ const en: typeof it = {
     links: [
       { label: "Panel", href: "/en/admin-panel/" },
       { label: "Pricing", href: "/en/pricing/" },
-      { label: "Privacy", href: "#" },
-      { label: "Terms", href: "#" },
+      { label: "Privacy", href: "/en/privacy/" },
+      { label: "Cookie", href: "/en/privacy/#cookie" },
     ],
     disclaimer: "OpenAI and Anthropic are registered trademarks of their respective owners. All rights reserved to their legitimate owners. Ventic is not affiliated with OpenAI, Inc. or Anthropic PBC.",
   },
@@ -1406,6 +1517,109 @@ const en: typeof it = {
       note: "No separate infra per customer: one panel, one GPU pool, as many tenants as needed.",
     },
   },
+  privacy: {
+    hero: {
+      plate: "Privacy notice",
+      title: ["Privacy policy", "for ventic.it"],
+      lead: "Information notice under Articles 13–14 of Regulation (EU) 2016/679 (GDPR), Italian Legislative Decree 196/2003 as amended, and EDPB Guidelines. It describes how Netter srl processes personal data of visitors to ventic.it and of those who contact Ventic.",
+      updatedLabel: "Last updated",
+      updatedDate: "15 May 2026",
+      tocTitle: "Contents",
+      printLabel: "Print / Save as PDF",
+    },
+    intro: {
+      note: "This notice covers only the showcase website ventic.it. It does not govern processing that happens inside the customer’s Ventic infrastructure (BYOH / PaaS — models, prompts, data loaded on GPUs, RAG collections, inference logs): for those, Netter acts as a technology stack supplier and, with respect to the end-customer’s data, as processor under Art. 28 GDPR where foreseen by contract; details are in the contract and in the dedicated DPA.",
+      also: "If you are already a Ventic customer, your contract and any Data Processing Agreement (DPA) remain applicable.",
+    },
+    sections: [
+      {
+        id: "controller",
+        title: "1. Controller and contact details",
+        html: "<p><strong>Controller:</strong> <strong>Netter srl</strong>, registered office at Via Indipendenza, 06081 Assisi (PG), Italy — VAT <strong>IT03569900545</strong>.</p><p><strong>Privacy contact:</strong> email <a href=\"mailto:info@ventic.it\">info@ventic.it</a> (subject: “Privacy — Ventic”). We usually reply within 15 business days. For formal communications you can also write to the registered office, attn. “Privacy — Ventic”.</p><p>No Data Protection Officer (DPO) has been appointed under Art. 37 GDPR as the conditions are not met; this is reviewed periodically. If a DPO is appointed, contact details will be published here.</p>",
+      },
+      {
+        id: "scope",
+        title: "2. Scope",
+        html: "<p>This notice applies to browsing <strong>ventic.it</strong>, to contact requests and to booking of technical calls via the site (Calendly/external links and email). It also applies to any forms or contact channels enabled on the ventic.it domain and functional sub-domains (e.g. docs, status). It does not apply to third-party sites reachable via links.</p><p>Language: if there is a conflict between the Italian version and the English translation, the Italian version prevails for users subject to Italian/EU law.</p>",
+      },
+      {
+        id: "categories",
+        title: "3. Categories of personal data",
+        html: "<h4 class=\"h4\">3.1 Browsing and technical logs</h4><p>IT systems and software procedures used to operate the site acquire, in normal operation, some personal data whose transmission is implicit in Internet protocols. This includes: IP address, browser and device type, OS, pages visited, dwell time, referrer, any errors, date/time of the request and other device/environment parameters (e.g. HTTP headers).</p><p>This data is needed to make the site available, keep it secure and measure performance in aggregated form.</p><h4 class=\"h4\">3.2 Data you provide voluntarily</h4><ul><li>content of emails and messages sent to <strong>info@ventic.it</strong> or via “Book a call” / “Email us” buttons;</li><li>name, surname, company, role, contact details and information you voluntarily share to request a demo, commercial information, support or to shortlist a configuration (BYOH / PaaS);</li><li>when you book a call via an external provider (e.g. Calendly), data you enter in that provider’s form (name, email, messages, time preferences).</li></ul><h4 class=\"h4\">3.3 Anti-abuse / human verification</h4><p>To protect the email address and forms from scraping and spam we use anti-bot solutions (Cloudflare Turnstile and/or TrustCaptcha). During verification technical identifiers such as IP, browser headers, interaction signals and the verification token may be processed; we do not use invasive fingerprinting or biometric data.</p><h4 class=\"h4\">3.4 Cookies and similar technologies</h4><p>See Section 4 “Cookies and similar technologies”.</p><p><strong>We do not collect</strong> special categories of data (Art. 9 GDPR) or data on criminal convictions via the showcase site. Please do not send unnecessary data or third-party data without a lawful basis.</p>",
+      },
+      {
+        id: "cookie",
+        title: "4. Cookies and similar technologies",
+        html: "<p>The site is intentionally lightweight. <strong>We do not use profiling or advertising tracking cookies</strong> of our own and we do not sell data to third parties.</p><h4 class=\"h4\">4.1 What we actually use</h4><table class=\"legal-table\"><thead><tr><th>Category</th><th>Name / origin</th><th>Purpose</th><th>Duration</th><th>Legal basis</th></tr></thead><tbody><tr><td>Strictly necessary cookies</td><td>Any load-balancing or language preference cookies (only if enabled in future)</td><td>Keep language and essential preferences</td><td>Session / 12 months</td><td>Technical necessity — consent not required (Art. 122 / ePrivacy)</td></tr><tr><td>Anti-abuse</td><td><code>__cf_turnstile</code>, <code>trustcaptcha_*</code> (Cloudflare / TrustCaptcha)</td><td>Prove the request comes from a human and prevent form/email abuse</td><td>Session / up to 24h</td><td>Legitimate interest to protect the service (Art. 6(1)(f)) + pre-contractual steps at your request</td></tr><tr><td>Fonts</td><td>Google Fonts (fonts.googleapis.com / fonts.gstatic.com)</td><td>Deliver the IBM Plex Sans font</td><td>Browser cache</td><td>Legitimate interest in legibility; loaded with preconnect. IP visible to Google as technical supplier</td></tr></tbody></table><h4 class=\"h4\">4.2 Third-party cookies (if any)</h4><p>If you book a call you will be redirected to an external provider (e.g. Calendly). That provider may set its own cookies under its cookie policy. No provider cookies are set before the redirect.</p><h4 class=\"h4\">4.3 How to manage cookies</h4><p>You can block or delete cookies in your browser settings (Chrome, Firefox, Safari, Edge). Blocking strictly necessary or anti-abuse cookies may break parts of the site (e.g. email reveal or form send). No consent banner is shown because we do not use cookies that require it; if we introduce analytics or profiling cookies in the future, we will show a banner compliant with the Italian Garante Cookie Guidelines 2021 and collect prior consent.</p><p>Useful tools: <a href=\"https://www.garanteprivacy.it/cookie\" target=\"_blank\" rel=\"noopener\">Garante guide on cookies</a>, <a href=\"https://www.youronlinechoices.com/\" target=\"_blank\" rel=\"noopener\">youronlinechoices.com</a>.</p>",
+      },
+      {
+        id: "purposes",
+        title: "5. Purposes and legal bases",
+        html: "<p>We process your data only when we have a lawful basis. Main purposes:</p><table class=\"legal-table\"><thead><tr><th>Purpose</th><th>Data</th><th>Legal basis (GDPR)</th></tr></thead><tbody><tr><td>Make the site available, keep it secure and prevent abuse (incl. anti-bot)</td><td>Browsing data, IP, anti-abuse tokens, logs</td><td>Legitimate interest (Art. 6(1)(f)) — protect and administer the site; legal security duty (Art. 32)</td></tr><tr><td>Reply to requests for information, demos, quotes and call bookings</td><td>Data you provide, message content</td><td>Pre-contractual steps at your request (Art. 6(1)(b)); legitimate interest in handling requests</td></tr><tr><td>Manage the pre-contractual / contractual relationship (BYOH, PaaS, server assessment, offers)</td><td>Business contact data, technical content shared</td><td>Contract / pre-contract (Art. 6(1)(b)); legal obligations (Art. 6(1)(c)) for invoicing</td></tr><tr><td>Administrative, accounting and tax compliance</td><td>Billing and contract data</td><td>Legal obligation (Art. 6(1)(c))</td></tr><tr><td>Establish, exercise or defend legal claims</td><td>Logs, correspondence, contract data</td><td>Legitimate interest (Art. 6(1)(f)) and legal obligation</td></tr><tr><td>Service follow-ups you requested</td><td>Email and request content</td><td>Pre-contractual steps / consent where required</td></tr></tbody></table><p>We do not carry out automated decision-making producing legal effects nor profiling under Art. 22 GDPR via the showcase site.</p>",
+      },
+      {
+        id: "how",
+        title: "6. How we process data and security",
+        html: "<p>Processing is carried out by electronic means and, where needed, on paper, with logic strictly related to the purposes and with appropriate technical and organisational measures (Art. 32 GDPR): encryption in transit (TLS/HTTPS), minimisation, access controls, logging, backups, updates and role separation. Access is limited to authorised Netter srl personnel and to processors/suppliers bound by contract.</p><p>The encrypted mTLS overlay and GPUs described on the site concern the <em>product</em> Ventic delivered to the customer: those systems do not process visitor data of the showcase site except as needed to deliver the contracted service and as described in the relevant DPA.</p>",
+      },
+      {
+        id: "location",
+        title: "7. Place of processing",
+        html: "<p>Site data are processed at the controller’s premises and, for technical delivery, at hosting / CDN and email suppliers located mostly in the European Economic Area (EEA). Some technical services (e.g. Google Fonts, anti-bot Cloudflare/TrustCaptcha, call scheduling) may involve contact with servers outside the EEA as well: see §10.</p>",
+      },
+      {
+        id: "retention",
+        title: "8. Retention periods",
+        html: "<table class=\"legal-table\"><thead><tr><th>Category</th><th>Retention</th></tr></thead><tbody><tr><td>Security and anti-abuse technical logs</td><td>up to 12 months, unless extended for security, defence or authority requests</td></tr><tr><td>Contact requests / emails / messages</td><td>24 months from last useful contact, unless it becomes a contractual relationship</td></tr><tr><td>Pre-contractual data and quotes</td><td>24 months or until you withdraw interest</td></tr><tr><td>Contract data, invoices and tax records</td><td>10 years under Art. 2220 Civil Code and tax law</td></tr><tr><td>Correspondence needed for litigation</td><td>until the dispute is settled and limitation periods expire</td></tr></tbody></table><p>After expiry data are deleted or anonymised. Periods may be extended only by law or order of an authority.</p>",
+      },
+      {
+        id: "recipients",
+        title: "9. Recipients and processors",
+        html: "<p>Data may be shared with:</p><ul><li><strong>Processors under Art. 28 GDPR</strong> where they process data on our behalf: static-site hosting/CDN provider, email provider, anti-bot providers (Cloudflare — Turnstile; TrustCaptcha / TrustComponent), call-scheduling provider (e.g. Calendly) if you use the booking link, IT/legal consultants bound by confidentiality.</li><li><strong>Independent controllers</strong>: courts, administrative or supervisory authorities where required by law; Google LLC for font delivery as independent controller under its privacy policy.</li><li><strong>Authorised personnel</strong> of Netter srl (Art. 29 GDPR).</li></ul><p>An up-to-date list of processors is available on request to the privacy contact. We do not disseminate data.</p>",
+      },
+      {
+        id: "transfers",
+        title: "10. Transfers outside the EEA",
+        html: "<p>Some suppliers may process data in countries outside the EEA (e.g. United States). Transfers then occur only to countries with an adequacy decision (Art. 45 GDPR — e.g. US under the Data Privacy Framework where applicable) or, failing that, on the basis of <em>Standard Contractual Clauses</em> (Art. 46) plus supplementary measures assessed case by case. A copy of safeguards can be requested from the privacy contact.</p><p>For Google Fonts we transmit only what is technically needed to deliver the font (HTTP request with IP and headers): we do not transmit profiling identifiers to the provider.</p>",
+      },
+      {
+        id: "nature",
+        title: "11. Nature of provision",
+        html: "<p>Browsing data are necessary to use the site. Providing data for contact requests is optional: without the minimum data (at least a contact and the request content) we cannot reply. Consent, where required (e.g. future non-essential cookies), is always withdrawable without affecting prior lawful processing.</p>",
+      },
+      {
+        id: "rights",
+        title: "12. Your rights (Arts. 15–22 GDPR)",
+        html: "<p>You have the right to obtain, where foreseen, access, rectification, erasure, restriction, objection, portability, withdrawal of consent, and not to be subject to automated decisions.</p><ul><li><strong>Access</strong> — know whether we process data about you and get a copy (Art. 15).</li><li><strong>Rectification</strong> — correct inaccurate data (Art. 16).</li><li><strong>Erasure</strong> (“right to be forgotten”) — Art. 17, where applicable (e.g. consent withdrawn, objection).</li><li><strong>Restriction</strong> — Art. 18.</li><li><strong>Portability</strong> — receive data you provided in a structured format when processing is based on consent or contract (Art. 20).</li><li><strong>Objection</strong> — Art. 21, in particular to processing for legitimate interest; for direct marketing you can object at any time.</li><li><strong>Withdraw consent</strong> — Art. 7(3), at any time without retroactive effect.</li></ul><p>You may also lodge a complaint with the supervisory authority (see §13).</p>",
+      },
+      {
+        id: "exercise",
+        title: "13. How to exercise rights and lodge a complaint",
+        html: "<p>To exercise rights write to <a href=\"mailto:info@ventic.it\">info@ventic.it</a> subject “Exercise of privacy rights — Ventic” attaching a copy of an ID document minimised to what is needed. We reply without undue delay, at latest within one month (extendable by two months for complex cases, Art. 12(3)).</p><p>If you believe processing infringes the GDPR, you have the right to <strong>lodge a complaint with the Italian Garante per la protezione dei dati personali</strong> — <a href=\"https://www.garanteprivacy.it\" target=\"_blank\" rel=\"noopener\">garanteprivacy.it</a> (Art. 77 GDPR) — or to seek a judicial remedy (Art. 79). Information and forms are on the Garante’s site. For your local authority in other EEA states, see the EDPB list.</p><p>For consumer disputes, out-of-court settlement bodies may be available where applicable.</p>",
+      },
+      {
+        id: "children",
+        title: "14. Children",
+        html: "<p>The site is not directed at children under 14 (digital consent age in Italy, Art. 2-quinquies Privacy Code). We do not knowingly collect children’s data. If you believe a child has provided data, contact us for deletion.</p>",
+      },
+      {
+        id: "changes",
+        title: "15. Changes to this notice",
+        html: "<p>We may update this notice to reflect regulatory, technical or service changes. The current version is the one published here with its “Last updated” date. Material changes will be highlighted with a notice on the site. Please review this page periodically.</p><p>For clarifications or copies of relevant contractual extracts (SCCs, DPA) for transfers, write to the privacy contact.</p>",
+      },
+    ],
+    footerNote: {
+      title: "Legal note",
+      body: "This notice follows the Garante’s template and EDPB Guidelines, in plain language without loss of completeness. It is not individual legal advice; for specific cases consult your counsel. If you have specific contractual terms with Netter srl, the contract and its DPA prevail for processing as processor.",
+    },
+    cta: {
+      title: "Questions about privacy?",
+      body: "Write to info@ventic.it — subject “Privacy — Ventic”. For commercial enquiries use the button below instead.",
+      btn: "Book a technical call",
+      mailLabel: "Email info@ventic.it",
+    },
+  },
+
 };
 
 export const content = { it, en } as const;
