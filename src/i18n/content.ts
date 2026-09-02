@@ -166,6 +166,48 @@ const it = {
       paas: { title: "INP PaaS — lato Ventic (sempre presente)", badge: "sempre attivo", body: "Gira sul control plane Ventic. Acquisisce GPU in cloud (spot/dedicato, UE/US) e le aggancia via overlay al tuo stack — anche quando parti da on-prem e devi scalare oltre le tue macchine." },
       billing: { title: "Billing & Resale", badge: "in arrivo", body: "Contabilizza uso per tenant e prepara rivendita a subscription o a token. Architettura già predisposta — funzionalità in arrivo." },
     },
+    nodesNote: "Slot accesi = repliche del modello attive su quel nodo.",
+    net: {
+      hint: "Scorri lo schema per intero →",
+      zones: {
+        clients: { t: "Postazioni di lavoro", s: "SDK invariato — cambia solo l'URL" },
+        infra: { t: "La tua infrastruttura Docker", s: "on-prem o cloud — i dati restano qui" },
+        overlay: { t: "Overlay", s: "cifrato mTLS" },
+        nodes: { t: "Nodi di inferenza", s: "GPU tue o dal catalogo" },
+        control: { t: "Control plane Ventic", s: "remoto — gestito da noi, sempre presente" },
+      },
+      boxes: {
+        wsA: { t: "AGENTI DI CODING", s: "Claude Code · Copilot · Cursor" },
+        wsB: { t: "APP E SERVIZI", s: "backend · job · automazioni" },
+        wsC: { t: "OPENAI / ANTHROPIC", s: "SDK e tool esistenti" },
+        proxy: { t: "LLM PROXY", s: "endpoint unico · auth · RBAC · quote" },
+        panel: { t: "ADMIN PANEL", s: "utenti · modelli · policy" },
+        obs: { t: "OBSERVABILITY LGTM", s: "log · metriche · tracce" },
+        inpOn: { t: "INP ON-PREM", s: "vede e gestisce solo le tue macchine" },
+        extras: { t: "OPENRAG · QDRANT · HARNESS", s: "moduli attivabili a richiesta" },
+        relay: { t: "RELAY", s: "mTLS · NAT" },
+        inpPaas: { t: "INP PAAS", s: "riceve l'intento e procura i nodi", s2: "scala oltre le tue macchine, anche da on-prem" },
+        catalog: { t: "CATALOGO GPU CLOUD", s: "spot o dedicato · UE / US", s2: "acquisto SEPA immediato" },
+        billing: { t: "BILLING & RESALE", s: "uso per tenant · rivendita", s2: "subscription o a token" },
+      },
+      badges: { opt: "opzionale", on: "sempre attivo", soon: "in arrivo", auto: "auto" },
+      edges: {
+        api: "API OpenAI / Anthropic",
+        overlayShort: "overlay mTLS",
+        overlay: "Nodi chiusi · nessun IP pubblico · mTLS",
+        manage: "accende / spegne — solo le tue macchine",
+        intent: "intento · manifest",
+        acquire: "acquisisce",
+        attach: "aggancia il nodo al tuo overlay",
+      },
+      notes: { noIp: "nessun IP pubblico", noVpn: "nessuna VPN da gestire" },
+      legend: {
+        data: "Percorso dati — richiesta e risposta",
+        mtls: "Overlay cifrato mTLS",
+        ctrl: "Percorso di controllo — provisioning",
+        opt: "Opzionale o in arrivo",
+      },
+    },
   },
 
   infraFlow: {
@@ -180,6 +222,19 @@ const it = {
       { k: "05", label: "Motore di inferenza", desc: "Inferenza ottimizzata per quel modello su quella GPU (vLLM / SGLang). Risponde al proxy, il proxy a te." },
     ],
     note: "Senza IP pubblico. Senza VPN manuale. Il relay può stare in rete pubblica; i tuoi nodi restano chiusi.",
+    net: {
+      hint: "Scorri il percorso →",
+      lane: "Percorso della richiesta",
+      boxes: [
+        { t: "APP", s: "SDK invariato" },
+        { t: "LLM PROXY", s: "auth · RBAC · quote" },
+        { t: "OVERLAY mTLS", s: "attraversa i NAT" },
+        { t: "VENTIC AGENT", s: "coda equa" },
+        { t: "MOTORE", s: "vLLM · SGLang" },
+      ],
+      back: "risposta — stessa strada al contrario",
+      ctrl: "Il control plane e il provisioner restano fuori dal percorso dati",
+    },
   },
 
   lifecycle: {
@@ -192,6 +247,24 @@ const it = {
       { label: "Spot revocato", body: "L’agent rischedula su un altro provider senza intervento manuale." },
     ],
     foot: "Tutto automatico. Nessun intervento notturno.",
+    net: {
+      hint: "Scorri il diagramma →",
+      actor: { t: "INFERENCE NODE PROVISIONER", s: "osserva il carico, decide e attua — on-prem o lato Ventic" },
+      states: {
+        run: { t: "IN ESERCIZIO", s: "n repliche attive" },
+        out: { t: "SCALE OUT", s: "+1 replica GPU" },
+        inn: { t: "SCALE IN", s: "−1 replica" },
+        off: { t: "SPENTO", s: "scale-to-zero · costo 0" },
+        spot: { t: "SPOT REVOCATO", s: "re-provisioning automatico" },
+      },
+      edges: {
+        up: "> 80% di carico",
+        down: "< 25% per 10 min",
+        off: "0 richieste per 15 min",
+        wake: "1ª chiamata → riaccensione",
+        resched: "rischedula su un altro provider",
+      },
+    },
   },
 
   stack: {
@@ -791,6 +864,48 @@ const en: typeof it = {
       paas: { title: "INP PaaS — Ventic side (always present)", badge: "always on", body: "Runs on Ventic control plane. Acquires cloud GPUs (spot/dedicated, EU/US) and attaches them via overlay to your stack — even when you start on-prem and need to burst beyond your machines." },
       billing: { title: "Billing & Resale", badge: "coming soon", body: "Will meter per-tenant usage for resale as subscription or per-token. Architecture ready — feature coming soon." },
     },
+    nodesNote: "Lit slots = model replicas currently running on that node.",
+    net: {
+      hint: "Scroll to see the whole map →",
+      zones: {
+        clients: { t: "Workstations", s: "SDK unchanged — only the URL moves" },
+        infra: { t: "Your Docker infrastructure", s: "on-prem or cloud — data stays here" },
+        overlay: { t: "Overlay", s: "encrypted mTLS" },
+        nodes: { t: "Inference nodes", s: "your GPUs or from the catalogue" },
+        control: { t: "Ventic control plane", s: "remote — run by us, always present" },
+      },
+      boxes: {
+        wsA: { t: "CODING AGENTS", s: "Claude Code · Copilot · Cursor" },
+        wsB: { t: "APPS & SERVICES", s: "backends · jobs · automations" },
+        wsC: { t: "OPENAI / ANTHROPIC", s: "existing SDKs and tools" },
+        proxy: { t: "LLM PROXY", s: "single endpoint · auth · RBAC · quotas" },
+        panel: { t: "ADMIN PANEL", s: "users · models · policy" },
+        obs: { t: "OBSERVABILITY LGTM", s: "logs · metrics · traces" },
+        inpOn: { t: "ON-PREM INP", s: "sees and drives your machines only" },
+        extras: { t: "OPENRAG · QDRANT · HARNESSES", s: "modules enabled on request" },
+        relay: { t: "RELAY", s: "mTLS · NAT" },
+        inpPaas: { t: "INP PAAS", s: "takes the intent, sources the nodes", s2: "bursts beyond your machines, even on-prem" },
+        catalog: { t: "CLOUD GPU CATALOGUE", s: "spot or dedicated · EU / US", s2: "instant SEPA purchase" },
+        billing: { t: "BILLING & RESALE", s: "per-tenant usage · resale", s2: "subscription or per-token" },
+      },
+      badges: { opt: "optional", on: "always on", soon: "coming soon", auto: "auto" },
+      edges: {
+        api: "OpenAI / Anthropic API",
+        overlayShort: "mTLS overlay",
+        overlay: "Closed nodes · no public IP · mTLS",
+        manage: "powers on / off — your machines only",
+        intent: "intent · manifest",
+        acquire: "acquires",
+        attach: "attaches the node to your overlay",
+      },
+      notes: { noIp: "no public IP", noVpn: "no VPN to maintain" },
+      legend: {
+        data: "Data path — request and response",
+        mtls: "Encrypted mTLS overlay",
+        ctrl: "Control path — provisioning",
+        opt: "Optional or coming soon",
+      },
+    },
   },
 
   infraFlow: {
@@ -805,6 +920,19 @@ const en: typeof it = {
       { k: "05", label: "Inference engine", desc: "Inference tuned for that model on that GPU (vLLM / SGLang). Replies to the proxy, proxy to you." },
     ],
     note: "No public IP. No manual VPN. The relay may be public; your nodes stay closed.",
+    net: {
+      hint: "Scroll the path →",
+      lane: "Request path",
+      boxes: [
+        { t: "APP", s: "SDK unchanged" },
+        { t: "LLM PROXY", s: "auth · RBAC · quotas" },
+        { t: "mTLS OVERLAY", s: "NAT traversal" },
+        { t: "VENTIC AGENT", s: "fair queue" },
+        { t: "ENGINE", s: "vLLM · SGLang" },
+      ],
+      back: "response — same path back",
+      ctrl: "Control plane and provisioner stay out of the data path",
+    },
   },
 
   lifecycle: {
@@ -817,6 +945,24 @@ const en: typeof it = {
       { label: "Spot reclaimed", body: "Agent reschedules to another provider with no hands on keyboard." },
     ],
     foot: "All automatic. No night ops.",
+    net: {
+      hint: "Scroll the diagram →",
+      actor: { t: "INFERENCE NODE PROVISIONER", s: "watches load, decides and acts — on-prem or Ventic side" },
+      states: {
+        run: { t: "RUNNING", s: "n replicas live" },
+        out: { t: "SCALE OUT", s: "+1 GPU replica" },
+        inn: { t: "SCALE IN", s: "−1 replica" },
+        off: { t: "POWERED OFF", s: "scale-to-zero · zero cost" },
+        spot: { t: "SPOT RECLAIMED", s: "automatic re-provisioning" },
+      },
+      edges: {
+        up: "> 80% load",
+        down: "< 25% for 10 min",
+        off: "0 requests for 15 min",
+        wake: "first call → wakes up",
+        resched: "reschedules on another provider",
+      },
+    },
   },
 
   stack: {

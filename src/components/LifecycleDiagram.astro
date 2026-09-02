@@ -3,6 +3,21 @@ import { content, type Lang } from "../i18n/content";
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const c = content[lang].lifecycle;
+const n = c.net;
+
+const S = {
+  wire: "#3d444b", amber: "#f5a83f", amberDim: "#7c5c2c", jade: "#35cfa4", jadeDim: "#2c5a4d",
+  box: "#181b1f", line: "#32373d", title: "#f2f0eb", titleDim: "#b7b5ae", sub: "#6f7276", ghost: "#5c5f63",
+};
+
+/* state boxes: x, y, w, h + accent bar colour */
+const states = [
+  { x: 60,  y: 150, w: 190, h: 76, bar: S.jade,  ...n.states.run },
+  { x: 380, y: 96,  w: 200, h: 64, bar: S.amber, ...n.states.out },
+  { x: 380, y: 232, w: 200, h: 64, bar: S.wire,  ...n.states.inn },
+  { x: 700, y: 150, w: 190, h: 76, bar: "",      ...n.states.off },
+  { x: 960, y: 232, w: 240, h: 76, bar: S.amber, ...n.states.spot },
+];
 ---
 <figure class="life">
   <div class="head">
@@ -19,42 +34,64 @@ const c = content[lang].lifecycle;
     ))}
   </div>
 
-  <!-- inline SVG timeline -->
-  <div class="svgwrap" aria-hidden="true">
-    <svg viewBox="0 0 960 140" width="100%" height="140" role="img">
-      <rect x="0.5" y="0.5" width="959" height="139" rx="3" fill="#101215" stroke="#262a2f"/>
-      <!-- timeline base -->
-      <line x1="40" y1="86" x2="920" y2="86" stroke="#32373d" stroke-width="1.2"/>
-      <!-- nodes -->
-      <g font-family="IBM Plex Mono, monospace" text-anchor="middle">
-        <!-- idle -->
-        <circle cx="150" cy="86" r="7" fill="#2b3036" stroke="#32373d"/><circle cx="150" cy="86" r="3" fill="#6f7276"/>
-        <text x="150" y="122" font-size="9" letter-spacing="0.08em" fill="#6f7276">IDLE 15m</text>
-        <text x="150" y="34" font-size="10" font-weight="600" fill="#8a8d92">●</text>
-        <!-- shutdown -->
-        <circle cx="380" cy="86" r="10" fill="#16181b" stroke="#32373d"/><circle cx="380" cy="86" r="4" fill="#5c5f63"/>
-        <text x="380" y="122" font-size="9" letter-spacing="0.08em" fill="#5c5f63">SHUTDOWN</text>
-        <text x="380" y="28" font-size="9" letter-spacing="0.1em" fill="#5c5f63">OFF</text>
-        <!-- wake -->
-        <circle cx="610" cy="86" r="10" fill="#f5a83f" stroke="#f5a83f"/><circle cx="610" cy="86" r="4" fill="#14161a"/>
-        <text x="610" y="122" font-size="9" letter-spacing="0.08em" fill="#f5a83f">WAKE ON REQUEST</text>
-        <text x="610" y="28" font-size="9" letter-spacing="0.1em" fill="#f5a83f">ON — 1ª chiamata</text>
-        <!-- reclaim -->
-        <rect x="770" y="62" width="120" height="48" rx="2" fill="#1d2126" stroke="#32373d"/>
-        <text x="830" y="82" font-size="9" font-weight="600" fill="#f2f0eb">SPOT RECLAIM</text><text x="830" y="96" font-size="8" fill="#8a8d92">→ altro provider</text>
-        <circle cx="730" cy="86" r="6" fill="#35cfa4" stroke="#35cfa4"/>
-      </g>
-      <!-- arrows -->
-      <g stroke="#32373d" stroke-width="1.2" fill="none" marker-end="url(#ah2)">
-        <path d="M162 86 H368"/><path d="M392 86 H598"/><path d="M622 86 H718"/><path d="M742 86 H768"/>
-      </g>
-      <defs><marker id="ah2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#32373d"/></marker></defs>
-      <!-- scale annotations top -->
-      <g font-family="IBM Plex Mono, monospace" font-size="8" fill="#8a8d92" text-anchor="middle">
-        <text x="265" y="68"> &lt;25% ×10m → −replica </text>
-        <text x="495" y="68"> &gt;80% → +replica </text>
-      </g>
-    </svg>
+  <div class="svgwrap">
+    <div class="sscroll">
+      <svg class="state" viewBox="0 0 1240 360" role="img" aria-label={c.title}>
+        <defs>
+          <marker id="lc-d" markerWidth="7" markerHeight="7" refX="6.2" refY="3.5" orient="auto">
+            <path d="M0 0 L7 3.5 L0 7 z" fill={S.wire} />
+          </marker>
+          <marker id="lc-a" markerWidth="7" markerHeight="7" refX="6.2" refY="3.5" orient="auto">
+            <path d="M0 0 L7 3.5 L0 7 z" fill={S.amber} />
+          </marker>
+          <marker id="lc-c" markerWidth="7" markerHeight="7" refX="6.2" refY="3.5" orient="auto">
+            <path d="M0 0 L7 3.5 L0 7 z" fill={S.jade} />
+          </marker>
+        </defs>
+
+        <!-- the actor that drives every transition -->
+        <rect x="16" y="14" width="1208" height="46" rx="3" fill="#0d0f12" stroke={S.jadeDim} stroke-dasharray="4 4" />
+        <rect x="16" y="14" width="3" height="46" fill={S.jade} />
+        <text x="36" y="36" font-size="10.5" font-weight="600" letter-spacing="0.14em" fill={S.jade}>{n.actor.t}</text>
+        <text x="36" y="52" font-size="8.5" letter-spacing="0.05em" fill={S.sub}>{n.actor.s}</text>
+
+        <!-- transitions -->
+        <g fill="none" stroke={S.wire} stroke-width="1.3">
+          <path d="M250 170 H315 V128 H374" marker-end="url(#lc-d)" />
+          <path d="M250 206 H315 V264 H374" marker-end="url(#lc-d)" />
+          <path d="M580 264 H640 V188 H694" marker-end="url(#lc-d)" />
+        </g>
+        <g fill="none" stroke={S.amber} stroke-width="1.3" opacity="0.9">
+          <path d="M795 150 V82 H155 V144" marker-end="url(#lc-a)" />
+        </g>
+        <g fill="none" stroke={S.jade} stroke-width="1.2" stroke-dasharray="5 4" opacity="0.85">
+          <path d="M960 270 H920 V332 H155 V232" marker-end="url(#lc-c)" />
+          <path d="M1080 60 V226" marker-end="url(#lc-c)" />
+        </g>
+
+        <g font-size="8.5" letter-spacing="0.06em">
+          <text x="376" y="120" text-anchor="end" fill={S.sub}>{n.edges.up}</text>
+          <text x="376" y="286" text-anchor="end" fill={S.sub}>{n.edges.down}</text>
+          <text x="640" y="178" text-anchor="middle" fill={S.sub}>{n.edges.off}</text>
+          <text x="475" y="74" text-anchor="middle" fill={S.amber} opacity="0.85">{n.edges.wake}</text>
+          <text x="540" y="324" text-anchor="middle" fill={S.jade} opacity="0.8">{n.edges.resched}</text>
+        </g>
+
+        <!-- states -->
+        {states.map((b) => (
+          <g>
+            <rect x={b.x} y={b.y} width={b.w} height={b.h} rx="2"
+              fill={b.bar ? S.box : "none"} stroke={b.bar === S.amber && b.w === 240 ? S.amberDim : b.bar ? S.line : "#3a4046"}
+              stroke-dasharray={b.bar ? undefined : "5 4"} />
+            {b.bar && <rect x={b.x} y={b.y} width="3" height={b.h} fill={b.bar} />}
+            <text x={b.x + 16} y={b.y + 28} font-size="11" font-weight="600" letter-spacing="0.1em"
+              fill={b.bar ? S.title : S.titleDim}>{b.t}</text>
+            <text x={b.x + 16} y={b.y + 46} font-size="8.5" letter-spacing="0.04em" fill={S.sub}>{b.s}</text>
+          </g>
+        ))}
+      </svg>
+    </div>
+    <span class="mono shint">{n.hint}</span>
   </div>
 
   <p class="mono foot">{c.foot}</p>
@@ -67,9 +104,19 @@ const c = content[lang].lifecycle;
   .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
   .rule { padding: 16px 16px 18px; display: flex; flex-direction: column; gap: 8px; }
   .k { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
-  .svgwrap { margin-top: 12px; border-radius: 3px; overflow: hidden; overflow-x: auto; }
+
+  .svgwrap { margin-top: 12px; background: var(--sunk); border: 1px solid var(--line-soft); border-radius: 3px; }
+  .sscroll { overflow-x: auto; padding: 16px 18px 10px; }
+  .state { display: block; width: 100%; min-width: 900px; height: auto; }
+  .shint { display: none; padding: 0 18px 12px; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-ghost); }
+
   .foot { margin-top: 12px; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--fg-ghost); }
 
   @media (max-width: 1080px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } .svgwrap { display: none; } }
+  @media (max-width: 940px) { .shint { display: block; } }
+  @media (max-width: 640px) {
+    .grid { grid-template-columns: 1fr; }
+    .sscroll { padding: 14px 14px 8px; }
+    .shint { padding: 0 14px 12px; }
+  }
 </style>
