@@ -1,0 +1,392 @@
+---
+import type { Lang } from "../i18n/content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+
+const T = {
+  it: {
+    title: "Dichiari l'intento. Ventic riconcilia.",
+    lead: "Come su Kubernetes: descrivi l'endpoint in un manifest, lo applichi da CLI e ricevi accessi pronti all'uso — che poi usi davvero, ad esempio dentro opencode.",
+    manifestTab: "llm-team.yaml",
+    manifestCap: "manifest · intent-based, come Kubernetes",
+    termTab: "terminale",
+    replay: "Riguarda",
+    playing: "In esecuzione…",
+    steps: ["manifest", "reconcile", "accessi", "opencode"],
+    note: "Demo registrata — chiavi ed endpoint di esempio",
+    applyCmd: "ventic apply -f llm-team.yaml",
+    lines: [
+      { t: "ok", h: "manifest valido — kind: LLMEndpoint / team-coding (tenant: acme)" },
+      { t: "dim", h: "→ intento inviato al control plane…" },
+      { t: "ok", h: "✓ nodo gpu-node-03 agganciato via overlay mTLS · eu-south · nessun IP pubblico" },
+      { t: "ok", h: "✓ pesi qwen3.8-27b caricati · motore vLLM (TP=2) avviato" },
+      { t: "ok", h: "✓ endpoint READY in 3m 12s · repliche 2/2 · scale-to-zero 15m" },
+    ],
+    accessTitle: "accessi emessi — tenant acme",
+    exports: [
+      'export OPENAI_BASE_URL="https://llm.ventic.local/v1"',
+      'export OPENAI_API_KEY="sk-vent-7f3a…9c2e"',
+      'export ANTHROPIC_BASE_URL="https://llm.ventic.local/anthropic"',
+      'export ANTHROPIC_AUTH_TOKEN="sk-vent-7f3a…9c2e"',
+    ],
+    opencodeCmd: 'opencode run "aggiungi retry con backoff a syncBilling() e copri con test"',
+    opencode: [
+      { t: "accent", h: "◆ opencode · modello ventic/qwen3.8-27b via proxy privato" },
+      { t: "dim", h: "◇ letto src/billing.ts (212 righe) + 2 file correlati — contesto resta in overlay" },
+      { t: "dim", h: "◇ patch src/billing.ts + tests/billing.test.ts" },
+      { t: "ok", h: "✓ test: 14 passed · diff pronto da committare" },
+      { t: "jade", h: "✓ fatto via LLM privato — 0 token fatturati al provider pubblico" },
+    ],
+    promptUser: "dev@acme",
+    promptDir: "~/acme",
+  },
+  en: {
+    title: "Declare intent. Ventic reconciles.",
+    lead: "Like Kubernetes: describe the endpoint in a manifest, apply it from the CLI and get ready-to-use credentials — then actually use them, e.g. inside opencode.",
+    manifestTab: "llm-team.yaml",
+    manifestCap: "manifest · intent-based, like Kubernetes",
+    termTab: "terminal",
+    replay: "Replay",
+    playing: "Playing…",
+    steps: ["manifest", "reconcile", "credentials", "opencode"],
+    note: "Recorded demo — sample keys and endpoints",
+    applyCmd: "ventic apply -f llm-team.yaml",
+    lines: [
+      { t: "ok", h: "manifest valid — kind: LLMEndpoint / team-coding (tenant: acme)" },
+      { t: "dim", h: "→ intent sent to control plane…" },
+      { t: "ok", h: "✓ node gpu-node-03 attached via mTLS overlay · eu-south · no public IP" },
+      { t: "ok", h: "✓ weights qwen3.8-27b loaded · vLLM engine (TP=2) started" },
+      { t: "ok", h: "✓ endpoint READY in 3m 12s · replicas 2/2 · scale-to-zero 15m" },
+    ],
+    accessTitle: "credentials issued — tenant acme",
+    exports: [
+      'export OPENAI_BASE_URL="https://llm.ventic.local/v1"',
+      'export OPENAI_API_KEY="sk-vent-7f3a…9c2e"',
+      'export ANTHROPIC_BASE_URL="https://llm.ventic.local/anthropic"',
+      'export ANTHROPIC_AUTH_TOKEN="sk-vent-7f3a…9c2e"',
+    ],
+    opencodeCmd: 'opencode run "add backoff retry to syncBilling() and cover it with tests"',
+    opencode: [
+      { t: "accent", h: "◆ opencode · model ventic/qwen3.8-27b via private proxy" },
+      { t: "dim", h: "◇ read src/billing.ts (212 lines) + 2 related files — context stays on overlay" },
+      { t: "dim", h: "◇ patch src/billing.ts + tests/billing.test.ts" },
+      { t: "ok", h: "✓ tests: 14 passed · diff ready to commit" },
+      { t: "jade", h: "✓ done via private LLM — 0 tokens billed by the public provider" },
+    ],
+    promptUser: "dev@acme",
+    promptDir: "~/acme",
+  },
+}[lang];
+
+const manifestLines = [
+  { n: 1, h: '<span class="k">apiVersion</span>: ventic.io/v1' },
+  { n: 2, h: '<span class="k">kind</span>: LLMEndpoint' },
+  { n: 3, h: '<span class="k">metadata</span>:' },
+  { n: 4, h: '  <span class="k">name</span>: team-coding' },
+  { n: 5, h: '  <span class="k">tenant</span>: acme' },
+  { n: 6, h: '<span class="k">spec</span>:' },
+  { n: 7, h: '  <span class="k">model</span>: qwen3.8-27b' },
+  { n: 8, h: '  <span class="k">engine</span>: vllm  <span class="c"># TP=2, ottimizzato per la GPU</span>' },
+  { n: 9, h: '  <span class="k">replicas</span>: 2' },
+  { n: 10, h: '  <span class="k">region</span>: eu-south' },
+  { n: 11, h: '  <span class="k">network</span>:' },
+  { n: 12, h: '    <span class="k">overlay</span>: mTLS' },
+  { n: 13, h: '    <span class="k">publicIP</span>: <span class="b">none</span>' },
+  { n: 14, h: '  <span class="k">auth</span>:' },
+  { n: 15, h: '    <span class="k">rbac</span>: [dev, agent]' },
+  { n: 16, h: '    <span class="k">quota</span>: 2M tokens/day' },
+  { n: 17, h: '  <span class="k">scale</span>:' },
+  { n: 18, h: '    <span class="k">toZero</span>: 15m  <span class="c"># spegne quando nessuno lo usa</span>' },
+  { n: 19, h: '    <span class="k">maxReplicas</span>: 4' },
+];
+
+const uid = `cli-${lang}`;
+---
+<figure class="clidemo" data-clidemo={uid} aria-label={T.title}>
+  <figcaption class="head">
+    <h3 class="flowtitle">{T.title}</h3>
+    <p class="body lead">{T.lead}</p>
+  </figcaption>
+
+  <div class="grid2">
+    <!-- manifest -->
+    <div class="panel card">
+      <div class="panel-head chrome">
+        <div class="grp">
+          <span class="rivet"></span>
+          <span class="mono fname">{T.manifestTab}</span>
+        </div>
+        <span class="plate plate--sm">yaml</span>
+      </div>
+      <pre class="manifest" tabindex="0" aria-label={T.manifestTab}><code>{manifestLines.map((l) => (
+        <span class="ml" data-ml><span class="ln" aria-hidden="true">{l.n}</span><span class="lc" set:html={l.h} /></span>
+      ))}</code></pre>
+      <div class="caprow"><span class="mono cap">{T.manifestCap}</span></div>
+    </div>
+
+    <!-- terminal -->
+    <div class="panel card">
+      <div class="panel-head chrome">
+        <div class="grp">
+          <span class="tdot tdot--r" aria-hidden="true"></span>
+          <span class="tdot tdot--y" aria-hidden="true"></span>
+          <span class="tdot tdot--g" aria-hidden="true"></span>
+          <span class="mono fname">{T.termTab}</span>
+        </div>
+        <button class="replay mono" type="button" data-replay>
+          <span class="rplay" aria-hidden="true">↻</span> <span data-replay-label>{T.replay}</span>
+        </button>
+      </div>
+
+      <div class="term" role="log" aria-live="polite" aria-label={T.termTab} data-term>
+        <div class="tline" data-step="0">
+          <span class="prompt"><span class="u">{T.promptUser}</span><span class="sep">:</span><span class="d">{T.promptDir}</span><span class="sep">$</span></span>
+          <span class="cmd" data-type={T.applyCmd}>{T.applyCmd}</span><span class="caret" aria-hidden="true"></span>
+        </div>
+        <div class="tout" data-step="1">
+          {T.lines.map((l) => <p class={`o o--${l.t}`}>{l.h}</p>)}
+          <div class="access">
+            <p class="mono atitle"><span class="dot dot--live"></span>{T.accessTitle}</p>
+            <code class="akeys">{T.exports.map((e) => <span class="ak">{e}</span>)}</code>
+          </div>
+        </div>
+        <div class="tline" data-step="2">
+          <span class="prompt"><span class="u">{T.promptUser}</span><span class="sep">:</span><span class="d">{T.promptDir}</span><span class="sep">$</span></span>
+          <span class="cmd" data-type={T.opencodeCmd}>{T.opencodeCmd}</span><span class="caret" aria-hidden="true"></span>
+        </div>
+        <div class="tout" data-step="3">
+          {T.opencode.map((l) => <p class={`o o--${l.t}`}>{l.h}</p>)}
+        </div>
+        <div class="tline is-idle" data-step="4">
+          <span class="prompt"><span class="u">{T.promptUser}</span><span class="sep">:</span><span class="d">{T.promptDir}</span><span class="sep">$</span></span>
+          <span class="caret caret--idle" aria-hidden="true"></span>
+        </div>
+      </div>
+
+      <div class="caprow caprow--split">
+        <div class="phases mono" aria-hidden="true">
+          {T.steps.map((s, i) => <span class="phase" data-phase={i}>{s}</span>)}
+        </div>
+        <span class="mono cap">{T.note}</span>
+      </div>
+    </div>
+  </div>
+</figure>
+
+<script>
+  (() => {
+    const roots = document.querySelectorAll("[data-clidemo]");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    roots.forEach((root) => {
+      const term = root.querySelector("[data-term]");
+      if (!term) return;
+      const cmdEls = Array.from(root.querySelectorAll("[data-type]"));
+      const steps = Array.from(root.querySelectorAll("[data-step]"));
+      const phases = Array.from(root.querySelectorAll("[data-phase]"));
+      const replayBtn = root.querySelector("[data-replay]");
+      const replayLabel = root.querySelector("[data-replay-label]");
+      const playingText = replayLabel?.textContent === "Replay" ? "Playing…" : "In esecuzione…";
+      const replayText = replayLabel?.textContent || "Replay";
+      let timers = [];
+      let started = false;
+
+      const later = (fn, ms) => {
+        const id = setTimeout(fn, ms);
+        timers.push(id);
+      };
+      const clear = () => { timers.forEach(clearTimeout); timers = []; };
+
+      const setPhase = (n) => {
+        phases.forEach((p, i) => {
+          p.classList.toggle("is-on", i <= n);
+          p.classList.toggle("is-now", i === n);
+        });
+      };
+
+      const paintStatic = () => {
+        // no-animations fallback: everything visible, full commands
+        steps.forEach((s) => s.classList.add("is-on"));
+        cmdEls.forEach((c) => { c.textContent = c.getAttribute("data-type") || ""; });
+        setPhase(phases.length - 1);
+        phases.forEach((p) => p.classList.remove("is-now"));
+        if (replayLabel) replayLabel.textContent = replayText;
+      };
+
+      const typeInto = (el, text, cps, done) => {
+        let i = 0;
+        const tick = () => {
+          i += 1 + Math.floor(Math.random() * 2);
+          el.textContent = text.slice(0, i);
+          if (i < text.length) {
+            const id = setTimeout(tick, 1000 / cps);
+            timers.push(id);
+          } else done();
+        };
+        tick();
+      };
+
+      const play = () => {
+        clear();
+        steps.forEach((s) => s.classList.remove("is-on"));
+        cmdEls.forEach((c) => { c.textContent = ""; });
+        if (replayLabel) replayLabel.textContent = playingText;
+        if (replayBtn) replayBtn.disabled = true;
+        setPhase(0);
+        steps[0].classList.add("is-on");
+
+        const [applyEl, opencodeEl] = cmdEls;
+        const applyCmd = applyEl.getAttribute("data-type") || "";
+        const opencodeCmd = opencodeEl.getAttribute("data-type") || "";
+
+        // 1 — ventic apply
+        later(() => typeInto(applyEl, applyCmd, 42, () => {
+          // 2 — reconcile output, line by line
+          const outLines = steps[1].querySelectorAll(":scope > p, :scope > .access");
+          setPhase(1);
+          steps[1].classList.add("is-on");
+          outLines.forEach((l) => l.classList.remove("is-on"));
+          outLines.forEach((l, i) => later(() => {
+            l.classList.add("is-on");
+            if (i === 2) setPhase(1);
+            if (i === outLines.length - 1) setPhase(2);
+          }, 420 * (i + 1)));
+
+          const waitOut = 420 * (outLines.length + 1) + 500;
+          // 3 — opencode command
+          later(() => {
+            setPhase(3);
+            steps[2].classList.add("is-on");
+            typeInto(opencodeEl, opencodeCmd, 34, () => {
+              // 4 — opencode output
+              const ocLines = steps[3].querySelectorAll(":scope > p");
+              steps[3].classList.add("is-on");
+              ocLines.forEach((l) => l.classList.remove("is-on"));
+              ocLines.forEach((l, i) => later(() => l.classList.add("is-on"), 520 * (i + 1)));
+              later(() => {
+                steps[4].classList.add("is-on");
+                setPhase(3);
+                phases.forEach((p) => p.classList.remove("is-now"));
+                if (replayLabel) replayLabel.textContent = replayText;
+                if (replayBtn) replayBtn.disabled = false;
+                // loop: hold the result, then restart
+                later(() => { if (!document.hidden) play(); }, 9000);
+              }, 520 * (ocLines.length + 1) + 600);
+            });
+          }, waitOut);
+        }), 700);
+      };
+
+      if (reduceMotion) {
+        paintStatic();
+        replayBtn?.addEventListener("click", paintStatic);
+        return;
+      }
+
+      replayBtn?.addEventListener("click", () => play());
+
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting && !started) {
+            started = true;
+            play();
+            io.disconnect();
+          }
+        });
+      }, { threshold: 0.3 });
+      io.observe(root);
+    });
+  })();
+</script>
+
+<noscript>
+  <style>
+    [data-clidemo] [data-step] { display: block !important; opacity: 1 !important; }
+    [data-clidemo] .tout > *, [data-clidemo] .access { opacity: 1 !important; transform: none !important; }
+  </style>
+</noscript>
+
+<style>
+  .clidemo { margin: 28px 0 0; }
+  .head { max-width: none; margin-bottom: 18px; }
+  .flowtitle { font-family: var(--display); font-size: clamp(22px, 2.2vw, 28px); font-weight: 700; line-height: 1.05; text-transform: uppercase; color: var(--fg-strong); margin-top: 6px; }
+  .lead { margin-top: 12px; max-width: none; color: var(--fg-mid); font-size: 16px; line-height: 1.6; }
+
+  .grid2 { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 14px; align-items: stretch; }
+  .card { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+  .chrome { padding: 12px 16px; }
+  .grp { display: flex; align-items: center; gap: 9px; }
+  .fname { font-size: 11px; font-weight: 600; letter-spacing: .1em; color: var(--fg-mute); }
+
+  .tdot { width: 10px; height: 10px; border-radius: 50%; background: #2b3036; box-shadow: inset 0 1px 0 #ffffff1a; }
+  .tdot--r { background: #5a3a3a; } .tdot--y { background: #5a4f35; } .tdot--g { background: #2f5248; }
+
+  .replay {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 10px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--fg-mute); background: var(--sunk);
+    border: 1px solid var(--line-soft); border-radius: 2px; padding: 7px 11px; cursor: pointer;
+  }
+  .replay:hover:not(:disabled) { color: var(--fg-strong); border-color: #4a5158; }
+  .replay:disabled { opacity: .6; cursor: default; }
+  .rplay { color: var(--accent); font-size: 13px; line-height: 1; }
+
+  .manifest {
+    margin: 0; padding: 16px 0 12px; overflow-x: auto; flex: 1;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12.5px; line-height: 1.72; color: #cfccc4;
+    background: var(--sunk); border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft);
+  }
+  .ml { display: flex; gap: 14px; padding: 0 18px; white-space: pre; }
+  .ml:hover { background: #ffffff06; }
+  .ln { width: 2ch; text-align: right; color: var(--fg-ghost); user-select: none; flex-shrink: 0; }
+  .manifest .k { color: var(--accent); } .manifest .b { color: var(--jade); } .manifest .c { color: var(--fg-ghost); font-style: italic; }
+
+  .term {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12.5px; line-height: 1.7; color: #d8d5cd;
+    background: #0c0e10; border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft);
+    padding: 16px 18px; min-height: 408px; flex: 1;
+  }
+  [data-step] { display: none; }
+  [data-step].is-on { display: block; }
+  .tline { display: flex; align-items: baseline; gap: 8px; margin: 10px 0 4px; flex-wrap: wrap; }
+  .tline:first-child { margin-top: 0; }
+  .prompt { color: var(--fg-ghost); white-space: nowrap; }
+  .prompt .u { color: var(--jade); } .prompt .d { color: #8fb8d8; } .prompt .sep { color: var(--fg-ghost); }
+  .cmd { color: #f2f0eb; word-break: break-all; }
+  .caret { display: inline-block; width: 8px; height: 15px; background: var(--accent); vertical-align: -2px; animation: blink 1s steps(1) infinite; }
+  .tline.is-on .caret:not(.caret--idle) { display: none; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .tout { margin: 2px 0 6px; }
+  .tout > p, .tout > .access { display: none; }
+  .tout.is-on > p.is-on, .tout.is-on > .access.is-on { display: block; animation: rise .3s ease; }
+  @keyframes rise { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+  .o { margin: 3px 0; word-break: break-word; }
+  .o--dim { color: var(--fg-mute); } .o--ok { color: #b9c4bb; } .o--accent { color: var(--accent); } .o--jade { color: var(--jade); }
+
+  .access { margin: 10px 0 4px; background: #101312; border: 1px solid #2c3a34; border-radius: 2px; padding: 10px 12px; }
+  .atitle { display: flex; align-items: center; gap: 8px; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--jade); margin-bottom: 8px; }
+  .atitle .dot { width: 6px; height: 6px; }
+  .akeys { display: flex; flex-direction: column; gap: 3px; }
+  .ak { color: #9fd8c0; font-size: 11.5px; word-break: break-all; }
+
+  .caprow { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; flex-wrap: wrap; }
+  .cap { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--fg-ghost); }
+  .phases { display: flex; gap: 6px; flex-wrap: wrap; }
+  .phase { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--fg-ghost); border: 1px solid var(--line-soft); border-radius: 999px; padding: 4px 10px; background: transparent; transition: all .25s ease; }
+  .phase.is-on { color: var(--accent); border-color: #3a3125; background: #f5a83f0d; }
+  .phase.is-now { box-shadow: 0 0 0 1px #f5a83f55; }
+
+  @media (max-width: 1080px) {
+    .grid2 { grid-template-columns: 1fr; }
+    .term { min-height: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-step], .tout > p, .tout > .access { display: block !important; }
+    .caret { animation: none !important; }
+    .cmd:empty::after { content: attr(data-type); }
+  }
+</style>
+</figure>

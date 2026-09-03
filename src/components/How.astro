@@ -1,6 +1,7 @@
 ---
 import Icon from "./Icon.astro";
 import InfraFlow from "./InfraFlow.astro";
+import CliDemo from "./CliDemo.astro";
 import { content, type Lang } from "../i18n/content";
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
@@ -32,6 +33,8 @@ const icons = ["discovery", "provisioning", "overlay", "ops"];
     </ol>
 
     <InfraFlow lang={lang} />
+
+    <CliDemo lang={lang} />
   </div>
 </section>
 
