@@ -3,7 +3,7 @@ import Layout from "../layouts/Layout.astro";
 const title = "Pagina non trovata — Ventic";
 const description = "La pagina che cerchi non esiste. Torna alla home di Ventic — LLM privati su GPU dedicate.";
 ---
-<Layout title={title} description={description} noindex={true}>
+<Layout title={title} description={description} noindex={true} noLocaleRedirect={true}>
   <main id="main" class="min-h-[70vh] grid place-items-center bg-[#0e0f11] text-[#F2F0EB] px-6 py-24">
     <div class="max-w-xl text-center">
       <p class="text-[11px] tracking-[0.2em] uppercase text-white/50 mb-4">Errore 404</p>

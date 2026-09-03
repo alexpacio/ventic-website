@@ -1,6 +1,7 @@
 ---
 import { getLangFromUrl, alternatePath, type Lang } from "../i18n/content";
 import HumanChallenge from "../components/HumanChallenge.astro";
+import LocaleRedirect from "../components/LocaleRedirect.astro";
 import GlobalTrustCaptcha from "../components/GlobalTrustCaptcha.tsx";
 import "../styles/global.css";
 
@@ -20,6 +21,8 @@ interface Props {
   imageHeight?: number;
   /** If true, page is excluded from indexing */
   noindex?: boolean;
+  /** If true, skip browser-language auto-redirect (e.g. 404 page) */
+  noLocaleRedirect?: boolean;
   type?: "website" | "article";
   breadcrumbs?: Breadcrumb[];
   /** Extra JSON-LD graph nodes to merge */
@@ -34,6 +37,7 @@ const {
   imageWidth = 1200,
   imageHeight = 630,
   noindex = false,
+  noLocaleRedirect = false,
   type = "website",
   breadcrumbs,
   jsonLd,
@@ -224,6 +228,9 @@ const jsonLdString = JSON.stringify({
 
     {/* Sitemap discovery */}
     <link rel="sitemap" href="/sitemap-index.xml" />
+
+    {/* Browser-language auto-redirect (static hosting: client-side) */}
+    {!noLocaleRedirect && <LocaleRedirect />}
 
     {/* Icons & manifest */}
     <link rel="icon" href="/favicon.ico" sizes="any" />
