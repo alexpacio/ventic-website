@@ -1,0 +1,44 @@
+---
+import { content, type Lang } from "../i18n/content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const c = content[lang].pains;
+---
+<section class="sec sec--tint pains">
+  <div class="wrap grid">
+    <div class="tcol">
+      <span class="plate">{c.plate}</span>
+      <h2 class="h2-big hl">{c.title}</h2>
+    </div>
+    <div class="cards">
+      {c.cards.map((card, i) => (
+        <article class="panel card">
+          <span class="idx">{String(i + 1).padStart(2, "0")}</span>
+          <h3 class="cell-t ct">{card.title}</h3>
+          <p class="body cb">{card.body}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .pains { padding: 88px 0; }
+  .tcol { grid-column: span 4; display: flex; flex-direction: column; align-items: flex-start; gap: 22px; }
+  .hl { color: var(--accent); }
+  .cards { grid-column: span 8; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  .card { padding: 28px; display: flex; flex-direction: column; gap: 14px; }
+  .ct { text-transform: none; font-size: clamp(19px, 1.5vw, 21px); }
+  .cb { font-size: 15px; line-height: 1.65; }
+
+  @media (max-width: 1080px) {
+    .pains { padding: 64px 0; }
+    .tcol, .cards { grid-column: span 12; }
+  }
+  @media (max-width: 860px) {
+    .pains { padding: 56px 0; }
+    .tcol, .cards { grid-column: span 6; }
+    .cards { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+    .card { padding: 22px; gap: 12px; }
+  }
+</style>

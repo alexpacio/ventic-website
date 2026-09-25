@@ -1,5 +1,24 @@
 ---
-// Italian-only promo video section (rendered on the IT home page only).
+import type { Lang } from "../i18n/content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = lang === "it"
+  ? {
+      title: ["Ventic in poco", "più di un minuto."],
+      lead: "Perché i provider LLM non bastano, come funziona Ventic e cosa ottieni con un'infrastruttura LLM privata.",
+      aria: "Video di presentazione di Ventic",
+      fallback: "Il tuo browser non supporta i video HTML5.",
+      download: "Scarica il video",
+    }
+  : {
+      title: ["Ventic in just", "over a minute."],
+      lead: "Why LLM providers fall short, how Ventic works and what you get with a private LLM infrastructure.",
+      aria: "Ventic promo video",
+      fallback: "Your browser does not support HTML5 video.",
+      download: "Download the video",
+    };
+const src = `/video/ventic-promo-${lang}.mp4`;
+const poster = `/video/ventic-promo-${lang}-poster.jpg`;
 ---
 <section id="video" class="sec promo">
   <div class="wrap">
@@ -9,9 +28,9 @@
           <span class="dot" style="width:6px;height:6px;box-shadow:none"></span>
           Video · 1:13
         </span>
-        <h2 class="h2">Ventic in poco<br />più di un minuto.</h2>
+        <h2 class="h2">{t.title[0]}<br />{t.title[1]}</h2>
       </div>
-      <p class="body lcol">Perché i provider LLM non bastano, come funziona Ventic e cosa ottieni con un'infrastruttura LLM privata.</p>
+      <p class="body lcol">{t.lead}</p>
     </div>
     <div class="frame panel">
       <video
@@ -21,11 +40,11 @@
         preload="none"
         width="1920"
         height="1080"
-        poster="/video/ventic-promo-it-poster.jpg"
-        aria-label="Video di presentazione di Ventic"
+        poster={poster}
+        aria-label={t.aria}
       >
-        <source src="/video/ventic-promo-it.mp4" type="video/mp4" />
-        Il tuo browser non supporta i video HTML5. <a href="/video/ventic-promo-it.mp4">Scarica il video</a>.
+        <source src={src} type="video/mp4" />
+        {t.fallback} <a href={src}>{t.download}</a>.
       </video>
     </div>
   </div>
