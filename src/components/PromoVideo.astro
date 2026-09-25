@@ -1,0 +1,45 @@
+---
+// Italian-only promo video section (rendered on the IT home page only).
+---
+<section id="video" class="sec promo">
+  <div class="wrap">
+    <div class="grid top">
+      <div class="tcol">
+        <span class="plate plate--accent">
+          <span class="dot" style="width:6px;height:6px;box-shadow:none"></span>
+          Video · 1:13
+        </span>
+        <h2 class="h2">Ventic in poco<br />più di un minuto.</h2>
+      </div>
+      <p class="body lcol">Perché i provider LLM non bastano, come funziona Ventic e cosa ottieni con un'infrastruttura LLM privata.</p>
+    </div>
+    <div class="frame panel">
+      <video
+        class="player"
+        controls
+        playsinline
+        preload="none"
+        width="1920"
+        height="1080"
+        poster="/video/ventic-promo-it-poster.jpg"
+        aria-label="Video di presentazione di Ventic"
+      >
+        <source src="/video/ventic-promo-it.mp4" type="video/mp4" />
+        Il tuo browser non supporta i video HTML5. <a href="/video/ventic-promo-it.mp4">Scarica il video</a>.
+      </video>
+    </div>
+  </div>
+</section>
+
+<style>
+  .promo { background: var(--ink); border-bottom: 1px solid var(--line-dim); }
+  .top { align-items: end; margin-bottom: 28px; }
+  .tcol { grid-column: span 7; }
+  .lcol { grid-column: span 5; }
+  .plate { margin-bottom: 16px; }
+  .frame { padding: 0; overflow: hidden; line-height: 0; }
+  .player { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #000; }
+  @media (max-width: 860px) {
+    .tcol, .lcol { grid-column: span 6; }
+  }
+</style>

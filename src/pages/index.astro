@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Nav from "../components/Nav.astro";
 import Hero from "../components/Hero.astro";
+import PromoVideo from "../components/PromoVideo.astro";
 import Problem from "../components/Problem.astro";
 import Modes from "../components/Modes.astro";
 import How from "../components/How.astro";
@@ -22,6 +23,7 @@ const jsonLd = serviceJsonLd(lang);
   <Nav lang={lang} />
   <main id="main">
     <Hero lang={lang} />
+    <PromoVideo />
     <Problem lang={lang} />
     <Modes lang={lang} />
     <How lang={lang} />

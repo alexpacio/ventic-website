@@ -48,14 +48,25 @@ const it = {
   },
 
   hero: {
-    plate: "LLM privati · GPU dedicate · Dati in UE / US",
-    title: ["Crea il tuo", "LLM privato.", "Usalo come e quando vuoi."],
-    lead: "Ventic è uno stack tecnologico chiavi in mano che consente di creare, gestire e configurare LLM privati. Puoi installarlo nella tua infrastruttura IT e diventa un tuo componente privato. Non dipenderai più da nessuno.",
-    sub: "Pannello di controllo Admin e Self-service, gestione centralizzata, autotuning dei modelli. Fare da soli non conviene con Ventic!",
-    cta1: "Prenota una call tecnica",
+    plate: "Aziende medio-grandi · Workload agentici e vibe coding",
+    hook: [
+      "Guidi un'azienda medio-grande e vuoi spostare i tuoi workload agentici e/o di vibe coding su un'infrastruttura di proprietà, con costi bassi e prevedibili? Lavori sotto pressione per il rischio di restare bloccato dai limiti giornalieri sui token, o di vedere i costi andare fuori controllo per il prezzo dei token via API?",
+      "Vuoi tenere un piccolo abbonamento ai modelli frontier proprietari solo per le sfide più difficili, e spostare tutto il resto (il 95%) del carico LLM quotidiano su modelli come DeepSeek 4 (o 4.1) Flash al posto di Sonnet 5, ma hai problemi con gli endpoint API cinesi e le loro regole commerciali, e non ti fidi?",
+    ],
+    punch: "Ti capisco.",
+    title: ["Ti presento", "Ventic."],
+    lead: "Una nuova infrastruttura dichiarativa e intent-driven per fare il deploy dei tuoi LLM e regolarne l'accesso. Crea la tua infrastruttura LLM privata con l'esperienza di un provider, a colpo d'occhio!",
+    sub: "Appoggiati a VM/container GPU a noleggio, accendendoli e spegnendoli solo quando serve, oppure usa il tuo hardware privato (o entrambi!).",
+    features: [
+      "Imposta le regole di scaling senza fatica.",
+      "Tieni tutto sotto controllo con un potente sistema di telemetria.",
+      "Blocca qualsiasi fuga di dati o violazione di sicurezza con un potente sistema di regole DLP.",
+    ],
+    alphaTitle: "Accedi gratis alla fase alpha!",
+    alphaPre: "Scrivici a",
+    alphaPost: "o mandami un messaggio diretto per richiedere l'accesso anticipato.",
+    cta1: "Richiedi l'accesso anticipato",
     cta2: "Vedi come funziona",
-    micro: "Setup in giornata · Licenza da €69,90/mese · Mai a token · Alpha stage — accesso su invito",
-    trust: ["Dati in UE o US, a tua scelta", "Compatibile OpenAI & Anthropic"],
   },
 
   panel: {
@@ -966,14 +977,25 @@ const en: typeof it = {
   },
 
   hero: {
-    plate: "Private LLMs · Dedicated GPUs · Data in EU / US",
-    title: ["Create your", "private LLM.", "Use it as you want."],
-    lead: "Ventic is a turnkey technology stack that lets you create, manage and configure private LLMs. You can install it in your IT infrastructure and it becomes your own private component. You will no longer depend on anyone.",
-    sub: "Admin and Self-service control panel, centralized management, model autotuning. Doing it alone doesn't pay off with Ventic!",
-    cta1: "Book a technical call",
+    plate: "Medium/large enterprises · Agentic & vibe coding workloads",
+    hook: [
+      "Running a medium/large enterprise and looking to move your agentic and/or vibe coding workload to an owned infrastructure with predictable, low costs? Under pressure about getting capped by daily token-window restrictions, or about costs getting out of control due to high API token prices?",
+      "Looking to keep a small subscription to proprietary frontier models for hard challenges only, while moving all the rest (95%) of your daily LLM workload to models like DeepSeek 4 (or 4.1) Flash to replace Sonnet 5 — but still having trouble with Chinese API endpoints and business rules, and you don't trust them?",
+    ],
+    punch: "I hear you.",
+    title: ["Introducing", "Ventic."],
+    lead: "A new declarative, intent-driven infrastructure that lets you deploy LLMs and regulate access to them. Create your own private LLM infrastructure with a provider-like feel, at a glance!",
+    sub: "Feel free to rely on rented GPU VMs/containers, turning them on and off only when demanded, or run your own private hardware (or both!).",
+    features: [
+      "Set up your scaling rules effortlessly.",
+      "Keep everything under control with a powerful telemetry system.",
+      "Block any data leak or security violation with a powerful DLP rule system.",
+    ],
+    alphaTitle: "Access the alpha stage for free!",
+    alphaPre: "Reach out to us at",
+    alphaPost: "or send me a direct message to request early access.",
+    cta1: "Request early access",
     cta2: "See how it works",
-    micro: "Live in a day · License from €69.90/month · Never per-token · Alpha stage — invite-only",
-    trust: ["Data in EU or US, your choice", "OpenAI & Anthropic compatible"],
   },
 
   panel: {
