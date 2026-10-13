@@ -1,0 +1,41 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+import Hero from "../components/Hero.astro";
+import Pains from "../components/Pains.astro";
+import Highlights from "../components/Highlights.astro";
+import PromoVideo from "../components/PromoVideo.astro";
+import Problem from "../components/Problem.astro";
+import Modes from "../components/Modes.astro";
+import How from "../components/How.astro";
+import Stack from "../components/Stack.astro";
+import Capabilities from "../components/Capabilities.astro";
+import Models from "../components/Models.astro";
+import PricingStrip from "../components/PricingStrip.astro";
+import Cta from "../components/Cta.astro";
+import Footer from "../components/Footer.astro";
+import { content } from "../i18n/content";
+import { serviceJsonLd } from "../lib/seo";
+
+const lang = "it" as const;
+const seo = content[lang].seo.home;
+const jsonLd = serviceJsonLd(lang);
+---
+<Layout title={seo.title} description={seo.desc} lang={lang} jsonLd={jsonLd}>
+  <Nav lang={lang} />
+  <main id="main">
+    <Hero lang={lang} />
+    <Pains lang={lang} />
+    <Highlights lang={lang} />
+    <PromoVideo lang={lang} />
+    <Problem lang={lang} />
+    <Modes lang={lang} />
+    <How lang={lang} />
+    <Stack lang={lang} />
+    <Capabilities lang={lang} />
+    <Models lang={lang} />
+    <PricingStrip lang={lang} />
+    <Cta lang={lang} />
+  </main>
+  <Footer lang={lang} />
+</Layout>

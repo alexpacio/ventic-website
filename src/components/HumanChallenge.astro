@@ -1,0 +1,120 @@
+---
+/**
+ * HumanChallenge.astro — Widget verifica umana stile Cloudflare
+ * Simula il comportamento di Cloudflare Turnstile / "Checking if you are human"
+ * - Invisibile di default: ascolta segnali umani (mousemove, touch, keydown, scroll)
+ * - Fallback checkbox interattivo se nessun segnale
+ * - Al successo dispatcha evento `ventic:humanVerified` e sblocca le email
+ *
+ * Per usare il vero Cloudflare Turnstile, impostare:
+ *   PUBLIC_TURNSTILE_SITEKEY="0x..." in .env e passare sitekey via prop
+ */
+interface Props {
+  sitekey?: string;
+  invisible?: boolean;
+  lang?: "it" | "en";
+}
+const { sitekey, invisible = false, lang = "it" } = Astro.props;
+const isTurnstile = Boolean(sitekey);
+---
+
+{isTurnstile ? (
+  <>
+    <div
+      class="cf-turnstile"
+      data-sitekey={sitekey}
+      data-callback="onVenticTurnstileVerified"
+      data-theme="dark"
+      data-size="normal"
+    ></div>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer is:inline></script>
+    <script is:inline define:vars={{ lang }}>
+      window.onVenticTurnstileVerified = function(token){
+        window.dispatchEvent(new CustomEvent("ventic:humanVerified", {detail:{token, provider:"turnstile"}}));
+        const w = document.querySelector("[data-cf-widget]");
+        if(w){ w.dataset.verified="1"; w.querySelector(".cf-msg").textContent = lang==="it" ? "Verifica completata ✓" : "Verified ✓"; }
+      };
+    </script>
+  </>
+) : (
+  <div
+    class="cf-challenge"
+    data-cf-widget
+    data-invisible={invisible ? "1" : "0"}
+    role="status"
+    aria-live="polite"
+    aria-label={lang==="it" ? "Verifica umana anti-spam" : "Human verification anti-spam"}
+  >
+    <div class="cf-box">
+      <div class="cf-left">
+        <button type="button" class="cf-checkbox" aria-label={lang==="it" ? "Clicca per verificare che sei umano" : "Click to verify you are human"}>
+          <span class="cf-spinner" aria-hidden="true"></span>
+          <span class="cf-check" aria-hidden="true">✓</span>
+        </button>
+        <span class="cf-label">{lang==="it" ? "Verifica che sei umano" : "Verify you are human"}</span>
+      </div>
+      <div class="cf-right">
+        <span class="cf-logo">Ventic Shield</span>
+        <span class="cf-sub">{lang==="it" ? "Protezione anti-spam" : "Anti-spam protection"}</span>
+      </div>
+    </div>
+    <span class="cf-msg">{lang==="it" ? "Verifica in corso…" : "Verifying…"}</span>
+  </div>
+)}
+
+<style>
+  .cf-challenge {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px 12px;
+    background: #0e0f11;
+    border: 1px solid #262a2f;
+    border-radius: 4px;
+    font-family: "IBM Plex Mono", monospace;
+    max-width: 320px;
+    user-select: none;
+  }
+  .cf-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .cf-left { display: flex; align-items: center; gap: 10px; }
+  .cf-checkbox {
+    width: 28px; height: 28px;
+    border: 2px solid #32373d;
+    background: #16181b;
+    border-radius: 3px;
+    display: grid; place-items: center;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .cf-checkbox:focus-visible { outline: 2px solid #f5a83f; outline-offset: 2px; }
+  .cf-spinner {
+    width: 16px; height: 16px;
+    border: 2px solid #32373d;
+    border-top-color: #f5a83f;
+    border-radius: 50%;
+    animation: cf-spin 0.8s linear infinite;
+  }
+  .cf-check {
+    display: none;
+    color: #35cfa4;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1;
+  }
+  .cf-challenge[data-verified="1"] .cf-spinner { display: none; }
+  .cf-challenge[data-verified="1"] .cf-check { display: block; }
+  .cf-challenge[data-verified="1"] .cf-checkbox { border-color: rgba(53,207,164,.4); background: rgba(53,207,164,.08); }
+  .cf-label { font-size: 13px; color: #f2f0eb; font-weight: 500; }
+  .cf-right { text-align: right; display: flex; flex-direction: column; gap: 1px; }
+  .cf-logo { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: #f5a83f; font-weight: 700; }
+  .cf-sub { font-size: 9px; letter-spacing: .08em; color: #6f7276; }
+  .cf-msg { font-size: 10px; color: #8a8d92; letter-spacing: .04em; }
+  .cf-challenge[data-verified="1"] .cf-msg { color: #35cfa4; }
+  @keyframes cf-spin { to { transform: rotate(360deg); } }
+</style>

@@ -1,0 +1,113 @@
+---
+import { content, type Lang } from "../i18n/content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const f = content[lang].infraFlow;
+const hops = f.net.boxes.map((b, i) => ({ ...b, k: f.steps[i].k, x: 26 + i * 248 }));
+---
+<figure class="flowfig">
+  <figcaption class="head">
+    <h3 class="flowtitle">{f.title}</h3>
+    <p class="body lead">{f.lead}</p>
+  </figcaption>
+
+  <div class="track" role="list">
+    {f.steps.map((s, i) => (
+      <div class="node" role="listitem">
+        <div class="kcol">
+          <span class="mono knum">{s.k}</span>
+          {i < f.steps.length - 1 && <span class="vline" aria-hidden="true"><span class="vdot"></span></span>}
+        </div>
+        <div class="panel card">
+          <span class="mono klabel">{s.label}</span>
+          <p class="cell-b desc">{s.desc}</p>
+        </div>
+        {i < f.steps.length - 1 && <span class="arrow" aria-hidden="true">→</span>}
+      </div>
+    ))}
+  </div>
+
+  <!-- desktop horizontal connectors, mobile vertical handled by vline -->
+  <div class="mono note">{f.note}</div>
+
+  <!-- Request path — network-diagram view -->
+  <div class="diagram">
+    <div class="dscroll">
+      <svg class="path" viewBox="0 0 1240 210" role="img" aria-label={f.net.lane}>
+        <defs>
+          <marker id="fa-d" markerWidth="7" markerHeight="7" refX="6.2" refY="3.5" orient="auto">
+            <path d="M0 0 L7 3.5 L0 7 z" fill="#3d444b" />
+          </marker>
+          <marker id="fa-b" markerWidth="7" markerHeight="7" refX="6.2" refY="3.5" orient="auto">
+            <path d="M0 0 L7 3.5 L0 7 z" fill="#4a5158" />
+          </marker>
+        </defs>
+
+        <text x="2" y="18" font-size="9.5" font-weight="600" letter-spacing="0.16em" fill="#f5a83f">{f.net.lane.toUpperCase()}</text>
+        <text x="1238" y="18" text-anchor="end" font-size="8.5" letter-spacing="0.05em" fill="#5c5f63">{f.net.ctrl}</text>
+
+        <g fill="none" stroke="#3d444b" stroke-width="1.3" marker-end="url(#fa-d)">
+          <path d="M222 82 H270" /><path d="M470 82 H518" /><path d="M718 82 H766" /><path d="M966 82 H1014" />
+        </g>
+
+        {hops.map((h, i) => (
+          <g>
+            <rect x={h.x} y="44" width="196" height="76" rx="2"
+              fill={i === 2 ? "#1d2126" : "#181b1f"} stroke={i === 2 ? "#7c5c2c" : "#32373d"}
+              stroke-dasharray={i === 2 ? "5 4" : undefined} />
+            <rect x={h.x} y="44" width="3" height="76" fill={i === 2 ? "#f5a83f" : "#3d444b"} />
+            <rect x={h.x + 15} y="60" width="24" height="17" rx="2" fill="none" stroke="#3f464e" />
+            <text x={h.x + 27} y="72" text-anchor="middle" font-size="9" font-weight="600"
+              letter-spacing="0.06em" fill="#f5a83f">{h.k}</text>
+            <text x={h.x + 47} y="73" font-size="11" font-weight="600" letter-spacing="0.09em" fill="#f2f0eb">{h.t}</text>
+            <text x={h.x + 15} y="99" font-size="8.5" letter-spacing="0.04em" fill="#6f7276">{h.s}</text>
+          </g>
+        ))}
+
+        <g fill="none" stroke="#4a5158" stroke-width="1.2" stroke-dasharray="5 4">
+          <path d="M1116 120 V156 H372 V126" marker-end="url(#fa-b)" />
+        </g>
+        <text x="744" y="176" text-anchor="middle" font-size="8.5" letter-spacing="0.08em" fill="#5c5f63">{f.net.back}</text>
+      </svg>
+    </div>
+  </div>
+</figure>
+
+<style>
+  .flowfig { margin: 28px 0 0; }
+  .head { max-width: none; margin-bottom: 18px; }
+  .plate { margin-bottom: 16px; }
+  .flowtitle { font-family: var(--display); font-size: clamp(22px, 2.2vw, 28px); font-weight: 700; line-height: 1.05; text-transform: uppercase; color: var(--fg-strong); margin-top: 6px; }
+  .lead { margin-top: 12px; max-width: none; color: var(--fg-mid); font-size: 16px; line-height: 1.6; }
+
+  .track { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; align-items: start; }
+  .node { position: relative; display: flex; flex-direction: column; gap: 0; }
+  .kcol { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .knum { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #14161a; font-size: 11px; font-weight: 700; letter-spacing: .04em; }
+  .vline { display: none; }
+  .card { padding: 16px 16px 18px; min-height: 112px; }
+  .klabel { font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-strong); }
+  .desc { margin-top: 8px; font-size: 13px; line-height: 1.55; }
+  .arrow { position: absolute; right: -10px; top: 74px; color: var(--line); font-size: 14px; }
+  .note { margin-top: 16px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-ghost); }
+  .diagram { margin-top: 16px; background: var(--sunk); border: 1px solid var(--line-soft); border-radius: 3px; }
+  .dscroll { overflow-x: auto; padding: 16px 18px 10px; }
+  .path { display: block; width: 100%; min-width: 900px; height: auto; }
+
+  @media (max-width: 1080px) {
+    .track { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .node:nth-child(4), .node:nth-child(5) { grid-column: span 1; }
+    .arrow { display: none; }
+  }
+  @media (max-width: 860px) {
+    .track { grid-template-columns: 1fr; gap: 0; }
+    .node { flex-direction: row; gap: 14px; align-items: stretch; }
+    .kcol { flex-direction: column; align-items: center; width: 28px; flex-shrink: 0; margin-bottom: 0; }
+    .vline { display: block; width: 1px; flex-grow: 1; background: var(--line-soft); margin-top: 6px; position: relative; min-height: 24px; }
+    .vdot { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 6px; height: 6px; border-radius: 50%; background: var(--line); }
+    .node:last-child .vline { display: none; }
+    .card { flex: 1; min-height: auto; margin-bottom: 14px; }
+    .arrow { display: none; }
+    .dscroll { padding: 14px 14px 8px; }
+  }
+</style>

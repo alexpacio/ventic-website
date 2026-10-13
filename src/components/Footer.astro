@@ -1,0 +1,43 @@
+---
+import Wordmark from "./Wordmark.astro";
+import ObfuscatedEmail from "./ObfuscatedEmail.astro";
+import { content, type Lang } from "../i18n/content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const c = content[lang].footer;
+---
+<footer class="foot">
+  <div class="wrap inner">
+    <div class="left">
+      <Wordmark height={16} />
+      <span class="mono meta">{c.legal}</span>
+    </div>
+    <div class="right">
+      <span class="mono meta">{c.region}</span>
+      <ObfuscatedEmail lang={lang} class="mono link" />
+      {c.links.map((l) => <a class="mono link" href={l.href}>{l.label}</a>)}
+    </div>
+  </div>
+  {(c as any).disclaimer && (
+    <div class="wrap disclaimer">
+      <span class="mono meta disclaimer-text">{(c as any).disclaimer}</span>
+    </div>
+  )}
+</footer>
+
+<style>
+  .foot { background: var(--ink); border-top: 1px solid var(--line-dim); }
+  .inner {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 20px; padding-top: 24px; padding-bottom: 28px;
+  }
+  .left, .right { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+  .meta { font-size: 11px; letter-spacing: .08em; color: var(--fg-ghost); }
+  .link { font-size: 11px; letter-spacing: .08em; color: var(--fg-mute); }
+  .link:hover { color: var(--fg-strong); }
+  .disclaimer { padding-top: 0; padding-bottom: 18px; }
+  .disclaimer-text { display: block; font-size: 10px; line-height: 1.6; letter-spacing: .04em; color: var(--fg-faint); max-width: 90ch; }
+  @media (max-width: 900px) {
+    .inner { flex-direction: column; align-items: flex-start; gap: 20px; }
+  }
+</style>

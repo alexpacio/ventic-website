@@ -1,0 +1,29 @@
+The Admin Panel should offer those features:
+
+- users management
+    - users
+        - active
+        - expiration
+        - revoke
+    - groups
+    - domains
+    - tenants
+    - API tokens
+    - OAuth/external auth integration
+- roles management (RBAC)
+    - by endpoint
+    - users/groups/domains/tenants to models
+    - user/developer/admin/superadmin roles to access the Admin Panel and interact with features
+- models management
+    - inventory (chat, multimodal, embedding) + context settings management
+        - deploy new model from Ventic templates showcase
+        - list of installed models
+    - quotas
+    - allows/denies from users
+    - scaling out/in
+    - auto shutdown/start policies
+    - semantic restrictions (banned wording, concepts, etc.)
+    - RAG sourcing setup
+- external components wirings
+    - RAG
+    - Automated Harnesses

@@ -1,0 +1,43 @@
+---
+import Icon from "./Icon.astro";
+import { content, type Lang } from "../i18n/content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const w = content[lang].adminPanelPage.whiteLabel;
+---
+<section id="white-label" class="sec">
+  <div class="wrap">
+    <div class="panel panel--warm wl">
+      <div class="wlcol">
+        <span class="plate plate--accent"><Icon name={w.icon} size={14} width={1.8} />{w.plate}</span>
+        <h2 class="h2">{w.title[0]}<br />{w.title[1]}</h2>
+        <p class="body lead-w">{w.lead}</p>
+        <p class="mono note">{w.note}</p>
+      </div>
+      <div class="wlpoints">
+        {w.points.map((p) => (
+          <div class="wlpoint">
+            <h3 class="cell-t">{p.title}</h3>
+            <p class="cell-b">{p.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .wl { display: grid; grid-template-columns: 5fr 7fr; gap: 32px; padding: 28px 28px; }
+  .plate { margin-bottom: 16px; }
+  .lead-w { margin-top: 14px; }
+  .note { margin-top: 16px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--fg-ghost); }
+  .wlpoints { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 20px; align-content: start; }
+  .wlpoint { display: flex; flex-direction: column; gap: 8px; }
+
+  @media (max-width: 1080px) {
+    .wl { grid-template-columns: 1fr; padding: 34px 28px 36px; }
+  }
+  @media (max-width: 640px) {
+    .wlpoints { grid-template-columns: 1fr; }
+  }
+</style>

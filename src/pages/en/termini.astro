@@ -1,0 +1,171 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+import ObfuscatedEmail from "../../components/ObfuscatedEmail.astro";
+import AlphaStamp from "../../components/AlphaStamp.astro";
+import { content } from "../../i18n/content";
+
+const lang = "en" as const;
+const seo = content[lang].seo.termini;
+const p = content[lang].termini;
+const site = "https://ventic.it";
+---
+
+<Layout title={seo.title} description={seo.desc} lang={lang} breadcrumbs={[{ name: "Home", href: "/en/" }, { name: "Terms", href: "/en/termini/" }]}>
+  <Nav lang={lang} />
+  <main id="main" class="legal">
+    <section class="hero">
+      <div class="wrap">
+        <p class="mono plate">{p.hero.plate}</p>
+        <h1 class="title">{p.hero.title[0]}<br/><span class="accent">{p.hero.title[1]}</span></h1>
+        <p class="lead">{p.hero.lead}</p>
+        <div class="meta-row">
+          <span class="mono meta">{p.hero.updatedLabel}: <strong>{p.hero.updatedDate}</strong></span>
+          <span class="mono meta sep">·</span>
+          <span class="mono meta">Controller: Netter srl — <ObfuscatedEmail lang={lang} class="mono link-inline" /> </span>
+          <span class="alpha-hero"><AlphaStamp variant="badge" size="md" lang={lang} /></span>
+          <button class="mono btn-print" onclick="window.print()" type="button">{p.hero.printLabel}</button>
+        </div>
+        <div class="alpha-callout panel">
+          <div class="alpha-callout-head">
+            <AlphaStamp variant="badge" size="sm" lang={lang} />
+            <span class="mono alpha-callout-title">Early Access Alpha — invite-only</span>
+          </div>
+          <p class="alpha-callout-body">Experimental, unfinished service: interruptions, breaking changes and possible loss of data/configuration are expected. Do not use it for critical workloads without a fallback. Launch pricing and features will change in Beta/GA.</p>
+        </div>
+        <div class="intro-box panel">
+          <p class="intro-note">{p.intro.note}</p>
+          <p class="intro-also mono">{p.intro.also}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="body">
+      <div class="wrap grid">
+        <aside class="toc panel" aria-label={p.hero.tocTitle}>
+          <p class="mono toc-title">{p.hero.tocTitle}</p>
+          <nav>
+            <ol>
+              {p.sections.map((s) => (
+                <li><a class="mono toc-link" href={`#${s.id}`}>{s.title}</a></li>
+              ))}
+            </ol>
+          </nav>
+        </aside>
+
+        <article class="content">
+          {p.sections.map((s) => (
+            <section id={s.id} class="sec">
+              <h2 class="sec-title">{s.title}</h2>
+              <div class="sec-body" set:html={s.html} />
+            </section>
+          ))}
+
+          <div class="note-box panel">
+            <p class="mono plate small">{p.footerNote.title}</p>
+            <p class="note-body">{p.footerNote.body}</p>
+          </div>
+
+          <div class="cta-box panel">
+            <h3 class="cta-title">{p.cta.title}</h3>
+            <p class="cta-body">{p.cta.body}</p>
+            <div class="cta-actions">
+              <ObfuscatedEmail lang={lang} label={p.cta.mailLabel} class="btn btn--a" />
+              <a class="btn btn--ghost" href="/en/#contatto">{p.cta.btn}</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+  <Footer lang={lang} />
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context":"https://schema.org",
+    "@type":"WebPage",
+    "@id": `${site}/en/termini/#webpage`,
+    name: seo.title,
+    description: seo.desc,
+    inLanguage: "en-GB",
+    isPartOf: { "@id": `${site}/#website` },
+    about: { "@id": `${site}/#organization` },
+    dateModified: "2026-09-02",
+  })} />
+</Layout>
+
+<style>
+  .legal { background: var(--bg); color: var(--fg); }
+  .hero { padding: 48px 0 28px; border-bottom: 1px solid var(--line-dim); }
+  .plate { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+  .plate.small { margin-bottom: 8px; }
+  .title { font-size: clamp(32px, 5vw, 48px); line-height: .95; font-weight: 700; letter-spacing: -.03em; color: var(--fg-strong); }
+  .title .accent { color: var(--accent); }
+  .lead { margin-top: 16px; max-width: 76ch; font-size: 16px; line-height: 1.6; color: var(--fg-mute); }
+  .meta-row { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-top: 18px; }
+  .meta { font-size: 11px; letter-spacing:.06em; color: var(--fg-ghost); }
+  .meta strong { color: var(--fg-mute); font-weight: 600; }
+  .sep { opacity:.5; }
+  :global(.link-inline) { color: var(--accent) !important; text-underline-offset: 3px; }
+  :global(.link-inline:hover) { text-decoration: underline; }
+  .btn-print { margin-left:auto; border:1px solid var(--line-soft); background: transparent; color: var(--fg-mute); padding: 6px 12px; font-size: 11px; letter-spacing:.08em; text-transform: uppercase; cursor:pointer; }
+  .btn-print:hover { border-color: var(--accent); color: var(--fg-strong); }
+  .alpha-hero { margin-left: 6px; }
+  .alpha-callout { margin-top: 18px; padding: 14px 16px; border: 1px solid rgba(229,62,62,0.22); background: rgba(229,62,62,0.06); }
+  .alpha-callout-head { display:flex; align-items:center; gap:10px; margin-bottom: 8px; }
+  .alpha-callout-title { font-size: 11px; letter-spacing:.08em; text-transform: uppercase; color: #e53e3e; font-weight: 700; }
+  .alpha-callout-body { font-size: 13px; line-height: 1.6; color: var(--fg-mute); }
+
+  .intro-box { margin-top: 22px; padding: 18px 20px; background: #ffffff07; border: 1px solid var(--line-soft); }
+  .intro-note { font-size: 13px; line-height: 1.65; color: var(--fg-dim); }
+  .intro-also { margin-top: 10px; font-size: 11px; letter-spacing:.04em; color: var(--fg-ghost); }
+
+  .body { padding: 32px 0 48px; }
+  .grid { display: grid; grid-template-columns: 280px 1fr; gap: 28px; align-items: start; }
+  @media (max-width: 980px) { .grid { grid-template-columns: 1fr; } .toc { position: static !important; } }
+
+  .toc { position: sticky; top: 84px; padding: 18px 18px; background: #ffffff06; border: 1px solid var(--line-soft); }
+  .toc-title { font-size: 11px; letter-spacing:.12em; text-transform: uppercase; color: var(--fg-muted, var(--fg-mute)); margin-bottom: 12px; }
+  .toc ol { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+  .toc-link { font-size: 11px; letter-spacing:.04em; line-height: 1.4; color: var(--fg-mute); text-decoration: none; }
+  .toc-link:hover { color: var(--accent); }
+
+  .content { min-width: 0; }
+  .sec { padding: 26px 0; border-bottom: 1px solid var(--line-dim); }
+  .sec:first-child { padding-top: 0; }
+  .sec-title { font-size: 19px; font-weight: 700; letter-spacing: -.02em; color: var(--fg-strong); margin-bottom: 14px; }
+  .sec-body { font-size: 14px; line-height: 1.7; color: var(--fg-dim); }
+  .sec-body :global(p) { margin: 0 0 12px; }
+  .sec-body :global(h4.h4) { font-size: 13px; font-weight: 700; letter-spacing:.06em; text-transform: uppercase; color: var(--fg-strong); margin: 18px 0 10px; }
+  .sec-body :global(ul) { margin: 0 0 12px 18px; list-style: disc; }
+  .sec-body :global(li) { margin-bottom: 6px; }
+  .sec-body :global(a) { color: var(--accent); text-underline-offset: 3px; }
+  .sec-body :global(a:hover) { text-decoration: underline; }
+  .sec-body :global(code) { font-family: var(--mono); font-size: 12px; background: #ffffff10; padding: 1px 5px; border-radius: 4px; color: var(--fg-mute); }
+  .sec-body :global(strong) { color: var(--fg-strong); font-weight: 600; }
+
+  .sec-body :global(table.legal-table) { width: 100%; border-collapse: collapse; margin: 14px 0 16px; font-size: 13px; line-height: 1.5; display: block; overflow-x: auto; }
+  .sec-body :global(table.legal-table thead th) { text-align: left; font-family: var(--mono); font-size: 11px; letter-spacing:.07em; text-transform: uppercase; color: var(--fg-mute); border-bottom: 1px solid var(--line-soft); padding: 10px 12px; white-space: nowrap; background: #ffffff06; }
+  .sec-body :global(table.legal-table tbody td) { padding: 10px 12px; border-bottom: 1px solid var(--line-dim); vertical-align: top; color: var(--fg-dim); }
+  .sec-body :global(table.legal-table tbody tr:hover td) { background: #ffffff05; }
+
+  .note-box { margin-top: 28px; padding: 18px 20px; border-left: 3px solid var(--accent); background: #f5a83f0f; }
+  .note-body { font-size: 13px; line-height: 1.6; color: var(--fg-mute); }
+
+  .cta-box { margin-top: 22px; padding: 22px 20px; background: #ffffff07; border: 1px solid var(--line-soft); display: flex; flex-direction: column; gap: 12px; }
+  .cta-title { font-size: 16px; font-weight: 700; color: var(--fg-strong); }
+  .cta-body { font-size: 13px; line-height: 1.6; color: var(--fg-mute); }
+  .cta-actions { display:flex; flex-wrap:wrap; gap:12px; margin-top: 4px; }
+
+  .btn { display:inline-flex; align-items:center; justify-content:center; height: 40px; padding: 0 18px; font-family: var(--mono); font-size: 12px; letter-spacing:.08em; text-transform: uppercase; font-weight: 600; text-decoration:none; border:1px solid transparent; cursor:pointer; }
+  .btn--a { background: var(--accent); color:#14161a; border-color: var(--accent); }
+  .btn--a:hover { filter: brightness(1.05); }
+  .btn--ghost { background: transparent; color: var(--fg-mute); border-color: var(--line-soft); }
+  .btn--ghost:hover { color: var(--fg-strong); border-color: var(--fg-mute); }
+
+  @media print {
+    .btn-print, nav, .toc, .cta-box { display:none !important; }
+    .hero { padding-top: 12px; }
+    .sec { break-inside: avoid; }
+  }
+</style>

@@ -1,0 +1,106 @@
+---
+// Zero-UI helper for static hosting (GitHub Pages has no Accept-Language
+// redirect): detects the browser language on first visit and swaps to the
+// matching locale path (/ <-> /en/...). An explicit click on any
+// hreflang link is persisted to localStorage and wins over auto-detect.
+---
+<script is:inline>
+  (() => {
+    try {
+      var KEY = "ventic-lang";
+      var path = window.location.pathname;
+      var search = window.location.search || "";
+      var hash = window.location.hash || "";
+      var isEn = path === "/en" || path.indexOf("/en/") === 0;
+      var current = isEn ? "en" : "it";
+
+      function targetPath(pathname, target) {
+        var en = pathname === "/en" || pathname.indexOf("/en/") === 0;
+        var base = en ? pathname.replace(/^\/en/, "") || "/" : pathname;
+        // Normalize alias: /terms <-> /termini (canonical is /termini)
+        if (base === "/terms" || base === "/terms/") base = "/termini/";
+        if (target === "en") return base === "/" ? "/en/" : "/en" + base;
+        return base || "/";
+      }
+
+      function savePreference(lang) {
+        try {
+          if (lang === "it" || lang === "en") window.localStorage.setItem(KEY, lang);
+        } catch (e) {}
+      }
+
+      // Explicit choice wins: persist clicks on language switch links.
+      function bindPreferenceLinks() {
+        try {
+          var links = document.querySelectorAll('a[hreflang="it"], a[hreflang="en"]');
+          for (var i = 0; i < links.length; i++) {
+            var save = function () {
+              var l = (this.getAttribute("hreflang") || "").toLowerCase();
+              savePreference(l);
+            };
+            links[i].addEventListener("click", save);
+            // middle-click / cmd+click "open in new tab" fires auxclick, not click
+            links[i].addEventListener("auxclick", save);
+          }
+        } catch (e) {}
+      }
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", bindPreferenceLinks);
+      } else {
+        bindPreferenceLinks();
+      }
+
+      // Opt-out for testing/debugging: ?nolocale=1
+      if (/(?:\?|&)nolocale=1/.test(search)) return;
+
+      // Never auto-redirect crawlers/bots: hreflang + canonical already guide them.
+      var ua = window.navigator.userAgent || "";
+      if (
+        /bot|crawler|spider|crawling|slurp|mediapartners|baidu|yandex|sogou|exabot|facebot|ia_archiver|semrush|ahrefs|mj12|dotbot|petal|gptbot|ccbot|anthropic-ai|claudebot|cohere|perplexity|preview|prerender/i.test(
+          ua
+        )
+      )
+        return;
+
+      // Returning visitor with an explicit choice: honour it.
+      var stored = null;
+      try {
+        stored = window.localStorage.getItem(KEY);
+      } catch (e) {}
+      if (stored === "it" || stored === "en") {
+        if (stored !== current) {
+          var dest = targetPath(path, stored);
+          if (dest !== path) window.location.replace(dest + search + hash);
+        }
+        return;
+      }
+
+      // First visit: first supported match in navigator.languages wins.
+      var raw = [];
+      try {
+        if (Array.isArray(window.navigator.languages) && window.navigator.languages.length)
+          raw = window.navigator.languages;
+        else if (window.navigator.language) raw = [window.navigator.language];
+      } catch (e) {}
+      var preferred = null;
+      for (var j = 0; j < raw.length; j++) {
+        var code = String(raw[j] || "").toLowerCase();
+        if (!code) continue;
+        if (code === "it" || code.indexOf("it-") === 0) {
+          preferred = "it";
+          break;
+        }
+        if (code === "en" || code.indexOf("en-") === 0) {
+          preferred = "en";
+          break;
+        }
+      }
+      if (!preferred) return; // unsupported browser lang -> keep served content (IT default)
+      if (preferred === current) return;
+      if (preferred !== current) {
+        var url = targetPath(path, preferred);
+        if (url !== path) window.location.replace(url + search + hash);
+      }
+    } catch (e) {}
+  })();
+</script>

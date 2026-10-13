@@ -1,0 +1,49 @@
+---
+/**
+ * ObfuscatedEmail.astro — Anti-spam: email mai mostrata prima di verifica
+ * - Nessuna traccia di `info@ventic.it` nell'HTML prima di TrustCaptcha / check umano
+ * - Solo su click del bottone mailto parte la verifica; poi mailto assemblato in JS
+ * - Fallback no-JS: placeholder generico, nessun [at]
+ */
+interface Props {
+  /** Testo prefix prima dell'email, es. "Scrivici: " — mostrato solo come prefisso, senza email */
+  prefix?: string;
+  /** Se fornito, mostra questo testo (CTA) invece dell'email — label non contiene email, quindi visibile subito */
+  label?: string;
+  /** Classi CSS */
+  class?: string;
+  /** id opzionale */
+  id?: string;
+  /** Aria label custom */
+  ariaLabel?: string;
+  lang?: "it" | "en";
+}
+
+const { prefix = "", label, class: className = "", id, ariaLabel, lang: propLang } = Astro.props;
+const isEn = propLang === "en";
+// placeholder generico — non contiene email, visibile prima di verifica
+const placeholder = label
+  ? label
+  : prefix
+    ? `${prefix}${isEn ? "verify to show" : "verifica per mostrare"}`
+    : isEn ? "Show email" : "Mostra email";
+const computedAria = ariaLabel ?? (label ? `${label} — ${isEn ? "human verification required to open email" : "verifica umana richiesta per aprire email"}` : isEn ? "Human verification required to show email address" : "Verifica umana richiesta per mostrare indirizzo email");
+const title = isEn
+  ? label
+    ? "Anti-spam protection — human verification required before opening email client"
+    : "Protected address — click to start verification and show email"
+  : label
+    ? "Protezione anti-spam — verifica umana richiesta prima di aprire il client email"
+    : "Indirizzo protetto — clicca per avviare la verifica e mostrare l'email";
+---
+<a
+  id={id}
+  class:list={["obf-email", className]}
+  data-prefix={prefix}
+  data-label={label}
+  href="#"
+  rel="nofollow"
+  aria-label={computedAria}
+  title={title}
+  data-obf="true"
+>{placeholder}</a>

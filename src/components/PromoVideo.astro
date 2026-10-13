@@ -1,0 +1,64 @@
+---
+import type { Lang } from "../i18n/content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = lang === "it"
+  ? {
+      title: ["Ventic in poco", "più di un minuto."],
+      lead: "Perché i provider LLM non bastano, come funziona Ventic e cosa ottieni con un'infrastruttura LLM privata.",
+      aria: "Video di presentazione di Ventic",
+      fallback: "Il tuo browser non supporta i video HTML5.",
+      download: "Scarica il video",
+    }
+  : {
+      title: ["Ventic in just", "over a minute."],
+      lead: "Why LLM providers fall short, how Ventic works and what you get with a private LLM infrastructure.",
+      aria: "Ventic promo video",
+      fallback: "Your browser does not support HTML5 video.",
+      download: "Download the video",
+    };
+const src = `/video/ventic-promo-${lang}.mp4`;
+const poster = `/video/ventic-promo-${lang}-poster.jpg`;
+---
+<section id="video" class="sec promo">
+  <div class="wrap">
+    <div class="grid top">
+      <div class="tcol">
+        <span class="plate plate--accent">
+          <span class="dot" style="width:6px;height:6px;box-shadow:none"></span>
+          Video · 1:13
+        </span>
+        <h2 class="h2">{t.title[0]}<br />{t.title[1]}</h2>
+      </div>
+      <p class="body lcol">{t.lead}</p>
+    </div>
+    <div class="frame panel">
+      <video
+        class="player"
+        controls
+        playsinline
+        preload="none"
+        width="1920"
+        height="1080"
+        poster={poster}
+        aria-label={t.aria}
+      >
+        <source src={src} type="video/mp4" />
+        {t.fallback} <a href={src}>{t.download}</a>.
+      </video>
+    </div>
+  </div>
+</section>
+
+<style>
+  .promo { background: var(--ink); border-bottom: 1px solid var(--line-dim); }
+  .top { align-items: end; margin-bottom: 28px; }
+  .tcol { grid-column: span 7; }
+  .lcol { grid-column: span 5; }
+  .plate { margin-bottom: 16px; }
+  .frame { padding: 0; overflow: hidden; line-height: 0; }
+  .player { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #000; }
+  @media (max-width: 860px) {
+    .tcol, .lcol { grid-column: span 6; }
+  }
+</style>
