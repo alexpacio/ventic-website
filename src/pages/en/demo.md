@@ -28,7 +28,7 @@ by Licman. Development images and builds without license enforcement are not nee
 | Storage and backup | The bundled PostgreSQL defaults to three 100 GiB instances; allow additional storage for Valkey, notifications and telemetry. Size PVCs and prepare a data bucket and off-cluster backup destination. A persistent volume is not a backup. |
 | Domain and TLS | A domain you control, six public hosts, wildcard chat DNS, ingress and valid certificates. Use DNS-01 or an existing wildcard certificate for wildcard chat. |
 | Tools | Git, Python 3.12+, Helm and kubectl on the administrative machine. Customers install published binaries/images without compiling Rust, Node or Python. |
-| Access | GitLab access to the Contoso template (request an invitation if needed), a dedicated kubeconfig and initial namespace/RBAC/shared-bootstrap privileges. Use scoped operational identities afterward. |
+| Access | GitHub access to the Contoso template (request an invitation if needed), a dedicated kubeconfig and initial namespace/RBAC/shared-bootstrap privileges. Use scoped operational identities afterward. |
 | External services | Working SMTP, S3-compatible storage, OpenBao for secret custody and a reachable inference target. Social/OAuth login and payments for your own service are separate integrations. |
 | Release and trust | An actually published Ventic release, its signed manifest and the release public key obtained from the owner through an independent trusted channel. The Licman public key is separate. |
 | License | A verified Licman company account and **Ventic On Premise** demo key. Licensing requires HTTPS access to Licman and a synchronized clock. |
@@ -65,7 +65,7 @@ Use a supported Ventic release with a compatible Licman server version.
 
 <h2 id="template">2. Fork Contoso and obtain a verified release</h2>
 
-Fork the [Contoso template](https://gitlab.com/nettersrl/ventic/netter-contoso-provider)
+Fork the [Contoso template](https://github.com/nettersrl/ventic-provider-template)
 and clone your fork. Contoso Ltd is fictional: replace identity, domains and
 artwork. Do not copy a live provider together with credentials, data, backups or
 historical legal documents.
