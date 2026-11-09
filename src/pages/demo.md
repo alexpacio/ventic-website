@@ -163,8 +163,8 @@ provider:
   logo_url: /brand/acme.svg
   logo_light_url: /brand/acme-light.svg
   logo_dark_url: /brand/acme-dark.svg
-  terms_url: https://demo.example.org/termini
-  privacy_url: https://demo.example.org/privacy
+  terms_url: https://legal.example.org/acme/termini
+  privacy_url: https://legal.example.org/acme/privacy
   legal_version: 'versione-approvata-dal-titolare'
 postgres:
   instances: 1
