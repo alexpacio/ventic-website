@@ -1,0 +1,74 @@
+---
+import Layout from './Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Cta from '../components/Cta.astro';
+import type { Lang } from '../i18n/content';
+
+interface Props {
+  frontmatter: {
+    title: string;
+    description: string;
+    lang: Lang;
+    contents: { id: string; label: string }[];
+  };
+}
+const { title, description, lang, contents } = Astro.props.frontmatter;
+const home = lang === 'it' ? '/' : '/en/';
+const path = lang === 'it' ? '/demo/' : '/en/demo/';
+const label = lang === 'it' ? 'Guida alla demo' : 'Demo deployment guide';
+---
+<Layout title={`${title} — Ventic`} description={description} lang={lang} type="article"
+  breadcrumbs={[{ name: 'Home', href: home }, { name: label, href: path }]}>
+  <Nav lang={lang} />
+  <main id="main" class="deployment-guide">
+    <header class="guide-hero wrap">
+      <p class="mono guide-plate">{lang === 'it' ? 'Ventic · Sulla tua infrastruttura' : 'Ventic · On your infrastructure'}</p>
+      <h1>{title}</h1>
+      <p class="guide-lead">{description}</p>
+    </header>
+    <div class="wrap guide-grid">
+      <aside class="guide-toc panel">
+        <nav aria-label={lang === 'it' ? 'In questa guida' : 'On this page'}>
+          <p class="mono">{lang === 'it' ? 'In questa guida' : 'On this page'}</p>
+          <ol>{contents.map((item) => <li><a href={`#${item.id}`}>{item.label}</a></li>)}</ol>
+        </nav>
+      </aside>
+      <article class="guide-content"><slot /></article>
+    </div>
+    <Cta lang={lang} />
+  </main>
+  <Footer lang={lang} />
+</Layout>
+
+<style>
+  .guide-hero { padding-block: 64px 36px; }
+  .guide-plate { color: var(--accent); font-size: 12px; letter-spacing: .1em; margin-bottom: 20px; }
+  h1 { color: var(--fg-strong); font-size: clamp(32px, 5vw, 60px); line-height: 1.1; max-width: 20ch; }
+  .guide-lead { color: var(--fg-mute); font-size: 18px; line-height: 1.7; max-width: 72ch; margin-top: 24px; }
+  .guide-grid { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 44px; align-items: start; padding-bottom: 72px; }
+  .guide-toc { position: sticky; top: 88px; padding: 22px; }
+  .guide-toc p { color: var(--accent); font-size: 12px; margin-bottom: 16px; }
+  .guide-toc ol { padding-left: 18px; }
+  .guide-toc li { margin-block: 12px; line-height: 1.5; font-size: 13px; }
+  .guide-toc a { color: var(--fg-mute); }
+  .guide-toc a:hover { color: var(--fg-strong); }
+  .guide-content { min-width: 0; color: var(--fg); line-height: 1.8; overflow-wrap: anywhere; }
+  .guide-content :global(h2) { color: var(--fg-strong); font-size: clamp(24px, 3vw, 32px); line-height: 1.3; margin-block: 52px 22px; scroll-margin-top: 90px; }
+  .guide-content :global(h2:first-child) { margin-top: 0; }
+  .guide-content :global(h3) { color: var(--fg-strong); font-size: 21px; margin-block: 30px 14px; scroll-margin-top: 90px; }
+  .guide-content :global(p), .guide-content :global(ul), .guide-content :global(ol) { margin-block: 18px; }
+  .guide-content :global(ul), .guide-content :global(ol) { padding-left: 24px; }
+  .guide-content :global(li) { margin-block: 8px; }
+  .guide-content :global(a) { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+  .guide-content :global(strong) { color: var(--fg-strong); }
+  .guide-content :global(code) { font-family: var(--mono); font-size: .88em; }
+  .guide-content :global(pre) { padding: 22px; border: 1px solid var(--line-dim); border-radius: 3px; margin-block: 22px; overflow-x: auto; background: var(--ink) !important; }
+  .guide-content :global(pre code) { overflow-wrap: normal; white-space: pre; }
+  .guide-content :global(blockquote) { margin-block: 26px; border-left: 3px solid var(--accent); padding: 4px 22px; background: var(--deck); }
+  .guide-content :global(table) { display: block; width: 100%; overflow-x: auto; border-collapse: collapse; margin-block: 24px; font-size: 14px; }
+  .guide-content :global(th), .guide-content :global(td) { padding: 12px 14px; border: 1px solid var(--line-dim); text-align: left; vertical-align: top; min-width: 130px; }
+  .guide-content :global(th) { color: var(--fg-strong); background: var(--deck); }
+  @media (max-width: 900px) { .guide-grid { grid-template-columns: minmax(0, 1fr); gap: 30px; } .guide-toc { position: static; } }
+  @media (max-width: 520px) { .guide-hero { padding-top: 38px; } .guide-content :global(pre) { padding: 16px; } }
+</style>

@@ -41,6 +41,7 @@ const it = {
       { label: "Piattaforma", href: "/#stack" },
       { label: "Prezzi", href: "/pricing/" },
       { label: "Pannello", href: "/admin-panel/" },
+      { label: "Installa la demo", href: "/demo/" },
     ],
     cta: "Prenota una call",
     skip: "Vai al contenuto",
@@ -515,6 +516,7 @@ const it = {
     mail: "Mostra email",
     links: [
       { label: "Pannello", href: "/admin-panel/" },
+      { label: "Installa la demo", href: "/demo/" },
       { label: "Prezzi", href: "/pricing/" },
       { label: "Termini", href: "/termini/" },
       { label: "Privacy", href: "/privacy/" },
@@ -981,6 +983,7 @@ const en: typeof it = {
       { label: "Platform", href: "/en/#stack" },
       { label: "Pricing", href: "/en/pricing/" },
       { label: "Panel", href: "/en/admin-panel/" },
+      { label: "Deploy a demo", href: "/en/demo/" },
     ],
     cta: "Book a call",
     skip: "Skip to content",
@@ -1455,6 +1458,7 @@ const en: typeof it = {
     mail: "Show email",
     links: [
       { label: "Panel", href: "/en/admin-panel/" },
+      { label: "Deploy a demo", href: "/en/demo/" },
       { label: "Pricing", href: "/en/pricing/" },
       { label: "Terms", href: "/en/termini/" },
       { label: "Privacy", href: "/en/privacy/" },
