@@ -10,10 +10,10 @@ const c = content[lang].pains;
       <span class="plate">{c.plate}</span>
       <h2 class="h2-big hl">{c.title}</h2>
     </div>
-    <div class="cards">
+    <div class="cards hairgrid">
       {c.cards.map((card, i) => (
-        <article class="panel card">
-          <span class="idx">{String(i + 1).padStart(2, "0")}</span>
+        <article class="card">
+          <span class="idx tag">{String(i + 1).padStart(2, "0")}</span>
           <h3 class="cell-t ct">{card.title}</h3>
           <p class="body cb">{card.body}</p>
         </article>
@@ -23,22 +23,23 @@ const c = content[lang].pains;
 </section>
 
 <style>
-  .pains { padding: 88px 0; }
+  .pains { padding: 112px 0; }
   .tcol { grid-column: span 4; display: flex; flex-direction: column; align-items: flex-start; gap: 22px; }
-  .hl { color: var(--accent); }
-  .cards { grid-column: span 8; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
-  .card { padding: 28px; display: flex; flex-direction: column; gap: 14px; }
+  .hl { color: var(--fg-strong); }
+  .tag { color: var(--accent); }
+  .cards { grid-column: span 8; align-self: start; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .card { padding: 36px; display: flex; flex-direction: column; gap: 16px; }
   .ct { text-transform: none; font-size: clamp(19px, 1.5vw, 21px); }
   .cb { font-size: 15px; line-height: 1.65; }
 
   @media (max-width: 1080px) {
-    .pains { padding: 64px 0; }
+    .pains { padding: 72px 0; }
     .tcol, .cards { grid-column: span 12; }
   }
   @media (max-width: 860px) {
     .pains { padding: 56px 0; }
     .tcol, .cards { grid-column: span 6; }
-    .cards { grid-template-columns: minmax(0, 1fr); gap: 16px; }
-    .card { padding: 22px; gap: 12px; }
+    .cards { grid-template-columns: minmax(0, 1fr); }
+    .card { padding: 24px; gap: 12px; }
   }
 </style>

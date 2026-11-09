@@ -1,0 +1,51 @@
+---
+import Icon from "./Icon.astro";
+import { pages, pagePath } from "../i18n/pages";
+import type { Lang } from "../i18n/content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const c = pages(lang).explore;
+---
+<section id="esplora" class="sec sec--tint">
+  <div class="wrap">
+    <div class="grid top">
+      <div class="tcol">
+        <span class="plate">{c.plate}</span>
+        <h2 class="h2">{c.title[0]}<br />{c.title[1]}</h2>
+      </div>
+      <div class="lcol"><p class="body">{c.lead}</p></div>
+    </div>
+    <div class="cards hairgrid">
+      {c.cards.map((card, i) => (
+        <a class="card" href={pagePath(lang, card.key)} data-explore={card.key}>
+          <span class="mono idx">{String(i + 1).padStart(2, "0")}</span>
+          <h3 class="card-title">{card.title}</h3>
+          <p class="cell-b">{card.body}</p>
+          <span class="arrowlink">{c.open} <Icon name="arrow" size={16} width={2} /></span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .top { align-items: end; margin-bottom: 56px; }
+  .tcol { grid-column: span 7; }
+  .lcol { grid-column: span 5; }
+  .cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .card { display: flex; flex-direction: column; gap: 14px; padding: 32px 28px; min-height: 280px; color: inherit; transition: background .15s; }
+  .card:hover { background: var(--panel-b) !important; }
+  .idx { font-size: 11px; letter-spacing: .1em; color: var(--accent); }
+  .card-title { margin: 0; font-size: 22px; }
+  .card .arrowlink { margin-top: auto; padding-top: 8px; }
+  @media (max-width: 1080px) {
+    .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 900px) {
+    .tcol, .lcol { grid-column: span 12; }
+    .top { align-items: start; }
+  }
+  @media (max-width: 560px) {
+    .cards { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>

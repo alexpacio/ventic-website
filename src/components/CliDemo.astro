@@ -19,7 +19,7 @@ const T = {
       { t: "ok", h: "manifest valido — kind: LLMEndpoint / team-coding (tenant: acme)" },
       { t: "dim", h: "→ intento inviato al control plane…" },
       { t: "ok", h: "✓ nodo gpu-node-03 agganciato via overlay mTLS · eu-south · nessun IP pubblico" },
-      { t: "ok", h: "✓ pesi qwen3.8-27b caricati · motore vLLM (TP=2) avviato" },
+      { t: "ok", h: "✓ pesi del modello caricati · motore vLLM (TP=2) avviato" },
       { t: "ok", h: "✓ endpoint READY in 3m 12s · repliche 2/2 · scale-to-zero 15m" },
     ],
     accessTitle: "accessi emessi — tenant acme",
@@ -31,7 +31,7 @@ const T = {
     ],
     opencodeCmd: 'opencode run "aggiungi retry con backoff a syncBilling() e copri con test"',
     opencode: [
-      { t: "accent", h: "◆ opencode · modello ventic/qwen3.8-27b via proxy privato" },
+      { t: "accent", h: "◆ opencode · modello ventic/default via proxy privato" },
       { t: "dim", h: "◇ letto src/billing.ts (212 righe) + 2 file correlati — contesto resta in overlay" },
       { t: "dim", h: "◇ patch src/billing.ts + tests/billing.test.ts" },
       { t: "ok", h: "✓ test: 14 passed · diff pronto da committare" },
@@ -55,7 +55,7 @@ const T = {
       { t: "ok", h: "manifest valid — kind: LLMEndpoint / team-coding (tenant: acme)" },
       { t: "dim", h: "→ intent sent to control plane…" },
       { t: "ok", h: "✓ node gpu-node-03 attached via mTLS overlay · eu-south · no public IP" },
-      { t: "ok", h: "✓ weights qwen3.8-27b loaded · vLLM engine (TP=2) started" },
+      { t: "ok", h: "✓ model weights loaded · vLLM engine (TP=2) started" },
       { t: "ok", h: "✓ endpoint READY in 3m 12s · replicas 2/2 · scale-to-zero 15m" },
     ],
     accessTitle: "credentials issued — tenant acme",
@@ -67,7 +67,7 @@ const T = {
     ],
     opencodeCmd: 'opencode run "add backoff retry to syncBilling() and cover it with tests"',
     opencode: [
-      { t: "accent", h: "◆ opencode · model ventic/qwen3.8-27b via private proxy" },
+      { t: "accent", h: "◆ opencode · model ventic/default via private proxy" },
       { t: "dim", h: "◇ read src/billing.ts (212 lines) + 2 related files — context stays on overlay" },
       { t: "dim", h: "◇ patch src/billing.ts + tests/billing.test.ts" },
       { t: "ok", h: "✓ tests: 14 passed · diff ready to commit" },
@@ -85,7 +85,7 @@ const manifestLines = [
   { n: 4, h: '  <span class="k">name</span>: team-coding' },
   { n: 5, h: '  <span class="k">tenant</span>: acme' },
   { n: 6, h: '<span class="k">spec</span>:' },
-  { n: 7, h: '  <span class="k">model</span>: qwen3.8-27b' },
+  { n: 7, h: '  <span class="k">model</span>: default' },
   { n: 8, h: '  <span class="k">engine</span>: vllm  <span class="c"># TP=2, ottimizzato per la GPU</span>' },
   { n: 9, h: '  <span class="k">replicas</span>: 2' },
   { n: 10, h: '  <span class="k">region</span>: eu-south' },
@@ -309,7 +309,7 @@ const uid = `cli-${lang}`;
 <style>
   .clidemo { margin: 28px 0 0; }
   .head { max-width: none; margin-bottom: 18px; }
-  .flowtitle { font-family: var(--display); font-size: clamp(22px, 2.2vw, 28px); font-weight: 700; line-height: 1.05; text-transform: uppercase; color: var(--fg-strong); margin-top: 6px; }
+  .flowtitle { font-family: var(--display); font-size: clamp(22px, 2.2vw, 28px); font-weight: 300; letter-spacing: -0.02em; line-height: 1.05;  color: var(--fg-strong); margin-top: 6px; }
   .lead { margin-top: 12px; max-width: none; color: var(--fg-mid); font-size: 16px; line-height: 1.6; }
 
   .grid2 { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 14px; align-items: stretch; }
@@ -325,7 +325,7 @@ const uid = `cli-${lang}`;
     display: inline-flex; align-items: center; gap: 7px;
     font-size: 10px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
     color: var(--fg-mute); background: var(--sunk);
-    border: 1px solid var(--line-soft); border-radius: 2px; padding: 7px 11px; cursor: pointer;
+    border: 1px solid var(--line-soft); border-radius: 0; padding: 7px 11px; cursor: pointer;
   }
   .replay:hover:not(:disabled) { color: var(--fg-strong); border-color: #4a5158; }
   .replay:disabled { opacity: .6; cursor: default; }
@@ -366,7 +366,7 @@ const uid = `cli-${lang}`;
   .o { margin: 3px 0; word-break: break-word; }
   .o--dim { color: var(--fg-mute); } .o--ok { color: #b9c4bb; } .o--accent { color: var(--accent); } .o--jade { color: var(--jade); }
 
-  .access { margin: 10px 0 4px; background: #101312; border: 1px solid #2c3a34; border-radius: 2px; padding: 10px 12px; }
+  .access { margin: 10px 0 4px; background: #101312; border: 1px solid #2c3a34; border-radius: 0; padding: 10px 12px; }
   .atitle { display: flex; align-items: center; gap: 8px; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--jade); margin-bottom: 8px; }
   .atitle .dot { width: 6px; height: 6px; }
   .akeys { display: flex; flex-direction: column; gap: 3px; }
@@ -375,7 +375,7 @@ const uid = `cli-${lang}`;
   .caprow { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; flex-wrap: wrap; }
   .cap { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--fg-ghost); }
   .phases { display: flex; gap: 6px; flex-wrap: wrap; }
-  .phase { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--fg-ghost); border: 1px solid var(--line-soft); border-radius: 999px; padding: 4px 10px; background: transparent; transition: all .25s ease; }
+  .phase { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--fg-ghost); border: 1px solid var(--line-soft); border-radius: 0; padding: 4px 10px; background: transparent; transition: all .25s ease; }
   .phase.is-on { color: var(--accent); border-color: #3a3125; background: #f5a83f0d; }
   .phase.is-now { box-shadow: 0 0 0 1px #f5a83f55; }
 

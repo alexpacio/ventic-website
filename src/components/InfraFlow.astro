@@ -77,7 +77,7 @@ const hops = f.net.boxes.map((b, i) => ({ ...b, k: f.steps[i].k, x: 26 + i * 248
   .flowfig { margin: 28px 0 0; }
   .head { max-width: none; margin-bottom: 18px; }
   .plate { margin-bottom: 16px; }
-  .flowtitle { font-family: var(--display); font-size: clamp(22px, 2.2vw, 28px); font-weight: 700; line-height: 1.05; text-transform: uppercase; color: var(--fg-strong); margin-top: 6px; }
+  .flowtitle { font-family: var(--display); font-size: clamp(22px, 2.2vw, 28px); font-weight: 300; letter-spacing: -0.02em; line-height: 1.05;  color: var(--fg-strong); margin-top: 6px; }
   .lead { margin-top: 12px; max-width: none; color: var(--fg-mid); font-size: 16px; line-height: 1.6; }
 
   .track { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; align-items: start; }
@@ -90,7 +90,7 @@ const hops = f.net.boxes.map((b, i) => ({ ...b, k: f.steps[i].k, x: 26 + i * 248
   .desc { margin-top: 8px; font-size: 13px; line-height: 1.55; }
   .arrow { position: absolute; right: -10px; top: 74px; color: var(--line); font-size: 14px; }
   .note { margin-top: 16px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-ghost); }
-  .diagram { margin-top: 16px; background: var(--sunk); border: 1px solid var(--line-soft); border-radius: 3px; }
+  .diagram { margin-top: 16px; background: var(--sunk); border: 1px solid var(--line-soft); border-radius: 0; }
   .dscroll { overflow-x: auto; padding: 16px 18px 10px; }
   .path { display: block; width: 100%; min-width: 900px; height: auto; }
 

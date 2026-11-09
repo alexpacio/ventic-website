@@ -26,17 +26,17 @@ const c = content[lang].footer;
 </footer>
 
 <style>
-  .foot { background: var(--ink); border-top: 1px solid var(--line-dim); }
+  .foot { background: var(--ink); border-top: 1px solid var(--line-soft); }
   .inner {
     display: flex; align-items: center; justify-content: space-between;
-    gap: 20px; padding-top: 24px; padding-bottom: 28px;
+    gap: 20px; padding-top: 40px; padding-bottom: 40px;
   }
   .left, .right { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
-  .meta { font-size: 11px; letter-spacing: .08em; color: var(--fg-ghost); }
-  .link { font-size: 11px; letter-spacing: .08em; color: var(--fg-mute); }
+  .meta { font-size: 12px; letter-spacing: .04em; color: var(--fg-mute); }
+  .link { font-size: 12px; letter-spacing: .04em; color: var(--fg-dim); }
   .link:hover { color: var(--fg-strong); }
   .disclaimer { padding-top: 0; padding-bottom: 18px; }
-  .disclaimer-text { display: block; font-size: 10px; line-height: 1.6; letter-spacing: .04em; color: var(--fg-faint); max-width: 90ch; }
+  .disclaimer-text { display: block; font-size: 11px; line-height: 1.6; letter-spacing: .02em; color: var(--fg-mute); max-width: 90ch; }
   @media (max-width: 900px) {
     .inner { flex-direction: column; align-items: flex-start; gap: 20px; }
   }

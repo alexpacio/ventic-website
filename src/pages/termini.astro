@@ -3,7 +3,6 @@ import Layout from "../layouts/Layout.astro";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
 import ObfuscatedEmail from "../components/ObfuscatedEmail.astro";
-import AlphaStamp from "../components/AlphaStamp.astro";
 import { content } from "../i18n/content";
 
 const lang = "it" as const;
@@ -25,15 +24,7 @@ const site = "https://ventic.it";
           <span class="mono meta">{p.hero.updatedLabel}: <strong>{p.hero.updatedDate}</strong></span>
           <span class="mono meta sep">·</span>
           <span class="mono meta">Titolare: Netter srl — <ObfuscatedEmail lang={lang} class="mono link-inline" /> </span>
-          <span class="alpha-hero"><AlphaStamp variant="badge" size="md" lang={lang} /></span>
           <button class="mono btn-print" onclick="window.print()" type="button">{p.hero.printLabel}</button>
-        </div>
-        <div class="alpha-callout panel">
-          <div class="alpha-callout-head">
-            <AlphaStamp variant="badge" size="sm" lang={lang} />
-            <span class="mono alpha-callout-title">Early Access Alpha — accesso su invito</span>
-          </div>
-          <p class="alpha-callout-body">Servizio sperimentale e non finito: interruzioni, breaking change e possibili perdite di dati/configurazione sono attesi. Non usarlo per carichi critici senza piano B. Prezzi e funzionalità sono di lancio e cambieranno in Beta/GA.</p>
         </div>
         <div class="intro-box panel">
           <p class="intro-note">{p.intro.note}</p>
@@ -112,12 +103,7 @@ const site = "https://ventic.it";
   :global(.link-inline:hover) { text-decoration: underline; }
   .btn-print { margin-left:auto; border:1px solid var(--line-soft); background: transparent; color: var(--fg-mute); padding: 6px 12px; font-size: 11px; letter-spacing:.08em; text-transform: uppercase; cursor:pointer; }
   .btn-print:hover { border-color: var(--accent); color: var(--fg-strong); }
-  .alpha-hero { margin-left: 6px; }
-  .alpha-callout { margin-top: 18px; padding: 14px 16px; border: 1px solid rgba(229,62,62,0.22); background: rgba(229,62,62,0.06); }
-  .alpha-callout-head { display:flex; align-items:center; gap:10px; margin-bottom: 8px; }
-  .alpha-callout-title { font-size: 11px; letter-spacing:.08em; text-transform: uppercase; color: #e53e3e; font-weight: 700; }
-  .alpha-callout-body { font-size: 13px; line-height: 1.6; color: var(--fg-mute); }
-
+          
   .intro-box { margin-top: 22px; padding: 18px 20px; background: #ffffff07; border: 1px solid var(--line-soft); }
   .intro-note { font-size: 13px; line-height: 1.65; color: var(--fg-dim); }
   .intro-also { margin-top: 10px; font-size: 11px; letter-spacing:.04em; color: var(--fg-ghost); }
@@ -143,7 +129,7 @@ const site = "https://ventic.it";
   .sec-body :global(li) { margin-bottom: 6px; }
   .sec-body :global(a) { color: var(--accent); text-underline-offset: 3px; }
   .sec-body :global(a:hover) { text-decoration: underline; }
-  .sec-body :global(code) { font-family: var(--mono); font-size: 12px; background: #ffffff10; padding: 1px 5px; border-radius: 4px; color: var(--fg-mute); }
+  .sec-body :global(code) { font-family: var(--mono); font-size: 12px; background: #ffffff10; padding: 1px 5px; border-radius: 0; color: var(--fg-mute); }
   .sec-body :global(strong) { color: var(--fg-strong); font-weight: 600; }
 
   /* Tables */

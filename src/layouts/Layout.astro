@@ -2,6 +2,7 @@
 import { getLangFromUrl, alternatePath, type Lang } from "../i18n/content";
 import HumanChallenge from "../components/HumanChallenge.astro";
 import LocaleRedirect from "../components/LocaleRedirect.astro";
+import ChatLauncher from "../components/ChatLauncher.astro";
 import GlobalTrustCaptcha from "../components/GlobalTrustCaptcha.tsx";
 import "../styles/global.css";
 
@@ -85,6 +86,18 @@ function autoBreadcrumbs(): Breadcrumb[] {
     return [
       { name: "Home", href: base },
       { name: isEn ? "Admin Panel" : "Pannello", href: isEn ? "/en/admin-panel/" : "/admin-panel/" },
+    ];
+  }
+  const sub = [
+    ["why-ventic", "Why Ventic", "Perché Ventic"],
+    ["how-it-works", "How it works", "Come funziona"],
+    ["platform", "Platform", "Piattaforma"],
+    ["on-premise", "On-premise", "On-premise"],
+  ].find(([slug]) => path.includes(`/${slug}/`));
+  if (sub) {
+    return [
+      { name: "Home", href: base },
+      { name: isEn ? sub[1] : sub[2], href: `${base}${sub[0]}/` },
     ];
   }
   if (path.includes("/privacy")) {
@@ -265,7 +278,7 @@ const jsonLdString = JSON.stringify({
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap"
     />
 
     {/* JSON-LD */}
@@ -273,6 +286,7 @@ const jsonLdString = JSON.stringify({
   </head>
   <body>
     <slot />
+    <ChatLauncher lang={lang} />
     {/* Global Human Challenge — TrustCaptcha (preferito) o fallback — visibile solo su click mailto */}
     {trustSitekey ? (
       <div id="ventic-trust-layer" style="position:fixed;right:16px;bottom:16px;z-index:9999;display:none;">

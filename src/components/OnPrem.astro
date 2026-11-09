@@ -1,0 +1,140 @@
+---
+import Icon from "./Icon.astro";
+import CopyAgent from "./CopyAgent.astro";
+import { onprem, TEMPLATE_URL, LICMAN_URL } from "../i18n/onprem";
+import type { Lang } from "../i18n/content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const c = onprem(lang);
+---
+<section id={c.id} class="sec sec--tint-top">
+  <div class="wrap">
+    <div class="hero">
+      <div class="copy">
+        <span class="plate plate--accent">{c.plate}</span>
+        <h2 class="h2-big ttl">{c.title[0]}<br />{c.title[1]}</h2>
+        <p class="lead">{c.lead}</p>
+        <div class="cta">
+          <a class="btn btn--a" href={TEMPLATE_URL} target="_blank" rel="noopener">
+            <Icon name="cloud" size={18} stroke="#14161a" width={1.8} />{c.cta1}
+          </a>
+          <a class="btn btn--b" href={c.guide}>{c.cta2}</a>
+        </div>
+        <CopyAgent lang={lang} />
+      </div>
+
+      <!-- art: template → signed release → cluster -->
+      <svg class="art" viewBox="0 0 520 280" role="img" aria-hidden="true">
+        <defs>
+          <marker id="op-a" markerWidth="8" markerHeight="8" refX="6.6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#f5a83f" /></marker>
+          <pattern id="op-g" width="26" height="26" patternUnits="userSpaceOnUse"><path d="M26 0H0V26" fill="none" stroke="#ffffff09" /></pattern>
+        </defs>
+        <rect width="520" height="280" fill="url(#op-g)" />
+        <g stroke="#3d444b" fill="#181b1f">
+          <rect x="24" y="90" width="120" height="100" rx="3" /><rect x="200" y="90" width="120" height="100" rx="3" stroke="#f5a83f" /><rect x="376" y="40" width="120" height="200" rx="3" stroke="#35cfa4" />
+        </g>
+        <g fill="none" stroke="#f5a83f" stroke-width="1.6" marker-end="url(#op-a)"><path d="M144 140H196" marker-end="url(#op-a)" /><path d="M320 140H372" marker-end="url(#op-a)" /></g>
+        <g fill="#97958f"><rect x="40" y="108" width="60" height="5" /><rect x="40" y="122" width="88" height="5" /><rect x="40" y="136" width="44" height="5" /></g>
+        <circle cx="260" cy="124" r="14" fill="none" stroke="#f5a83f" stroke-width="1.6" /><path d="M252 124l6 6 11-12" fill="none" stroke="#f5a83f" stroke-width="1.8" />
+        <g stroke="#2c5a4d" fill="#14201c"><rect x="392" y="58" width="88" height="34" rx="2" /><rect x="392" y="104" width="88" height="34" rx="2" /><rect x="392" y="150" width="88" height="34" rx="2" /><rect x="392" y="196" width="88" height="30" rx="2" /></g>
+        <g class="mono" font-size="10" letter-spacing="0.1em" fill="#8a8d92" text-anchor="middle">
+          <text x="84" y="214">TEMPLATE</text><text x="260" y="214">SIGNED RELEASE</text><text x="436" y="262">KUBERNETES</text>
+        </g>
+        <g fill="#35cfa4"><circle cx="404" cy="75" r="3" /><circle cx="404" cy="121" r="3" /><circle cx="404" cy="167" r="3" /><circle cx="404" cy="211" r="3" /></g>
+      </svg>
+    </div>
+
+    <div class="layout">
+      <aside class="side">
+        <div class="panel box">
+          <h3 class="boxt mono">{c.needs.title}</h3>
+          <ul class="ticks">{c.needs.items.map((i) => <li class="tick">{i}</li>)}</ul>
+        </div>
+        <div class="panel box">
+          <h3 class="boxt mono">{c.stackTitle}</h3>
+          <dl class="dl">
+            {c.stack.map((r) => <><dt class="mono">{r.k}</dt><dd>{r.v}</dd></>)}
+          </dl>
+        </div>
+        <a class="btn btn--b wide" href={LICMAN_URL} target="_blank" rel="noopener">Licman · {lang === "it" ? "chiave demo" : "demo key"}</a>
+      </aside>
+
+      <ol class="steps">
+        {c.steps.map((s) => (
+          <li class="step">
+            <span class="num mono">{s.n}</span>
+            <div class="body-col">
+              <h3 class="cell-t st">{s.title}</h3>
+              <p class="cell-b">{s.body}</p>
+              {s.code && (
+                <div class="code">
+                  <button class="copy-btn mono" type="button" data-copied={c.copied}>{c.copy}</button>
+                  <pre><code>{s.code}</code></pre>
+                </div>
+              )}
+              {s.note && <p class="note mono">{s.note}</p>}
+              {s.link && <a class="arrowlink" href={s.link.href} target="_blank" rel="noopener">{s.link.label} <Icon name="arrow" size={16} /></a>}
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+    <p class="foot mono">{c.foot}</p>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>(".copy-btn").forEach((b) => {
+    const label = b.textContent;
+    b.addEventListener("click", async () => {
+      const code = b.parentElement?.querySelector("code")?.textContent ?? "";
+      try { await navigator.clipboard.writeText(code); b.textContent = b.dataset.copied ?? "OK"; setTimeout(() => (b.textContent = label), 1600); } catch { /* clipboard unavailable */ }
+    });
+  });
+</script>
+
+<style>
+  .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 520px); gap: 44px; align-items: center; margin-bottom: 48px; }
+  .copy { display: flex; flex-direction: column; align-items: flex-start; gap: 22px; }
+  .ttl { margin-top: -2px; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; }
+  .art { width: 100%; height: auto; background: var(--sunk); border: 1px solid var(--line-soft); border-radius: 0;  }
+  .art .mono { font-family: var(--mono); }
+
+  .layout { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 36px; align-items: start; }
+  .side { position: sticky; top: 88px; display: flex; flex-direction: column; gap: 16px; }
+  .box { padding: 20px; }
+  .boxt { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--fg-mute); margin-bottom: 14px; font-weight: 600; }
+  .dl { margin: 0; display: grid; gap: 12px; }
+  .dl dt { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+  .dl dd { margin: 2px 0 0; font-size: 14px; line-height: 1.5; color: var(--fg-dim); }
+  .wide { width: 100%; }
+  .box .ticks { margin: 0; padding: 0; list-style: none; }
+
+  .steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .step { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 18px; padding-bottom: 30px; position: relative; }
+  .step::before { content: ""; position: absolute; left: 21px; top: 44px; bottom: 6px; width: 1px; background: linear-gradient(var(--line), transparent); }
+  .step:last-child::before { display: none; }
+  .num { display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--sunk); border: 1px solid var(--line); border-radius: 0; }
+  .body-col { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; min-width: 0; padding-top: 8px; }
+  .st { font-size: 19px; }
+  .body-col .cell-b { font-size: 15px; max-width: 70ch; }
+
+  .code { position: relative; width: 100%; background: var(--sunk); border: 1px solid var(--line-soft); border-radius: 0;  }
+  .code pre { margin: 0; padding: 16px 18px; overflow-x: auto; font-family: var(--mono); font-size: 13px; line-height: 1.7; color: var(--fg-dim); }
+  .copy-btn { position: absolute; top: 8px; right: 8px; height: 30px; padding: 0 10px; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--fg-mute); background: var(--panel-b); border: 1px solid var(--line); border-radius: 0; cursor: pointer; }
+  .copy-btn:hover { color: var(--fg-strong); border-color: #4a5158; }
+  .note { font-size: 12px; line-height: 1.6; color: var(--jade); padding-left: 12px; border-left: 2px solid var(--jade); }
+  .foot { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--line-soft); font-size: 12px; line-height: 1.6; color: var(--fg-mute); }
+
+  @media (max-width: 1000px) {
+    .hero { grid-template-columns: 1fr; }
+    .layout { grid-template-columns: 1fr; }
+    .side { position: static; }
+  }
+  @media (max-width: 560px) {
+    .step { grid-template-columns: 40px minmax(0, 1fr); gap: 12px; }
+    .num { width: 36px; height: 36px; font-size: 12px; }
+    .step::before { left: 17px; top: 38px; }
+  }
+</style>

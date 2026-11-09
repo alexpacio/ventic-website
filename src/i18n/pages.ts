@@ -1,0 +1,171 @@
+import type { Lang } from "./content";
+
+const pick = (lang: Lang) => <T,>(it: T, en: T): T => (lang === "it" ? it : en);
+
+/** Sub-pages that used to be sections of the one-page home. Same slug in both languages. */
+export const pageKeys = ["why", "how", "platform", "onprem"] as const;
+export type PageKey = (typeof pageKeys)[number];
+
+export const slugs: Record<PageKey, string> = {
+  why: "why-ventic",
+  how: "how-it-works",
+  platform: "platform",
+  onprem: "on-premise",
+};
+
+export const pagePath = (lang: Lang, key: PageKey) => `${lang === "en" ? "/en" : ""}/${slugs[key]}/`;
+export const homePath = (lang: Lang) => (lang === "en" ? "/en/" : "/");
+
+export function pages(lang: Lang) {
+  const t = pick(lang);
+  return {
+    why: {
+      nav: t("Perché Ventic", "Why Ventic"),
+      crumb: t("Perché Ventic", "Why Ventic"),
+      seo: {
+        title: t("Perché Ventic — oltre subscription e pagamento a token", "Why Ventic — beyond subscriptions and per-token billing"),
+        desc: t(
+          "Limiti di quota, outage, modelli deprecati, prezzi a token e compliance: perché i provider di LLM non bastano per il lavoro agentico, e come iniziare con il tuo hardware o con il nostro.",
+          "Quota limits, outages, deprecated models, per-token pricing and compliance: why LLM providers fall short for agentic work, and how to start on your own hardware or ours.",
+        ),
+      },
+      hero: {
+        plate: t("Perché Ventic", "Why Ventic"),
+        title: t(["I provider non", "bastano più."], ["Providers are", "not enough."]),
+        lead: t(
+          "Cosa si rompe quando agenti e team usano un LLM in subscription o a token, e i tre modi con cui Ventic lo risolve.",
+          "What breaks when agents and teams run on a subscription or per-token LLM, and the three ways Ventic fixes it.",
+        ),
+      },
+    },
+    how: {
+      nav: t("Come funziona", "How it works"),
+      crumb: t("Come funziona", "How it works"),
+      seo: {
+        title: t("Come funziona Ventic — stack, rete overlay, autoscaling", "How Ventic works — stack, overlay network, autoscaling"),
+        desc: t(
+          "Dall'intento al server in produzione: provisioning, rete overlay cifrata, lifecycle, scaling e 12 capacità sotto il cofano, con gli schemi architetturali.",
+          "From intent to a server in production: provisioning, encrypted overlay network, lifecycle, scaling and 12 under-the-hood capabilities, with architecture diagrams.",
+        ),
+      },
+      hero: {
+        plate: t("Architettura", "Architecture"),
+        title: t(["Dall'intento", "al server."], ["From intent", "to server."]),
+        lead: t(
+          "Come Ventic trova la macchina, la raggiunge senza aprire porte e ne gestisce la vita, con gli schemi di ogni componente.",
+          "How Ventic finds the machine, reaches it without opening ports and manages its lifecycle, with a diagram of every component.",
+        ),
+      },
+    },
+    platform: {
+      nav: t("Piattaforma", "Platform"),
+      crumb: t("Piattaforma", "Platform"),
+      seo: {
+        title: t("Piattaforma Ventic — stack e funzioni", "Ventic platform — stack and features"),
+        desc: t(
+          "Lo stack Ventic componente per componente, cosa ottieni dal primo giorno su GPU dedicate.",
+          "The Ventic stack component by component, what you get from day one on dedicated GPUs.",
+        ),
+      },
+      hero: {
+        plate: t("Piattaforma", "Platform"),
+        title: t(["Tutto lo stack,", "già assemblato."], ["The whole stack,", "already assembled."]),
+        lead: t(
+          "I componenti e le funzioni incluse, sul tuo hardware o sul nostro.",
+          "The components and the features included, on your hardware or ours.",
+        ),
+      },
+    },
+    onprem: {
+      nav: t("On-premise", "On-premise"),
+      crumb: t("On-premise", "On-premise"),
+      seo: {
+        title: t("Ventic on-premise — installa lo stack sul tuo hardware", "Ventic on-premise — install the stack on your hardware"),
+        desc: t(
+          "Installa Ventic sulla tua infrastruttura in 8 passi: template provider, release, licenza e deploy, con la guida copiabile per il tuo agente AI.",
+          "Install Ventic on your own infrastructure in 8 steps: provider template, release, license and deploy, with a guide you can copy into your AI agent.",
+        ),
+      },
+      hero: {
+        plate: t("On-premise", "On-premise"),
+        title: t(["Sul tuo hardware,", "in otto passi."], ["On your hardware,", "in eight steps."]),
+        lead: t(
+          "Dal template del provider al deploy della release: tutto ciò che serve per far girare Ventic in casa tua.",
+          "From the provider template to the release deploy: everything needed to run Ventic in-house.",
+        ),
+      },
+    },
+    explore: {
+      plate: t("Esplora Ventic", "Explore Ventic"),
+      title: t(["Tutto quello che", "c'è da sapere."], ["Everything you", "need to know."]),
+      lead: t(
+        "Ogni argomento ha la sua pagina: scegli da dove partire.",
+        "Every topic has its own page: pick where to start.",
+      ),
+      cards: [
+        {
+          key: "why" as const,
+          title: t("Perché Ventic", "Why Ventic"),
+          body: t(
+            "I limiti di subscription e pagamento a token, e i tre modi di iniziare: i tuoi server, i nostri o un'istanza già pronta.",
+            "The limits of subscriptions and per-token billing, and the three ways to start: your servers, ours, or an instance that is already running.",
+          ),
+        },
+        {
+          key: "how" as const,
+          title: t("Come funziona", "How it works"),
+          body: t(
+            "Provisioning, rete overlay cifrata, lifecycle e gli schemi architetturali di ogni componente.",
+            "Provisioning, encrypted overlay network, lifecycle and architecture diagrams of every component.",
+          ),
+        },
+        {
+          key: "platform" as const,
+          title: t("Piattaforma", "Platform"),
+          body: t(
+            "Lo stack e le funzioni incluse dal primo giorno.",
+            "The stack and the features included from day one.",
+          ),
+        },
+        {
+          key: "onprem" as const,
+          title: t("On-premise", "On-premise"),
+          body: t(
+            "Installa Ventic sul tuo hardware in otto passi, con la guida pronta per il tuo agente AI.",
+            "Install Ventic on your hardware in eight steps, with a guide ready for your AI agent.",
+          ),
+        },
+      ],
+      open: t("Apri la pagina", "Open the page"),
+    },
+  };
+}
+
+export interface NavItem { label: string; desc?: string; href: string }
+export interface NavGroup { label: string; href?: string; items?: NavItem[] }
+
+/** Main menu: grouped, with a one-line description for every dropdown entry. */
+export function navGroups(lang: Lang): NavGroup[] {
+  const t = pick(lang);
+  const p = pages(lang);
+  const pre = lang === "en" ? "/en" : "";
+  return [
+    {
+      label: t("Prodotto", "Product"),
+      items: [
+        { label: p.why.nav, desc: t("Perché i provider non bastano", "Why providers fall short"), href: pagePath(lang, "why") },
+        { label: p.how.nav, desc: t("Dall'intento al server in produzione", "From intent to a server in production"), href: pagePath(lang, "how") },
+        { label: p.platform.nav, desc: t("Stack e funzioni", "Stack and features"), href: pagePath(lang, "platform") },
+        { label: t("Pannello", "Admin panel"), desc: t("Utenti, ruoli, quote, white label", "Users, roles, quotas, white label"), href: `${pre}/admin-panel/` },
+      ],
+    },
+    { label: t("Prezzi", "Pricing"), href: `${pre}/pricing/` },
+    {
+      label: t("Installa", "Deploy"),
+      items: [
+        { label: p.onprem.nav, desc: t("Sul tuo hardware in otto passi", "On your hardware in eight steps"), href: pagePath(lang, "onprem") },
+        { label: t("Installa la demo", "Deploy a demo"), desc: t("Guida passo passo alla demo self-hosted", "Step-by-step self-hosted demo guide"), href: `${pre}/demo/` },
+      ],
+    },
+  ];
+}

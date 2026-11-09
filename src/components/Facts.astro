@@ -1,0 +1,42 @@
+---
+import type { Lang } from "../i18n/content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+
+const facts = {
+  it: [
+    { k: "Endpoint", v: "Compatibile OpenAI e Anthropic" },
+    { k: "Residenza dei dati", v: "In UE o US, a tua scelta" },
+    { k: "Inferenza", v: "vLLM e SGLang ottimizzati" },
+    { k: "Modelli", v: "Open-weight, assistenza inclusa" },
+  ],
+  en: [
+    { k: "Endpoint", v: "OpenAI and Anthropic compatible" },
+    { k: "Data residency", v: "EU or US, your choice" },
+    { k: "Inference", v: "Tuned vLLM and SGLang" },
+    { k: "Models", v: "Open-weight, support included" },
+  ],
+}[lang];
+---
+<section class="facts" aria-label={lang === "it" ? "In sintesi" : "At a glance"}>
+  <div class="wrap">
+    <dl class="row hairgrid">
+      {facts.map((f) => (
+        <div class="cell">
+          <dt class="mono k">{f.k}</dt>
+          <dd class="v">{f.v}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>
+
+<style>
+  .facts { border-bottom: 1px solid var(--line-soft); }
+  .row { margin: 0; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 0; border-bottom: 0; }
+  .cell { padding: 28px 28px 30px; }
+  .k { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-mute); }
+  .v { margin: 8px 0 0; font-size: 18px; line-height: 1.35; color: var(--fg-strong); }
+  @media (max-width: 1080px) { .row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 520px) { .row { grid-template-columns: minmax(0, 1fr); } .cell { padding: 22px 20px; } }
+</style>

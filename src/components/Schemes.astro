@@ -1,0 +1,28 @@
+---
+import Scheme from "./Scheme.astro";
+import { schemes } from "../i18n/onprem";
+import type { Lang } from "../i18n/content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const c = schemes(lang);
+---
+<section id={c.id} class="sec sec--tint">
+  <div class="wrap">
+    <div class="head">
+      <div>
+        <span class="plate">{c.plate}</span>
+        <h2 class="h2 ttl">{c.title[0]}<br />{c.title[1]}</h2>
+      </div>
+      <p class="lead intro">{c.lead}</p>
+    </div>
+    <div class="stack">
+      {c.items.map((s) => <Scheme scheme={s} />)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .ttl { margin-top: 16px; }
+  .intro { max-width: 46ch; }
+  .stack { display: flex; flex-direction: column; gap: 24px; }
+</style>

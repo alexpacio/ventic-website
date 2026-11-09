@@ -3,6 +3,7 @@ import Layout from './Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Cta from '../components/Cta.astro';
+import CopyAgent from '../components/CopyAgent.astro';
 import type { Lang } from '../i18n/content';
 
 interface Props {
@@ -26,6 +27,7 @@ const label = lang === 'it' ? 'Guida alla demo' : 'Demo deployment guide';
       <p class="mono guide-plate">{lang === 'it' ? 'Ventic · Sulla tua infrastruttura' : 'Ventic · On your infrastructure'}</p>
       <h1>{title}</h1>
       <p class="guide-lead">{description}</p>
+      <div class="guide-agent"><CopyAgent lang={lang} /></div>
     </header>
     <div class="wrap guide-grid">
       <aside class="guide-toc panel">
@@ -47,6 +49,7 @@ const label = lang === 'it' ? 'Guida alla demo' : 'Demo deployment guide';
   h1 { color: var(--fg-strong); font-size: clamp(32px, 5vw, 60px); line-height: 1.1; max-width: 20ch; }
   .guide-lead { color: var(--fg-mute); font-size: 18px; line-height: 1.7; max-width: 72ch; margin-top: 24px; }
   .guide-grid { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 44px; align-items: start; padding-bottom: 72px; }
+  .guide-agent { margin-top: 28px; }
   .guide-toc { position: sticky; top: 88px; padding: 22px; }
   .guide-toc p { color: var(--accent); font-size: 12px; margin-bottom: 16px; }
   .guide-toc ol { padding-left: 18px; }
@@ -63,7 +66,7 @@ const label = lang === 'it' ? 'Guida alla demo' : 'Demo deployment guide';
   .guide-content :global(a) { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
   .guide-content :global(strong) { color: var(--fg-strong); }
   .guide-content :global(code) { font-family: var(--mono); font-size: .88em; }
-  .guide-content :global(pre) { padding: 22px; border: 1px solid var(--line-dim); border-radius: 3px; margin-block: 22px; overflow-x: auto; background: var(--ink) !important; }
+  .guide-content :global(pre) { padding: 22px; border: 1px solid var(--line-dim); border-radius: 0; margin-block: 22px; overflow-x: auto; background: var(--ink) !important; }
   .guide-content :global(pre code) { overflow-wrap: normal; white-space: pre; }
   .guide-content :global(blockquote) { margin-block: 26px; border-left: 3px solid var(--accent); padding: 4px 22px; background: var(--deck); }
   .guide-content :global(table) { display: block; width: 100%; overflow-x: auto; border-collapse: collapse; margin-block: 24px; font-size: 14px; }

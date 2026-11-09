@@ -5,13 +5,13 @@ import { content, type Lang } from "../i18n/content";
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const h = content[lang].hero;
-const how = lang === "it" ? "/#come-funziona" : "/en/#how-it-works";
+const how = lang === "it" ? "/how-it-works/" : "/en/how-it-works/";
 ---
 <section class="hero">
   <div class="wrap grid inner">
     <div class="copy">
-      <span class="plate plate--accent">
-        <span class="dot" style="width:6px;height:6px;box-shadow:none"></span>
+      <span class="plate">
+        <span class="dot"></span>
         {h.plate}
       </span>
       <h1 class="h1">
@@ -22,7 +22,10 @@ const how = lang === "it" ? "/#come-funziona" : "/en/#how-it-works";
         <a class="btn btn--a" href="#contatto">{h.cta1}</a>
         <a class="btn btn--b" href={how}>{h.cta2}</a>
       </div>
-      <p class="alpha measure"><strong>{h.alphaTitle}</strong> {h.alphaPre} <ObfuscatedEmail lang={lang} class="mono link-inline" /> {h.alphaPost}</p>
+      <p class="start measure"><strong>{h.startTitle}</strong> {h.startPre} <ObfuscatedEmail lang={lang} class="mono link-inline" /> {h.startPost}</p>
+      <p class="start measure">
+        {lang === "it" ? "Preferisci non installare nulla? Prova " : "Rather not install anything? Try "}<a class="link-inline" href="https://llm.netter.io" rel="noopener">Netter Intelligence</a>{lang === "it" ? ", un'istanza Ventic già attiva su llm.netter.io." : ", a Ventic instance that is already up at llm.netter.io."}
+      </p>
     </div>
     <div class="slidecol"><PlatformShots lang={lang} /></div>
   </div>
@@ -30,25 +33,24 @@ const how = lang === "it" ? "/#come-funziona" : "/en/#how-it-works";
 
 <style>
   .hero {
-    position: relative; overflow: hidden; padding: 72px 0 44px;
-    background:
-      radial-gradient(900px 520px at 78% 18%, rgba(245,168,63,0.10) 0%, transparent 62%),
-      radial-gradient(700px 400px at 50% -10%, #1c1f24 0%, transparent 58%),
-      var(--ink);
-    border-bottom: 1px solid var(--line-dim);
+    position: relative; overflow: hidden; padding: 112px 0 64px;
+    background-color: var(--ink);
+    background-image: radial-gradient(circle at 1px 1px, #2a2f36 1px, transparent 0);
+    background-size: 32px 32px;
+    border-bottom: 1px solid var(--line-soft);
   }
-  .inner { position: relative; align-items: start; }
+  .inner { position: relative; align-items: center; }
   .copy { grid-column: span 6; }
   .slidecol { grid-column: span 6; min-width: 0; }
 
-  .plate { margin-bottom: 28px; }
-  .h1 { margin: 0; }
-  .hl { color: var(--accent); }
+  .plate { margin-bottom: 32px; }
+  .h1 { margin: 0; color: var(--fg-mute); }
+  .hl { color: var(--fg-strong); }
   .measure { max-width: 52ch; }
-  .lead { margin-top: 28px; font-size: clamp(17px, 1.35vw, 19px); line-height: 1.55; }
-  .actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px; }
-  .alpha { margin-top: 28px; font-size: 14px; line-height: 1.6; color: var(--fg-mid); }
-  .alpha strong { color: var(--fg-strong); font-weight: 600; }
+  .lead { margin-top: 32px; font-size: clamp(17px, 1.4vw, 20px); line-height: 1.55; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 40px; }
+  .start { margin-top: 28px; font-size: 14px; line-height: 1.6; color: var(--fg-mid); }
+  .start strong { color: var(--fg-strong); font-weight: 500; }
   :global(.link-inline) { color: var(--accent) !important; text-underline-offset: 3px; }
   :global(.link-inline:hover) { text-decoration: underline; }
 
@@ -57,12 +59,12 @@ const how = lang === "it" ? "/#come-funziona" : "/en/#how-it-works";
     .slidecol { grid-column: span 12; margin-top: 16px; }
   }
   @media (max-width: 860px) {
-    .hero { padding: 36px 0 36px; }
+    .hero { padding: 48px 0 40px; }
     .copy, .slidecol { grid-column: span 6; }
     .plate { margin-bottom: 24px; line-height: 1.5; }
     .lead { margin-top: 20px; }
     .actions { margin-top: 28px; }
-    .alpha { margin-top: 20px; }
+    .start { margin-top: 20px; }
   }
   @media (max-width: 520px) {
     .actions { flex-direction: column; gap: 10px; }

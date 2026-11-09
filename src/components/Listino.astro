@@ -1,0 +1,97 @@
+---
+import Icon from "./Icon.astro";
+import { listino } from "../i18n/listino";
+import type { Lang } from "../i18n/content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const c = listino(lang);
+---
+<section id={c.id} class="sec sec--tint">
+  <div class="wrap">
+    <div class="grid top">
+      <div class="tcol">
+        <span class="plate">{c.plate}</span>
+        <h2 class="h2">{c.title[0]}<br />{c.title[1]}</h2>
+      </div>
+      <div class="lcol"><p class="body">{c.lead}</p></div>
+    </div>
+
+    <div class="panel tbl" role="table">
+      <div class="tr th mono" role="row">
+        {c.cols.map((h) => <span role="columnheader">{h}</span>)}
+      </div>
+      {c.rows.map((r) => (
+        <div class="grp">
+          <div class="pname">
+            <h3 class="cell-t">{r.name}</h3>
+            <p class="psub">{r.sub}</p>
+          </div>
+          {r.variants.map((v) => (
+            <div class="tr" role="row">
+              <span class="mono deliv" role="cell">{v.delivery}</span>
+              <span class="cellp" role="cell">{v.host ? <><b class="price">{v.host}</b><i class="mono u">{c.month}</i></> : <span class="mono dash">{c.none}</span>}</span>
+              <span class="cellp" role="cell"><b class="price">{v.company}</b><i class="mono u">{c.month}</i></span>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+
+    <div class="panel panel--warm ob">
+      <div class="ob-head">
+        <h3 class="cell-t">{c.obstack.name}</h3>
+        <p class="psub">{c.obstack.sub}</p>
+      </div>
+      <div class="ob-items">
+        {c.obstack.items.map((i) => (
+          <div class="ob-item">
+            <span class="mono ob-k">{i.k}</span>
+            <span class="prow"><b class="price ob-v">{i.v}</b><i class="mono u">{i.u}</i></span>
+            {i.note && <span class="mono ob-n">{i.note}</span>}
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <p class="mono foot">{c.foot}</p>
+    <a class="arrowlink" href={c.href} target="_blank" rel="noopener">{c.cta} <Icon name="arrow" size={16} width={2} /></a>
+  </div>
+</section>
+
+<style>
+  .top { align-items: end; margin-bottom: 40px; }
+  .tcol { grid-column: span 7; }
+  .lcol { grid-column: span 5; }
+  .plate { margin-bottom: 16px; }
+  .tbl { display: flex; flex-direction: column; }
+  .tr { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: baseline; padding: 14px 24px; }
+  .th { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-mute); border-bottom: 1px solid var(--line-soft); background: var(--sunk); padding-block: 12px; }
+  .grp { border-bottom: 1px solid var(--line-soft); padding: 18px 0 6px; }
+  .grp:last-child { border-bottom: 0; }
+  .pname { padding: 0 24px 8px; }
+  .psub { margin: 4px 0 0; font-size: 13px; color: var(--fg-mute); line-height: 1.5; }
+  .deliv { font-size: 12px; letter-spacing: .06em; color: var(--fg-dim); }
+  .cellp { display: inline-flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  .price { font-size: 24px; font-weight: 300; }
+  .u { font-style: normal; font-size: 11px; color: var(--fg-mute); }
+  .dash { color: var(--fg-ghost); }
+  .ob { margin-top: 16px; padding: 24px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 24px; align-items: center; }
+  .ob-items { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .ob-item { display: flex; flex-direction: column; gap: 6px; padding: 14px; background: var(--sunk); border: 1px solid var(--line-soft); }
+  .ob-k { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+  .prow { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+  .ob-v { font-size: 22px; }
+  .ob-n { font-size: 10px; color: var(--fg-faint); }
+  .foot { margin: 18px 0 14px; font-size: 11px; letter-spacing: .04em; line-height: 1.7; color: var(--fg-faint); }
+  @media (max-width: 860px) {
+    .tcol, .lcol { grid-column: span 6; }
+    .ob { grid-template-columns: 1fr; }
+    .ob-items { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .tr { grid-template-columns: 1fr 1fr; padding-inline: 16px; }
+    .tr .deliv { grid-column: 1 / -1; }
+    .th { display: none; }
+    .pname { padding-inline: 16px; }
+  }
+</style>

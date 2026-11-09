@@ -2,8 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import Nav from "../../components/Nav.astro";
 import PriceHero from "../../components/PriceHero.astro";
-import PricePair from "../../components/PricePair.astro";
-import Packages from "../../components/Packages.astro";
+import Listino from "../../components/Listino.astro";
 import Matrix from "../../components/Matrix.astro";
 import Sizing from "../../components/Sizing.astro";
 import PriceNotes from "../../components/PriceNotes.astro";
@@ -19,8 +18,7 @@ const jsonLd = pricingJsonLd(lang);
   <Nav lang={lang} />
   <main id="main">
     <PriceHero lang={lang} />
-    <PricePair lang={lang} />
-    <Packages lang={lang} />
+    <Listino lang={lang} />
     <Matrix lang={lang} />
     <Sizing lang={lang} />
     <PriceNotes lang={lang} />

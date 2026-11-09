@@ -1,0 +1,56 @@
+---
+import Icon from "./Icon.astro";
+import { agentPrompt, agentLabels } from "../lib/agentGuide";
+import type { Lang } from "../i18n/content";
+interface Props { lang: Lang; hint?: boolean; }
+const { lang, hint = true } = Astro.props;
+const l = agentLabels[lang];
+const text = agentPrompt(lang);
+const filename = lang === "it" ? "ventic-deploy-guida-agente.md" : "ventic-deploy-agent-guide.md";
+---
+<div class="agent" data-agent data-copied={l.copied} data-failed={l.failed} data-filename={filename}>
+  <div class="row">
+    <button class="btn btn--a" type="button" data-agent-copy>
+      <Icon name="terminal" size={18} stroke="#14161a" width={1.8} /><span data-label>{l.copy}</span>
+    </button>
+    <button class="btn btn--b" type="button" data-agent-download>{l.download}</button>
+  </div>
+  {hint && <p class="hint mono">{l.hint}</p>}
+  <p class="status mono" role="status" aria-live="polite" data-status></p>
+  <script type="text/plain" data-agent-text set:html={text.replace(/<\/script/gi, "<\\/script")}></script>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-agent]").forEach((root) => {
+    const text = () => (root.querySelector("[data-agent-text]")?.textContent ?? "").split("<\\/" + "script").join("</" + "script");
+    const status = root.querySelector<HTMLElement>("[data-status]")!;
+    const label = root.querySelector<HTMLElement>("[data-label]")!;
+    const original = label.textContent;
+    const say = (m: string) => { status.textContent = m; };
+
+    root.querySelector("[data-agent-copy]")?.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(text());
+        label.textContent = root.dataset.copied ?? "OK";
+        say(root.dataset.copied ?? "OK");
+        setTimeout(() => { label.textContent = original; say(""); }, 3200);
+      } catch {
+        say(root.dataset.failed ?? "");
+      }
+    });
+    root.querySelector("[data-agent-download]")?.addEventListener("click", () => {
+      const url = URL.createObjectURL(new Blob([text()], { type: "text/markdown;charset=utf-8" }));
+      const a = Object.assign(document.createElement("a"), { href: url, download: root.dataset.filename ?? "guide.md" });
+      document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    });
+  });
+</script>
+
+<style>
+  .agent { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+  .row { display: flex; flex-wrap: wrap; gap: 12px; }
+  .hint { max-width: 70ch; font-size: 12px; line-height: 1.6; color: var(--fg-mute); }
+  .status { min-height: 1em; font-size: 12px; color: var(--jade); }
+  .status:empty { display: none; }
+  [data-agent-text] { display: none; }
+</style>

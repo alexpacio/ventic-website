@@ -1,0 +1,86 @@
+---
+import ObfuscatedEmail from "./ObfuscatedEmail.astro";
+import { contact } from "../i18n/contact";
+import type { Lang } from "../i18n/content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const f = contact(lang).form;
+// Endpoint JSON compatibile con Formspree / Web3Forms / simili
+const endpoint = (import.meta.env.PUBLIC_CONTACT_ENDPOINT as string | undefined) || "";
+const privacyHref = lang === "en" ? "/en/privacy/" : "/privacy/";
+---
+{endpoint ? (
+  <form class="cf" data-contact-form data-endpoint={endpoint} data-ok={f.ok} data-err={f.err} data-invalid={f.invalid} data-sending={f.sending} data-send={f.send} novalidate>
+    <div class="row">
+      <label>{f.name}<input name="name" required autocomplete="name" /></label>
+      <label>{f.email}<input name="email" type="email" required autocomplete="email" /></label>
+    </div>
+    <div class="row">
+      <label>{f.company}<input name="company" autocomplete="organization" /></label>
+      <label>{f.topic}
+        <select name="topic">{f.topics.map((t) => <option value={t}>{t}</option>)}</select>
+      </label>
+    </div>
+    <label>{f.message}<textarea name="message" rows="6" required></textarea></label>
+    <input class="hp" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" />
+    <label class="consent"><input type="checkbox" name="consent" required /><span>{f.consent} <a href={privacyHref}>{f.privacy}</a>.</span></label>
+    <button class="btn" type="submit">{f.send}</button>
+    <p class="status mono" role="status" aria-live="polite"></p>
+  </form>
+) : (
+  <p class="body">{f.missing} <ObfuscatedEmail lang={lang} class="mono" /></p>
+)}
+
+<style is:global>
+  .cf { display: grid; gap: 16px; max-width: 640px; }
+  .cf .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .cf label { display: grid; gap: 6px; font-size: 13px; color: var(--fg-dim); }
+  .cf input:not([type=checkbox]), .cf select, .cf textarea {
+    background: var(--deck); color: var(--fg); border: 1px solid var(--line); border-radius: 4px;
+    padding: 10px 12px; font: inherit; font-size: 15px;
+  }
+  .cf input:focus, .cf select:focus, .cf textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .cf .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+  .cf .consent { display: flex; gap: 10px; align-items: flex-start; }
+  .cf .consent a { color: var(--accent); }
+  .cf button { justify-self: start; cursor: pointer; }
+  .cf button[disabled] { opacity: .6; cursor: progress; }
+  .cf .status { min-height: 1.4em; font-size: 12px; margin: 0; color: var(--fg-dim); }
+  .cf .status[data-state=ok] { color: var(--jade); }
+  .cf .status[data-state=err] { color: #e05a5a; }
+  @media (max-width: 640px) { .cf .row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>("[data-contact-form]").forEach((form) => {
+    const status = form.querySelector<HTMLElement>(".status")!;
+    const btn = form.querySelector<HTMLButtonElement>("button[type=submit]")!;
+    const set = (state: string, msg: string) => { status.dataset.state = state; status.textContent = msg; };
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const d = form.dataset;
+      const fd = new FormData(form);
+      const email = String(fd.get("email") || "");
+      if (!String(fd.get("name") || "").trim() || !/^\S+@\S+\.\S+$/.test(email) || !String(fd.get("message") || "").trim() || !form.consent.checked) {
+        return set("err", d.invalid!);
+      }
+      if (fd.get("_gotcha")) return set("ok", d.ok!); // bot: finge successo
+      const payload: Record<string, unknown> = Object.fromEntries(fd.entries());
+      delete payload.consent;
+      payload.page = location.href;
+      const token = (window as any).__venticTrustToken;
+      if (token) payload.trustcaptcha_token = token;
+      btn.disabled = true; btn.textContent = d.sending!; set("", "");
+      try {
+        const res = await fetch(d.endpoint!, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify(payload),
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        form.reset(); set("ok", d.ok!);
+      } catch { set("err", d.err!); }
+      finally { btn.disabled = false; btn.textContent = d.send!; }
+    });
+  });
+</script>

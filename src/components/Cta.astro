@@ -7,10 +7,9 @@ const c = content[lang].cta as typeof content["it"]["cta"] & { mailPrefix?: stri
 const mailPrefix = (c as any).mailPrefix ?? "";
 ---
 <section id="contatto" class="sec band">
-  <span class="grain" aria-hidden="true"></span>
   <div class="wrap inner">
     <div>
-      <span class="plate plate--accent">{c.plate}</span>
+      <span class="plate">{c.plate}</span>
       <h2 class="h2-big">{c.title[0]}<br />{c.title[1]}</h2>
       <p class="lead measure">{c.body}</p>
     </div>
@@ -24,12 +23,15 @@ const mailPrefix = (c as any).mailPrefix ?? "";
 <style>
   .band {
     position: relative; overflow: hidden;
-    background: linear-gradient(180deg, #14171b 0%, var(--deck) 100%);
-    border-top: 1px solid var(--line-dim);
+    background-color: var(--ink);
+    background-image: radial-gradient(circle at 1px 1px, #2a2f36 1px, transparent 0);
+    background-size: 32px 32px;
+    border-top: 1px solid var(--line-soft);
+    padding: 136px 0;
   }
   .inner { position: relative; display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; }
-  .plate { margin-bottom: 16px; }
-  .measure { margin-top: 18px; max-width: 52ch; }
+  .plate { margin-bottom: 24px; }
+  .measure { margin-top: 24px; max-width: 52ch; }
   .actions { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; flex-shrink: 0; }
   @media (max-width: 1080px) {
     .inner { flex-direction: column; align-items: flex-start; gap: 24px; }

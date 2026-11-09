@@ -1,0 +1,23 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Nav from "../../components/Nav.astro";
+import PageHero from "../../components/PageHero.astro";
+import Problem from "../../components/Problem.astro";
+import Modes from "../../components/Modes.astro";
+import Cta from "../../components/Cta.astro";
+import Footer from "../../components/Footer.astro";
+import { pages } from "../../i18n/pages";
+
+const lang = "en" as const;
+const seo = pages(lang).why.seo;
+---
+<Layout title={seo.title} description={seo.desc} lang={lang}>
+  <Nav lang={lang} />
+  <main id="main">
+    <PageHero lang={lang} page="why" />
+    <Problem lang={lang} />
+    <Modes lang={lang} />
+    <Cta lang={lang} />
+  </main>
+  <Footer lang={lang} />
+</Layout>

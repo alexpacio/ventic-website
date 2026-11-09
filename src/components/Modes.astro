@@ -25,28 +25,6 @@ const c = content[lang].modes;
         <div class="body-in">
           <h3 class="ctitle">{c.byoh.title}</h3>
           <p class="desc">{c.byoh.desc}</p>
-          <div class="sunk pricebox pricebox--byoh">
-            <span class="mono plabel">{c.byoh.priceLabel}</span>
-            <span class="prow">
-              <span class="price pval">{c.byoh.price}</span>
-              <span class="mono punit">{c.byoh.unit}</span>
-            </span>
-            <span class="mono byoh-sub">{lang === "it" ? "per 5 postazioni incluse" : "for 5 seats included"}</span>
-            <div class="scale">
-              <div class="scale-row">
-                <span class="seat-dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
-                <span class="mono scale-label">{lang === "it" ? "5 incluse" : "5 included"}</span>
-                <span class="mono scale-price">{lang === "it" ? "€69,90" : "€69.90"}</span>
-              </div>
-              <div class="scale-sep"><span></span><span class="mono plus">{lang === "it" ? "+ €39,99" : "+ €39.99"}</span><span></span></div>
-              <div class="scale-row scale-row--muted">
-                <span class="seat-dots seat-dots--muted" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
-                <span class="mono scale-label">{lang === "it" ? "ogni 10 aggiuntive" : "per extra 10"}</span>
-                <span class="mono scale-price">{lang === "it" ? "€39,99" : "€39.99"}</span>
-              </div>
-              <p class="mono scale-foot">{lang === "it" ? "Es. 15 posti → €109,89/mese · 25 posti → €149,88/mese" : "E.g. 15 seats → €109.89/mo · 25 seats → €149.88/mo"}</p>
-            </div>
-          </div>
           <ul class="ticks">
             {c.byoh.ticks.map((t) => <li class="tick">{t}</li>)}
           </ul>
@@ -63,18 +41,6 @@ const c = content[lang].modes;
         <div class="body-in">
           <h3 class="ctitle">{c.paas.title}</h3>
           <p class="desc">{c.paas.desc}</p>
-          <div class="sunk pricebox pricebox--paas">
-            <span class="mono plabel plabel--warm">{c.paas.priceLabel}</span>
-            <span class="prow">
-              <span class="price pval pval--warm">{c.paas.price}</span>
-              <span class="mono punit">{c.paas.unit}</span>
-            </span>
-            <span class="badge-lic mono"><span class="dot dot--live" style="width:6px;height:6px"></span>{lang === "it" ? "licenza inclusa" : "license included"}</span>
-            <div class="paas-meta">
-              <span class="mono paas-hw"><Icon name="provisioning" size={14} width={1.6} /> {lang === "it" ? "hardware + licenza" : "hardware + license"}</span>
-              <span class="mono paas-off">{lang === "it" ? "mai a token" : "never per-token"}</span>
-            </div>
-          </div>
           <ul class="ticks">
             {c.paas.ticks.map((t) => <li class="tick">{t}</li>)}
           </ul>
@@ -82,6 +48,30 @@ const c = content[lang].modes;
         </div>
       </article>
     </div>
+
+    <!-- Netter Intelligence — istanza già attiva -->
+    <article class="panel card hosted" data-mode="hosted">
+      <div class="panel-head">
+        <span class="mono tag">{c.hosted.tag}</span>
+        <span class="rivet"></span>
+      </div>
+      <div class="hosted-in">
+        <div class="hosted-copy">
+          <h3 class="ctitle">{c.hosted.title}</h3>
+          <p class="desc">{c.hosted.desc}</p>
+          <ul class="ticks">
+            {c.hosted.ticks.map((t) => <li class="tick">{t}</li>)}
+          </ul>
+          <p class="note">{c.hosted.note}</p>
+        </div>
+        <div class="sunk hosted-box">
+          <span class="mono plabel">{c.hosted.endpointLabel}</span>
+          <span class="host">{c.hosted.host}</span>
+          <span class="badge-lic mono"><span class="dot dot--live" style="width:6px;height:6px"></span>{lang === "it" ? "già attiva" : "already running"}</span>
+          <a class="btn btn--a hosted-cta" href={c.hosted.url} rel="noopener">{c.hosted.cta}<Icon name="arrow" size={16} width={2} /></a>
+        </div>
+      </div>
+    </article>
   </div>
 </section>
 
@@ -89,11 +79,17 @@ const c = content[lang].modes;
   .plate { margin-bottom: 16px; }
   .lead-r { max-width: 38ch; }
   .pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .hosted { margin-top: 16px; }
+  .hosted-in { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 32px; align-items: stretch; padding: 24px 22px; }
+  .hosted-copy { display: flex; flex-direction: column; gap: 16px; }
+  .hosted-box { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 14px; padding: 24px; }
+  .host { font-family: var(--sans); font-weight: 300; font-size: clamp(28px, 3vw, 40px); letter-spacing: -0.02em; line-height: 1.1; color: var(--accent); overflow-wrap: anywhere; }
+  .hosted-cta { margin-top: 6px; }
   .card { display: flex; flex-direction: column; padding: 0; overflow: hidden; }
   .tag { font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: #a9a7a1; line-height: 1.3; }
   .tag--warm { color: var(--accent); }
   .body-in { display: flex; flex-direction: column; gap: 16px; padding: 24px 22px; flex-grow: 1; }
-  .ctitle { font-family: var(--display); font-size: clamp(30px, 3vw, 40px); font-weight: 700; line-height: 1; text-transform: uppercase; color: var(--fg-strong); }
+  .ctitle { font-family: var(--display); font-size: clamp(30px, 3vw, 40px); font-weight: 300; letter-spacing: -0.02em; line-height: 1;  color: var(--fg-strong); }
   .desc { font-size: 16px; line-height: 1.62; color: var(--fg-dim); }
   .pricebox { display: flex; flex-direction: column; gap: 10px; padding: 16px; }
   .pricebox--byoh { gap: 8px; border-style: dashed; }
@@ -116,18 +112,18 @@ const c = content[lang].modes;
   .scale-price { font-size: 13px; font-weight: 600; color: var(--fg-strong); font-variant-numeric: tabular-nums; }
   .scale-sep { display: flex; align-items: center; gap: 10px; }
   .scale-sep span:first-child, .scale-sep span:last-child { flex: 1; height: 1px; background: var(--line-dim); }
-  .plus { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); background: rgba(245,168,63,.08); border: 1px solid rgba(245,168,63,.18); padding: 3px 8px; border-radius: 999px; }
+  .plus { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); background: rgba(245,168,63,.08); border: 1px solid rgba(245,168,63,.18); padding: 3px 8px; border-radius: 0; }
   .scale-foot { font-size: 11px; letter-spacing: .02em; color: var(--fg-ghost); line-height: 1.5; margin-top: 2px; }
   .badge-lic {
     display: inline-flex; align-items: center; gap: 7px;
     font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
     color: var(--jade); background: rgba(53,207,164,.08); border: 1px solid rgba(53,207,164,.18);
-    border-radius: 999px; padding: 6px 10px; align-self: flex-start;
+    border-radius: 0; padding: 6px 10px; align-self: flex-start;
   }
   .paas-meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 2px; padding-top: 12px; border-top: 1px solid #2e2a26; }
   .paas-hw { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-mute); }
   .paas-off { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--fg-ghost); }
   ul.ticks { list-style: none; margin: 0; padding: 0; }
   .note { margin-top: auto; padding-top: 6px; font-size: 13px; line-height: 1.55; color: var(--fg-faint); }
-  @media (max-width: 860px) { .pair { grid-template-columns: 1fr; } .tag { font-size: 9px; } }
+  @media (max-width: 860px) { .pair { grid-template-columns: 1fr; } .tag { font-size: 9px; } .hosted-in { grid-template-columns: 1fr; gap: 24px; } .hosted-cta { width: 100%; } }
 </style>

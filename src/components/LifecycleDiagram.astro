@@ -99,12 +99,12 @@ const states = [
 <style>
   .life { margin: 20px 0 0; }
   .head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 14px; }
-  .ltitle { font-family: var(--display); font-size: clamp(18px, 1.8vw, 22px); font-weight: 700; line-height: 1.1; text-transform: uppercase; color: var(--fg-strong); }
+  .ltitle { font-family: var(--display); font-size: clamp(18px, 1.8vw, 22px); font-weight: 300; letter-spacing: -0.02em; line-height: 1.1;  color: var(--fg-strong); }
   .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
   .rule { padding: 16px 16px 18px; display: flex; flex-direction: column; gap: 8px; }
   .k { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
 
-  .svgwrap { margin-top: 12px; background: var(--sunk); border: 1px solid var(--line-soft); border-radius: 3px; }
+  .svgwrap { margin-top: 12px; background: var(--sunk); border: 1px solid var(--line-soft); border-radius: 0; }
   .sscroll { overflow-x: auto; padding: 16px 18px 10px; }
   .state { display: block; width: 100%; min-width: 900px; height: auto; }
 

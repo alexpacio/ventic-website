@@ -1,0 +1,61 @@
+---
+/**
+ * Chat dal vivo via provider esterno (Crisp o Tawk.to), caricato SOLO al click (GDPR).
+ * Env: PUBLIC_CHAT_PROVIDER = "crisp" | "tawk"
+ *      PUBLIC_CHAT_ID       = Crisp website id | Tawk "propertyId/widgetId"
+ * Se non configurato, non renderizza nulla.
+ */
+import { contact } from "../i18n/contact";
+import type { Lang } from "../i18n/content";
+interface Props { lang: Lang; inline?: boolean; }
+const { lang, inline = false } = Astro.props;
+const provider = (import.meta.env.PUBLIC_CHAT_PROVIDER as string | undefined) || "";
+const id = (import.meta.env.PUBLIC_CHAT_ID as string | undefined) || "";
+const enabled = (provider === "crisp" || provider === "tawk") && !!id;
+---
+{enabled && (
+  <button type="button" class:list={["chat-launch", inline ? "inline" : "float"]} data-chat data-provider={provider} data-id={id} data-lang={lang}>
+    <span class="dot" aria-hidden="true"></span>{contact(lang).chat.open}
+  </button>
+)}
+
+<style is:global>
+  .chat-launch {
+    display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+    background: var(--panel-a); color: var(--fg-strong); border: 1px solid var(--line);
+    border-radius: 999px; padding: 10px 18px; font: 500 14px var(--display);
+  }
+  .chat-launch:hover { border-color: var(--accent); }
+  .chat-launch .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--jade); }
+  .chat-launch.float { position: fixed; left: 16px; bottom: 16px; z-index: 9000; }
+  .chat-launch[disabled] { opacity: .6; cursor: progress; }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>("[data-chat]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const { provider, id, lang } = btn.dataset as Record<string, string>;
+      const w = window as any;
+      btn.disabled = true;
+      const done = () => document.querySelectorAll<HTMLElement>("[data-chat]").forEach((b) => (b.hidden = true));
+      if (w.__venticChatLoaded) { done(); return; }
+      w.__venticChatLoaded = true;
+      const s = document.createElement("script");
+      s.async = true;
+      if (provider === "crisp") {
+        w.$crisp = [["safe", true], ["config", "locale", [lang]]];
+        w.CRISP_WEBSITE_ID = id;
+        s.src = "https://client.crisp.chat/l.js";
+        s.onload = () => { w.$crisp.push(["do", "chat:show"]); w.$crisp.push(["do", "chat:open"]); done(); };
+      } else {
+        w.Tawk_API = w.Tawk_API || {};
+        w.Tawk_API.onLoad = () => { w.Tawk_API.showWidget?.(); w.Tawk_API.maximize?.(); done(); };
+        s.src = `https://embed.tawk.to/${id}`;
+        s.charset = "UTF-8";
+        s.setAttribute("crossorigin", "*");
+      }
+      s.onerror = () => { w.__venticChatLoaded = false; btn.disabled = false; };
+      document.head.appendChild(s);
+    });
+  });
+</script>

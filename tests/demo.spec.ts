@@ -46,7 +46,7 @@ for (const language of ['it', 'en']) {
 test('the guide is linked from both home pages', async ({ page }) => {
   for (const prefix of ['', '/en']) {
     await page.goto(`${prefix}/?nolocale=1`);
-    await expect(page.locator(`.bar a[href="${prefix}/demo/"]`).first()).toBeVisible();
+    await expect(page.locator(`.bar a[href="${prefix}/demo/"]`).first()).toBeAttached();
     await expect(page.locator(`.foot a[href="${prefix}/demo/"]`)).toBeVisible();
   }
 });

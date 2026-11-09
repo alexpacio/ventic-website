@@ -1,0 +1,33 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import ContactForm from "../components/ContactForm.astro";
+import ChatLauncher from "../components/ChatLauncher.astro";
+import { contact } from "../i18n/contact";
+
+const lang = "it" as const;
+const c = contact(lang);
+---
+<Layout title={c.seo.title} description={c.seo.desc} lang={lang}>
+  <Nav lang={lang} />
+  <main id="main">
+    <section class="phero">
+      <div class="wrap">
+        <span class="plate">{c.plate}</span>
+        <h1 class="h2-big">{c.title[0]}<br />{c.title[1]}</h1>
+        <p class="body" style="max-width:48ch;margin-top:20px">{c.lead}</p>
+      </div>
+    </section>
+    <section class="wrap" style="padding:56px 0 96px;display:grid;gap:48px">
+      <ContactForm lang={lang} />
+      <div>
+        <h2 class="h4">{c.chat.side}</h2>
+        <p class="body" style="max-width:48ch;margin:8px 0 16px">{c.chat.sideBody}</p>
+        <ChatLauncher lang={lang} inline />
+      </div>
+    </section>
+  </main>
+  <Footer lang={lang} />
+</Layout>
+<style>.phero{padding:96px 0 40px;border-bottom:1px solid var(--line-soft)}</style>
