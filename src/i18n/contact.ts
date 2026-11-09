@@ -11,7 +11,7 @@ export function contact(lang: Lang) {
         lead: "Tell us about your workloads and hardware. We reply within one business day.",
         form: {
           name: "Name", email: "Work email", company: "Company", topic: "Topic", message: "Message",
-          topics: ["Request access / demo", "Pricing and licensing", "On-premise (BYOH)", "Other"],
+          topics: ["Request access / demo", "Pricing and licensing", "On-premise", "Other"],
           consent: "I agree to be contacted about my request. See the",
           privacy: "privacy policy",
           send: "Send message", sending: "Sending…",
@@ -30,7 +30,7 @@ export function contact(lang: Lang) {
         lead: "Raccontaci i tuoi workload e il tuo hardware. Rispondiamo entro un giorno lavorativo.",
         form: {
           name: "Nome", email: "Email aziendale", company: "Azienda", topic: "Argomento", message: "Messaggio",
-          topics: ["Richiesta accesso / demo", "Prezzi e licenze", "On-premise (BYOH)", "Altro"],
+          topics: ["Richiesta accesso / demo", "Prezzi e licenze", "On-premise", "Altro"],
           consent: "Acconsento ad essere ricontattato per la mia richiesta. Vedi la",
           privacy: "informativa privacy",
           send: "Invia messaggio", sending: "Invio…",

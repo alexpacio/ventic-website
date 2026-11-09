@@ -22,7 +22,7 @@ function wrap(text: string, max: number): string[] {
 const uid = `sc-${s.id}`;
 ---
 <figure class="scheme panel">
-  <div class="shead">
+  <div class="s-head">
     <span class="plate">{s.plate}</span>
     <h3 class="stitle">{s.title}</h3>
     <p class="slead">{s.lead}</p>
@@ -94,7 +94,7 @@ const uid = `sc-${s.id}`;
 
 <style>
   .scheme { margin: 0; padding: 28px 28px 24px; display: flex; flex-direction: column; gap: 20px; }
-  .shead { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+  .s-head { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
   .stitle { font-size: clamp(20px, 2vw, 26px); line-height: 1.15; text-transform: none; }
   .slead { max-width: 74ch; font-size: 15px; line-height: 1.6; color: var(--fg-mid); }
   .sscroll { overflow-x: auto; background: var(--sunk); border: 1px solid var(--line-soft); border-radius: 0;  padding: 8px; }

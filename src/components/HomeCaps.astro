@@ -1,0 +1,35 @@
+---
+import Icon from "./Icon.astro";
+import type { Lang } from "../i18n/content";
+import { home } from "../i18n/home";
+interface Props { lang: Lang; num?: string; }
+const { lang, num } = Astro.props;
+const c = home(lang).caps;
+---
+<section class="sec sec--rule">
+  <div class="wrap vt-reveal">
+    <div class="shead">
+      <div>
+        <span class="plate">{num && <span class="plate-num">{num} —</span>}{c.plate}</span>
+        <h2 class="h2">{c.title[0]}<br />{c.title[1]}</h2>
+      </div>
+    </div>
+    <div class="grid4">
+      {c.items.map((it) => (
+        <div class="cap vt-card">
+          <span class:list={["tile", it.tone && `tile--${it.tone}`]}><Icon name={it.icon} size={22} stroke="currentColor" /></span>
+          <h3 class="cell-t">{it.title}</h3>
+          <p class="cell-b">{it.body}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line-soft); border-left: 1px solid var(--line-soft); }
+  .cap { border-right: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); padding: 28px; display: flex; flex-direction: column; gap: 14px; min-height: 220px; }
+  .cap .cell-t { margin-top: 12px; }
+  @media (max-width: 1080px) { .grid4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 560px) { .grid4 { grid-template-columns: 1fr; } .cap { min-height: 0; padding: 24px 20px; } }
+</style>

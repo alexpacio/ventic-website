@@ -1,97 +1,64 @@
 ---
-import Icon from "./Icon.astro";
 import { listino } from "../i18n/listino";
+import { pick } from "../i18n/onprem";
 import type { Lang } from "../i18n/content";
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const c = listino(lang);
+const t = pick(lang);
+const v = c.rows[0].variants[0];
+const demoHref = lang === "it" ? "/demo/" : "/en/demo/";
+const plans = [
+  { key: "demo", tag: t("Demo", "Demo"), price: "€0", unit: t("30 giorni", "30 days"), body: t("Installi lo stack completo sul tuo server e lo provi con i tuoi carichi reali. Poi passi alla licenza senza reinstallare.", "Install the full stack on your server and try it on your real workloads. Then move to the licence without reinstalling."), cta: t("Installa la demo", "Deploy the demo"), href: demoHref, ext: false },
+  { key: "host", tag: t("Per host", "Per host"), price: v.host?.replace(/[,.]00$/, "") ?? "", unit: c.month, body: t("Una licenza per ogni host su cui gira Ventic. Ideale per partire con uno o due server.", "One licence per host running Ventic. Ideal to start with one or two servers."), cta: t("Acquista su Licman", "Buy on Licman"), href: c.href, ext: true },
+  { key: "company", tag: t("Per azienda", "Per company"), price: v.company.replace(/[,.]00$/, ""), unit: c.month, body: t("Tutti gli host dell'azienda sotto un'unica licenza. Conviene quando la flotta cresce.", "All of the company's hosts under one licence. Better value as the fleet grows."), badge: t("Host illimitati", "Unlimited hosts"), cta: t("Acquista su Licman", "Buy on Licman"), href: c.href, ext: true },
+];
 ---
 <section id={c.id} class="sec sec--tint">
-  <div class="wrap">
-    <div class="grid top">
-      <div class="tcol">
+  <div class="wrap vt-reveal">
+    <div class="shead">
+      <div>
         <span class="plate">{c.plate}</span>
         <h2 class="h2">{c.title[0]}<br />{c.title[1]}</h2>
       </div>
-      <div class="lcol"><p class="body">{c.lead}</p></div>
+      <p class="shead-lead">{c.lead}</p>
     </div>
-
-    <div class="panel tbl" role="table">
-      <div class="tr th mono" role="row">
-        {c.cols.map((h) => <span role="columnheader">{h}</span>)}
-      </div>
-      {c.rows.map((r) => (
-        <div class="grp">
-          <div class="pname">
-            <h3 class="cell-t">{r.name}</h3>
-            <p class="psub">{r.sub}</p>
+    <div class="plans">
+      {plans.map((p) => (
+        <article class={`plan plan--${p.key}`}>
+          <div class="ptop">
+            <span class="mono tag">{p.tag}</span>
+            {p.badge && <span class="mono badge">{p.badge}</span>}
           </div>
-          {r.variants.map((v) => (
-            <div class="tr" role="row">
-              <span class="mono deliv" role="cell">{v.delivery}</span>
-              <span class="cellp" role="cell">{v.host ? <><b class="price">{v.host}</b><i class="mono u">{c.month}</i></> : <span class="mono dash">{c.none}</span>}</span>
-              <span class="cellp" role="cell"><b class="price">{v.company}</b><i class="mono u">{c.month}</i></span>
-            </div>
-          ))}
-        </div>
+          <div class="prow"><span class="price pval">{p.price}</span><span class="punit">{p.unit}</span></div>
+          <p class="pbody">{p.body}</p>
+          <a class={`btn ${p.key === "host" ? "btn--a" : p.key === "company" ? "btn--light" : "btn--ghost"}`} href={p.href} target={p.ext ? "_blank" : undefined} rel={p.ext ? "noopener" : undefined}>{p.cta} <span class="arr" aria-hidden="true">{p.ext ? "↗" : "→"}</span></a>
+        </article>
       ))}
     </div>
-
-    <div class="panel panel--warm ob">
-      <div class="ob-head">
-        <h3 class="cell-t">{c.obstack.name}</h3>
-        <p class="psub">{c.obstack.sub}</p>
-      </div>
-      <div class="ob-items">
-        {c.obstack.items.map((i) => (
-          <div class="ob-item">
-            <span class="mono ob-k">{i.k}</span>
-            <span class="prow"><b class="price ob-v">{i.v}</b><i class="mono u">{i.u}</i></span>
-            {i.note && <span class="mono ob-n">{i.note}</span>}
-          </div>
-        ))}
-      </div>
-    </div>
-
     <p class="mono foot">{c.foot}</p>
-    <a class="arrowlink" href={c.href} target="_blank" rel="noopener">{c.cta} <Icon name="arrow" size={16} width={2} /></a>
   </div>
 </section>
 
 <style>
-  .top { align-items: end; margin-bottom: 40px; }
-  .tcol { grid-column: span 7; }
-  .lcol { grid-column: span 5; }
-  .plate { margin-bottom: 16px; }
-  .tbl { display: flex; flex-direction: column; }
-  .tr { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: baseline; padding: 14px 24px; }
-  .th { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-mute); border-bottom: 1px solid var(--line-soft); background: var(--sunk); padding-block: 12px; }
-  .grp { border-bottom: 1px solid var(--line-soft); padding: 18px 0 6px; }
-  .grp:last-child { border-bottom: 0; }
-  .pname { padding: 0 24px 8px; }
-  .psub { margin: 4px 0 0; font-size: 13px; color: var(--fg-mute); line-height: 1.5; }
-  .deliv { font-size: 12px; letter-spacing: .06em; color: var(--fg-dim); }
-  .cellp { display: inline-flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
-  .price { font-size: 24px; font-weight: 300; }
-  .u { font-style: normal; font-size: 11px; color: var(--fg-mute); }
-  .dash { color: var(--fg-ghost); }
-  .ob { margin-top: 16px; padding: 24px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 24px; align-items: center; }
-  .ob-items { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-  .ob-item { display: flex; flex-direction: column; gap: 6px; padding: 14px; background: var(--sunk); border: 1px solid var(--line-soft); }
-  .ob-k { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
-  .prow { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
-  .ob-v { font-size: 22px; }
-  .ob-n { font-size: 10px; color: var(--fg-faint); }
-  .foot { margin: 18px 0 14px; font-size: 11px; letter-spacing: .04em; line-height: 1.7; color: var(--fg-faint); }
-  @media (max-width: 860px) {
-    .tcol, .lcol { grid-column: span 6; }
-    .ob { grid-template-columns: 1fr; }
-    .ob-items { grid-template-columns: 1fr; }
-  }
-  @media (max-width: 640px) {
-    .tr { grid-template-columns: 1fr 1fr; padding-inline: 16px; }
-    .tr .deliv { grid-column: 1 / -1; }
-    .th { display: none; }
-    .pname { padding-inline: 16px; }
-  }
+  .plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px; }
+  .plan { background: var(--ink); padding: 36px; display: flex; flex-direction: column; gap: 20px; border-top: 4px solid #161616; }
+  .plan--host { border-top-color: var(--accent); }
+  .plan--company { background: #161616; border-top-color: var(--amber); }
+  .ptop { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .tag { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--fg-mute); }
+  .plan--host .tag { color: var(--accent); }
+  .plan--company .tag { color: var(--amber); }
+  .badge { font-size: 11px; background: var(--amber); color: #161616; padding: 4px 8px; }
+  .prow { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; }
+  .pval { font-size: clamp(52px, 5vw, 64px); }
+  .punit { font-size: 14px; color: var(--fg-faint); }
+  .pbody { font-size: 15px; color: var(--fg-mid); }
+  .plan--company .pval { color: #fff; }
+  .plan--company .punit { color: #a8a8a8; }
+  .plan--company .pbody { color: #c6c6c6; }
+  .plan .btn { margin-top: auto; }
+  .foot { margin-top: 18px; font-size: 12px; line-height: 1.7; color: var(--fg-mid); }
+  @media (max-width: 960px) { .plans { grid-template-columns: 1fr; } }
+  @media (max-width: 520px) { .plan { padding: 28px 20px; } }
 </style>

@@ -5,30 +5,34 @@ interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const c = content[lang].pricingPage;
 ---
-<section class="notes-sec">
-  <div class="wrap grid inner">
-    <div class="left">
+<section class="sec">
+  <div class="wrap inner vt-reveal">
+    <div class="notes">
       <span class="plate">{c.notes.plate}</span>
-      <ul class="ticks list">
-        {c.notes.items.map((n) => <li class="tick tick--mute">{n}</li>)}
-      </ul>
+      <ol class="list">
+        {c.notes.items.map((n, i) => <li><span class="mono n">0{i + 1}</span><span>{n}</span></li>)}
+      </ol>
     </div>
-    <div class="right">
-      <h2 class="h3">{c.notes.ctaTitle}</h2>
-      <p class="cell-b">{c.notes.ctaBody}</p>
-      <ObfuscatedEmail label={c.notes.ctaBtn} lang={lang} class="btn btn--a" />
+    <div class="cta">
+      <div class="cta-copy">
+        <h2 class="h3">{c.notes.ctaTitle}</h2>
+        <p>{c.notes.ctaBody}</p>
+      </div>
+      <ObfuscatedEmail label={c.notes.ctaBtn} lang={lang} class="btn btn--light" />
     </div>
   </div>
 </section>
 
 <style>
-  .notes-sec { padding-bottom: 40px; }
-  .inner { align-items: end; }
-  .left { grid-column: span 7; }
-  .right { grid-column: span 5; display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
-  .plate { margin-bottom: 16px; }
-  ul.list { list-style: none; margin: 0; padding: 0; gap: 14px; }
-  .right .btn { margin-top: 6px; }
-  .meta { font-size: 11px; letter-spacing: .08em; color: var(--fg-ghost); }
-  @media (max-width: 860px) { .left, .right { grid-column: span 6; } }
+  .inner { display: flex; flex-wrap: wrap; gap: 2px; }
+  .notes { flex: 3 1 520px; background: var(--deck); padding: 40px; display: flex; flex-direction: column; gap: 20px; }
+  .list { list-style: none; margin: 0; padding: 0; }
+  .list li { display: flex; gap: 16px; padding: 14px 0; border-top: 1px solid var(--line); font-size: 15px; color: var(--fg-dim); }
+  .list li:last-child { border-bottom: 1px solid var(--line); }
+  .n { color: var(--accent); }
+  .cta { flex: 2 1 360px; background: var(--accent); color: #fff; padding: 40px; display: flex; flex-direction: column; justify-content: space-between; gap: 24px; min-height: 320px; }
+  .cta-copy { display: flex; flex-direction: column; gap: 16px; }
+  .cta .h3 { color: #fff; font-size: clamp(28px, 2.6vw, 36px); font-weight: 300; }
+  .cta p { color: #e6ebfd; }
+  @media (max-width: 520px) { .notes, .cta { padding: 28px 20px; } }
 </style>

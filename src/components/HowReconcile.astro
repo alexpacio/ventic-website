@@ -1,0 +1,82 @@
+---
+import type { Lang } from "../i18n/content";
+import { howto } from "../i18n/howto";
+interface Props { lang: Lang; num?: string; }
+const { lang, num } = Astro.props;
+const c = howto(lang).rec;
+/* six nodes around a 440px ring, radius 170 */
+const nodes = c.loop.map((label, i) => {
+  const a = (i * 60 * Math.PI) / 180;
+  return { label, x: 220 + 170 * Math.sin(a), y: 220 - 170 * Math.cos(a), delay: i * 2 };
+});
+const yaml = c.yaml.split("\n").map((line) => {
+  const m = line.match(/^(\s*)([^:]+:)?(.*)$/) || ["", "", "", line];
+  return { pad: m[1] || "", k: m[2] || "", v: m[3] || "", sep: line.trim() === "---" };
+});
+---
+<section id="riconciliazione" class="sec sec--rule">
+  <div class="wrap vt-reveal">
+    <div class="shead">
+      <div>
+        <span class="plate">{num && <span class="plate-num">{num} —</span>}{c.plate}</span>
+        <h2 class="h2">{c.title}</h2>
+      </div>
+      <p class="shead-lead">{c.lead}</p>
+    </div>
+    <div class="cols">
+      <div class="loopwrap">
+        <div class="loop" role="img" aria-label={c.loopLabel}>
+          <div class="ring" aria-hidden="true"></div>
+          <div class="orbit" aria-hidden="true"><span></span></div>
+          <div class="goal" aria-hidden="true"><span class="mono">{c.goal}</span><strong>{c.goalText[0]}<br />{c.goalText[1]}</strong></div>
+          {nodes.map((n) => (
+            <div class="lnode" aria-hidden="true" style={`left:${(n.x / 440) * 100}%;top:${(n.y / 440) * 100}%;animation-delay:${n.delay}s`}>{n.label}</div>
+          ))}
+        </div>
+      </div>
+      <div class="files">
+        <div class="mono fhead"><span>{c.file}</span><span>{c.example}</span></div>
+        <pre class="yaml">{yaml.map((l) => (
+          <span class="yl">{l.sep ? <span class="sep">---</span> : <>{l.pad}<span class:list={["k", { "k--top": !l.pad }]}>{l.k}</span><span class="v">{l.v}</span></>}</span>
+        ))}</pre>
+        <div class="term">
+          {c.term.map(([kind, text, note]) => (
+            <div>
+              {kind === "$" ? <span class="dim">$ {text}</span> : <><span class:list={["mark", kind]}>{kind === "ok" ? "✓" : "◷"}</span> {text} {note && <span class="dim">{note}</span>}</>}
+            </div>
+          ))}
+          <div class="dim">$ <span class="vt-caret caret">▍</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cols { display: flex; flex-wrap: wrap; gap: 48px; align-items: center; }
+  .loopwrap { flex: 1 1 300px; min-width: 0; display: flex; justify-content: center; overflow: clip; }
+  .loop { position: relative; width: min(440px, 100%); aspect-ratio: 1; }
+  .ring { position: absolute; inset: 11.4%; border-radius: 50%; border: 1px dashed #a8a8a8; }
+  .orbit { position: absolute; inset: 0; animation: vt-spin 12s linear infinite; }
+  .orbit span { position: absolute; left: 50%; top: 11.4%; width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 6px rgba(35,71,232,.15); }
+  .goal { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); text-align: center; display: flex; flex-direction: column; gap: 4px; }
+  .goal .mono { font-size: 11px; color: var(--fg-mid); text-transform: uppercase; letter-spacing: .06em; }
+  .goal strong { font-size: 17px; font-weight: 500; line-height: 1.25; color: var(--fg-strong); }
+  .lnode { position: absolute; transform: translate(-50%, -50%); width: 30%; min-height: 44px; padding: 6px; display: flex; align-items: center; justify-content: center; text-align: center; background: var(--ink); border: 1px solid var(--line); font-size: 13px; font-weight: 500; color: var(--fg-strong); animation: hl 12s linear infinite; }
+  @keyframes hl { 0%, 15% { background: var(--accent); color: #fff; border-color: var(--accent); } 15.01%, 100% { background: var(--ink); color: var(--fg-strong); border-color: var(--line); } }
+
+  .files { flex: 1 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .fhead { background: #161616; color: #a8a8a8; padding: 10px 16px; font-size: 12px; display: flex; justify-content: space-between; }
+  .yaml { margin: 0; background: var(--deck); padding: 20px; font-family: var(--mono); font-size: 13px; line-height: 1.7; overflow-x: auto; }
+  .yl { display: block; white-space: pre; color: var(--fg-strong); }
+  .k { color: var(--accent); }
+  .k--top { color: var(--amber-ink); }
+  .sep { color: var(--fg-faint); }
+  .term { white-space: normal; }
+  .term > div { white-space: pre; }
+  .dim { color: #8d8d8d; }
+  .mark.ok { color: #3ddbb9; }
+  .mark.wait { color: var(--amber); }
+  .caret { color: var(--accent-mid); }
+  @media (max-width: 520px) { .lnode { font-size: 11px; width: 34%; } }
+</style>

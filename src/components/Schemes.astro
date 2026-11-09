@@ -6,8 +6,8 @@ interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const c = schemes(lang);
 ---
-<section id={c.id} class="sec sec--tint">
-  <div class="wrap">
+<section id={c.id} class="sec sec--dark">
+  <div class="wrap vt-reveal">
     <div class="head">
       <div>
         <span class="plate">{c.plate}</span>

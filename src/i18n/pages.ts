@@ -25,16 +25,16 @@ export function pages(lang: Lang) {
       seo: {
         title: t("Perché Ventic — oltre subscription e pagamento a token", "Why Ventic — beyond subscriptions and per-token billing"),
         desc: t(
-          "Limiti di quota, outage, modelli deprecati, prezzi a token e compliance: perché i provider di LLM non bastano per il lavoro agentico, e come iniziare con il tuo hardware o con il nostro.",
-          "Quota limits, outages, deprecated models, per-token pricing and compliance: why LLM providers fall short for agentic work, and how to start on your own hardware or ours.",
+          "Limiti di quota, outage, modelli deprecati, prezzi a token e compliance: perché i provider di LLM non bastano per il lavoro agentico e aziendale, e come Ventic governa l'AI sul tuo cluster.",
+          "Quota limits, outages, deprecated models, per-token pricing and compliance: why LLM providers fall short for agentic and company work, and how Ventic governs AI on your cluster.",
         ),
       },
       hero: {
         plate: t("Perché Ventic", "Why Ventic"),
         title: t(["I provider non", "bastano più."], ["Providers are", "not enough."]),
         lead: t(
-          "Cosa si rompe quando agenti e team usano un LLM in subscription o a token, e i tre modi con cui Ventic lo risolve.",
-          "What breaks when agents and teams run on a subscription or per-token LLM, and the three ways Ventic fixes it.",
+          "Cosa si rompe quando agenti e team usano un LLM in subscription o a token, e come Ventic lo governa.",
+          "What breaks when agents and teams run on a subscription or per-token LLM, and how Ventic governs it.",
         ),
       },
     },
@@ -42,18 +42,18 @@ export function pages(lang: Lang) {
       nav: t("Come funziona", "How it works"),
       crumb: t("Come funziona", "How it works"),
       seo: {
-        title: t("Come funziona Ventic — stack, rete overlay, autoscaling", "How Ventic works — stack, overlay network, autoscaling"),
+        title: t("Come funziona Ventic — richiesta, credito, agenti remoti", "How Ventic works — request, credit, remote agents"),
         desc: t(
-          "Dall'intento al server in produzione: provisioning, rete overlay cifrata, lifecycle, scaling e 12 capacità sotto il cofano, con gli schemi architetturali.",
-          "From intent to a server in production: provisioning, encrypted overlay network, lifecycle, scaling and 12 under-the-hood capabilities, with architecture diagrams.",
+          "Dall'intento al modello in produzione: agente remoto, inferenza gestita, routing, contabilità esatta e 12 capacità sotto il cofano, con gli schemi architetturali.",
+          "From intent to a model in production: remote agent, managed inference, routing, exact accounting and 12 under-the-hood capabilities, with architecture diagrams.",
         ),
       },
       hero: {
         plate: t("Architettura", "Architecture"),
-        title: t(["Dall'intento", "al server."], ["From intent", "to server."]),
+        title: t(["Dall'intento", "al modello."], ["From intent", "to model."]),
         lead: t(
-          "Come Ventic trova la macchina, la raggiunge senza aprire porte e ne gestisce la vita, con gli schemi di ogni componente.",
-          "How Ventic finds the machine, reaches it without opening ports and manages its lifecycle, with a diagram of every component.",
+          "Come Ventic collega un runtime, instrada una richiesta e ne contabilizza il costo, con gli schemi di ogni componente.",
+          "How Ventic connects a runtime, routes a request and accounts for its cost, with a diagram of every component.",
         ),
       },
     },
@@ -63,16 +63,16 @@ export function pages(lang: Lang) {
       seo: {
         title: t("Piattaforma Ventic — stack e funzioni", "Ventic platform — stack and features"),
         desc: t(
-          "Lo stack Ventic componente per componente, cosa ottieni dal primo giorno su GPU dedicate.",
-          "The Ventic stack component by component, what you get from day one on dedicated GPUs.",
+          "Lo stack Ventic componente per componente: gateway, billing, dati, runtime e licenza.",
+          "The Ventic stack component by component: gateway, billing, data, runtimes and licence.",
         ),
       },
       hero: {
         plate: t("Piattaforma", "Platform"),
         title: t(["Tutto lo stack,", "già assemblato."], ["The whole stack,", "already assembled."]),
         lead: t(
-          "I componenti e le funzioni incluse, sul tuo hardware o sul nostro.",
-          "The components and the features included, on your hardware or ours.",
+          "I componenti e le funzioni incluse, sul tuo cluster Kubernetes.",
+          "The components and the features included, on your Kubernetes cluster.",
         ),
       },
     },
@@ -80,7 +80,7 @@ export function pages(lang: Lang) {
       nav: t("On-premise", "On-premise"),
       crumb: t("On-premise", "On-premise"),
       seo: {
-        title: t("Ventic on-premise — installa lo stack sul tuo hardware", "Ventic on-premise — install the stack on your hardware"),
+        title: t("Ventic on-premise — installa la piattaforma sul tuo Kubernetes", "Ventic on-premise — install the platform on your Kubernetes"),
         desc: t(
           "Installa Ventic sulla tua infrastruttura in 8 passi: template provider, release, licenza e deploy, con la guida copiabile per il tuo agente AI.",
           "Install Ventic on your own infrastructure in 8 steps: provider template, release, license and deploy, with a guide you can copy into your AI agent.",
@@ -88,10 +88,10 @@ export function pages(lang: Lang) {
       },
       hero: {
         plate: t("On-premise", "On-premise"),
-        title: t(["Sul tuo hardware,", "in otto passi."], ["On your hardware,", "in eight steps."]),
+        title: t(["Sul tuo Kubernetes,", "in otto passi."], ["On your Kubernetes,", "in eight steps."]),
         lead: t(
-          "Dal template del provider al deploy della release: tutto ciò che serve per far girare Ventic in casa tua.",
-          "From the provider template to the release deploy: everything needed to run Ventic in-house.",
+          "Dal template del provider al deploy della release: tutto ciò che serve per far girare Ventic nel tuo cluster.",
+          "From the provider template to the release deploy: everything needed to run Ventic in your own cluster.",
         ),
       },
     },
@@ -107,32 +107,32 @@ export function pages(lang: Lang) {
           key: "why" as const,
           title: t("Perché Ventic", "Why Ventic"),
           body: t(
-            "I limiti di subscription e pagamento a token, e i tre modi di iniziare: i tuoi server, i nostri o un'istanza già pronta.",
-            "The limits of subscriptions and per-token billing, and the three ways to start: your servers, ours, or an instance that is already running.",
+            "I limiti di subscription e pagamento a token, e le due strade per iniziare: installare Ventic o usare un servizio già pronto.",
+            "The limits of subscriptions and per-token billing, and the two ways to start: install Ventic or use a service that is already running.",
           ),
         },
         {
           key: "how" as const,
           title: t("Come funziona", "How it works"),
           body: t(
-            "Provisioning, rete overlay cifrata, lifecycle e gli schemi architetturali di ogni componente.",
-            "Provisioning, encrypted overlay network, lifecycle and architecture diagrams of every component.",
+            "Agenti remoti, inferenza gestita, ciclo di una richiesta e gli schemi architetturali di ogni componente.",
+            "Remote agents, managed inference, request lifecycle and architecture diagrams of every component.",
           ),
         },
         {
           key: "platform" as const,
           title: t("Piattaforma", "Platform"),
           body: t(
-            "Lo stack e le funzioni incluse dal primo giorno.",
-            "The stack and the features included from day one.",
+            "Componenti, namespace e funzioni incluse dal primo giorno.",
+            "Components, namespaces and the features included from day one.",
           ),
         },
         {
           key: "onprem" as const,
           title: t("On-premise", "On-premise"),
           body: t(
-            "Installa Ventic sul tuo hardware in otto passi, con la guida pronta per il tuo agente AI.",
-            "Install Ventic on your hardware in eight steps, with a guide ready for your AI agent.",
+            "Installa Ventic sul tuo Kubernetes in otto passi, con la guida pronta per il tuo agente AI.",
+            "Install Ventic on your Kubernetes in eight steps, with a guide ready for your AI agent.",
           ),
         },
       ],
@@ -154,16 +154,16 @@ export function navGroups(lang: Lang): NavGroup[] {
       label: t("Prodotto", "Product"),
       items: [
         { label: p.why.nav, desc: t("Perché i provider non bastano", "Why providers fall short"), href: pagePath(lang, "why") },
-        { label: p.how.nav, desc: t("Dall'intento al server in produzione", "From intent to a server in production"), href: pagePath(lang, "how") },
-        { label: p.platform.nav, desc: t("Stack e funzioni", "Stack and features"), href: pagePath(lang, "platform") },
-        { label: t("Pannello", "Admin panel"), desc: t("Utenti, ruoli, quote, white label", "Users, roles, quotas, white label"), href: `${pre}/admin-panel/` },
+        { label: p.how.nav, desc: t("Dall'intento al modello in produzione", "From intent to a model in production"), href: pagePath(lang, "how") },
+        { label: p.platform.nav, desc: t("Componenti e funzioni", "Components and features"), href: pagePath(lang, "platform") },
+        { label: t("Console", "Console"), desc: t("Persone, quote, modelli, agenti remoti", "People, quotas, models, remote agents"), href: `${pre}/admin-panel/` },
       ],
     },
     { label: t("Prezzi", "Pricing"), href: `${pre}/pricing/` },
     {
       label: t("Installa", "Deploy"),
       items: [
-        { label: p.onprem.nav, desc: t("Sul tuo hardware in otto passi", "On your hardware in eight steps"), href: pagePath(lang, "onprem") },
+        { label: p.onprem.nav, desc: t("Sul tuo Kubernetes in otto passi", "On your Kubernetes in eight steps"), href: pagePath(lang, "onprem") },
         { label: t("Installa la demo", "Deploy a demo"), desc: t("Guida passo passo alla demo self-hosted", "Step-by-step self-hosted demo guide"), href: `${pre}/demo/` },
       ],
     },

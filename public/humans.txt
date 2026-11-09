@@ -15,4 +15,4 @@ Sitemap: https://ventic.it/sitemap-index.xml
 Robots: https://ventic.it/robots.txt
 
 /* THANKS */
-Thanks to open-weight community and inference engine teams (vLLM, SGLang).
+Thanks to the open-source communities behind Kubernetes, Open WebUI, PostgreSQL and the model runtimes Ventic connects to.

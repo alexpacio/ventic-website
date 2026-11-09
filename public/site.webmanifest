@@ -1,7 +1,7 @@
 {
-  "name": "Ventic — LLM privati su GPU dedicate",
+  "name": "Ventic — piattaforma AI multi-tenant on premise",
   "short_name": "Ventic",
-  "description": "Il tuo endpoint LLM privato, compatibile OpenAI e Anthropic. Gira sulle tue GPU — dati in UE o US — con modelli open-weight, motore di inferenza ottimizzato (vLLM, SGLang) e assistenza inclusa.",
+  "description": "Piattaforma AI multi-tenant per Kubernetes: gateway compatibile OpenAI e Anthropic, credito prepagato, quote, filtro PII reversibile e runtime locali.",
   "lang": "it",
   "dir": "ltr",
   "start_url": "/",

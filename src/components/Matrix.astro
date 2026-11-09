@@ -1,38 +1,35 @@
 ---
-import Icon from "./Icon.astro";
 import { content, type Lang } from "../i18n/content";
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const m = content[lang].pricingPage.matrix;
-const icon = { yes: "check", no: "cross", dash: "dash" } as const;
-const tone = { yes: "var(--jade)", no: "#7a7e82", dash: "#7a7e82" } as const;
+const legend = lang === "it" ? [["yes", "Sì"], ["dash", "Parziale"], ["no", "No"]] : [["yes", "Yes"], ["dash", "Partly"], ["no", "No"]];
+const last = m.cols.length - 1;
 ---
-<section class="mx-sec">
-  <div class="wrap">
-    <div class="head">
-      <h2 class="h3">{m.title}</h2>
-      <span class="mono meta">{m.meta}</span>
+<section class="sec sec--rule">
+  <div class="wrap vt-reveal">
+    <div class="shead">
+      <div>
+        <span class="plate">{lang === "it" ? "Confronto" : "Comparison"}</span>
+        <h2 class="h2">{m.title}</h2>
+      </div>
+      <div class="legend">
+        <span class="mono meta">{m.meta}</span>
+        <span class="keys">{legend.map(([k, l]) => <span><i class={`mk mk--${k}`}></i>{l}</span>)}</span>
+      </div>
     </div>
-
     <div class="tablewrap">
       <table class="tbl">
         <thead>
-          <tr>
-            {m.cols.map((col, i) => (
-              <th class={`mono th ${i === 3 ? "th--own" : ""} ${i === 4 ? "th--warm" : ""}`} scope="col">{col}</th>
-            ))}
-          </tr>
+          <tr>{m.cols.map((col, i) => <th scope="col" class:list={["mono", { own: i === last }]}>{col}</th>)}</tr>
         </thead>
         <tbody>
           {m.rows.map((row) => (
             <tr>
-              <th class="rowlab" scope="row">{row.label}</th>
+              <th scope="row" class="rowlab">{row.label}</th>
               {row.cells.map((cell, i) => (
-                <td class={`cell ${i === 2 ? "cell--own" : ""} ${i === 3 ? "cell--warm" : ""}`}>
-                  <span class={`inner ${cell.mark === "yes" ? "on" : ""}`}>
-                    <Icon name={icon[cell.mark]} size={15} stroke={tone[cell.mark]} width={2.2} />
-                    <span>{cell.text}</span>
-                  </span>
+                <td class:list={{ own: i === row.cells.length - 1 }}>
+                  <span class="inner"><i class={`mk mk--${cell.mark}`} aria-hidden="true"></i><span>{cell.text}</span></span>
                 </td>
               ))}
             </tr>
@@ -44,34 +41,24 @@ const tone = { yes: "var(--jade)", no: "#7a7e82", dash: "#7a7e82" } as const;
 </section>
 
 <style>
-  .mx-sec { padding-bottom: 40px; }
-  .head { display: flex; align-items: flex-end; justify-content: space-between; gap: 28px; margin-bottom: 20px; }
-  .meta { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--fg-ghost); white-space: nowrap; }
-
-  .tablewrap { border: 1px solid var(--line-soft); border-radius: 0; overflow-x: auto; }
-  .tbl { width: 100%; min-width: 900px; border-collapse: collapse; text-align: left; }
-
-  .th {
-    padding: 16px 18px; background: var(--raise); vertical-align: bottom;
-    font-size: 10px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--fg-faint);
-  }
-  .th:first-child { padding-left: 22px; width: 292px; }
-  .th--own { background: #1d1f22; color: #a9a7a1; }
-  .th--warm { background: var(--warm-head); color: var(--accent); }
-
-  .tbl tbody tr > * { border-top: 1px solid var(--line-soft); }
-  .rowlab {
-    padding: 20px 22px; background: var(--cell); vertical-align: top;
-    font-size: 15px; font-weight: 600; line-height: 1.4; color: #d4d2cc;
-  }
-  .cell { padding: 20px 18px; background: var(--panel-b); vertical-align: top; }
-  .cell--own { background: #1a1d20; }
-  .cell--warm { background: var(--warm-cell); }
-  .inner { display: flex; align-items: flex-start; gap: 9px; font-size: 13px; line-height: 1.45; color: var(--fg-mute); }
-  .inner :global(svg) { flex-shrink: 0; margin-top: 1px; }
-  .inner.on { color: #c5c3bd; }
-
-  @media (max-width: 900px) {
-    .head { flex-direction: column; align-items: flex-start; gap: 14px; }
-  }
+  .legend { flex: 0 1 auto !important; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+  .meta { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-mid); }
+  .keys { display: flex; gap: 20px; font-size: 13px; color: var(--fg-mid); }
+  .keys span { display: inline-flex; align-items: center; gap: 6px; }
+  .mk { display: inline-block; flex: none; width: 12px; height: 12px; margin-top: 4px; }
+  .keys .mk { margin-top: 0; }
+  .mk--yes { background: var(--jade); }
+  .mk--dash { background: var(--line); }
+  .mk--no { background: var(--red); }
+  .tablewrap { overflow-x: auto; border-top: 2px solid var(--fg-strong); }
+  .tbl { width: 100%; min-width: 860px; border-collapse: collapse; text-align: left; font-size: 15px; }
+  thead th { padding: 16px; font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--fg-mid); vertical-align: bottom; }
+  thead th:first-child { padding-left: 0; width: 28%; }
+  thead th.own { background: var(--accent); color: #fff; }
+  tbody tr { border-top: 1px solid var(--line-soft); transition: background-color .2s ease; }
+  tbody tr:hover { background: var(--deck); }
+  .rowlab { padding: 16px 16px 16px 0; font-weight: 500; color: var(--fg-strong); vertical-align: top; }
+  td { padding: 16px; vertical-align: top; color: var(--fg-dim); }
+  td.own { background: #f1f4fe; color: var(--fg-strong); font-weight: 500; }
+  .inner { display: flex; align-items: flex-start; gap: 10px; line-height: 1.45; }
 </style>

@@ -1,0 +1,187 @@
+---
+import type { Lang } from "../i18n/content";
+import { howto } from "../i18n/howto";
+interface Props { lang: Lang; num?: string; }
+const { lang, num } = Astro.props;
+const h = howto(lang);
+const c = h.life;
+const s0 = c.stages[0];
+const data = JSON.stringify(c.stages.map((s) => ({ svc: s.svc, title: s.title, body: s.body, points: s.points, payloadLabel: s.payloadLabel, payload: s.payload })));
+const labels = JSON.stringify({ play: c.play, pause: c.pause, wallet: c.wallet, piiOn: c.piiOn, piiReq: c.piiReq });
+---
+<nav class="toc" aria-label={lang === "it" ? "In questa pagina" : "On this page"}>
+  <div class="wrap toc-in">
+    {h.toc.map(([id, label], i) => <a href={`#${id}`}><span class="mono">0{i + 1}</span>{label}</a>)}
+  </div>
+</nav>
+
+<section id="ciclo" class="sec sec--tint">
+  <div class="wrap" data-life data-stages={data} data-labels={labels}>
+    <div class="shead">
+      <div>
+        <span class="plate">{num && <span class="plate-num">{num} —</span>}{c.plate}</span>
+        <h2 class="h2">{c.title}</h2>
+      </div>
+      <div class="controls">
+        <button type="button" class="ctl" data-prev aria-label={c.prev}>←</button>
+        <button type="button" class="ctl ctl--play" data-toggle><span data-toggle-label>{c.pause}</span></button>
+        <button type="button" class="ctl" data-next aria-label={c.next}>→</button>
+      </div>
+    </div>
+
+    <div class="pipe">
+      <div class="pipe-in">
+        <div class="rail" aria-hidden="true"></div>
+        <div class="rail-fill" aria-hidden="true" data-fill></div>
+        <div class="packet" aria-hidden="true" data-packet></div>
+        <ol class="stages">
+          {c.stages.map((s, i) => (
+            <li>
+              <button type="button" class="node" data-stage={i} aria-label={`${c.stepWord} ${i + 1}: ${s.label}`} aria-current={i === 0 ? "step" : undefined}>0{i + 1}</button>
+              <span class="slabel">{s.label}</span>
+              <span class="mono ssvc">{s.svc}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+
+    <div class="detail">
+      <div class="explain" aria-live="polite">
+        <span class="mono kicker">{c.stepWord} <span data-n>01</span> / 07 · <span data-svc>{s0.svc}</span></span>
+        <h3 class="etitle" data-title>{s0.title}</h3>
+        <p class="ebody" data-body>{s0.body}</p>
+        <ul class="points" data-points>{s0.points.map((p) => <li>{p}</li>)}</ul>
+      </div>
+      <div class="inspector on-dark">
+        <div class="mono ihead"><span>{c.inspector}</span><span>{c.example}</span></div>
+        <div class="payload">
+          <span class="mono plabel" data-plabel>{s0.payloadLabel}</span>
+          <div class="mono pbox"><span data-payload>{s0.payload}</span><span class="vt-caret caret" aria-hidden="true">▍</span></div>
+        </div>
+        <div class="principal" data-principal hidden>
+          {c.principal.map(([k, v], i) => (
+            <div><span class="mono pk">{k}</span><span class="mono pv" data-pii={i === 2 ? "" : undefined}>{v || c.piiReq}</span></div>
+          ))}
+        </div>
+        <div class="wallet">
+          <div class="mono wrow"><span class="wk">{c.budget}</span><span data-wallet>{c.wallet[0]}</span></div>
+          <div class="wbar"><span class="w-set" data-settled></span><span class="w-res" data-reserved></span></div>
+          <div class="mono wlegend"><span><i class="sw sw-res"></i>{c.reserved}</span><span><i class="sw sw-set"></i>{c.charged}</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-life]").forEach((root) => {
+    const S = JSON.parse(root.dataset.stages || "[]") as { svc: string; title: string; body: string; points: string[]; payloadLabel: string; payload: string }[];
+    const L = JSON.parse(root.dataset.labels || "{}") as { play: string; pause: string; wallet: string[]; piiOn: string; piiReq: string };
+    const $ = <T extends HTMLElement>(sel: string) => root.querySelector<T>(sel);
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let step = 0, paused = reduce, visible = false;
+
+    const render = () => {
+      const s = S[step];
+      const pos = ((step + 0.5) / S.length) * 100;
+      const fill = $("[data-fill]"); if (fill) fill.style.width = Math.max(0, pos - 100 / S.length / 2) + "%";
+      const pk = $("[data-packet]"); if (pk) pk.style.left = pos + "%";
+      root.querySelectorAll<HTMLButtonElement>("[data-stage]").forEach((b, i) => {
+        b.dataset.state = i < step ? "done" : i === step ? "active" : "";
+        if (i === step) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current");
+      });
+      const set = (sel: string, v: string) => { const el = $(sel); if (el) el.textContent = v; };
+      set("[data-n]", "0" + (step + 1)); set("[data-svc]", s.svc); set("[data-title]", s.title); set("[data-body]", s.body);
+      set("[data-plabel]", s.payloadLabel); set("[data-payload]", s.payload);
+      const pts = $("[data-points]");
+      if (pts) pts.replaceChildren(...s.points.map((p) => { const li = document.createElement("li"); li.textContent = p; return li; }));
+      const ex = root.querySelector(".explain"); if (ex) { ex.classList.remove("swap"); void (ex as HTMLElement).offsetWidth; ex.classList.add("swap"); }
+      const pr = $("[data-principal]"); if (pr) pr.hidden = step < 1;
+      const pii = $("[data-pii]"); if (pii) { const on = step >= 3 && step <= 5; pii.textContent = on ? L.piiOn : L.piiReq; pii.classList.toggle("on", on); }
+      const reserved = step === 4 || step === 5, settled = step === 6;
+      set("[data-wallet]", reserved ? L.wallet[1] : settled ? L.wallet[2] : L.wallet[0]);
+      const r = $("[data-reserved]"); if (r) r.style.width = (reserved ? 40 : 0) + "%";
+      const st = $("[data-settled]"); if (st) st.style.width = (settled ? 12 : 0) + "%";
+      set("[data-toggle-label]", paused ? "▶  " + L.play : "❚❚  " + L.pause);
+    };
+    const go = (i: number) => { step = (i + S.length) % S.length; paused = true; render(); };
+    root.querySelectorAll<HTMLButtonElement>("[data-stage]").forEach((b) => b.addEventListener("click", () => go(Number(b.dataset.stage))));
+    $("[data-prev]")?.addEventListener("click", () => go(step - 1));
+    $("[data-next]")?.addEventListener("click", () => go(step + 1));
+    $("[data-toggle]")?.addEventListener("click", () => { paused = !paused; render(); });
+    new IntersectionObserver((e) => { visible = e[0]?.isIntersecting ?? false; }, { threshold: 0.3 }).observe(root);
+    window.setInterval(() => { if (!paused && visible && !document.hidden) { step = (step + 1) % S.length; render(); } }, 3600);
+    render();
+  });
+</script>
+
+<style>
+  .toc { border-bottom: 1px solid var(--line-soft); }
+  .toc-in { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .toc a { display: flex; gap: 12px; align-items: center; min-height: 56px; padding: 0 16px; color: var(--fg-strong); border-right: 1px solid var(--line-soft); font-size: 15px; }
+  .toc a:first-child { padding-left: 0; }
+  .toc a:last-child { border-right: 0; }
+  .toc a:hover { color: var(--accent); }
+  .toc .mono { color: var(--accent); }
+  @media (max-width: 860px) { .toc-in { grid-template-columns: repeat(2, minmax(0, 1fr)); } .toc a { padding: 0 12px; border-bottom: 1px solid var(--line-soft); } .toc a:first-child { padding-left: 12px; } }
+
+  .controls { display: flex; gap: 2px; flex: 0 0 auto !important; }
+  .ctl { min-width: 48px; height: 48px; border: 0; background: var(--ink); color: var(--fg-strong); font: inherit; cursor: pointer; transition: background-color .2s ease; }
+  .ctl:hover { background: var(--line-soft); }
+  .ctl--play { min-width: 140px; background: #161616; color: #fff; padding: 0 20px; }
+  .ctl--play:hover { background: #393939; }
+
+  .pipe { background: var(--ink); padding: 32px 24px 24px; overflow-x: auto; }
+  .pipe-in { min-width: 860px; position: relative; }
+  .rail, .rail-fill { position: absolute; top: 27px; height: 2px; left: calc(100% / 14); }
+  .rail { right: calc(100% / 14); background: var(--line-soft); }
+  .rail-fill { width: 0; background: var(--accent); transition: width .7s var(--ease); }
+  .packet { position: absolute; top: 20px; left: calc(100% / 14); width: 16px; height: 16px; margin-left: -8px; background: var(--amber); z-index: 2; transition: left .7s var(--ease); pointer-events: none; }
+  .stages { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); position: relative; }
+  .stages li { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; padding: 0 6px; }
+  .node { width: 56px; height: 56px; border: 1px solid var(--line); background: var(--ink); color: var(--fg-mid); font-family: var(--mono); font-size: 14px; cursor: pointer; position: relative; z-index: 1; transition: background-color .3s ease, color .3s ease, border-color .3s ease, box-shadow .3s ease; }
+  .node:hover { border-color: var(--accent); color: var(--accent); }
+  .node[data-state="done"] { background: #161616; border-color: #161616; color: #fff; }
+  .node[data-state="active"] { background: var(--accent); border-color: var(--accent); color: #fff; box-shadow: 0 0 0 6px #dce3fb; }
+  .slabel { font-size: 14px; font-weight: 500; color: var(--fg-strong); }
+  .ssvc { font-size: 11px; color: var(--fg-mid); }
+
+  .detail { display: flex; flex-wrap: wrap; gap: 2px; margin-top: 2px; }
+  .explain { flex: 1 1 440px; background: var(--ink); padding: 36px; display: flex; flex-direction: column; gap: 16px; min-height: 360px; }
+  .explain.swap > * { animation: vt-rise .5s var(--ease) both; }
+  .explain.swap > :nth-child(2) { animation-delay: .05s; }
+  .explain.swap > :nth-child(3) { animation-delay: .1s; }
+  .kicker { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+  .etitle { font-size: clamp(24px, 2.4vw, 30px); font-weight: 300; letter-spacing: -.02em; line-height: 1.15; }
+  .ebody { font-size: 16px; color: var(--fg-dim); }
+  .points { list-style: none; margin: auto 0 0; padding: 0; border-top: 1px solid var(--line-soft); }
+  .points :global(li) { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line-soft); font-size: 14px; color: var(--fg-dim); }
+  .points :global(li)::before { content: "→"; color: var(--accent); }
+
+  .inspector { flex: 1 1 440px; background: var(--night); padding: 32px; display: flex; flex-direction: column; gap: 20px; font-size: 13px; }
+  .ihead { display: flex; justify-content: space-between; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--fg-mid); }
+  .payload { display: flex; flex-direction: column; gap: 8px; }
+  .plabel { color: var(--fg-faint); }
+  .pbox { background: #161616; border: 1px solid #393939; padding: 16px; line-height: 1.6; min-height: 92px; color: #f4f4f4; }
+  .caret { color: var(--accent-mid); }
+  .principal { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: #393939; border: 1px solid #393939; animation: vt-rise .5s var(--ease) both; }
+  .principal[hidden] { display: none; }
+  .principal > div { background: #161616; padding: 10px 12px; display: flex; flex-direction: column; min-width: 0; }
+  .pk { font-size: 10px; color: var(--fg-faint); }
+  .pv { color: #fff; overflow-wrap: anywhere; }
+  .pv.on { color: #3ddbb9; }
+  .wallet { display: flex; flex-direction: column; gap: 8px; }
+  .wrow { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; color: #f4f4f4; }
+  .wk { color: var(--fg-faint); }
+  .wbar { display: flex; height: 12px; background: #262626; }
+  .wbar span { display: block; height: 12px; width: 0; transition: width .6s var(--ease); }
+  .w-set { background: var(--accent); }
+  .w-res { background: var(--amber); }
+  .wlegend { display: flex; gap: 16px; font-size: 11px; color: var(--fg-mid); }
+  .wlegend span { display: inline-flex; align-items: center; gap: 6px; }
+  .sw { width: 10px; height: 10px; display: inline-block; }
+  .sw-res { background: var(--amber); }
+  .sw-set { background: var(--accent); }
+  @media (max-width: 560px) { .explain, .inspector { padding: 24px 20px; } .controls { width: 100%; } .ctl--play { flex: 1; } }
+</style>

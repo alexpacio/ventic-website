@@ -16,7 +16,7 @@ const c = onprem(lang);
         <p class="lead">{c.lead}</p>
         <div class="cta">
           <a class="btn btn--a" href={TEMPLATE_URL} target="_blank" rel="noopener">
-            <Icon name="cloud" size={18} stroke="#14161a" width={1.8} />{c.cta1}
+            <Icon name="cloud" size={18} stroke="currentColor" width={1.8} />{c.cta1}
           </a>
           <a class="btn btn--b" href={c.guide}>{c.cta2}</a>
         </div>
@@ -24,7 +24,7 @@ const c = onprem(lang);
       </div>
 
       <!-- art: template → signed release → cluster -->
-      <svg class="art" viewBox="0 0 520 280" role="img" aria-hidden="true">
+      <svg class="art art--dark" viewBox="0 0 520 280" role="img" aria-hidden="true">
         <defs>
           <marker id="op-a" markerWidth="8" markerHeight="8" refX="6.6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#f5a83f" /></marker>
           <pattern id="op-g" width="26" height="26" patternUnits="userSpaceOnUse"><path d="M26 0H0V26" fill="none" stroke="#ffffff09" /></pattern>
@@ -99,6 +99,7 @@ const c = onprem(lang);
   .ttl { margin-top: -2px; }
   .cta { display: flex; flex-wrap: wrap; gap: 12px; }
   .art { width: 100%; height: auto; background: var(--sunk); border: 1px solid var(--line-soft); border-radius: 0;  }
+  .art--dark { background: var(--night); border-color: var(--night); }
   .art .mono { font-family: var(--mono); }
 
   .layout { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 36px; align-items: start; }
@@ -123,7 +124,7 @@ const c = onprem(lang);
   .code { position: relative; width: 100%; background: var(--sunk); border: 1px solid var(--line-soft); border-radius: 0;  }
   .code pre { margin: 0; padding: 16px 18px; overflow-x: auto; font-family: var(--mono); font-size: 13px; line-height: 1.7; color: var(--fg-dim); }
   .copy-btn { position: absolute; top: 8px; right: 8px; height: 30px; padding: 0 10px; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--fg-mute); background: var(--panel-b); border: 1px solid var(--line); border-radius: 0; cursor: pointer; }
-  .copy-btn:hover { color: var(--fg-strong); border-color: #4a5158; }
+  .copy-btn:hover { color: var(--fg-strong); border-color: var(--fg-strong); }
   .note { font-size: 12px; line-height: 1.6; color: var(--jade); padding-left: 12px; border-left: 2px solid var(--jade); }
   .foot { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--line-soft); font-size: 12px; line-height: 1.6; color: var(--fg-mute); }
 

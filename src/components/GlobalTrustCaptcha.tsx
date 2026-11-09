@@ -60,8 +60,8 @@ export default function GlobalTrustCaptcha({ sitekey, lang = "it" }: Props) {
         flexDirection: "column",
         gap: 6,
         padding: verified ? 0 : 10,
-        background: verified ? "transparent" : "#0e0f11",
-        border: verified ? "none" : "1px solid #262a2f",
+        background: verified ? "transparent" : "#ffffff",
+        border: verified ? "none" : "1px solid #e0e0e0",
         borderRadius: 4,
         maxWidth: 320,
       }}
@@ -69,10 +69,10 @@ export default function GlobalTrustCaptcha({ sitekey, lang = "it" }: Props) {
       {!verified ? (
         <>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
-            <span style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: 11, color: "#8a8d92", letterSpacing: ".04em" }}>
+            <span style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: 11, color: "#525252", letterSpacing: ".04em" }}>
               {lang === "it" ? "Protezione anti-spam" : "Anti-spam protection"}
             </span>
-            <span style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: 9, color: "#6f7276", letterSpacing: ".08em" }}>
+            <span style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: 9, color: "#6f6f6f", letterSpacing: ".08em" }}>
               TrustCaptcha
             </span>
           </div>
@@ -85,7 +85,7 @@ export default function GlobalTrustCaptcha({ sitekey, lang = "it" }: Props) {
             onCaptchaExpired={handleExpired as any}
           />
           {error && (
-            <span style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: 10, color: "#e05a5a" }}>{error}</span>
+            <span style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: 10, color: "#c4361a" }}>{error}</span>
           )}
         </>
       ) : (
@@ -93,7 +93,7 @@ export default function GlobalTrustCaptcha({ sitekey, lang = "it" }: Props) {
           style={{
             fontFamily: '"IBM Plex Mono", monospace',
             fontSize: 11,
-            color: "#35cfa4",
+            color: "#0b6b5e",
             display: "inline-flex",
             alignItems: "center",
             gap: 6,

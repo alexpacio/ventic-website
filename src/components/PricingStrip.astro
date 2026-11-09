@@ -1,63 +1,49 @@
 ---
-import Icon from "./Icon.astro";
 import { content, type Lang } from "../i18n/content";
-interface Props { lang: Lang; }
-const { lang } = Astro.props;
+interface Props { lang: Lang; num?: string; }
+const { lang, num } = Astro.props;
 const c = content[lang].pricing;
 const href = lang === "it" ? "/pricing/" : "/en/pricing/";
 ---
-<section id={c.id} class="sec">
-  <div class="wrap">
-    <div class="grid top">
-      <div class="tcol">
-        <span class="plate">{c.plate}</span>
+<section id={c.id} class="sec sec--tint">
+  <div class="wrap vt-reveal">
+    <div class="shead">
+      <div>
+        <span class="plate">{num && <span class="plate-num">{num} —</span>}{c.plate}</span>
         <h2 class="h2">{c.title[0]}<br />{c.title[1]}</h2>
       </div>
-      <div class="lcol">
-        <p class="body">{c.lead}</p>
-        <a class="arrowlink" href={href}>
-          {c.link}
-          <Icon name="arrow" size={16} width={2} />
-        </a>
-      </div>
+      <p class="shead-lead">{c.lead}</p>
     </div>
 
     <div class="cards">
-      {c.cards.map((card) => (
-        <article class={`panel card ${card.warm ? "panel--warm" : ""}`}>
-          <div class="card-head">
-            <span class={`mono tag ${card.warm ? "tag--warm" : ""}`}>{card.tag}</span>
-          </div>
-          <span class="prow">
-            <span class="price pval">{card.price}</span>
-            <span class="mono punit">{card.unit}</span>
-          </span>
-          <span class="seam"></span>
+      {c.cards.map((card, i) => (
+        <article class:list={["card", "vt-card", { "card--warm": card.warm && i === 1 }]}>
+          <span class="mono tag">{card.tag}</span>
+          <span class="prow"><span class="price pval">{card.price}</span><span class="punit">{card.unit}</span></span>
           <p class="cell-b">{card.body}</p>
         </article>
       ))}
+      <a class="card card--link" href={href}>
+        <span class="mono tag tag--on">{lang === "it" ? "Listino completo" : "Full price list"}</span>
+        <span class="link-t">{c.link} <span class="arr" aria-hidden="true">→</span></span>
+      </a>
     </div>
     <p class="mono foot">{c.foot}</p>
   </div>
 </section>
 
 <style>
-  .top { align-items: end; margin-bottom: 56px; }
-  .tcol { grid-column: span 7; }
-  .lcol { grid-column: span 5; }
-  .plate { margin-bottom: 16px; }
-  .arrowlink { margin-top: 16px; }
-  .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
-  .cards > .card { margin: 0 -1px -1px 0; }
-  .card { display: flex; flex-direction: column; padding: 32px 28px; gap: 12px; }
-  .card-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-  .tag { font-size: 11px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-mute); line-height: 1.3; }
-  .tag--warm { color: var(--accent); }
-  .prow { display: flex; align-items: baseline; gap: 8px; margin-top: 6px; }
-  .pval { font-size: clamp(36px, 3.8vw, 52px); color: var(--fg-strong); }
-  .punit { font-size: 13px; color: var(--fg-mute); }
-  .seam { margin: 10px 0 2px; }
-  .foot { margin-top: 18px; font-size: 11px; letter-spacing: .04em; line-height: 1.7; color: var(--fg-faint); }
-  @media (max-width: 1080px) { .cards { grid-template-columns: 1fr; } }
-  @media (max-width: 860px) { .tcol, .lcol { grid-column: span 6; } }
+  .cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--line-soft); border: 1px solid var(--line-soft); }
+  .card { background-color: var(--ink); padding: 28px 24px; display: flex; flex-direction: column; gap: 12px; }
+  .tag { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--fg-mute); }
+  .prow { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 8px; }
+  .pval { font-size: clamp(38px, 3.6vw, 48px); }
+  .punit { font-size: 13px; color: var(--fg-faint); }
+  .card--link { background: var(--accent); color: #fff; justify-content: space-between; min-height: 160px; }
+  .card--link:hover { background: var(--accent-deep); color: #fff; }
+  .tag--on { color: #fff; opacity: .85; }
+  .link-t { font-size: 18px; display: flex; justify-content: space-between; gap: 12px; }
+  .foot { margin-top: 18px; font-size: 11px; letter-spacing: .02em; line-height: 1.7; color: var(--fg-faint); }
+  @media (max-width: 1080px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 560px) { .cards { grid-template-columns: 1fr; } }
 </style>

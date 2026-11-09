@@ -1,73 +1,301 @@
 ---
-import PlatformShots from "./PlatformShots.astro";
 import ObfuscatedEmail from "./ObfuscatedEmail.astro";
+import Wordmark from "./Wordmark.astro";
 import { content, type Lang } from "../i18n/content";
+import { home } from "../i18n/home";
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
-const h = content[lang].hero;
-const how = lang === "it" ? "/how-it-works/" : "/en/how-it-works/";
+const c = content[lang].hero;
+const h = home(lang).hero;
+const first = h.scenarios[0];
+const data = JSON.stringify(h.scenarios.map((s) => ({ rule: s.rule, pct: s.pct, active: s.active })));
+const packetCount = (p: number) => (p >= 50 ? 3 : p >= 25 ? 2 : p > 0 ? 1 : 0);
 ---
 <section class="hero">
-  <div class="wrap grid inner">
+  <div class="wrap top">
     <div class="copy">
-      <span class="plate">
-        <span class="dot"></span>
-        {h.plate}
-      </span>
-      <h1 class="h1">
-        {h.title[0]}<br /><span class="hl">{h.title[1]}</span>
-      </h1>
-      <p class="lead measure">{h.lead}</p>
-      <div class="actions">
-        <a class="btn btn--a" href="#contatto">{h.cta1}</a>
-        <a class="btn btn--b" href={how}>{h.cta2}</a>
-      </div>
-      <p class="start measure"><strong>{h.startTitle}</strong> {h.startPre} <ObfuscatedEmail lang={lang} class="mono link-inline" /> {h.startPost}</p>
-      <p class="start measure">
-        {lang === "it" ? "Preferisci non installare nulla? Prova " : "Rather not install anything? Try "}<a class="link-inline" href="https://llm.netter.io" rel="noopener">Netter Intelligence</a>{lang === "it" ? ", un'istanza Ventic già attiva su llm.netter.io." : ", a Ventic instance that is already up at llm.netter.io."}
-      </p>
+      <span class="plate"><span class="dot"></span>{h.plate}</span>
+      <h1 class="h1"><span class="vt-line">{h.title[0]}</span><br /><span class="vt-line vt-line--2 hl">{h.title[1]}</span></h1>
     </div>
-    <div class="slidecol"><PlatformShots lang={lang} /></div>
+    <div class="side">
+      <p class="lead">{h.lead}</p>
+      <div class="actions">
+        <a class="btn btn--a" href="#contatto">{h.cta1} <span class="arr" aria-hidden="true">→</span></a>
+        <a class="btn btn--b" href={h.how}>{h.cta2} <span class="arr" aria-hidden="true">→</span></a>
+      </div>
+      <p class="start">{c.startPre} <ObfuscatedEmail lang={lang} class="mono link-inline" /> {c.startPost}</p>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="board lattice" data-router data-scenarios={data}>
+      <div class="board-head">
+        <div class="seg" role="group" aria-label={h.compareLabel}>
+          <button type="button" class="seg--bad" data-mode="today" aria-pressed="false">{h.tabs.today}</button>
+          <button type="button" data-mode="ventic" aria-pressed="true">{h.tabs.ventic}</button>
+        </div>
+        <div class="seg rules" role="group" aria-label={h.ruleLabel} data-only="ventic">
+          <span class="mono seg-label">{h.ruleLabel}</span>
+          {h.scenarios.map((s, i) => (
+            <button type="button" data-scen={i} aria-pressed={i === 0 ? "true" : "false"}>
+              <span>{s.key}</span><span class="timer" aria-hidden="true"></span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <!-- today: everything to one foreign provider -->
+      <div class="view today" data-view="today" hidden>
+        <div class="sources">
+          <span class="mono lbl">{h.sources.label}</span>
+          {h.sources.items.map((s) => <div class="src">{s}</div>)}
+        </div>
+        <div class="conn conn--bad" aria-hidden="true">
+          <span class="mono conn-lbl">{h.today.flow}</span>
+          <span class="track"><span class="vt-dash"></span><span class="vt-run"></span><span class="vt-run" style="animation-delay:.73s"></span><span class="vt-run" style="animation-delay:1.46s"></span></span>
+        </div>
+        <div class="foreign">
+          <div class="foreign-head"><span class="foreign-title">{h.today.title}</span><span class="mono badge">{h.today.badge}</span></div>
+          <div class="issues">
+            {h.today.issues.map(([title, body]) => (
+              <div class="issue"><span class="sq" aria-hidden="true"></span><span><strong>{title}</strong><br /><span class="issue-b">{body}</span></span></div>
+            ))}
+          </div>
+          <button type="button" class="btn btn--a btn--sm" data-mode="ventic">{h.today.cta} <span class="arr" aria-hidden="true">→</span></button>
+        </div>
+      </div>
+
+      <!-- ventic: rules split traffic across targets -->
+      <div class="view ventic" data-view="ventic">
+        <div class="sources">
+          <span class="mono lbl">{h.sources.label}</span>
+          {h.sources.items.map((s) => <div class="src">{s}</div>)}
+        </div>
+        <div class="conn conn--in" aria-hidden="true">
+          <span class="track"><span class="vt-dash"></span><span class="vt-run" style="animation-duration:1.4s"></span></span>
+        </div>
+        <div class="router vt-breathe on-dark">
+          <div class="router-brand"><Wordmark /></div>
+          <div class="mono endpoint">{h.router.endpoint}<br /><span>{h.router.protocols}</span></div>
+          <span class="mono active-lbl">{h.router.active} · <span data-rule-name>{first.key}</span></span>
+          <dl class="rule" data-rule>
+            {first.rule.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
+          </dl>
+          <div class="split" aria-hidden="true">
+            {h.targets.map((tg, i) => <span class={`seg-${tg.key}`} data-seg={i} style={`width:${first.pct[i]}%`}></span>)}
+          </div>
+          <span class="mono split-lbl">{h.router.split}</span>
+        </div>
+        <div class="targets">
+          {h.targets.map((tg, i) => (
+            <div class={`trow t-${tg.key}`} data-target={i} data-off={first.pct[i] === 0 ? "" : undefined}>
+              <div class="conn conn--out" aria-hidden="true">
+                <span class="mono pct" data-pct>{first.pct[i]}%</span>
+                <span class="track"><span class="vt-dash"></span>
+                  {[0, 1, 2].map((k) => (
+                    <span class="vt-run" data-packet={k} hidden={k >= packetCount(first.pct[i])} style={`animation-delay:${(k * 0.7 + i * 0.3).toFixed(2)}s`}></span>
+                  ))}
+                </span>
+              </div>
+              <div class="tcard">
+                <div class="tcard-head"><span class="tname"><span class="sq" aria-hidden="true"></span>{tg.name}<span class="mono pct-m" data-pct>{first.pct[i]}%</span></span><span class="mono tsub">{tg.sub}</span></div>
+                <ul class="models">
+                  {tg.models.map((m) => (
+                    <li data-model={m.id} class={first.active[i] === m.id ? "is-active" : undefined}><span class="mono">{m.name}</span><span class="mono qtag">{m.q}</span></li>
+                  ))}
+                </ul>
+                <span class="mono tfoot">{tg.foot}</span>
+              </div>
+            </div>
+          ))}
+          <div class="add"><span>{h.add}</span><code class="mono">{h.addCmd}</code></div>
+        </div>
+      </div>
+      <p class="mono note">{h.note}</p>
+    </div>
   </div>
 </section>
 
-<style>
-  .hero {
-    position: relative; overflow: hidden; padding: 112px 0 64px;
-    background-color: var(--ink);
-    background-image: radial-gradient(circle at 1px 1px, #2a2f36 1px, transparent 0);
-    background-size: 32px 32px;
-    border-bottom: 1px solid var(--line-soft);
-  }
-  .inner { position: relative; align-items: center; }
-  .copy { grid-column: span 6; }
-  .slidecol { grid-column: span 6; min-width: 0; }
+<script>
+  const roots = document.querySelectorAll<HTMLElement>("[data-router]");
+  roots.forEach((root) => {
+    const scen = JSON.parse(root.dataset.scenarios || "[]") as { rule: [string, string][]; pct: number[]; active: (string | null)[] }[];
+    const names = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-scen]")).map((b) => b.querySelector("span")?.textContent || "");
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let cur = 0, manual = reduce, mode = "ventic", visible = true, timer: number | undefined;
 
-  .plate { margin-bottom: 32px; }
-  .h1 { margin: 0; color: var(--fg-mute); }
-  .hl { color: var(--fg-strong); }
-  .measure { max-width: 52ch; }
-  .lead { margin-top: 32px; font-size: clamp(17px, 1.4vw, 20px); line-height: 1.55; }
-  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 40px; }
-  .start { margin-top: 28px; font-size: 14px; line-height: 1.6; color: var(--fg-mid); }
-  .start strong { color: var(--fg-strong); font-weight: 500; }
+    const packets = (p: number) => (p >= 50 ? 3 : p >= 25 ? 2 : p > 0 ? 1 : 0);
+
+    const restartTimerBar = () => {
+      root.querySelectorAll<HTMLElement>("[data-scen] .timer").forEach((el, i) => {
+        el.classList.remove("run");
+        if (i === cur && !manual && mode === "ventic") { void el.offsetWidth; el.classList.add("run"); }
+      });
+    };
+
+    const apply = (i: number) => {
+      cur = i;
+      const s = scen[i];
+      root.querySelectorAll<HTMLButtonElement>("[data-scen]").forEach((b, k) => b.setAttribute("aria-pressed", String(k === i)));
+      const nameEl = root.querySelector("[data-rule-name]");
+      if (nameEl) nameEl.textContent = names[i];
+      const rule = root.querySelector("[data-rule]");
+      if (rule) {
+        rule.replaceChildren(...s.rule.map(([k, v]) => {
+          const row = document.createElement("div");
+          const dt = document.createElement("dt"); dt.textContent = k;
+          const dd = document.createElement("dd"); dd.textContent = v;
+          row.append(dt, dd);
+          return row;
+        }));
+        rule.classList.remove("swap"); void (rule as HTMLElement).offsetWidth; rule.classList.add("swap");
+      }
+      root.querySelectorAll<HTMLElement>("[data-seg]").forEach((el, k) => { el.style.width = s.pct[k] + "%"; });
+      root.querySelectorAll<HTMLElement>("[data-target]").forEach((row, k) => {
+        const p = s.pct[k];
+        row.toggleAttribute("data-off", p === 0);
+        row.querySelectorAll("[data-pct]").forEach((el) => { el.textContent = p + "%"; });
+        const n = packets(p);
+        row.querySelectorAll<HTMLElement>("[data-packet]").forEach((el, j) => { el.hidden = j >= n; });
+        row.querySelectorAll<HTMLElement>("[data-model]").forEach((m) => m.classList.toggle("is-active", m.dataset.model === s.active[k]));
+      });
+      restartTimerBar();
+    };
+
+    const setMode = (m: string) => {
+      mode = m;
+      root.querySelectorAll<HTMLButtonElement>(".board-head [data-mode]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.mode === m)));
+      root.querySelectorAll<HTMLElement>("[data-view]").forEach((v) => { v.hidden = v.dataset.view !== m; });
+      root.querySelectorAll<HTMLElement>("[data-only]").forEach((v) => { v.hidden = v.dataset.only !== m; });
+      restartTimerBar();
+    };
+
+    root.querySelectorAll<HTMLButtonElement>("[data-mode]").forEach((b) => b.addEventListener("click", () => setMode(b.dataset.mode || "ventic")));
+    root.querySelectorAll<HTMLButtonElement>("[data-scen]").forEach((b) => b.addEventListener("click", () => { manual = true; apply(Number(b.dataset.scen)); }));
+
+    const tick = () => { if (!manual && visible && mode === "ventic" && !document.hidden) apply((cur + 1) % scen.length); };
+    if (!reduce) timer = window.setInterval(tick, 5200);
+    new IntersectionObserver((entries) => {
+      visible = entries[0]?.isIntersecting ?? true;
+      root.classList.toggle("paused", !visible);
+    }).observe(root);
+    restartTimerBar();
+    void timer;
+  });
+</script>
+
+<style>
+  .hero { border-bottom: 1px solid var(--line-soft); padding-bottom: 80px; }
+  .top { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 32px 64px; padding-top: 80px; padding-bottom: 40px; }
+  .copy { flex: 1 1 600px; min-width: 0; display: flex; flex-direction: column; gap: 24px; }
+  .side { flex: 1 1 400px; min-width: 0; display: flex; flex-direction: column; gap: 24px; }
+  .lead { font-size: 18px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 2px; }
+  .actions .btn { min-width: 220px; }
+  .start { font-size: 14px; line-height: 1.6; color: var(--fg-mid); }
   :global(.link-inline) { color: var(--accent) !important; text-underline-offset: 3px; }
   :global(.link-inline:hover) { text-decoration: underline; }
 
+  /* board */
+  .board { border: 1px solid var(--line-soft); }
+  .board.paused :global(.vt-run), .board.paused :global(.vt-dash) { animation-play-state: paused; }
+  .board-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; padding: 12px; background: var(--ink); border-bottom: 1px solid var(--line-soft); }
+  .seg-label { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--fg-mute); padding: 0 12px; align-self: center; }
+  .rules[hidden] { display: none; }
+  .rules button { overflow: hidden; }
+  .timer { position: absolute; left: 0; bottom: 0; height: 2px; width: 0; background: var(--accent-mid); }
+  .timer.run { animation: vt-fill 5.2s linear both; }
+
+  .view { display: flex; flex-wrap: wrap; align-items: stretch; padding: 32px; min-height: 500px; }
+  .view[hidden] { display: none; }
+  .lbl { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-mute); }
+  .sources { flex: 0 1 190px; min-width: 160px; display: flex; flex-direction: column; justify-content: center; gap: 8px; }
+  .src { background: var(--ink); border: 1px solid var(--line-soft); padding: 12px 14px; font-size: 14px; }
+
+  .conn { display: flex; flex-direction: column; justify-content: center; gap: 6px; padding: 0 10px; transition: opacity .4s ease, color .4s ease; }
+  .conn--in { flex: 0 1 72px; min-width: 40px; color: var(--fg-strong); }
+  .conn--in .vt-run { background: var(--fg-strong); }
+  .conn--bad { flex: 1 1 120px; min-width: 80px; color: var(--red); }
+  .conn--bad .vt-run { background: var(--red); }
+  .conn-lbl { font-size: 11px; text-align: center; }
+  .track { position: relative; height: 12px; display: block; }
+  .track .vt-dash { position: absolute; left: 0; right: 0; top: 5px; }
+
+  /* today */
+  .today { align-items: center; }
+  .foreign { flex: 1 1 420px; background: var(--ink); border: 1px solid var(--red); border-top-width: 4px; padding: 28px; display: flex; flex-direction: column; gap: 16px; }
+  .foreign-head { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .foreign-title { font-size: 22px; font-weight: 300; letter-spacing: -.02em; color: var(--fg-strong); }
+  .badge { font-size: 11px; color: #a8341c; text-transform: uppercase; letter-spacing: .06em; }
+  .issues { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2px; background: var(--deck); }
+  .issue { background: var(--ink); padding: 16px; display: flex; gap: 12px; font-size: 14px; }
+  .issue strong { font-weight: 500; color: var(--fg-strong); }
+  .issue-b { color: var(--fg-mid); }
+  .issue .sq { flex: none; width: 10px; height: 10px; margin-top: 7px; background: var(--red); }
+  .foreign .btn { align-self: flex-start; }
+
+  /* router */
+  .router { flex: 0 1 290px; min-width: 240px; background: #161616; color: #f4f4f4; padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+  .router-brand { color: #fff; }
+  .endpoint { background: #262626; padding: 10px 12px; font-size: 12px; color: #c6c6c6; }
+  .endpoint span { color: #8d8d8d; }
+  .active-lbl { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-mid); }
+  .rule { margin: 0; border-top: 1px solid #393939; }
+  .rule :global(div) { display: flex; gap: 10px; padding: 9px 0; border-bottom: 1px solid #393939; font-family: var(--mono); font-size: 12px; }
+  .rule :global(dt) { color: var(--amber); min-width: 70px; }
+  .rule :global(dd) { margin: 0; color: #f4f4f4; }
+  .rule.swap :global(div) { animation: vt-rise .5s var(--ease) both; }
+  .rule.swap :global(div:nth-child(2)) { animation-delay: .06s; }
+  .rule.swap :global(div:nth-child(3)) { animation-delay: .12s; }
+  .split { display: flex; height: 8px; margin-top: auto; background: #262626; }
+  .split span { display: block; height: 8px; transition: width .6s var(--ease); }
+  .seg-cloud { background: var(--amber); }
+  .seg-neocloud { background: var(--accent); }
+  .seg-local { background: var(--jade); }
+  .split-lbl { font-size: 11px; color: #8d8d8d; }
+
+  /* targets */
+  .targets { flex: 1 1 480px; min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 10px; }
+  .trow { display: flex; align-items: center; --tc: var(--accent); --tbg: var(--accent-soft); --tfg: var(--accent); }
+  .t-cloud { --tc: var(--amber); --tbg: var(--amber-soft); --tfg: var(--amber-ink); }
+  .t-local { --tc: var(--jade); --tbg: var(--jade-soft); --tfg: var(--jade-ink); }
+  .conn--out { flex: 0 0 110px; color: var(--tc); }
+  .conn--out .vt-run { background: var(--tc); }
+  .pct { font-size: 13px; font-weight: 500; text-align: center; color: var(--fg-strong); }
+  .tcard { flex: 1 1 auto; min-width: 0; background: var(--ink); border: 1px solid var(--line-soft); border-left: 4px solid var(--tc); padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; transition: opacity .4s ease; }
+  .trow[data-off] .tcard, .trow[data-off] .conn--out { opacity: .45; }
+  .tcard-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  .tname { display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 15px; color: var(--fg-strong); }
+  .tname .sq { width: 10px; height: 10px; background: var(--tc); }
+  .pct-m { display: none; margin-left: 4px; font-size: 12px; color: var(--fg-mid); }
+  .tsub, .tfoot { font-size: 11px; color: var(--fg-mid); }
+  .models { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+  .models li { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 6px 8px; font-size: 12.5px; color: var(--fg-faint); box-shadow: inset 2px 0 0 transparent; transition: background-color .3s ease, color .3s ease, box-shadow .3s ease; }
+  .models li.is-active { background: var(--deck); color: var(--fg-strong); box-shadow: inset 2px 0 0 var(--tc); }
+  .qtag { font-size: 10.5px; padding: 2px 6px; background: var(--tbg); color: var(--tfg); white-space: nowrap; }
+  .add { margin-left: 110px; border: 1px dashed #8d8d8d; padding: 12px 16px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; font-size: 14px; color: var(--fg-dim); }
+  .add code { font-size: 12px; background: #161616; color: #f4f4f4; padding: 6px 10px; }
+  .note { padding: 0 32px 20px; font-size: 11px; color: var(--fg-faint); }
+
   @media (max-width: 1080px) {
-    .copy { grid-column: span 12; }
-    .slidecol { grid-column: span 12; margin-top: 16px; }
+    .router { flex-basis: 100%; }
+    .conn--in { flex-basis: 100%; min-height: 32px; }
+    .sources { flex-basis: 100%; flex-direction: row; flex-wrap: wrap; }
+    .sources .lbl { flex-basis: 100%; }
+    .targets { margin-top: 16px; }
   }
   @media (max-width: 860px) {
-    .hero { padding: 48px 0 40px; }
-    .copy, .slidecol { grid-column: span 6; }
-    .plate { margin-bottom: 24px; line-height: 1.5; }
-    .lead { margin-top: 20px; }
-    .actions { margin-top: 28px; }
-    .start { margin-top: 20px; }
+    .top { padding-top: 48px; }
+    .hero { padding-bottom: 56px; }
+    .view { padding: 20px 16px; }
+    .conn--out { flex-basis: 64px; padding: 0 6px; }
+    .add { margin-left: 0; }
+    .note { padding: 0 16px 16px; }
   }
   @media (max-width: 520px) {
-    .actions { flex-direction: column; gap: 10px; }
     .actions .btn { width: 100%; }
+    .conn--out { display: none; }
+    .pct-m { display: inline; }
+    .trow .tcard { position: relative; }
   }
 </style>

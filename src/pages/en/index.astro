@@ -3,10 +3,11 @@ import Layout from "../../layouts/Layout.astro";
 import Nav from "../../components/Nav.astro";
 import Hero from "../../components/Hero.astro";
 import Facts from "../../components/Facts.astro";
-import Pains from "../../components/Pains.astro";
-import Highlights from "../../components/Highlights.astro";
-import PromoVideo from "../../components/PromoVideo.astro";
 import Explore from "../../components/Explore.astro";
+import HomeSteps from "../../components/HomeSteps.astro";
+import HomeArch from "../../components/HomeArch.astro";
+import HomeCaps from "../../components/HomeCaps.astro";
+import Modes from "../../components/Modes.astro";
 import PricingStrip from "../../components/PricingStrip.astro";
 import Cta from "../../components/Cta.astro";
 import Footer from "../../components/Footer.astro";
@@ -22,11 +23,12 @@ const jsonLd = serviceJsonLd(lang);
   <main id="main">
     <Hero lang={lang} />
     <Facts lang={lang} />
-    <Pains lang={lang} />
-    <Highlights lang={lang} />
-    <PromoVideo lang={lang} />
-    <Explore lang={lang} />
-    <PricingStrip lang={lang} />
+    <HomeSteps lang={lang} num="01" />
+    <HomeArch lang={lang} num="02" />
+    <HomeCaps lang={lang} num="03" />
+    <Modes lang={lang} num="04" />
+    <Explore lang={lang} num="05" />
+    <PricingStrip lang={lang} num="06" />
     <Cta lang={lang} />
   </main>
   <Footer lang={lang} />

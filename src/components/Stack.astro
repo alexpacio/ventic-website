@@ -1,7 +1,5 @@
 ---
 import Icon from "./Icon.astro";
-import StackDiagram from "./StackDiagram.astro";
-import LifecycleDiagram from "./LifecycleDiagram.astro";
 import { content, type Lang } from "../i18n/content";
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
@@ -23,10 +21,6 @@ const icons = ["terminal", "provisioning", "overlay", "ops", "cloud"];
         </div>
       </div>
     </div>
-
-    <StackDiagram lang={lang} />
-
-    <LifecycleDiagram lang={lang} />
 
     <div class="planes">
       {c.planes.map((p, i) => (
@@ -84,7 +78,7 @@ const icons = ["terminal", "provisioning", "overlay", "ops", "cloud"];
     white-space: normal; line-height: 1.4;
   }
   .swatch { width: 11px; height: 11px; border-radius: 0; background: var(--sunk); border: 1px solid var(--line); }
-  .swatch--opt { border-style: dashed; border-color: #3d4349; background: transparent; }
+  .swatch--opt { border-style: dashed; border-color: var(--line); background: transparent; }
 
   .planes { display: flex; flex-direction: column; margin-top: 24px; }
 
@@ -105,7 +99,7 @@ const icons = ["terminal", "provisioning", "overlay", "ops", "cloud"];
     padding: 16px;
   }
   .cell { display: flex; flex-direction: column; gap: 9px; padding: 16px 16px 18px; }
-  .cell--opt { background: transparent; border-style: dashed; border-color: #3d4349; box-shadow: none; }
+  .cell--opt { background: transparent; border-style: dashed; border-color: var(--line); box-shadow: none; }
   .crow { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
   .cname { font-size: 15px; font-weight: 600; line-height: 1.3; color: var(--fg-strong); flex: 1; min-width: 0; }
   .optag { flex-shrink: 0; max-width: 42%; white-space: normal; line-height: 1.3; text-align: right; letter-spacing: 0.08em; font-size: 9px; padding: 4px 7px; }

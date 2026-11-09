@@ -6,24 +6,24 @@ const { lang } = Astro.props;
 const facts = {
   it: [
     { k: "Endpoint", v: "Compatibile OpenAI e Anthropic" },
-    { k: "Residenza dei dati", v: "In UE o US, a tua scelta" },
-    { k: "Inferenza", v: "vLLM e SGLang ottimizzati" },
-    { k: "Modelli", v: "Open-weight, assistenza inclusa" },
+    { k: "Installazione", v: "Kubernetes 1.36–1.37, Helm" },
+    { k: "Contabilità", v: "Credito prepagato, ledger esatto" },
+    { k: "Modelli", v: "Cloud e runtime locali" },
   ],
   en: [
     { k: "Endpoint", v: "OpenAI and Anthropic compatible" },
-    { k: "Data residency", v: "EU or US, your choice" },
-    { k: "Inference", v: "Tuned vLLM and SGLang" },
-    { k: "Models", v: "Open-weight, support included" },
+    { k: "Installation", v: "Kubernetes 1.36–1.37, Helm" },
+    { k: "Accounting", v: "Prepaid credit, exact ledger" },
+    { k: "Models", v: "Cloud and local runtimes" },
   ],
 }[lang];
 ---
 <section class="facts" aria-label={lang === "it" ? "In sintesi" : "At a glance"}>
   <div class="wrap">
     <dl class="row hairgrid">
-      {facts.map((f) => (
+      {facts.map((f, i) => (
         <div class="cell">
-          <dt class="mono k">{f.k}</dt>
+          <dt class="mono k"><span class="n">{String(i + 1).padStart(2, "0")}</span> · {f.k}</dt>
           <dd class="v">{f.v}</dd>
         </div>
       ))}
@@ -35,6 +35,7 @@ const facts = {
   .facts { border-bottom: 1px solid var(--line-soft); }
   .row { margin: 0; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 0; border-bottom: 0; }
   .cell { padding: 28px 28px 30px; }
+  .n { color: var(--accent); }
   .k { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-mute); }
   .v { margin: 8px 0 0; font-size: 18px; line-height: 1.35; color: var(--fg-strong); }
   @media (max-width: 1080px) { .row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

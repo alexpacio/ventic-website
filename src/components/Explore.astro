@@ -1,27 +1,26 @@
 ---
-import Icon from "./Icon.astro";
 import { pages, pagePath } from "../i18n/pages";
 import type { Lang } from "../i18n/content";
-interface Props { lang: Lang; }
-const { lang } = Astro.props;
+interface Props { lang: Lang; num?: string; }
+const { lang, num } = Astro.props;
 const c = pages(lang).explore;
 ---
-<section id="esplora" class="sec sec--tint">
-  <div class="wrap">
+<section id="esplora" class="sec sec--rule">
+  <div class="wrap vt-reveal">
     <div class="grid top">
       <div class="tcol">
-        <span class="plate">{c.plate}</span>
+        <span class="plate">{num && <span class="plate-num">{num} —</span>}{c.plate}</span>
         <h2 class="h2">{c.title[0]}<br />{c.title[1]}</h2>
       </div>
       <div class="lcol"><p class="body">{c.lead}</p></div>
     </div>
     <div class="cards hairgrid">
       {c.cards.map((card, i) => (
-        <a class="card" href={pagePath(lang, card.key)} data-explore={card.key}>
+        <a class="card vt-card" href={pagePath(lang, card.key)} data-explore={card.key}>
           <span class="mono idx">{String(i + 1).padStart(2, "0")}</span>
           <h3 class="card-title">{card.title}</h3>
           <p class="cell-b">{card.body}</p>
-          <span class="arrowlink">{c.open} <Icon name="arrow" size={16} width={2} /></span>
+          <span class="arrowlink">{c.open} <span class="arr" aria-hidden="true">→</span></span>
         </a>
       ))}
     </div>
@@ -34,7 +33,7 @@ const c = pages(lang).explore;
   .lcol { grid-column: span 5; }
   .cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .card { display: flex; flex-direction: column; gap: 14px; padding: 32px 28px; min-height: 280px; color: inherit; transition: background .15s; }
-  .card:hover { background: var(--panel-b) !important; }
+  .card:hover { background-color: var(--deck) !important; }
   .idx { font-size: 11px; letter-spacing: .1em; color: var(--accent); }
   .card-title { margin: 0; font-size: 22px; }
   .card .arrowlink { margin-top: auto; padding-top: 8px; }

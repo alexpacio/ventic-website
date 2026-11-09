@@ -2,7 +2,10 @@
 import Layout from "../layouts/Layout.astro";
 import Nav from "../components/Nav.astro";
 import PageHero from "../components/PageHero.astro";
-import How from "../components/How.astro";
+import HowLifecycle from "../components/HowLifecycle.astro";
+import HowReconcile from "../components/HowReconcile.astro";
+import HowAgent from "../components/HowAgent.astro";
+import HowSwitchyard from "../components/HowSwitchyard.astro";
 import UnderHood from "../components/UnderHood.astro";
 import Schemes from "../components/Schemes.astro";
 import Cta from "../components/Cta.astro";
@@ -16,7 +19,10 @@ const seo = pages(lang).how.seo;
   <Nav lang={lang} />
   <main id="main">
     <PageHero lang={lang} page="how" />
-    <How lang={lang} />
+    <HowLifecycle lang={lang} num="01" />
+    <HowReconcile lang={lang} num="02" />
+    <HowAgent lang={lang} num="03" />
+    <HowSwitchyard lang={lang} num="04" />
     <UnderHood lang={lang} />
     <Schemes lang={lang} />
     <Cta lang={lang} />

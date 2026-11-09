@@ -1,26 +1,26 @@
 # Ventic — llms.txt
 # See https://llmstxt.org/ — helps LLMs discover and cite your site correctly.
 
-> Ventic è uno stack tecnologico chiavi in mano per creare, gestire e configurare LLM privati. Gira sulle tue GPU — dati in UE o US — con endpoint compatibile OpenAI e Anthropic, motore di inferenza ottimizzato (vLLM, SGLang) e pannello Admin multi-tenant. Alternativa a subscription frontier e pagamento a token: licenza mensile (On Premise €29/host o €299/azienda, Cloud Hosted €99/azienda), mai a token.
+> Ventic è una piattaforma AI multi-tenant che si installa sul tuo cluster Kubernetes (1.36–1.37, Helm). Un gateway compatibile OpenAI e Anthropic con credito prepagato, quote per gruppo e per chiave API, filtro PII reversibile opzionale, modelli cloud (DeepSeek, OpenRouter) o runtime locali collegati con un agente remoto in uscita, inferenza gestita con OpenTofu e licenza Licman. Licenza mensile On Premise (€29/host o €299/azienda); il consumo dei modelli è credito prepagato a parte. Il servizio gestito è a parte su llm.netter.io.
 
 # Primary
-- [Ventic — Home](https://ventic.it/): LLM privati su GPU dedicate, endpoint OpenAI/Anthropic, BYOH e PaaS, overlay cifrato, scaling automatico.
-- [Ventic — Home (EN)](https://ventic.it/en/): Private LLMs on dedicated GPUs, OpenAI/Anthropic-compatible, data in EU/US.
+- [Ventic — Home](https://ventic.it/): piattaforma AI multi-tenant on premise, endpoint OpenAI/Anthropic, credito prepagato, PII reversibile, runtime locali.
+- [Ventic — Home (EN)](https://ventic.it/en/): On-premise multi-tenant AI platform, OpenAI/Anthropic-compatible, prepaid credit, reversible PII, local runtimes.
 - [Prezzi e confronto](https://ventic.it/pricing/): listino licenze, matrice confronto vs provider.
 - [Pricing (EN)](https://ventic.it/en/pricing/): licence price list, Ventic vs alternatives.
-- [Pannello Admin](https://ventic.it/admin-panel/): Utenti, ruoli RBAC, modelli, telemetria, white label.
-- [Admin Panel (EN)](https://ventic.it/en/admin-panel/): Users, RBAC, models, telemetry, white label, self-service.
+- [Console](https://ventic.it/admin-panel/): team e gruppi, credito, modelli e Switchyard, agenti remoti, runtime certificati, chiavi API.
+- [Console (EN)](https://ventic.it/en/admin-panel/): teams and groups, credit, models and Switchyard, remote agents, certified runtimes, API keys.
 
 # Details
-- [Perché Ventic](https://ventic.it/why-ventic/): limiti di subscription e pagamento a token, BYOH vs PaaS vs istanza cloud già attiva (Netter Intelligence, https://llm.netter.io).
-- [Come funziona — stack, rete overlay, autoscaling](https://ventic.it/how-it-works/)
-- [Piattaforma — stack, funzioni e modelli open-weight](https://ventic.it/platform/)
-- [On-premise — installazione sul tuo hardware](https://ventic.it/on-premise/)
+- [Perché Ventic](https://ventic.it/why-ventic/): limiti di subscription e pagamento a token, prodotto da installare vs servizio gestito a parte (Netter Intelligence, https://llm.netter.io).
+- [Come funziona — richiesta, contabilità, agenti remoti, inferenza gestita](https://ventic.it/how-it-works/)
+- [Piattaforma — componenti, namespace, runtime certificati](https://ventic.it/platform/)
+- [On-premise — installazione sul tuo Kubernetes](https://ventic.it/on-premise/)
 - [Why Ventic (EN)](https://ventic.it/en/why-ventic/)
 - [How it works (EN)](https://ventic.it/en/how-it-works/)
 - [Platform (EN)](https://ventic.it/en/platform/)
 - [On-premise (EN)](https://ventic.it/en/on-premise/)
-- [Admin panel screenshots](https://ventic.it/admin-panel/)
+- [Console screenshots](https://ventic.it/admin-panel/)
 - [Self-service](https://ventic.it/admin-panel/#self-service)
 
 # Contact

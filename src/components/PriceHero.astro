@@ -6,21 +6,18 @@ const c = content[lang].pricingPage;
 ---
 <section class="phero">
   <div class="wrap inner">
-    <div>
-      <span class="plate">{c.plate}</span>
-      <h1 class="h2-big">{c.title[0]}<br />{c.title[1]}</h1>
+    <div class="copy">
+      <span class="plate"><span class="dot"></span>{c.plate}</span>
+      <h1 class="h1"><span class="vt-line">{c.title[0]}</span><br /><span class="vt-line vt-line--2 hl">{c.title[1]}</span></h1>
     </div>
-    <p class="body measure">{c.lead}</p>
+    <p class="lead">{c.lead}</p>
   </div>
 </section>
 
 <style>
-  .phero { padding: 48px 0 32px; }
-  .inner { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; }
-  .plate { margin-bottom: 16px; }
-  .measure { max-width: 34ch; }
-  @media (max-width: 900px) {
-    .phero { padding: 32px 0 24px; }
-    .inner { flex-direction: column; align-items: flex-start; gap: 20px; }
-  }
+  .phero { padding: 88px 0 72px; border-bottom: 1px solid var(--line-soft); }
+  .inner { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 32px 64px; }
+  .copy { flex: 1 1 560px; display: flex; flex-direction: column; gap: 20px; }
+  .lead { flex: 1 1 380px; }
+  @media (max-width: 860px) { .phero { padding: 48px 0 40px; } }
 </style>

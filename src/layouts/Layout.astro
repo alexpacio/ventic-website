@@ -45,7 +45,7 @@ const {
 } = Astro.props;
 
 const lang: Lang = Astro.props.lang ?? getLangFromUrl(Astro.url);
-const imageAlt = rawImageAlt ?? (lang === "it" ? "Ventic — LLM privati su GPU dedicate" : "Ventic — Private LLMs on dedicated GPUs");
+const imageAlt = rawImageAlt ?? (lang === "it" ? "Ventic — piattaforma AI multi-tenant on premise" : "Ventic — on-premise multi-tenant AI platform");
 const turnstileSitekey = (import.meta.env.PUBLIC_TURNSTILE_SITEKEY as string | undefined) || undefined;
 const trustSitekey = (import.meta.env.PUBLIC_TRUSTCAPTCHA_SITEKEY as string | undefined) || undefined;
 
@@ -141,8 +141,8 @@ const organization = {
   image: imageUrl,
   description:
     lang === "it"
-      ? "LLM privati su GPU dedicate — endpoint OpenAI/Anthropic compatibile, dati in UE o US, motore di inferenza ottimizzato (vLLM, SGLang)."
-      : "Private LLMs on dedicated GPUs — OpenAI/Anthropic-compatible endpoint, data in EU or US, tuned inference engine (vLLM, SGLang).",
+      ? "Piattaforma AI multi-tenant per Kubernetes — gateway compatibile OpenAI/Anthropic, credito prepagato, quote, filtro PII reversibile, runtime locali."
+      : "Multi-tenant AI platform for Kubernetes — OpenAI/Anthropic-compatible gateway, prepaid credit, quotas, reversible PII filtering, local runtimes.",
   address: {
     "@type": "PostalAddress",
     streetAddress: "Via Indipendenza",
@@ -250,7 +250,7 @@ const jsonLdString = JSON.stringify({
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content="#0e0f11" />
+    <meta name="theme-color" content="#ffffff" />
 
     {/* Open Graph */}
     <meta property="og:type" content={type} />
