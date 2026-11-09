@@ -28,7 +28,7 @@ concessa da Licman. Non occorrono immagini di sviluppo o build senza licenza.
 | Storage e backup | Nel profilo bundled PostgreSQL usa per default tre istanze da 100 GiB; aggiungi Valkey, notifiche e telemetria. Dimensiona i PVC, prepara un bucket dati e una destinazione backup esterna. Un PVC non è un backup. |
 | Dominio e TLS | Un dominio controllato, sei host pubblici, wildcard chat, ingress e certificati validi. Per il wildcard serve DNS-01 oppure un certificato wildcard già disponibile. |
 | Strumenti | Git, Python 3.12+, Helm e kubectl sulla macchina amministrativa. Il cliente installa binari e immagini pubblicate: non deve compilare Rust, Node o Python. |
-| Accessi | Kubeconfig dedicato e permessi iniziali per namespace/RBAC e prerequisiti condivisi. Dopo il bootstrap usa identità operative limitate. |
+| Accessi | Accesso GitLab al template Contoso (richiedi l’invito se necessario), kubeconfig dedicato e permessi iniziali per namespace/RBAC e prerequisiti condivisi. Dopo il bootstrap usa identità operative limitate. |
 | Servizi esterni | SMTP funzionante, storage compatibile S3, OpenBao per la custodia dei segreti e un target di inferenza raggiungibile. OAuth/social login e pagamenti del tuo servizio sono integrazioni separate. |
 | Release e fiducia | Una release Ventic effettivamente pubblicata, il suo manifest firmato e la chiave pubblica release ottenuta dal proprietario attraverso un canale fidato indipendente. La chiave pubblica Licman è distinta. |
 | Licenza | Account aziendale Licman verificato e chiave demo **Ventic On Premise**. Il controllo licenza richiede accesso HTTPS a Licman e un orologio sincronizzato. |
