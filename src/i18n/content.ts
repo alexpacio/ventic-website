@@ -325,7 +325,8 @@ const it = {
       { label: "Privacy", href: "/privacy/" },
       { label: "Cookie", href: "/privacy/#cookie" },
     ],
-    disclaimer: "OpenAI e Anthropic sono marchi registrati dei rispettivi proprietari. Ogni diritto è riservato ai legittimi titolari. Ventic non è affiliato ad OpenAI, Inc. né ad Anthropic PBC. Funzionalità e prezzi soggetti a modifica senza preavviso.",
+    rights: "Ventic è un prodotto di Netter srl. Testi, grafica, screenshot e video del sito sono di Netter srl: tutti i diritti riservati, vietata la riproduzione senza autorizzazione scritta.",
+    disclaimer: "OpenAI e Anthropic sono marchi registrati dei rispettivi proprietari; Ventic non è affiliato ad OpenAI, Inc. né ad Anthropic PBC. Tutti gli altri nomi di prodotti, modelli, aziende e loghi citati (es. Kubernetes, NVIDIA, Google, Rust) sono marchi dei rispettivi titolari, usati a solo scopo identificativo, senza implicare affiliazione o approvazione. Logo Rust © Rust Foundation, CC BY 4.0. Font IBM Plex © IBM Corp., SIL Open Font License 1.1. Prezzi di terzi tratti da listini pubblici alla data indicata nelle fonti. Funzionalità e prezzi soggetti a modifica senza preavviso.",
   },
   pricingPage: {
     plate: "Prezzi e confronto",
@@ -1008,7 +1009,8 @@ const en: typeof it = {
       { label: "Privacy", href: "/en/privacy/" },
       { label: "Cookie", href: "/en/privacy/#cookie" },
     ],
-    disclaimer: "OpenAI and Anthropic are registered trademarks of their respective owners. All rights reserved to their legitimate owners. Ventic is not affiliated with OpenAI, Inc. or Anthropic PBC. Features and pricing subject to change without notice.",
+    rights: "Ventic is a product of Netter srl. Site text, graphics, screenshots and videos belong to Netter srl: all rights reserved, no reproduction without written permission.",
+    disclaimer: "OpenAI and Anthropic are registered trademarks of their respective owners; Ventic is not affiliated with OpenAI, Inc. or Anthropic PBC. All other product, model and company names and logos mentioned (e.g. Kubernetes, NVIDIA, Google, Rust) are trademarks of their respective owners, used for identification only, with no affiliation or endorsement implied. Rust logo © Rust Foundation, CC BY 4.0. IBM Plex fonts © IBM Corp., SIL Open Font License 1.1. Third-party prices taken from public price lists as of the date given in the sources. Features and pricing subject to change without notice.",
   },
   pricingPage: {
     plate: "Pricing and comparison",

@@ -7,7 +7,9 @@ URL: https://ventic.it
 
 /* SITE */
 Built with: Astro 7, React, Tailwind CSS
-Fonts: IBM Plex Sans (Google Fonts)
+Fonts: IBM Plex Sans / Mono © IBM Corp., SIL Open Font License 1.1 (served by Google Fonts)
+Rust logo: © Rust Foundation, CC BY 4.0 (https://github.com/rust-lang/rust-artwork)
+Copyright: © Netter srl. All rights reserved. Third-party trademarks belong to their respective owners.
 Doctype: HTML5
 Language: it (default), en
 Standards: W3C HTML5, Schema.org, Open Graph, Twitter Cards
