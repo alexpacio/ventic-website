@@ -2,6 +2,11 @@
 import Layout from "../../layouts/Layout.astro";
 import Nav from "../../components/Nav.astro";
 import Hero from "../../components/Hero.astro";
+import HomeWhat from "../../components/HomeWhat.astro";
+import HomePlatform from "../../components/HomePlatform.astro";
+import HomeSecure from "../../components/HomeSecure.astro";
+import HomeEconomics from "../../components/HomeEconomics.astro";
+import HomeEnable from "../../components/HomeEnable.astro";
 import HomeSteps from "../../components/HomeSteps.astro";
 import HomeArch from "../../components/HomeArch.astro";
 import Modes from "../../components/Modes.astro";
@@ -19,10 +24,15 @@ const jsonLd = serviceJsonLd(lang);
   <Nav lang={lang} />
   <main id="main">
     <Hero lang={lang} />
-    <HomeSteps lang={lang} num="01" />
-    <HomeArch lang={lang} num="02" />
-    <Modes lang={lang} num="03" lean />
-    <PricingStrip lang={lang} num="04" />
+    <HomeWhat lang={lang} num="01" />
+    <HomePlatform lang={lang} num="02" />
+    <HomeEconomics lang={lang} num="03" />
+    <HomeEnable lang={lang} num="04" />
+    <HomeSteps lang={lang} num="05" />
+    <HomeArch lang={lang} num="06" />
+    <HomeSecure lang={lang} num="07" />
+    <Modes lang={lang} num="08" lean />
+    <PricingStrip lang={lang} num="09" />
     <Cta lang={lang} />
   </main>
   <Footer lang={lang} />

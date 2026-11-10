@@ -1,0 +1,28 @@
+---
+import type { Lang } from "../i18n/content";
+import { why } from "../i18n/why";
+import { pagePath } from "../i18n/pages";
+import PlatformShots from "./PlatformShots.astro";
+interface Props { lang: Lang; num?: string; }
+const { lang, num } = Astro.props;
+const c = why(lang).platform;
+---
+<section id={c.id} class="sec sec--tint">
+  <div class="wrap vt-reveal">
+    <div class="shead">
+      <div>
+        <span class="plate">{num && <span class="plate-num">{num} —</span>}{c.plate}</span>
+        <h2 class="h2">{c.title[0]}<br /><span class="h-accent">{c.title[1]}</span></h2>
+      </div>
+      <div class="shead-lead">
+        <p>{c.lead}</p>
+        <a class="arrowlink" href={pagePath(lang, "platform")}>{c.link} <span class="arr" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+    <PlatformShots lang={lang} />
+  </div>
+</section>
+
+<style>
+  .shead-lead p { margin: 0 0 12px; }
+</style>

@@ -30,23 +30,9 @@ const srcIds = ["agent", "app", "chat"];
 
   <div class="wrap">
     <div class="board lattice" data-router data-scenarios={data} data-models={models} data-lang={lang}>
-      <div class="board-head">
-        <div class="seg" role="group" aria-label={h.compareLabel}>
-          <button type="button" class="seg--bad" data-mode="today" aria-pressed="false">{h.tabs.today}</button>
-          <button type="button" data-mode="ventic" aria-pressed="true">{h.tabs.ventic}</button>
-        </div>
-        <div class="seg rules" role="group" aria-label={h.ruleLabel} data-only="ventic">
-          <span class="mono seg-label">{h.ruleLabel}</span>
-          {h.scenarios.map((s, i) => (
-            <button type="button" data-scen={i} aria-pressed={i === 0 ? "true" : "false"}>
-              <span>{s.key}</span><span class="timer" aria-hidden="true"></span>
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <!-- today: everything to one foreign provider -->
-      <div class="view today" data-view="today" hidden>
+      <!-- today: everything to one foreign provider, always visible above the Ventic view -->
+      <div class="view today" data-view="today">
+        <span class="mode-lbl mode-lbl--bad">{h.tabs.today}</span>
         <div class="sources">
           <span class="mono lbl">{h.sources.label}</span>
           {h.sources.items.map((s) => <div class="src">{s}</div>)}
@@ -62,7 +48,18 @@ const srcIds = ["agent", "app", "chat"];
               <div class="issue" style={`--k:${k}`}><span class="sq" aria-hidden="true"></span><span><strong>{title}</strong><br /><span class="issue-b">{body}</span></span></div>
             ))}
           </div>
-          <button type="button" class="btn btn--a btn--sm" data-mode="ventic">{h.today.cta} <span class="arr" aria-hidden="true">→</span></button>
+        </div>
+      </div>
+
+      <div class="board-head">
+        <span class="mode-lbl mode-lbl--ventic">{h.tabs.ventic}</span>
+        <div class="seg rules" role="group" aria-label={h.ruleLabel} data-only="ventic">
+          <span class="mono seg-label">{h.ruleLabel}</span>
+          {h.scenarios.map((s, i) => (
+            <button type="button" data-scen={i} aria-pressed={i === 0 ? "true" : "false"}>
+              <span>{s.key}</span><span class="timer" aria-hidden="true"></span>
+            </button>
+          ))}
         </div>
       </div>
 
@@ -294,16 +291,6 @@ const srcIds = ["agent", "app", "chat"];
       restartTimerBar();
     };
 
-    const setMode = (m: string) => {
-      mode = m;
-      root.querySelectorAll<HTMLButtonElement>(".board-head [data-mode]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.mode === m)));
-      root.querySelectorAll<HTMLElement>("[data-view]").forEach((v) => { v.hidden = v.dataset.view !== m; });
-      root.querySelectorAll<HTMLElement>("[data-only]").forEach((v) => { v.hidden = v.dataset.only !== m; });
-      restartTimerBar();
-      kick();
-    };
-
-    root.querySelectorAll<HTMLButtonElement>("[data-mode]").forEach((b) => b.addEventListener("click", () => setMode(b.dataset.mode || "ventic")));
     root.querySelectorAll<HTMLButtonElement>("[data-scen]").forEach((b) => b.addEventListener("click", () => { manual = true; apply(Number(b.dataset.scen)); }));
 
     const tick = () => { if (!manual && visible && mode === "ventic" && !document.hidden) apply((cur + 1) % scen.length); };
@@ -356,13 +343,17 @@ const srcIds = ["agent", "app", "chat"];
   .track { position: relative; height: 12px; display: block; }
   .track .vt-dash { position: absolute; left: 0; right: 0; top: 5px; }
 
-  /* today */
-  .today { align-items: center; }
-  .foreign { flex: 1 1 420px; background: var(--ink); border: 1px solid var(--red); border-top-width: 4px; padding: 28px; display: flex; flex-direction: column; gap: 16px; }
+  /* today: compact band above the Ventic view */
+  .mode-lbl { font-size: 13px; font-weight: 500; padding: 6px 12px; color: #fff; background: #161616; align-self: center; }
+  .mode-lbl--bad { background: var(--red); position: absolute; left: 32px; top: 16px; }
+  .mode-lbl--ventic { background: var(--accent); }
+  .today { position: relative; align-items: center; min-height: 0; padding-top: 56px; background: var(--deck); border-bottom: 1px solid var(--line-soft); }
+  .foreign { flex: 1 1 420px; background: var(--ink); border: 1px solid var(--red); border-top-width: 4px; padding: 20px 24px; display: flex; flex-direction: column; gap: 12px; }
   .foreign-head { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; align-items: center; }
   .foreign-title { font-size: 22px; font-weight: 300; letter-spacing: -.02em; color: var(--fg-strong); }
   .badge { font-size: 11px; color: #a8341c; text-transform: uppercase; letter-spacing: .06em; }
-  .issues { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2px; background: var(--deck); }
+  .issues { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px; background: var(--deck); }
+  @media (max-width: 560px) { .issues { grid-template-columns: 1fr; } }
   .issue { background: var(--ink); padding: 16px; display: flex; gap: 12px; font-size: 14px; box-shadow: inset 3px 0 0 transparent;
     animation: vt-rise .6s var(--ease) calc(var(--k) * 90ms) both, vt-issue 6s ease-in-out calc(var(--k) * 1.5s + .8s) infinite; }
   .issue .sq { animation: vt-issueSq 6s ease-in-out calc(var(--k) * 1.5s + .8s) infinite; }
@@ -455,6 +446,8 @@ const srcIds = ["agent", "app", "chat"];
     .top { padding-top: 48px; }
     .hero { padding-bottom: 56px; }
     .view { padding: 20px 16px; }
+    .today { padding-top: 52px; }
+    .mode-lbl--bad { left: 16px; }
     .note { padding: 0 16px 16px; }
   }
   @media (max-width: 520px) {

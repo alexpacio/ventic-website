@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 300" fill="none" font-family="IBM Plex Mono, ui-monospace, monospace">
+  <ellipse cx="180" cy="286" rx="110" ry="8" fill="#161616" opacity=".08"/>
+  <!-- cabinet -->
+  <rect x="96" y="14" width="168" height="268" fill="#161616" stroke="#161616" stroke-width="2"/>
+  <rect x="106" y="24" width="148" height="248" fill="#262626"/>
+  <!-- rails -->
+  <g fill="#6f6f6f">
+    <rect x="108" y="26" width="3" height="244"/><rect x="249" y="26" width="3" height="244"/>
+  </g>
+  <!-- 1U switch -->
+  <rect x="114" y="32" width="132" height="14" fill="#393939" stroke="#6f6f6f"/>
+  <g fill="#161616"><rect x="120" y="36" width="6" height="6"/><rect x="128" y="36" width="6" height="6"/><rect x="136" y="36" width="6" height="6"/><rect x="144" y="36" width="6" height="6"/><rect x="152" y="36" width="6" height="6"/><rect x="160" y="36" width="6" height="6"/><rect x="168" y="36" width="6" height="6"/><rect x="176" y="36" width="6" height="6"/></g>
+  <g fill="#24a148"><circle cx="234" cy="39" r="1.6"/><circle cx="239" cy="39" r="1.6"/></g>
+  <!-- GPU server template: 4U -->
+  <g id="srv">
+    <rect x="114" y="54" width="132" height="54" fill="#f4f4f4" stroke="#161616" stroke-width="1.5"/>
+    <rect x="114" y="54" width="132" height="4" fill="#2347e8"/>
+    <g stroke="#161616" stroke-width="1.2" opacity=".55">
+      <path d="M122 66 h60 M122 72 h60 M122 78 h60 M122 84 h60 M122 90 h60 M122 96 h60"/>
+    </g>
+    <g fill="#ffffff" stroke="#161616" stroke-width="1.2">
+      <rect x="190" y="64" width="10" height="34"/><rect x="203" y="64" width="10" height="34"/><rect x="216" y="64" width="10" height="34"/>
+    </g>
+    <circle cx="236" cy="68" r="2" fill="#24a148"/>
+    <circle cx="236" cy="76" r="2" fill="#2347e8"/>
+    <text x="122" y="104" font-size="6.5" fill="#525252">8× GPU</text>
+  </g>
+  <use href="#srv" y="62"/>
+  <use href="#srv" y="124"/>
+  <!-- 2U storage / free -->
+  <rect x="114" y="240" width="132" height="24" fill="#393939" stroke="#6f6f6f"/>
+  <g fill="#161616"><rect x="122" y="246" width="18" height="12"/><rect x="144" y="246" width="18" height="12"/><rect x="166" y="246" width="18" height="12"/><rect x="188" y="246" width="18" height="12"/></g>
+  <circle cx="236" cy="252" r="1.8" fill="#f5a83f"/>
+  <!-- feet -->
+  <rect x="104" y="282" width="16" height="4" fill="#161616"/><rect x="240" y="282" width="16" height="4" fill="#161616"/>
+</svg>

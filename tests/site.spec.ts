@@ -1,8 +1,8 @@
 import { expect, test } from '@playwright/test';
 
 const langs = [
-  { lang: 'it', home: '/', pre: '', demo: '/demo/', pages: ['/', '/why-ventic/', '/how-it-works/', '/platform/', '/on-premise/', '/pricing/', '/termini/', '/privacy/', '/admin-panel/', '/demo/'], h2: 'Requisiti' },
-  { lang: 'en', home: '/en/', pre: '/en', demo: '/en/demo/', pages: ['/en/', '/en/why-ventic/', '/en/how-it-works/', '/en/platform/', '/en/on-premise/', '/en/pricing/', '/en/terms/', '/en/privacy/', '/en/admin-panel/', '/en/demo/'], h2: 'Requirements' },
+  { lang: 'it', home: '/', pre: '', demo: '/demo/', pages: ['/', '/why-ventic/', '/how-it-works/', '/platform/', '/on-premise/', '/pricing/', '/termini/', '/privacy/', '/admin-panel/', '/demo/', '/comparison/'], h2: 'Requisiti' },
+  { lang: 'en', home: '/en/', pre: '/en', demo: '/en/demo/', pages: ['/en/', '/en/why-ventic/', '/en/how-it-works/', '/en/platform/', '/en/on-premise/', '/en/pricing/', '/en/terms/', '/en/privacy/', '/en/admin-panel/', '/en/demo/', '/en/comparison/'], h2: 'Requirements' },
 ] as const;
 
 for (const { lang, home, pre, demo, pages, h2 } of langs) {

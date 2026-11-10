@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 300" fill="none">
+  <!-- desk shadow -->
+  <ellipse cx="180" cy="272" rx="130" ry="10" fill="#161616" opacity=".08"/>
+  <!-- case: side face (depth) -->
+  <path d="M232 52 L282 34 L282 244 L232 266 Z" fill="#e0e0e0" stroke="#161616" stroke-width="2" stroke-linejoin="round"/>
+  <!-- case: top face -->
+  <path d="M100 52 L150 34 L282 34 L232 52 Z" fill="#f4f4f4" stroke="#161616" stroke-width="2" stroke-linejoin="round"/>
+  <!-- case: front -->
+  <rect x="100" y="52" width="132" height="214" fill="#ffffff" stroke="#161616" stroke-width="2"/>
+  <!-- front mesh -->
+  <g fill="#161616" opacity=".55">
+    <circle cx="122" cy="80" r="2.2"/><circle cx="134" cy="80" r="2.2"/><circle cx="146" cy="80" r="2.2"/><circle cx="158" cy="80" r="2.2"/><circle cx="170" cy="80" r="2.2"/><circle cx="182" cy="80" r="2.2"/><circle cx="194" cy="80" r="2.2"/><circle cx="206" cy="80" r="2.2"/>
+    <circle cx="128" cy="92" r="2.2"/><circle cx="140" cy="92" r="2.2"/><circle cx="152" cy="92" r="2.2"/><circle cx="164" cy="92" r="2.2"/><circle cx="176" cy="92" r="2.2"/><circle cx="188" cy="92" r="2.2"/><circle cx="200" cy="92" r="2.2"/>
+    <circle cx="122" cy="104" r="2.2"/><circle cx="134" cy="104" r="2.2"/><circle cx="146" cy="104" r="2.2"/><circle cx="158" cy="104" r="2.2"/><circle cx="170" cy="104" r="2.2"/><circle cx="182" cy="104" r="2.2"/><circle cx="194" cy="104" r="2.2"/><circle cx="206" cy="104" r="2.2"/>
+    <circle cx="128" cy="116" r="2.2"/><circle cx="140" cy="116" r="2.2"/><circle cx="152" cy="116" r="2.2"/><circle cx="164" cy="116" r="2.2"/><circle cx="176" cy="116" r="2.2"/><circle cx="188" cy="116" r="2.2"/><circle cx="200" cy="116" r="2.2"/>
+    <circle cx="122" cy="128" r="2.2"/><circle cx="134" cy="128" r="2.2"/><circle cx="146" cy="128" r="2.2"/><circle cx="158" cy="128" r="2.2"/><circle cx="170" cy="128" r="2.2"/><circle cx="182" cy="128" r="2.2"/><circle cx="194" cy="128" r="2.2"/><circle cx="206" cy="128" r="2.2"/>
+  </g>
+  <!-- accent stripe -->
+  <rect x="100" y="150" width="132" height="4" fill="#2347e8"/>
+  <!-- brand plate -->
+  <text x="116" y="180" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" fill="#161616" letter-spacing=".5">RYZEN AI MAX+ 495</text>
+  <text x="116" y="195" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" fill="#525252">192 GB · UNIFIED</text>
+  <!-- ports -->
+  <rect x="116" y="222" width="14" height="7" fill="#161616"/>
+  <rect x="136" y="222" width="14" height="7" fill="#161616"/>
+  <rect x="156" y="221" width="10" height="9" rx="2" stroke="#161616" stroke-width="1.6"/>
+  <!-- power button + led -->
+  <circle cx="208" cy="226" r="8" stroke="#161616" stroke-width="2"/>
+  <path d="M208 221 v5 M204.5 223 a5 5 0 1 0 7 0" stroke="#161616" stroke-width="1.6" stroke-linecap="round"/>
+  <circle cx="208" cy="246" r="2.5" fill="#24a148"/>
+  <!-- side vents -->
+  <g stroke="#161616" stroke-width="1.4" opacity=".5">
+    <path d="M246 90 L270 81"/><path d="M246 102 L270 93"/><path d="M246 114 L270 105"/><path d="M246 126 L270 117"/><path d="M246 138 L270 129"/>
+  </g>
+</svg>

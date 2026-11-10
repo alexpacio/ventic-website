@@ -1,0 +1,163 @@
+---
+import type { Lang } from "../i18n/content";
+import { homeEconomics, cfo, teamEconomics, TEAMS, usd, months } from "../i18n/economics";
+import { pagePath } from "../i18n/pages";
+interface Props { lang: Lang; num?: string; }
+const { lang, num } = Astro.props;
+const c = homeEconomics(lang);
+const DEFAULT = 20;
+const COLORS = { plan: "#8d8d8d", api: "var(--red)", cloud: "var(--accent)", local: "var(--jade)" } as const;
+const MS = [6, 12, 24, 36];
+const panels = TEAMS.map((n) => {
+  const e = teamEconomics(n);
+  const max = Math.max(...e.options.map((o) => o.tco(36)));
+  const save = Math.round(e.cloudSave * 100);
+  return {
+    n, e, f: cfo(lang, e),
+    cards: e.options.map((o) => ({
+      ...c.options[o.key], key: o.key, color: COLORS[o.key],
+      capex: o.capex ? usd(lang, o.capex) : "—", month: usd(lang, o.month), tco: usd(lang, o.tco(36)),
+      verdict: o.key === "plan" ? c.verdict.plan : o.key === "api" ? c.verdict.api
+        : o.key === "cloud" ? c.verdict.cloud(save >= 0 ? `−${save}%` : `+${-save}%`)
+        : c.verdict.local(e.boxes, months(lang, e.paybackPlan), months(lang, e.paybackApi)),
+      good: o.key === "cloud" ? save >= 0 : o.key === "local" ? isFinite(e.paybackPlan) && e.paybackPlan <= 36 : null,
+    })),
+    cum: MS.map((m) => ({ m, bars: e.options.map((o) => ({ key: o.key, color: COLORS[o.key], h: Math.max(1, Math.round((o.tco(m) / max) * 100)), label: `${c.options[o.key].name}: ${usd(lang, o.tco(m))}` })) })),
+  };
+});
+---
+<section id="economia" class="sec sec--tint econ">
+  <div class="wrap vt-reveal">
+    <div class="shead">
+      <div>
+        <span class="plate">{num && <span class="plate-num">{num} —</span>}{c.plate}</span>
+        <h2 class="h2">{c.title[0]}<br />{c.title[1]}</h2>
+      </div>
+      <p class="shead-lead">{c.lead}</p>
+    </div>
+
+    <div class="team" data-econ>
+      <div class="seg" role="group" aria-label={c.teamLabel}>
+        <span class="seg-l">{c.teamLabel}</span>
+        {TEAMS.map((n) => <button type="button" data-team={n} aria-pressed={n === DEFAULT ? "true" : "false"}>{n}</button>)}
+      </div>
+
+      {panels.map((p) => (
+        <div class="panel" data-panel={p.n} hidden={p.n !== DEFAULT}>
+          <div class="opts">
+            {p.cards.map((o) => (
+              <article class="opt" style={`--c:${o.color}`}>
+                <span class="kind">{o.kind}</span>
+                <h3 class="oname">{o.name}</h3>
+                <dl class="rows">
+                  <div><dt>{c.rows.capex}</dt><dd>{o.capex}</dd></div>
+                  <div><dt>{c.rows.month}</dt><dd>{o.month}</dd></div>
+                  <div><dt>{c.rows.speed}</dt><dd>{o.speed}</dd></div>
+                  <div class="tco"><dt>{c.rows.tco}</dt><dd>{o.tco}</dd></div>
+                </dl>
+                <p class:list={["verdict", { good: o.good === true, warn: o.good === false }]}>{o.verdict}</p>
+              </article>
+            ))}
+          </div>
+
+          <figure class="cum">
+            <figcaption>{c.cumTitle}</figcaption>
+            <div class="chart" role="img" aria-label={`${c.cumTitle}: ${p.cards.map((o) => `${o.name} ${o.tco}`).join("; ")}`}>
+              {p.cum.map((g) => (
+                <div class="grp">
+                  <div class="bars">{g.bars.map((b) => <span title={b.label} style={`height:${b.h}%;background:${b.color}`}></span>)}</div>
+                  <span class="gl">{g.m} {c.cumMonths}</span>
+                </div>
+              ))}
+            </div>
+            <ul class="legend">{p.cards.map((o) => <li><span style={`background:${o.color}`}></span>{o.name}</li>)}</ul>
+          </figure>
+
+          <div class="cfo on-dark">
+            <div class="cfo-head">
+              <span class="plate plate--sm">{p.f.plate}</span>
+              <h3 class="h3">{p.f.title}</h3>
+            </div>
+            <div class="cfo-grid">
+              {p.f.points.map((x) => (
+                <div class="pt"><span class="pk">{x.k}</span><strong>{x.t}</strong><p>{x.b}</p></div>
+              ))}
+            </div>
+            <p class="reco">{p.f.reco}</p>
+            <p class="caveat">{p.f.caveat}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="tail">
+      <p class="foot">{c.foot}</p>
+      <a class="btn btn--b" href={pagePath(lang, "compare")}>{c.detail} <span class="arr" aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-econ]").forEach((root) => {
+    const btns = root.querySelectorAll<HTMLButtonElement>("[data-team]");
+    btns.forEach((b) => b.addEventListener("click", () => {
+      btns.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      root.querySelectorAll<HTMLElement>("[data-panel]").forEach((p) => { p.hidden = p.dataset.panel !== b.dataset.team; });
+    }));
+  });
+</script>
+
+<style>
+  .team { display: flex; flex-direction: column; gap: 24px; }
+  .seg { align-items: center; }
+  .seg-l { font-size: 13px; color: var(--fg-mute); padding-right: 12px; }
+  .seg button { min-width: 56px; min-height: 44px; }
+  .panel[hidden] { display: none; }
+  .panel { display: flex; flex-direction: column; gap: 24px; }
+
+  .opts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--line-soft); border: 1px solid var(--line-soft); }
+  .opt { background: var(--ink); padding: 22px; display: flex; flex-direction: column; gap: 12px; box-shadow: inset 0 4px 0 var(--c); }
+  .kind { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--fg-mute); }
+  .oname { margin: 0; font-size: 16px; font-weight: 500; line-height: 1.3; color: var(--fg-strong); }
+  .rows { margin: 0; display: flex; flex-direction: column; }
+  .rows div { display: flex; justify-content: space-between; gap: 8px; padding: 7px 0; border-top: 1px solid var(--line-soft); font-size: 14px; }
+  .rows dt { color: var(--fg-mid); }
+  .rows dd { margin: 0; font-weight: 500; color: var(--fg-strong); text-align: right; }
+  .rows .tco dd { font-size: 22px; font-weight: 300; }
+  .verdict { margin: auto 0 0; font-size: 13px; line-height: 1.45; color: var(--fg-mid); }
+  .verdict.good { color: var(--jade-ink); font-weight: 500; }
+  .verdict.warn { color: var(--amber-ink); font-weight: 500; }
+
+  .cum { margin: 0; background: var(--ink); border: 1px solid var(--line-soft); padding: 20px 24px; display: flex; flex-direction: column; gap: 14px; }
+  .cum figcaption { font-size: 15px; font-weight: 500; color: var(--fg-strong); }
+  .chart { display: flex; gap: 20px; height: 200px; }
+  .grp { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+  .bars { flex: 1; display: flex; align-items: flex-end; justify-content: center; gap: 3px; border-bottom: 1px solid var(--line); }
+  .bars span { flex: 1 1 0; max-width: 34px; }
+  .gl { font-size: 12px; text-align: center; color: var(--fg-mid); }
+  .legend { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 13px; color: var(--fg-dim); }
+  .legend li { display: flex; align-items: center; gap: 6px; }
+  .legend span { width: 12px; height: 12px; flex: none; }
+
+  .cfo { background: #161616; color: #f4f4f4; padding: 32px; display: flex; flex-direction: column; gap: 22px; }
+  .cfo-head .h3 { margin: 10px 0 0; color: #fff; font-weight: 300; }
+  .cfo-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: #393939; border: 1px solid #393939; }
+  .pt { background: #161616; padding: 20px; display: flex; flex-direction: column; gap: 6px; }
+  .pk { font-size: 34px; font-weight: 300; line-height: 1.1; color: var(--accent-mid); }
+  .pt strong { font-weight: 500; color: #fff; }
+  .pt p { margin: 0; font-size: 14px; line-height: 1.5; color: #c6c6c6; }
+  .reco { margin: 0; font-size: 16px; color: #fff; border-left: 3px solid var(--accent); padding-left: 12px; }
+  .caveat { margin: 0; font-size: 13px; line-height: 1.5; color: #a8a8a8; }
+
+  .tail { margin-top: 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
+  .foot { margin: 0; flex: 1 1 520px; font-size: 12px; line-height: 1.6; color: var(--fg-faint); }
+
+  @media (max-width: 1080px) {
+    .opts, .cfo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 560px) {
+    .opts, .cfo-grid { grid-template-columns: 1fr; }
+    .chart { gap: 8px; }
+    .cfo { padding: 22px 16px; }
+  }
+</style>

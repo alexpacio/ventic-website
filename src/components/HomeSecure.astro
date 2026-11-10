@@ -1,0 +1,77 @@
+---
+import type { Lang } from "../i18n/content";
+import { why } from "../i18n/why";
+interface Props { lang: Lang; num?: string; }
+const { lang, num } = Astro.props;
+const c = why(lang).secure;
+---
+<section id={c.id} class="sec sec--tint">
+  <div class="wrap vt-reveal">
+    <div class="shead">
+      <div>
+        <span class="plate">{num && <span class="plate-num">{num} —</span>}{c.plate}</span>
+        <h2 class="h2">{c.title[0]}<br /><span class="h-accent">{c.title[1]}</span></h2>
+      </div>
+      <p class="shead-lead">{c.lead}</p>
+    </div>
+
+    <div class="cols">
+      <div class="rust">
+        <div class="rust-head">
+          <img src="/rust-logo.svg" width="72" height="72" alt="Rust" loading="lazy" />
+          <h3>{c.rust.title}</h3>
+        </div>
+        <p class="body">{c.rust.body}</p>
+        <dl>{c.rust.points.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}</dl>
+      </div>
+
+      <div class="waf">
+        <div class="waf-head">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Z M8.5 12l2.5 2.5 4.5-5" /></svg>
+          <h3>{c.waf.title}</h3>
+        </div>
+        <p class="body">{c.waf.body}</p>
+        <ul>{c.waf.items.map(([k, v]) => <li><strong>{k}</strong><span>{v}</span></li>)}</ul>
+      </div>
+
+      <div class="perf">
+        <div class="waf-head">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z" /></svg>
+          <h3>{c.perf.title}</h3>
+        </div>
+        <p class="body">{c.perf.body}</p>
+        <ul class="four">{c.perf.items.map(([k, v]) => <li><strong>{k}</strong><span>{v}</span></li>)}</ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); border: 1px solid var(--fg-strong); background: var(--panel-a); }
+  .rust, .waf { padding: 32px; display: flex; flex-direction: column; gap: 16px; }
+  .rust { border-right: 1px solid var(--fg-strong); }
+  .perf { grid-column: 1 / -1; padding: 32px; display: flex; flex-direction: column; gap: 16px; border-top: 1px solid var(--fg-strong); }
+  ul.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  @media (max-width: 1080px) { ul.four { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .rust-head, .waf-head { display: flex; align-items: center; gap: 16px; }
+  .rust-head img { flex: none; background: #fff; border-radius: 50%; }
+  .waf-head svg { flex: none; color: var(--accent); }
+  h3 { margin: 0; font-size: 22px; font-weight: 400; line-height: 1.25; color: var(--fg-strong); }
+  .body { margin: 0; font-size: 15px; line-height: 1.6; color: var(--fg-mid); }
+  dl { margin: 0; }
+  dl div { padding: 12px 0; border-top: 1px solid var(--line-soft); }
+  dt { font-weight: 500; color: var(--fg-strong); margin-bottom: 2px; }
+  dd { margin: 0; font-size: 14px; line-height: 1.55; color: var(--fg-mid); }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 24px; }
+  li { padding: 12px 0; border-top: 1px solid var(--line-soft); display: flex; flex-direction: column; gap: 2px; }
+  li strong { font-weight: 500; color: var(--fg-strong); }
+  li span { font-size: 14px; line-height: 1.55; color: var(--fg-mid); }
+  @media (max-width: 960px) {
+    .cols { grid-template-columns: 1fr; }
+    .rust { border-right: 0; border-bottom: 1px solid var(--fg-strong); }
+  }
+  @media (max-width: 760px) {
+    .rust, .waf, .perf { padding: 22px 16px; }
+    ul, ul.four { grid-template-columns: 1fr; }
+  }
+</style>

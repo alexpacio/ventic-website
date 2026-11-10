@@ -1,0 +1,53 @@
+---
+import type { Lang } from "../i18n/content";
+import { why } from "../i18n/why";
+interface Props { lang: Lang; num?: string; }
+const { lang, num } = Astro.props;
+const c = why(lang).what;
+---
+<section id={c.id} class="sec sec--rule">
+  <div class="wrap vt-reveal">
+    <div class="shead">
+      <div>
+        <span class="plate">{num && <span class="plate-num">{num} —</span>}{c.plate}</span>
+        <h2 class="h2">{c.title[0]}<br /><span class="h-accent">{c.title[1]}</span></h2>
+      </div>
+      <p class="shead-lead">{c.lead}</p>
+    </div>
+
+    <h3 class="sub">{c.benefitsLabel}</h3>
+    <ol class="ben">
+      {c.benefits.map((x, i) => (
+        <li>
+          <span class="mono k">0{i + 1} · {x.k}</span>
+          <strong>{x.t}</strong>
+          <p>{x.b}</p>
+        </li>
+      ))}
+    </ol>
+
+    <h3 class="sub">{c.usesLabel}</h3>
+    <dl class="uses">
+      {c.uses.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
+    </dl>
+  </div>
+</section>
+
+<style>
+  .sub { margin: 48px 0 0; padding-bottom: 12px; font-size: 13px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--fg-mid); border-bottom: 1px solid var(--fg-strong); }
+  .ben { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .ben li { padding: 24px 24px 24px 0; border-bottom: 1px solid var(--line-soft); display: flex; flex-direction: column; gap: 8px; }
+  .ben .k { font-size: 12px; color: var(--accent); text-transform: uppercase; letter-spacing: .04em; }
+  .ben strong { font-weight: 500; font-size: 20px; line-height: 1.25; color: var(--fg-strong); }
+  .ben p { margin: 0; font-size: 15px; line-height: 1.55; color: var(--fg-mid); }
+  .uses { margin: 0; }
+  .uses div { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 24px; padding: 14px 0; border-bottom: 1px solid var(--line-soft); }
+  .uses dt { font-weight: 500; color: var(--fg-strong); }
+  .uses dd { margin: 0; color: var(--fg-mid); line-height: 1.55; }
+  @media (max-width: 1080px) { .ben { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 760px) {
+    .ben { grid-template-columns: 1fr; }
+    .ben li { padding-right: 0; }
+    .uses div { grid-template-columns: 1fr; gap: 4px; }
+  }
+</style>

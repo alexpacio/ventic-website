@@ -3,7 +3,7 @@ import type { Lang } from "./content";
 const pick = (lang: Lang) => <T,>(it: T, en: T): T => (lang === "it" ? it : en);
 
 /** Sub-pages that used to be sections of the one-page home. Same slug in both languages. */
-export const pageKeys = ["why", "how", "platform", "onprem", "resellers"] as const;
+export const pageKeys = ["why", "how", "platform", "onprem", "resellers", "compare"] as const;
 export type PageKey = (typeof pageKeys)[number];
 
 export const slugs: Record<PageKey, string> = {
@@ -12,6 +12,7 @@ export const slugs: Record<PageKey, string> = {
   platform: "platform",
   onprem: "on-premise",
   resellers: "resellers",
+  compare: "comparison",
 };
 
 export const pagePath = (lang: Lang, key: PageKey) => `${lang === "en" ? "/en" : ""}/${slugs[key]}/`;
@@ -115,6 +116,25 @@ export function pages(lang: Lang) {
         ),
       },
     },
+    compare: {
+      nav: t("Costi a confronto", "Cost comparison"),
+      crumb: t("Costi a confronto", "Cost comparison"),
+      seo: {
+        title: t("Ventic a confronto — modelli open, GPU e piani Claude, Codex, Copilot", "Ventic compared — open models, GPUs and Claude, Codex, Copilot plans"),
+        desc: t(
+          "DeepSeek, GLM, Qwen e Kimi su GPU B300, MI300X, H100 o su un server locale: velocità per utente, sviluppatori per nodo e costo, contro API e piani Claude, Codex e Copilot.",
+          "DeepSeek, GLM, Qwen and Kimi on B300, MI300X, H100 GPUs or a local server: speed per user, developers per node and cost, against APIs and Claude, Codex and Copilot plans.",
+        ),
+      },
+      hero: {
+        plate: t("Costi a confronto", "Cost comparison"),
+        title: t(["Quanto veloce,", "per quanti, a che prezzo."], ["How fast,", "for how many, at what price."]),
+        lead: t(
+          "Modelli open con Ventic, su GPU a noleggio o in casa, contro API e piani. Prezzi di novembre 2026.",
+          "Open models with Ventic, on rented GPUs or in-house, against APIs and plans. November 2026 prices.",
+        ),
+      },
+    },
     explore: {
       plate: t("Esplora Ventic", "Explore Ventic"),
       title: t(["Tutto quello che", "c'è da sapere."], ["Everything you", "need to know."]),
@@ -177,6 +197,7 @@ export function navGroups(lang: Lang): NavGroup[] {
         { label: p.how.nav, desc: t("Dall'intento al modello in produzione", "From intent to a model in production"), href: pagePath(lang, "how") },
         { label: p.platform.nav, desc: t("Componenti e funzioni", "Components and features"), href: pagePath(lang, "platform") },
         { label: p.resellers.nav, desc: t("Vendi AI con il tuo marchio", "Sell AI under your brand"), href: pagePath(lang, "resellers") },
+        { label: p.compare.nav, desc: t("Modelli open, GPU e piani a confronto", "Open models, GPUs and plans compared"), href: pagePath(lang, "compare") },
         { label: t("Console", "Console"), desc: t("Persone, quote, modelli, agenti remoti", "People, quotas, models, remote agents"), href: `${pre}/admin-panel/` },
       ],
     },

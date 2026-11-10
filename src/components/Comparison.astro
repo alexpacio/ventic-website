@@ -1,0 +1,213 @@
+---
+import type { Lang } from "../i18n/content";
+import { comparison } from "../i18n/comparison";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const c = comparison(lang);
+const L = c.labels;
+const DEFAULT_SLA = 1;
+---
+<section class="sec sec--rule">
+  <div class="wrap vt-reveal stack">
+    <div class="chead"><span class="plate">{c.sec.models.plate}</span><h2 class="h3">{c.sec.models.title}</h2><p class="body">{c.sec.models.lead}</p></div>
+    <ul class="bars">
+      {c.models.map((m) => (
+        <li>
+          <div class="bl"><strong class:list={{ own: !m.ref }}>{m.name}</strong><span>{m.spec}</span></div>
+          <div class="bt"><span style={`width:${m.w}%;background:${m.ref ? "#8d8d8d" : "var(--accent)"}`}></span></div>
+          <span class="bv">{m.value}</span>
+          <span class:list={["bs", { good: m.good }]}>{m.save}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<section class="sec sec--tint">
+  <div class="wrap vt-reveal stack">
+    <div class="chead"><span class="plate">{c.sec.fit.plate}</span><h2 class="h3">{c.sec.fit.title}</h2><p class="body">{c.sec.fit.lead}</p></div>
+    <div class="scroll">
+      <table class="fit">
+        <thead><tr><th scope="col">{L.model}</th>{c.hw.map((h) => <th scope="col">{h.n}<span>{h.mem}</span></th>)}</tr></thead>
+        <tbody>
+          {c.fitRows.map((r) => (
+            <tr><th scope="row">{r.name}<span>{r.note}</span></th>{r.cells.map((x) => <td><span class:list={["chip", { ok: x.ok }]}>{x.t}</span></td>)}</tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--rule">
+  <div class="wrap vt-reveal stack">
+    <div class="chead"><span class="plate">{c.sec.speed.plate}</span><h2 class="h3">{c.sec.speed.title}</h2><p class="body">{c.sec.speed.lead}</p></div>
+    <ul class="bars">
+      {c.speedRows.map((r) => (
+        <li>
+          <div class="bl"><strong class:list={{ own: r.k !== "ext" }}>{r.n}</strong><span>{r.s}</span></div>
+          <div class="bt"><span class={`k-${r.k}`} style={`width:${r.w}%`}></span></div>
+          <span class="bv">{r.value}</span>
+        </li>
+      ))}
+    </ul>
+    <ul class="legend">
+      <li><span class="k-ext"></span>{L.legendExt}</li><li><span class="k-own"></span>{L.legendOwn}</li><li><span class="k-pred"></span>{L.legendPred}</li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec sec--tint">
+  <div class="wrap vt-reveal stack" data-sla>
+    <div class="chead"><span class="plate">{c.sec.sla.plate}</span><h2 class="h3">{c.sec.sla.title}</h2><p class="body">{c.sec.sla.lead}</p></div>
+    <div class="seg" role="group" aria-label={c.sec.sla.title}>
+      {c.sla.map((s, i) => <button type="button" data-sla-btn={i} aria-pressed={i === DEFAULT_SLA ? "true" : "false"}><strong>{s.v} tok/s</strong> <span>{s.l}</span></button>)}
+    </div>
+    {c.sla.map((s, i) => (
+      <div class="nodes" data-sla-panel={i} hidden={i !== DEFAULT_SLA}>
+        {s.cards.map((n) => (
+          <article class:list={["node", { main: n.main }]}>
+            <div class="nh"><strong>{n.name}</strong><span>{n.price}</span></div>
+            <div class="nk"><div><span>{L.sessions}</span><b>{n.sessions}</b></div><div><span>{L.devs}</span><b>{n.devs}</b></div></div>
+            <div class="np"><span>{L.perDev}</span><b>{n.perDev}</b></div>
+            <ul class="ns">{n.saves.map((v) => <li><span>{L.vs} {v.n}</span><b class:list={{ good: v.good, bad: !v.good }}>{v.text}</b></li>)}</ul>
+          </article>
+        ))}
+      </div>
+    ))}
+    <p class="callout">{c.kimiBreak}</p>
+    <p class="note">{L.method}</p>
+  </div>
+</section>
+
+<section class="sec sec--rule">
+  <div class="wrap vt-reveal stack">
+    <div class="chead"><span class="plate">{c.sec.local.plate}</span><h2 class="h3">{c.sec.local.title}</h2><p class="body">{c.sec.local.lead}</p></div>
+    <ul class="bars">
+      {c.local.map((r) => (
+        <li>
+          <div class="bl"><strong class:list={{ jade: r.k === "own", bad: r.k === "no" }}>{r.n}</strong><span>{r.s}</span></div>
+          <div class="bt">{r.k === "no" ? <span class="none"></span> : <span class={r.k === "ext" ? "k-ext" : "k-jade"} style={`width:${r.w}%`}></span>}</div>
+          <span class="bv">{r.value}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<section class="sec sec--tint">
+  <div class="wrap vt-reveal stack">
+    <div class="chead"><span class="plate">{c.sec.work.plate}</span><h2 class="h3">{c.sec.work.title}</h2><p class="body">{c.sec.work.lead}</p></div>
+    <div class="work">
+      {c.workloads.map((w) => (
+        <article class="wk">
+          <div class="nh"><strong>{w.title}</strong><code>{w.ep}</code></div>
+          <span class="unit">{w.unit}</span>
+          <ul class="mini">
+            {w.rows.map((r) => (
+              <li><div class="ml"><span class:list={{ own: r.own }}>{r.n}</span><b>{r.value}</b></div><div class="bt sm">{r.w ? <span class={r.own ? "k-own" : "k-ext"} style={`width:${r.w}%`}></span> : <span class="none"></span>}</div></li>
+            ))}
+          </ul>
+          <p class:list={["ws", { good: w.good === true }]}>{w.save}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap stack">
+    <p class="note">{L.foot}</p>
+    <ul class="src">{c.sources.map(([n, href]) => <li><a href={href} rel="noopener" target="_blank">{n}</a></li>)}</ul>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-sla]").forEach((root) => {
+    const btns = root.querySelectorAll<HTMLButtonElement>("[data-sla-btn]");
+    btns.forEach((b) => b.addEventListener("click", () => {
+      btns.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      root.querySelectorAll<HTMLElement>("[data-sla-panel]").forEach((p) => { p.hidden = p.dataset.slaPanel !== b.dataset.slaBtn; });
+    }));
+  });
+</script>
+
+<style>
+  .stack { display: flex; flex-direction: column; gap: 24px; }
+  .chead { display: flex; flex-direction: column; gap: 10px; max-width: 860px; }
+  .chead .h3 { margin: 0; font-weight: 300; }
+  .chead .body { margin: 0; }
+
+  .bars { list-style: none; margin: 0; padding: 4px 24px; background: var(--ink); border: 1px solid var(--line-soft); }
+  .bars li { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; padding: 11px 0; border-bottom: 1px solid var(--deck); }
+  .bars li:last-child { border-bottom: 0; }
+  .bl { flex: 0 0 320px; max-width: 100%; display: flex; flex-direction: column; gap: 2px; }
+  .bl strong { font-weight: 500; font-size: 14px; color: var(--fg-strong); }
+  .bl strong.own { color: var(--accent-deep); }
+  .bl strong.jade { color: var(--jade-ink); }
+  .bl strong.bad { color: #a8341c; }
+  .bl span { font-size: 12px; color: var(--fg-faint); }
+  .bt { flex: 1 1 200px; min-width: 0; height: 16px; background: var(--deck); }
+  .bt.sm { flex: none; height: 10px; }
+  .bt span { display: block; height: 100%; }
+  .bt .none { width: 100%; box-sizing: border-box; border: 1px dashed var(--line); background: transparent; }
+  .bv { flex: 0 0 96px; text-align: right; font-weight: 500; font-size: 15px; color: var(--fg-strong); }
+  .bs { flex: 0 0 90px; text-align: right; font-weight: 500; font-size: 14px; color: #a8341c; }
+  .bs.good { color: var(--jade-ink); }
+  .k-ext { background: #8d8d8d; }
+  .k-own { background: var(--accent); }
+  .k-pred { background: var(--accent-mid); }
+  .k-jade { background: var(--jade); }
+  .legend { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 13px; color: var(--fg-dim); }
+  .legend li { display: flex; align-items: center; gap: 6px; }
+  .legend span { width: 12px; height: 12px; display: inline-block; }
+
+  .scroll { overflow-x: auto; border: 1px solid var(--line-soft); background: var(--ink); }
+  .fit { width: 100%; min-width: 760px; border-collapse: collapse; font-size: 14px; }
+  .fit th, .fit td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--line-soft); vertical-align: middle; }
+  .fit thead th { font-size: 12px; font-weight: 500; color: var(--fg-dim); background: var(--deck); }
+  .fit th span { display: block; font-size: 12px; font-weight: 400; color: var(--fg-faint); }
+  .fit tbody th { font-weight: 500; color: var(--fg-strong); }
+  .chip { display: inline-block; padding: 4px 10px; font-size: 13px; background: var(--deck); color: #a8341c; }
+  .chip.ok { background: var(--accent-soft); color: var(--accent-deep); font-weight: 500; }
+
+  .seg button { min-height: 52px; padding: 8px 16px; display: inline-flex; gap: 6px; align-items: baseline; }
+  .seg button span { font-size: 12px; opacity: .8; }
+  .nodes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .nodes[hidden] { display: none; }
+  .node { background: var(--ink); border: 1px solid var(--line); padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+  .node.main { border: 2px solid var(--accent); }
+  .nh { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px; align-items: baseline; }
+  .nh strong { font-weight: 500; font-size: 16px; color: var(--fg-strong); }
+  .nh span { font-size: 12px; color: var(--fg-faint); }
+  .nk { display: flex; border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); }
+  .nk div { flex: 1; padding: 10px 0; display: flex; flex-direction: column; gap: 2px; }
+  .nk span, .np span { font-size: 12px; color: var(--fg-faint); }
+  .nk b { font-size: 22px; font-weight: 300; color: var(--fg-strong); }
+  .np { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  .np b { font-size: 26px; font-weight: 300; color: var(--accent-deep); }
+  .ns { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; font-size: 13px; }
+  .ns li { display: flex; justify-content: space-between; gap: 8px; }
+  .ns span { color: var(--fg-mid); }
+  .ns .good { color: var(--jade-ink); }
+  .ns .bad { color: #a8341c; }
+  .callout { margin: 0; font-size: 16px; line-height: 1.5; color: var(--fg-strong); border-left: 3px solid var(--accent); padding-left: 12px; max-width: 980px; }
+  .note { margin: 0; font-size: 12px; line-height: 1.6; color: var(--fg-faint); max-width: 980px; }
+
+  .work { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 12px; }
+  .wk { background: var(--ink); border: 1px solid var(--line-soft); padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+  .wk code { font-family: var(--code); font-size: 11px; color: var(--accent-deep); background: var(--accent-soft); padding: 2px 8px; }
+  .unit { font-size: 12px; color: var(--fg-faint); }
+  .mini { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+  .mini li { display: flex; flex-direction: column; gap: 4px; }
+  .ml { display: flex; justify-content: space-between; gap: 10px; font-size: 13px; color: var(--fg-dim); }
+  .ml .own { color: var(--accent-deep); font-weight: 500; }
+  .ml b { font-weight: 500; white-space: nowrap; color: var(--fg-strong); }
+  .ws { margin: auto 0 0; padding-top: 10px; border-top: 1px solid var(--line-soft); font-size: 13px; color: var(--fg-mid); }
+  .ws.good { color: var(--jade-ink); font-weight: 500; }
+
+  .src { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13px; }
+
+  @media (max-width: 960px) { .nodes { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { .bars { padding: 4px 14px; } .bv, .bs { flex-basis: auto; } }
+</style>
