@@ -4,6 +4,7 @@ import Nav from "../components/Nav.astro";
 import PageHero from "../components/PageHero.astro";
 import Stack from "../components/Stack.astro";
 import Capabilities from "../components/Capabilities.astro";
+import HomeSecure from "../components/HomeSecure.astro";
 import Cta from "../components/Cta.astro";
 import Footer from "../components/Footer.astro";
 import { pages } from "../i18n/pages";
@@ -17,6 +18,7 @@ const seo = pages(lang).platform.seo;
     <PageHero lang={lang} page="platform" />
     <Stack lang={lang} />
     <Capabilities lang={lang} />
+    <HomeSecure lang={lang} />
     <Cta lang={lang} />
   </main>
   <Footer lang={lang} />

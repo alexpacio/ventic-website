@@ -4,13 +4,8 @@ import Nav from "../components/Nav.astro";
 import Hero from "../components/Hero.astro";
 import HomeWhat from "../components/HomeWhat.astro";
 import HomePlatform from "../components/HomePlatform.astro";
-import HomeSecure from "../components/HomeSecure.astro";
-import HomeEconomics from "../components/HomeEconomics.astro";
-import HomeEnable from "../components/HomeEnable.astro";
 import HomeSteps from "../components/HomeSteps.astro";
-import HomeArch from "../components/HomeArch.astro";
 import Modes from "../components/Modes.astro";
-import PricingStrip from "../components/PricingStrip.astro";
 import Cta from "../components/Cta.astro";
 import Footer from "../components/Footer.astro";
 import { content } from "../i18n/content";
@@ -26,13 +21,8 @@ const jsonLd = serviceJsonLd(lang);
     <Hero lang={lang} />
     <HomeWhat lang={lang} num="01" />
     <HomePlatform lang={lang} num="02" />
-    <HomeEconomics lang={lang} num="03" />
-    <HomeEnable lang={lang} num="04" />
-    <HomeSteps lang={lang} num="05" />
-    <HomeArch lang={lang} num="06" />
-    <HomeSecure lang={lang} num="07" />
-    <Modes lang={lang} num="08" lean />
-    <PricingStrip lang={lang} num="09" />
+    <HomeSteps lang={lang} num="03" />
+    <Modes lang={lang} num="04" lean />
     <Cta lang={lang} />
   </main>
   <Footer lang={lang} />

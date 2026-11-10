@@ -5,6 +5,7 @@ import PriceHero from "../../components/PriceHero.astro";
 import Listino from "../../components/Listino.astro";
 import Matrix from "../../components/Matrix.astro";
 import Sizing from "../../components/Sizing.astro";
+import HomeEnable from "../../components/HomeEnable.astro";
 import PriceNotes from "../../components/PriceNotes.astro";
 import Footer from "../../components/Footer.astro";
 import { content } from "../../i18n/content";
@@ -21,6 +22,7 @@ const jsonLd = pricingJsonLd(lang);
     <Listino lang={lang} />
     <Matrix lang={lang} />
     <Sizing lang={lang} />
+    <HomeEnable lang={lang} />
     <PriceNotes lang={lang} />
   </main>
   <Footer lang={lang} />

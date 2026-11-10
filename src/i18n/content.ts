@@ -70,7 +70,6 @@ const it = {
   heroShots: {
     label: "Console",
     host: "portal.example.org",
-    note: "Portale reale — dati sintetici",
   },
   problem: {
     id: "perche",
@@ -754,7 +753,6 @@ const en: typeof it = {
   heroShots: {
     label: "Console",
     host: "portal.example.org",
-    note: "Real portal — synthetic data",
   },
   problem: {
     id: "why",

@@ -52,6 +52,51 @@ export function why(lang: Lang) {
       ],
     },
 
+    tuning: {
+      plate: t("Ventic Tuning · opzionale", "Ventic Tuning · optional"),
+      title: t("I setup migliori per il tuo hardware, sempre aggiornati.", "The best setups for your hardware, always up to date."),
+      body: t(
+        "Ti forniamo le configurazioni di inferenza già ottimizzate per le tue macchine, così sfrutti al massimo ogni GPU. Per i modelli open weight più recenti curiamo il fine tuning dei parametri di serving sui principali motori di inferenza: quantizzazione, parallelismo, batching, cache KV e contesto.",
+        "We give you inference configurations already optimised for your machines, so you get the most out of every GPU. For the latest open-weight models we fine-tune the serving parameters on the main inference engines: quantization, parallelism, batching, KV cache and context.",
+      ),
+      points: [
+        t("Nuovi modelli open weight pronti appena escono", "New open-weight models ready as soon as they ship"),
+        t("vLLM, SGLang, llama.cpp e Ollama", "vLLM, SGLang, llama.cpp and Ollama"),
+        t("Più token al secondo, più utenti per macchina", "More tokens per second, more users per machine"),
+      ],
+      price: t("€59,99", "€59.99"),
+      per: t("al mese per ogni setup hardware", "per month per hardware setup"),
+      note: t(
+        "Un canone per ogni configurazione hardware diversa da coprire. Il servizio è opzionale: Ventic funziona anche senza.",
+        "One fee for each distinct hardware configuration you want covered. The service is optional: Ventic works without it too.",
+      ),
+    },
+
+    gitops: {
+      plate: "GitOps",
+      title: t("L'inferenza diventa un passo del tuo workflow.", "Inference becomes a step in your workflow."),
+      body: t(
+        "Pool di GPU, deployment e routing sono file YAML: li versioni in Git e li applichi dalla pipeline CI/CD. Così la richiesta di inferenza entra nel workflow: la pipeline accende le risorse che le servono, esegue il lavoro e le spegne. Niente capacità ferma a pagamento, risorse completamente dinamiche.",
+        "GPU pools, deployments and routing are YAML files: you version them in Git and apply them from your CI/CD pipeline. Inference becomes part of the workflow: the pipeline brings up the resources it needs, runs the job and tears them down. No idle capacity to pay for, fully dynamic resources.",
+      ),
+      points: [
+        t("Review e storico delle modifiche in Git", "Review and change history in Git"),
+        t("venticli diff prima di applicare", "venticli diff before applying"),
+        t("Rollback con un revert", "Rollback with a revert"),
+      ],
+      code: t(
+        "# .gitlab-ci.yml · job notturno\n- venticli apply -f infra/vast-h100.yaml\n- python batch.py --base-url $VENTIC/v1\n- venticli delete -f infra/vast-h100.yaml",
+        "# .gitlab-ci.yml · nightly job\n- venticli apply -f infra/vast-h100.yaml\n- python batch.py --base-url $VENTIC/v1\n- venticli delete -f infra/vast-h100.yaml",
+      ),
+      vast: {
+        title: t("Supporto vast.ai", "vast.ai support"),
+        body: t(
+          "Ti serve potenza subito? Ventic avvia macchine GPU su vast.ai in pochi minuti, le collega come target e le usa nel routing come qualsiasi altra risorsa. Paghi a ore solo quando servono.",
+          "Need power right now? Ventic starts GPU machines on vast.ai in minutes, connects them as targets and uses them in routing like any other resource. You pay by the hour, only when needed.",
+        ),
+      },
+    },
+
     secure: {
       id: t("sicurezza", "security"),
       plate: t("Prestazioni e sicurezza", "Performance and security"),

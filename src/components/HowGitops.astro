@@ -1,0 +1,41 @@
+---
+import type { Lang } from "../i18n/content";
+import { why } from "../i18n/why";
+interface Props { lang: Lang; num?: string; }
+const { lang, num } = Astro.props;
+const g = why(lang).gitops;
+---
+<section class="sec sec--rule">
+  <div class="wrap vt-reveal">
+    <span class="plate">{num && <span class="plate-num">{num} —</span>}{g.plate}</span>
+    <div class="ops">
+      <div class="ops-a">
+        <p class="ops-t">{g.title}</p>
+        <p class="cell-b">{g.body}</p>
+        <ul>{g.points.map((p) => <li>{p}</li>)}</ul>
+        <pre class="code">{g.code}</pre>
+      </div>
+      <div class="ops-b">
+        <p class="ops-t">{g.vast.title}</p>
+        <p class="cell-b">{g.vast.body}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .code { margin-top: auto; }
+  .ops { margin-top: 24px; display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); border: 1px solid var(--fg-strong); }
+  .ops-a, .ops-b { padding: 28px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+  .ops-b { background: var(--accent-soft); border-left: 1px solid var(--fg-strong); }
+  .ops-t { margin: 0; font-size: 24px; font-weight: 300; line-height: 1.25; color: var(--fg-strong); }
+  .ops .cell-b { margin: 0; }
+  .ops ul { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+  .ops li { font-size: 13px; padding: 4px 10px; border: 1px solid var(--line); color: var(--fg-strong); }
+  .ops .code { margin: 0; overflow-x: auto; }
+  @media (max-width: 960px) {
+    .ops { grid-template-columns: 1fr; }
+    .ops-b { border-left: 0; border-top: 1px solid var(--fg-strong); }
+  }
+  @media (max-width: 760px) { .ops-a, .ops-b { padding: 22px 16px; } }
+</style>

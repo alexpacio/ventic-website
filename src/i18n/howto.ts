@@ -117,7 +117,7 @@ export function howto(lang: Lang) {
       hard: t("Sfida difficile", "Hard problem"),
       cols: [t("Route candidata", "Candidate route"), t("Idoneità", "Suitability"), t("Costo", "Cost")],
       chosen: t("SCELTA", "CHOSEN"),
-      note: t("Valori illustrativi. Il costo massimo viene riservato sul wallet prima dell'invio.", "Illustrative values. The maximum cost is reserved on the wallet before dispatch."),
+      note: t("Il costo massimo viene riservato sul wallet prima dell'invio.", "The maximum cost is reserved on the wallet before dispatch."),
       routine_rows: [
         ["qwen3.8-flash-next", t("gpu-node-01 · locale", "gpu-node-01 · on-prem"), 92, "€", true],
         ["deepseek-v4.1-flash", "neocloud-eu-02 · FP8", 90, "€", false],

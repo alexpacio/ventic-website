@@ -21,7 +21,7 @@ const fromPrice = lang === "it" ? "da €29 / host / mese" : "from €29 / host 
       <article class="card card--product">
         <div class="card-top">
           <span class="mono tag tag--accent">{c.byoh.tag}</span>
-          <a class="mono price-hint" href={pricing}>{fromPrice}</a>
+          {!lean && <a class="mono price-hint" href={pricing}>{fromPrice}</a>}
         </div>
         <h3 class="ctitle">{c.byoh.title}</h3>
         {!lean && <p class="desc">{c.byoh.desc}</p>}

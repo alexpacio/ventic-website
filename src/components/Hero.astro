@@ -104,7 +104,6 @@ const srcIds = ["agent", "app", "chat"];
           <div class="add"><span>{h.add}</span><code class="mono">{h.addCmd}</code></div>
         </div>
       </div>
-      <p class="mono note">{h.note}</p>
     </div>
   </div>
 </section>
@@ -432,7 +431,31 @@ const srcIds = ["agent", "app", "chat"];
   .qtag { font-size: 10.5px; padding: 2px 6px; background: var(--tbg); color: var(--tfg); white-space: nowrap; }
   .add { border: 1px dashed #8d8d8d; background: var(--ink); padding: 12px 16px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; font-size: 14px; color: var(--fg-dim); }
   .add code { font-size: 12px; background: #161616; color: #f4f4f4; padding: 6px 10px; }
-  .note { padding: 0 32px 20px; font-size: 11px; color: var(--fg-faint); }
+
+  /* the two scenarios read as opposite worlds: warm red for today, cool blue for Ventic */
+  .today { background: color-mix(in srgb, var(--red) 9%, var(--ink)); background-image: repeating-linear-gradient(135deg, transparent 0 14px, color-mix(in srgb, var(--red) 5%, transparent) 14px 15px); border-top: 4px solid var(--red); }
+  .today .src { border-color: color-mix(in srgb, var(--red) 25%, var(--line-soft)); }
+  .today .lbl { color: color-mix(in srgb, var(--red) 70%, var(--fg-mute)); }
+  .board-head { background: color-mix(in srgb, var(--accent) 10%, var(--ink)); border-top: 4px solid var(--accent); }
+  .ventic { background-color: color-mix(in srgb, var(--accent) 6%, var(--deck)); }
+
+  /* wide: "today" becomes a narrow column beside the Ventic view instead of a band above it */
+  @media (min-width: 1200px) {
+    .board { display: grid; grid-template-columns: minmax(270px, 300px) minmax(0, 1fr); grid-template-rows: 76px 1fr auto; }
+    .today { grid-row: 1 / 3; flex-direction: column; flex-wrap: nowrap; align-items: stretch; gap: 0; padding: 72px 24px 24px; border-bottom: 0; border-right: 1px solid var(--line-soft); }
+    /* both scenario labels sit centred in the same 72px band below the 4px colour bar */
+    .mode-lbl--bad { left: 24px; top: 36px; transform: translateY(-50%); }
+    .today .sources { flex: none; min-width: 0; }
+    .today .conn--bad { flex: none; height: 72px; padding: 0; align-items: center; }
+    .today .conn-lbl { order: -1; }
+    .today .track { width: 44px; transform: rotate(90deg); margin-top: 16px; }
+    .foreign { flex: 1 1 auto; padding: 18px; }
+    .foreign-title { font-size: 19px; }
+    .issues { grid-template-columns: minmax(0, 1fr); }
+    .issue { padding: 12px 14px; font-size: 13.5px; }
+    .board-head { grid-column: 2; box-sizing: border-box; height: 76px; padding-block: 0; padding-left: 24px; }
+    .ventic { grid-column: 2; padding: 32px 28px; grid-template-columns: minmax(140px, 160px) minmax(230px, 260px) minmax(0, 1fr); column-gap: clamp(40px, 4vw, 64px); }
+  }
 
   @media (max-width: 1080px) {
     .ventic { grid-template-columns: minmax(0, 1fr); row-gap: 16px; }
@@ -448,7 +471,6 @@ const srcIds = ["agent", "app", "chat"];
     .view { padding: 20px 16px; }
     .today { padding-top: 52px; }
     .mode-lbl--bad { left: 16px; }
-    .note { padding: 0 16px 16px; }
   }
   @media (max-width: 520px) {
     .actions .btn { width: 100%; }

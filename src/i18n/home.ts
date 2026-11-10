@@ -1,8 +1,7 @@
 import type { Lang } from "./content";
 import { pick } from "./onprem";
 
-/* Copy for the redesigned home: routing hero, steps, architecture, capabilities.
-   Model names, hardware and percentages in the hero are illustrative. */
+/* Copy for the redesigned home: routing hero, steps, architecture, capabilities. */
 
 export type TargetKey = "cloud" | "neocloud" | "local";
 
@@ -61,10 +60,6 @@ export function home(lang: Lang) {
       ] as { key: string; rule: [string, string][]; pct: [number, number, number]; active: (string | null)[] }[],
       add: t("+ Aggiungi un target con un manifest", "+ Add a target with one manifest"),
       addCmd: "$ venticli apply -f neocloud.yaml",
-      note: t(
-        "Modelli, hardware e percentuali di esempio. Le regole si definiscono in Ventic per team, tipo di richiesta, presenza di PII, residenza dei dati e budget.",
-        "Example models, hardware and percentages. Rules are defined in Ventic by team, request type, PII presence, data residency and budget.",
-      ),
     },
 
     steps: {
