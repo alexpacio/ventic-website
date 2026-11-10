@@ -2,7 +2,6 @@
 import Layout from "../../layouts/Layout.astro";
 import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
-import ObfuscatedEmail from "../../components/ObfuscatedEmail.astro";
 import { content } from "../../i18n/content";
 
 const lang = "en" as const;
@@ -22,7 +21,7 @@ const site = "https://ventic.it";
         <div class="meta-row">
           <span class="mono meta">{p.hero.updatedLabel}: <strong>{p.hero.updatedDate}</strong></span>
           <span class="mono meta sep">·</span>
-          <span class="mono meta">Controller: Netter srl — <ObfuscatedEmail lang={lang} class="mono link-inline" /> </span>
+          <span class="mono meta">Controller: Netter srl</span>
           <button class="mono btn-print" onclick="window.print()" type="button">{p.hero.printLabel}</button>
         </div>
         <div class="intro-box panel">
@@ -62,7 +61,6 @@ const site = "https://ventic.it";
             <h3 class="cta-title">{p.cta.title}</h3>
             <p class="cta-body">{p.cta.body}</p>
             <div class="cta-actions">
-              <ObfuscatedEmail lang={lang} label={p.cta.mailLabel} class="btn btn--a" />
               <a class="btn btn--ghost" href="/en/#contatto">{p.cta.btn}</a>
             </div>
           </div>

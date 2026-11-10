@@ -1,10 +1,9 @@
 ---
 import { content, type Lang } from "../i18n/content";
-import ObfuscatedEmail from "./ObfuscatedEmail.astro";
+import { contactPath } from "../i18n/contact";
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
-const c = content[lang].cta as typeof content["it"]["cta"] & { mailPrefix?: string };
-const mailPrefix = (c as any).mailPrefix ?? "";
+const c = content[lang].cta;
 /* decorative pixel field: deterministic pattern, drawn once */
 const cells = Array.from({ length: 64 }, (_, i) => {
   const x = i % 8, y = Math.floor(i / 8);
@@ -20,8 +19,7 @@ const cells = Array.from({ length: 64 }, (_, i) => {
     <h2 class="h2-big">{c.title[0]}<br />{c.title[1]}</h2>
     <p class="lead measure">{c.body}</p>
     <div class="actions">
-      <ObfuscatedEmail label={c.btn} lang={lang} class="btn btn--light" />
-      <ObfuscatedEmail prefix={mailPrefix} lang={lang} class="btn btn--b" />
+      <a class="btn btn--light" href={contactPath(lang)}>{c.btn}</a>
     </div>
   </div>
 </section>

@@ -44,8 +44,6 @@ const it = {
     title: ["Ti presento", "Ventic."],
     lead: "Una piattaforma AI multi-tenant che installi sul tuo Kubernetes: un endpoint compatibile OpenAI e Anthropic, credito prepagato con quote per gruppo, filtro PII reversibile e modelli cloud o locali sotto le stesse regole.",
     startTitle: "Inizia con Ventic.",
-    startPre: "Scrivici a",
-    startPost: "o mandami un messaggio diretto per richiedere l'accesso.",
     cta1: "Richiedi l'accesso",
     cta2: "Vedi come funziona",
   },
@@ -312,7 +310,6 @@ const it = {
     body: "Ti aiutiamo a installare Ventic sulla tua infrastruttura e partiamo direttamente dal workload che vuoi portare in produzione.",
     btn: "Prenota una call tecnica",
     mail: "Scrivici: verifica per mostrare",
-    mailPrefix: "Scrivici: ",
   },
 
   footer: {
@@ -505,7 +502,7 @@ const it = {
       {
         id: "titolare",
         title: "1. Titolare del trattamento e contatti",
-        html: "<p><strong>Titolare:</strong> <strong>Netter srl</strong>, con sede legale in Via Indipendenza, 06081 Assisi (PG), Italia — P.IVA <strong>IT03569900545</strong>.</p><p><strong>Contatti privacy:</strong> email <a href=\"mailto:info@ventic.it\">info@ventic.it</a> (oggetto: “Privacy — Ventic”). Rispondiamo di norma entro 15 giorni lavorativi. Per comunicazioni formali puoi scrivere alla sede legale all’attenzione “Privacy — Ventic”.</p><p>Non è stato designato un Responsabile della Protezione dei Dati (DPO) ai sensi dell’art. 37 GDPR, non ricorrendone i presupposti; la valutazione viene riesaminata periodicamente. Se in futuro sarà nominato, i recapiti saranno pubblicati qui.</p>",
+        html: "<p><strong>Titolare:</strong> <strong>Netter srl</strong>, con sede legale in Via Indipendenza, 06081 Assisi (PG), Italia — P.IVA <strong>IT03569900545</strong>.</p><p><strong>Contatti privacy:</strong> email il <a href=\"/contatti/\">modulo contatti</a> (oggetto: “Privacy — Ventic”). Rispondiamo di norma entro 15 giorni lavorativi. Per comunicazioni formali puoi scrivere alla sede legale all’attenzione “Privacy — Ventic”.</p><p>Non è stato designato un Responsabile della Protezione dei Dati (DPO) ai sensi dell’art. 37 GDPR, non ricorrendone i presupposti; la valutazione viene riesaminata periodicamente. Se in futuro sarà nominato, i recapiti saranno pubblicati qui.</p>",
       },
       {
         id: "ambito",
@@ -515,7 +512,7 @@ const it = {
       {
         id: "tipologie",
         title: "3. Categorie di dati trattati",
-        html: "<h4 class=\"h4\">3.1 Dati di navigazione e log tecnici</h4><p>I sistemi informatici e le procedure software preposte al funzionamento del sito acquisiscono, nel corso del loro normale esercizio, alcuni dati personali la cui trasmissione è implicita nell’uso dei protocolli di comunicazione di Internet. Rientrano tra questi: indirizzo IP, tipo di browser e dispositivo, sistema operativo, pagine visitate, tempi di permanenza, referrer, eventuali errori, data/ora della richiesta e altri parametri del dispositivo o dell’ambiente (es. header HTTP).</p><p>Questi dati sono necessari per rendere fruibile il sito, garantirne la sicurezza e misurare in forma aggregata le performance.</p><h4 class=\"h4\">3.2 Dati forniti volontariamente dall’utente</h4><ul><li>contenuto di email, messaggi inviati dal form di contatto o dalla chat dal vivo, e messaggi inviati a <strong>info@ventic.it</strong> o tramite i pulsanti “Prenota una call” / “Scrivici”;</li><li>nome, cognome, azienda, ruolo, recapiti e informazioni condivise volontariamente per richiedere demo, informazioni commerciali, supporto o selezione di configurazione;</li><li>quando prenoti una call via fornitore esterno (es. Calendly), i dati inseriti nel form del fornitore stesso (nome, email, messaggi, preferenze orario).</li></ul><h4 class=\"h4\">3.3 Dati anti-abuso e verifica umana</h4><p>Per proteggere l’indirizzo email e i form da scraping e spam utilizziamo soluzioni anti-bot (Cloudflare Turnstile e/o TrustCaptcha). Durante la verifica possono essere elaborati identificatori tecnici quali IP, header browser, segnali di interazione e il token di verifica; non elaboriamo fingerprint invasivi né dati biometrici.</p><h4 class=\"h4\">3.4 Dati dei cookie e tecnologie simili</h4><p>Vedi sezione 4 “Cookie e tecnologie simili”.</p><p><strong>Non raccogliamo</strong> tramite il sito categorie particolari di dati (art. 9 GDPR) né dati relativi a condanne penali. Ti invitiamo a non inviare dati non necessari o di terzi senza base giuridica.</p>",
+        html: "<h4 class=\"h4\">3.1 Dati di navigazione e log tecnici</h4><p>I sistemi informatici e le procedure software preposte al funzionamento del sito acquisiscono, nel corso del loro normale esercizio, alcuni dati personali la cui trasmissione è implicita nell’uso dei protocolli di comunicazione di Internet. Rientrano tra questi: indirizzo IP, tipo di browser e dispositivo, sistema operativo, pagine visitate, tempi di permanenza, referrer, eventuali errori, data/ora della richiesta e altri parametri del dispositivo o dell’ambiente (es. header HTTP).</p><p>Questi dati sono necessari per rendere fruibile il sito, garantirne la sicurezza e misurare in forma aggregata le performance.</p><h4 class=\"h4\">3.2 Dati forniti volontariamente dall’utente</h4><ul><li>contenuto di email, messaggi inviati dal form di contatto o dalla chat dal vivo, e messaggi inviati tramite i pulsanti “Prenota una call” / “Scrivici”;</li><li>nome, cognome, azienda, ruolo, recapiti e informazioni condivise volontariamente per richiedere demo, informazioni commerciali, supporto o selezione di configurazione;</li><li>quando prenoti una call via fornitore esterno (es. Calendly), i dati inseriti nel form del fornitore stesso (nome, email, messaggi, preferenze orario).</li></ul><h4 class=\"h4\">3.3 Dati anti-abuso e verifica umana</h4><p>Per proteggere l’indirizzo email e i form da scraping e spam utilizziamo soluzioni anti-bot (Cloudflare Turnstile e/o TrustCaptcha). Durante la verifica possono essere elaborati identificatori tecnici quali IP, header browser, segnali di interazione e il token di verifica; non elaboriamo fingerprint invasivi né dati biometrici.</p><h4 class=\"h4\">3.4 Dati dei cookie e tecnologie simili</h4><p>Vedi sezione 4 “Cookie e tecnologie simili”.</p><p><strong>Non raccogliamo</strong> tramite il sito categorie particolari di dati (art. 9 GDPR) né dati relativi a condanne penali. Ti invitiamo a non inviare dati non necessari o di terzi senza base giuridica.</p>",
       },
       {
         id: "cookie",
@@ -565,7 +562,7 @@ const it = {
       {
         id: "esercizio",
         title: "13. Come esercitare i diritti e reclamo al Garante",
-        html: "<p>Per esercitare i diritti scrivi a <a href=\"mailto:info@ventic.it\">info@ventic.it</a> con oggetto “Esercizio diritti privacy — Ventic” allegando copia di un documento utile a identificarti (comunque minimizzato). Riscontriamo senza ingiustificato ritardo, al più tardi entro un mese (prorogabile di due mesi nei casi complessi, art. 12.3).</p><p>Se ritieni che il trattamento violi il GDPR, hai diritto di <strong>proporre reclamo al Garante per la protezione dei dati personali</strong> — <a href=\"https://www.garanteprivacy.it\" target=\"_blank\" rel=\"noopener\">garanteprivacy.it</a> (art. 77 GDPR) — o di adire l’autorità giudiziaria (art. 79). Informazioni e modulistica sul sito del Garante.</p><p>Per contenziosi con consumatori resta ferma la possibilità di ricorrere a organismi di risoluzione extragiudiziale ove applicabili.</p>",
+        html: "<p>Per esercitare i diritti scrivi a il <a href=\"/contatti/\">modulo contatti</a> con oggetto “Esercizio diritti privacy — Ventic” allegando copia di un documento utile a identificarti (comunque minimizzato). Riscontriamo senza ingiustificato ritardo, al più tardi entro un mese (prorogabile di due mesi nei casi complessi, art. 12.3).</p><p>Se ritieni che il trattamento violi il GDPR, hai diritto di <strong>proporre reclamo al Garante per la protezione dei dati personali</strong> — <a href=\"https://www.garanteprivacy.it\" target=\"_blank\" rel=\"noopener\">garanteprivacy.it</a> (art. 77 GDPR) — o di adire l’autorità giudiziaria (art. 79). Informazioni e modulistica sul sito del Garante.</p><p>Per contenziosi con consumatori resta ferma la possibilità di ricorrere a organismi di risoluzione extragiudiziale ove applicabili.</p>",
       },
       {
         id: "minori",
@@ -584,9 +581,8 @@ const it = {
     },
     cta: {
       title: "Hai domande sulla privacy?",
-      body: "Scrivici a info@ventic.it — oggetto “Privacy — Ventic”. Per richieste di contatto commerciale usa invece il pulsante qui sotto.",
+      body: "Scrivici tramite il modulo contatti — oggetto “Privacy”. Per richieste di contatto commerciale usa invece il pulsante qui sotto.",
       btn: "Prenota una call tecnica",
-      mailLabel: "Scrivi a info@ventic.it",
     },
   },
   termini: {
@@ -642,7 +638,7 @@ const it = {
       {
         id: "obblighi",
         title: "8. Obblighi dell’utente e uso accettabile",
-        html: "<p>Usi Ventic in modo lecito, proporzionato e senza abusare del servizio. In particolare ti impegni a non:</p><ul><li>violare leggi, diritti di terzi o sanzioni applicabili; generare o diffondere contenuti illegali;</li><li>tentare accessi non autorizzati, attacchi, scraping aggressivo, bypass di ruoli/quote/policy, o uso oltre gli host o l’ambito di licenza acquistati;</li><li>condividere chiavi o accessi fuori dal perimetro autorizzato, né esporre gateway o agente su rete pubblica senza controllo;</li><li>usare i modelli per scopi illeciti: resti unico responsabile dell’uso conforme alla legge dei modelli e dei runtime che colleghi;</li><li>caricare dati di cui non hai diritto o categorie particolari/sensibili senza base giuridica, né dati di minori.</li></ul><p>Possiamo applicare rate limit, blocchi automatici e sospensioni per tutelare la piattaforma e gli altri utenti. Segnali abusi a <a href='mailto:info@ventic.it'>info@ventic.it</a>.</p>",
+        html: "<p>Usi Ventic in modo lecito, proporzionato e senza abusare del servizio. In particolare ti impegni a non:</p><ul><li>violare leggi, diritti di terzi o sanzioni applicabili; generare o diffondere contenuti illegali;</li><li>tentare accessi non autorizzati, attacchi, scraping aggressivo, bypass di ruoli/quote/policy, o uso oltre gli host o l’ambito di licenza acquistati;</li><li>condividere chiavi o accessi fuori dal perimetro autorizzato, né esporre gateway o agente su rete pubblica senza controllo;</li><li>usare i modelli per scopi illeciti: resti unico responsabile dell’uso conforme alla legge dei modelli e dei runtime che colleghi;</li><li>caricare dati di cui non hai diritto o categorie particolari/sensibili senza base giuridica, né dati di minori.</li></ul><p>Possiamo applicare rate limit, blocchi automatici e sospensioni per tutelare la piattaforma e gli altri utenti. Segnala abusi tramite il <a href='/contatti/'>modulo contatti</a>.</p>",
       },
       {
         id: "privacy",
@@ -682,7 +678,7 @@ const it = {
       {
         id: "contatti",
         title: "16. Contatti, comunicazioni e reclami",
-        html: "<p><strong>Titolare e fornitore:</strong> Netter srl, Via Indipendenza, 06081 Assisi (PG), Italia — P.IVA IT03569900545. <strong>Email:</strong> <a href='mailto:info@ventic.it'>info@ventic.it</a> (oggetto: “Termini — Ventic”). Rispondiamo di norma entro 10 giorni lavorativi.</p><p><strong>Comunicazioni formali:</strong> sede legale all’attenzione “Ventic — Termini” o PEC se comunicata in offerta.</p><p>Per contestazioni: scrivici descrivendo l’evento e il danno asserito; cercheremo soluzione bonaria. Resta fermo il diritto di adire l’autorità/giudice competente. Per utenti consumatori: informazioni su ADR/ODR disponibili su richiesta.</p>",
+        html: "<p><strong>Titolare e fornitore:</strong> Netter srl, Via Indipendenza, 06081 Assisi (PG), Italia — P.IVA IT03569900545. <strong>Contatti:</strong> <a href='/contatti/'>modulo contatti</a>. Rispondiamo di norma entro 10 giorni lavorativi.</p><p><strong>Comunicazioni formali:</strong> sede legale all’attenzione “Ventic — Termini” o PEC se comunicata in offerta.</p><p>Per contestazioni: scrivici descrivendo l’evento e il danno asserito; cercheremo soluzione bonaria. Resta fermo il diritto di adire l’autorità/giudice competente. Per utenti consumatori: informazioni su ADR/ODR disponibili su richiesta.</p>",
       },
     ],
     footerNote: {
@@ -691,9 +687,8 @@ const it = {
     },
     cta: {
       title: "Domande sui Termini?",
-      body: "Scrivici a info@ventic.it — oggetto “Termini — Ventic”. Per attivare Ventic o discutere un caso d’uso, prenota una call tecnica.",
+      body: "Scrivici tramite il modulo contatti — oggetto “Termini”. Per attivare Ventic o discutere un caso d’uso, prenota una call tecnica.",
       btn: "Prenota una call tecnica",
-      mailLabel: "Scrivi a info@ventic.it",
     },
   },
 
@@ -733,8 +728,6 @@ const en: typeof it = {
     title: ["Meet", "Ventic."],
     lead: "A multi-tenant AI platform you install on your own Kubernetes: one OpenAI- and Anthropic-compatible endpoint, prepaid credit with group quotas, reversible PII filtering, and cloud or local models under the same rules.",
     startTitle: "Get started with Ventic.",
-    startPre: "Write to",
-    startPost: "or send me a direct message to request access.",
     cta1: "Request access",
     cta2: "See how it works",
   },
@@ -1001,7 +994,6 @@ const en: typeof it = {
     body: "We help you install Ventic on your infrastructure and start directly from the workload you want to put in production.",
     btn: "Book a technical call",
     mail: "Email us: verify to show",
-    mailPrefix: "Email us: ",
   },
 
   footer: {
@@ -1194,7 +1186,7 @@ const en: typeof it = {
       {
         id: "controller",
         title: "1. Controller and contact details",
-        html: "<p><strong>Controller:</strong> <strong>Netter srl</strong>, registered office at Via Indipendenza, 06081 Assisi (PG), Italy — VAT <strong>IT03569900545</strong>.</p><p><strong>Privacy contact:</strong> email <a href=\"mailto:info@ventic.it\">info@ventic.it</a> (subject: “Privacy — Ventic”). We usually reply within 15 business days. For formal communications you can also write to the registered office, attn. “Privacy — Ventic”.</p><p>No Data Protection Officer (DPO) has been appointed under Art. 37 GDPR as the conditions are not met; this is reviewed periodically. If a DPO is appointed, contact details will be published here.</p>",
+        html: "<p><strong>Controller:</strong> <strong>Netter srl</strong>, registered office at Via Indipendenza, 06081 Assisi (PG), Italy — VAT <strong>IT03569900545</strong>.</p><p><strong>Privacy contact:</strong> email il <a href=\"/contatti/\">modulo contatti</a> (subject: “Privacy — Ventic”). We usually reply within 15 business days. For formal communications you can also write to the registered office, attn. “Privacy — Ventic”.</p><p>No Data Protection Officer (DPO) has been appointed under Art. 37 GDPR as the conditions are not met; this is reviewed periodically. If a DPO is appointed, contact details will be published here.</p>",
       },
       {
         id: "scope",
@@ -1204,7 +1196,7 @@ const en: typeof it = {
       {
         id: "categories",
         title: "3. Categories of personal data",
-        html: "<h4 class=\"h4\">3.1 Browsing and technical logs</h4><p>IT systems and software procedures used to operate the site acquire, in normal operation, some personal data whose transmission is implicit in Internet protocols. This includes: IP address, browser and device type, OS, pages visited, dwell time, referrer, any errors, date/time of the request and other device/environment parameters (e.g. HTTP headers).</p><p>This data is needed to make the site available, keep it secure and measure performance in aggregated form.</p><h4 class=\"h4\">3.2 Data you provide voluntarily</h4><ul><li>content of emails and messages sent to <strong>info@ventic.it</strong> or via “Book a call” / “Email us” buttons;</li><li>name, surname, company, role, contact details and information you voluntarily share to request a demo, commercial information, support or to shortlist a configuration;</li><li>when you book a call via an external provider (e.g. Calendly), data you enter in that provider’s form (name, email, messages, time preferences).</li></ul><h4 class=\"h4\">3.3 Anti-abuse / human verification</h4><p>To protect the email address and forms from scraping and spam we use anti-bot solutions (Cloudflare Turnstile and/or TrustCaptcha). During verification technical identifiers such as IP, browser headers, interaction signals and the verification token may be processed; we do not use invasive fingerprinting or biometric data.</p><h4 class=\"h4\">3.4 Cookies and similar technologies</h4><p>See Section 4 “Cookies and similar technologies”.</p><p><strong>We do not collect</strong> special categories of data (Art. 9 GDPR) or data on criminal convictions via the showcase site. Please do not send unnecessary data or third-party data without a lawful basis.</p>",
+        html: "<h4 class=\"h4\">3.1 Browsing and technical logs</h4><p>IT systems and software procedures used to operate the site acquire, in normal operation, some personal data whose transmission is implicit in Internet protocols. This includes: IP address, browser and device type, OS, pages visited, dwell time, referrer, any errors, date/time of the request and other device/environment parameters (e.g. HTTP headers).</p><p>This data is needed to make the site available, keep it secure and measure performance in aggregated form.</p><h4 class=\"h4\">3.2 Data you provide voluntarily</h4><ul><li>content of messages sent via “Book a call” / “Email us” buttons;</li><li>name, surname, company, role, contact details and information you voluntarily share to request a demo, commercial information, support or to shortlist a configuration;</li><li>when you book a call via an external provider (e.g. Calendly), data you enter in that provider’s form (name, email, messages, time preferences).</li></ul><h4 class=\"h4\">3.3 Anti-abuse / human verification</h4><p>To protect the email address and forms from scraping and spam we use anti-bot solutions (Cloudflare Turnstile and/or TrustCaptcha). During verification technical identifiers such as IP, browser headers, interaction signals and the verification token may be processed; we do not use invasive fingerprinting or biometric data.</p><h4 class=\"h4\">3.4 Cookies and similar technologies</h4><p>See Section 4 “Cookies and similar technologies”.</p><p><strong>We do not collect</strong> special categories of data (Art. 9 GDPR) or data on criminal convictions via the showcase site. Please do not send unnecessary data or third-party data without a lawful basis.</p>",
       },
       {
         id: "cookie",
@@ -1254,7 +1246,7 @@ const en: typeof it = {
       {
         id: "exercise",
         title: "13. How to exercise rights and lodge a complaint",
-        html: "<p>To exercise rights write to <a href=\"mailto:info@ventic.it\">info@ventic.it</a> subject “Exercise of privacy rights — Ventic” attaching a copy of an ID document minimised to what is needed. We reply without undue delay, at latest within one month (extendable by two months for complex cases, Art. 12(3)).</p><p>If you believe processing infringes the GDPR, you have the right to <strong>lodge a complaint with the Italian Garante per la protezione dei dati personali</strong> — <a href=\"https://www.garanteprivacy.it\" target=\"_blank\" rel=\"noopener\">garanteprivacy.it</a> (Art. 77 GDPR) — or to seek a judicial remedy (Art. 79). Information and forms are on the Garante’s site. For your local authority in other EEA states, see the EDPB list.</p><p>For consumer disputes, out-of-court settlement bodies may be available where applicable.</p>",
+        html: "<p>To exercise rights write to il <a href=\"/contatti/\">modulo contatti</a> subject “Exercise of privacy rights — Ventic” attaching a copy of an ID document minimised to what is needed. We reply without undue delay, at latest within one month (extendable by two months for complex cases, Art. 12(3)).</p><p>If you believe processing infringes the GDPR, you have the right to <strong>lodge a complaint with the Italian Garante per la protezione dei dati personali</strong> — <a href=\"https://www.garanteprivacy.it\" target=\"_blank\" rel=\"noopener\">garanteprivacy.it</a> (Art. 77 GDPR) — or to seek a judicial remedy (Art. 79). Information and forms are on the Garante’s site. For your local authority in other EEA states, see the EDPB list.</p><p>For consumer disputes, out-of-court settlement bodies may be available where applicable.</p>",
       },
       {
         id: "children",
@@ -1273,9 +1265,8 @@ const en: typeof it = {
     },
     cta: {
       title: "Questions about privacy?",
-      body: "Write to info@ventic.it — subject “Privacy — Ventic”. For commercial enquiries use the button below instead.",
+      body: "Write to us via the contact form — subject “Privacy”. For commercial enquiries use the button below instead.",
       btn: "Book a technical call",
-      mailLabel: "Email info@ventic.it",
     },
   },
   termini: {
@@ -1331,7 +1322,7 @@ const en: typeof it = {
       {
         id: "acceptable",
         title: "8. User obligations and acceptable use",
-        html: "<p>You use Ventic lawfully, proportionally and without abusing the service. In particular you will not:</p><ul><li>violate laws, third-party rights or applicable sanctions; generate or disseminate illegal content;</li><li>attempt unauthorised access, attacks, aggressive scraping, bypass of roles/quotas/policy, or use beyond the hosts or licence scope purchased;</li><li>share keys or access outside the authorised perimeter, or expose the gateway or agent to the public internet without control;</li><li>use models for unlawful ends: you remain solely responsible for lawful use of the models and runtimes you connect;</li><li>upload data you have no right to, or special-category/sensitive data without lawful basis, or data about children.</li></ul><p>We may apply rate limits, automatic blocks and suspensions to protect the platform and other users. Report abuse to <a href='mailto:info@ventic.it'>info@ventic.it</a>.</p>",
+        html: "<p>You use Ventic lawfully, proportionally and without abusing the service. In particular you will not:</p><ul><li>violate laws, third-party rights or applicable sanctions; generate or disseminate illegal content;</li><li>attempt unauthorised access, attacks, aggressive scraping, bypass of roles/quotas/policy, or use beyond the hosts or licence scope purchased;</li><li>share keys or access outside the authorised perimeter, or expose the gateway or agent to the public internet without control;</li><li>use models for unlawful ends: you remain solely responsible for lawful use of the models and runtimes you connect;</li><li>upload data you have no right to, or special-category/sensitive data without lawful basis, or data about children.</li></ul><p>We may apply rate limits, automatic blocks and suspensions to protect the platform and other users. Report abuse via the <a href='/en/contatti/'>contact form</a>.</p>",
       },
       {
         id: "privacy",
@@ -1371,7 +1362,7 @@ const en: typeof it = {
       {
         id: "contact",
         title: "16. Contact, notices and complaints",
-        html: "<p><strong>Controller/provider:</strong> Netter srl, Via Indipendenza, 06081 Assisi (PG), Italy — VAT IT03569900545. <strong>Email:</strong> <a href='mailto:info@ventic.it'>info@ventic.it</a> (subject: “Terms — Ventic”). We usually reply within 10 business days.</p><p><strong>Formal notices:</strong> registered office attn. “Ventic — Terms” or PEC if given in the offer.</p><p>For disputes: write describing the event and alleged damage; we will seek an amicable solution. Your right to go to the competent authority/court remains. For consumer users: ADR/ODR info available on request.</p>",
+        html: "<p><strong>Controller/provider:</strong> Netter srl, Via Indipendenza, 06081 Assisi (PG), Italy — VAT IT03569900545. <strong>Contact:</strong> <a href='/en/contatti/'>contact form</a>. We usually reply within 10 business days.</p><p><strong>Formal notices:</strong> registered office attn. “Ventic — Terms” or PEC if given in the offer.</p><p>For disputes: write describing the event and alleged damage; we will seek an amicable solution. Your right to go to the competent authority/court remains. For consumer users: ADR/ODR info available on request.</p>",
       },
     ],
     footerNote: {
@@ -1380,9 +1371,8 @@ const en: typeof it = {
     },
     cta: {
       title: "Questions about the Terms?",
-      body: "Write to info@ventic.it — subject “Terms — Ventic”. To get started with Ventic or discuss a use case, book a technical call.",
+      body: "Write to us via the contact form — subject “Terms”. To get started with Ventic or discuss a use case, book a technical call.",
       btn: "Book a technical call",
-      mailLabel: "Email info@ventic.it",
     },
   },
 

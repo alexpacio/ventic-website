@@ -1,6 +1,6 @@
 ---
 import { content, type Lang } from "../i18n/content";
-import ObfuscatedEmail from "./ObfuscatedEmail.astro";
+import { contactPath } from "../i18n/contact";
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const c = content[lang].pricingPage;
@@ -18,7 +18,7 @@ const c = content[lang].pricingPage;
         <h2 class="h3">{c.notes.ctaTitle}</h2>
         <p>{c.notes.ctaBody}</p>
       </div>
-      <ObfuscatedEmail label={c.notes.ctaBtn} lang={lang} class="btn btn--light" />
+      <a class="btn btn--light" href={contactPath(lang)}>{c.notes.ctaBtn}</a>
     </div>
   </div>
 </section>
