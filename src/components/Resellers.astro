@@ -1,0 +1,119 @@
+---
+import { resellers } from "../i18n/resellers";
+import { contactPath } from "../i18n/contact";
+import type { Lang } from "../i18n/content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const c = resellers(lang);
+const p = c.prices;
+const priceBlocks = [
+  { key: "licman", ...p.licman, extras: [] as { name: string; value: string }[] },
+  { key: "ni", ...p.ni },
+];
+---
+<section id={c.advantages.id} class="sec sec--tint">
+  <div class="wrap vt-reveal">
+    <div class="shead">
+      <div>
+        <span class="plate">{c.advantages.plate}</span>
+        <h2 class="h2">{c.advantages.title[0]}<br />{c.advantages.title[1]}</h2>
+      </div>
+      <p class="shead-lead">{c.advantages.lead}</p>
+    </div>
+    <div class="cards">
+      {c.advantages.items.map((it) => (
+        <article class="card vt-card">
+          <span class="mono tag">{it.tag}</span>
+          <h3 class="card-title">{it.title}</h3>
+          <p class="cell-b">{it.body}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section id={c.solutions.id} class="sec">
+  <div class="wrap vt-reveal">
+    <div class="shead">
+      <div>
+        <span class="plate">{c.solutions.plate}</span>
+        <h2 class="h2">{c.solutions.title[0]}<br />{c.solutions.title[1]}</h2>
+      </div>
+      <p class="shead-lead">{c.solutions.lead}</p>
+    </div>
+    <div class="sols">
+      {c.solutions.cards.map((s) => (
+        <article class={`sol sol--${s.key}`}>
+          <span class="mono tag">{s.tag}</span>
+          <h3 class="card-title">{s.title}</h3>
+          <p class="cell-b">{s.body}</p>
+          <ul class="ticks">{s.ticks.map((x) => <li>{x}</li>)}</ul>
+          <a class="btn btn--a" href={s.href} target={s.ext ? "_blank" : undefined} rel={s.ext ? "noopener" : undefined}>{s.cta} <span aria-hidden="true">{s.ext ? "↗" : "→"}</span></a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section id={p.id} class="sec sec--tint">
+  <div class="wrap vt-reveal">
+    <div class="shead">
+      <div>
+        <span class="plate">{p.plate}</span>
+        <h2 class="h2">{p.title[0]}<br />{p.title[1]}</h2>
+      </div>
+      <p class="shead-lead">{p.lead}</p>
+    </div>
+    <div class="blocks">
+      {priceBlocks.map((b) => (
+        <article class="block">
+          <span class="mono tag">{b.tag}</span>
+          <ul class="rows">
+            {b.rows.map((r) => (
+              <li class="row">
+                <div class="rname"><strong>{r.name}</strong><span class="cell-b">{r.note}</span></div>
+                <div class="rprice"><span class="price">{r.price}</span><span class="unit">{r.unit}</span></div>
+              </li>
+            ))}
+          </ul>
+          {b.extras.length > 0 && (
+            <dl class="extras">
+              {b.extras.map((e) => <div><dt>{e.name}</dt><dd>{e.value}</dd></div>)}
+            </dl>
+          )}
+          <a class="btn btn--ghost" href={b.href} target="_blank" rel="noopener">{b.cta} <span aria-hidden="true">↗</span></a>
+        </article>
+      ))}
+    </div>
+    <p class="mono foot">{p.foot}</p>
+    <a class="btn btn--a ask" href={contactPath(lang)}>{lang === "it" ? "Parla con noi di rivendita" : "Talk to us about reselling"} <span aria-hidden="true">→</span></a>
+  </div>
+</section>
+
+<style>
+  .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px; }
+  .card { background: var(--ink); padding: 28px 28px 32px; display: flex; flex-direction: column; gap: 14px; }
+  .tag { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--fg-mute); }
+  .sols, .blocks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px; }
+  .sol, .block { background: var(--ink); padding: 36px; display: flex; flex-direction: column; gap: 18px; border-top: 4px solid #161616; }
+  .sol--own { border-top-color: var(--accent); }
+  .sol--ni { border-top-color: var(--amber); }
+  .sol .btn, .block .btn { margin-top: auto; align-self: flex-start; }
+  .ticks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font-size: 15px; color: var(--fg-mid); }
+  .ticks li::before { content: "—"; margin-right: 10px; color: var(--accent); }
+  .rows { list-style: none; margin: 0; padding: 0; }
+  .row { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; padding: 16px 0; border-top: 1px solid var(--line-soft); }
+  .rname { display: flex; flex-direction: column; gap: 4px; }
+  .rprice { display: flex; flex-direction: column; align-items: flex-end; text-align: right; flex-shrink: 0; }
+  .price { font-size: 32px; }
+  .unit { font-size: 12px; color: var(--fg-faint); }
+  .extras { margin: 0; display: flex; flex-direction: column; gap: 10px; padding-top: 16px; border-top: 1px solid var(--line-soft); font-size: 14px; }
+  .extras div { display: flex; justify-content: space-between; gap: 20px; }
+  .extras dt { color: var(--fg-mute); }
+  .extras dd { margin: 0; text-align: right; color: var(--fg-mid); }
+  .foot { margin-top: 18px; font-size: 12px; line-height: 1.7; color: var(--fg-mid); }
+  .ask { margin-top: 24px; }
+  @media (max-width: 1080px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 860px) { .sols, .blocks { grid-template-columns: 1fr; } }
+  @media (max-width: 680px) { .cards { grid-template-columns: 1fr; } .card { padding: 24px 20px; } .sol, .block { padding: 28px 20px; } }
+</style>

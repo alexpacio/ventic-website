@@ -3,7 +3,7 @@ import type { Lang } from "./content";
 const pick = (lang: Lang) => <T,>(it: T, en: T): T => (lang === "it" ? it : en);
 
 /** Sub-pages that used to be sections of the one-page home. Same slug in both languages. */
-export const pageKeys = ["why", "how", "platform", "onprem"] as const;
+export const pageKeys = ["why", "how", "platform", "onprem", "resellers"] as const;
 export type PageKey = (typeof pageKeys)[number];
 
 export const slugs: Record<PageKey, string> = {
@@ -11,6 +11,7 @@ export const slugs: Record<PageKey, string> = {
   how: "how-it-works",
   platform: "platform",
   onprem: "on-premise",
+  resellers: "resellers",
 };
 
 export const pagePath = (lang: Lang, key: PageKey) => `${lang === "en" ? "/en" : ""}/${slugs[key]}/`;
@@ -95,6 +96,25 @@ export function pages(lang: Lang) {
         ),
       },
     },
+    resellers: {
+      nav: t("Rivenditori e provider", "Resellers and providers"),
+      crumb: t("Rivenditori e provider", "Resellers and providers"),
+      seo: {
+        title: t("Ventic per rivenditori e provider — vantaggi, soluzioni e prezzi", "Ventic for resellers and providers — advantages, solutions and prices"),
+        desc: t(
+          "Vendi accesso all'AI con il tuo marchio: multi-tenancy, commissioni, billing integrato. Due strade, Ventic On Premise o Netter Intelligence, con i prezzi di Licman e llm.netter.io.",
+          "Sell AI access under your own brand: multi-tenancy, commissions, built-in billing. Two routes, Ventic On Premise or Netter Intelligence, with the Licman and llm.netter.io prices.",
+        ),
+      },
+      hero: {
+        plate: t("Rivenditori e provider", "Resellers and providers"),
+        title: t(["Rivendi AI", "con il tuo marchio."], ["Sell AI", "under your brand."]),
+        lead: t(
+          "Un'installazione, molti clienti, prezzi tuoi: cosa ottieni e da dove partire.",
+          "One installation, many customers, your own prices: what you get and where to start.",
+        ),
+      },
+    },
     explore: {
       plate: t("Esplora Ventic", "Explore Ventic"),
       title: t(["Tutto quello che", "c'è da sapere."], ["Everything you", "need to know."]),
@@ -156,6 +176,7 @@ export function navGroups(lang: Lang): NavGroup[] {
         { label: p.why.nav, desc: t("Perché i provider non bastano", "Why providers fall short"), href: pagePath(lang, "why") },
         { label: p.how.nav, desc: t("Dall'intento al modello in produzione", "From intent to a model in production"), href: pagePath(lang, "how") },
         { label: p.platform.nav, desc: t("Componenti e funzioni", "Components and features"), href: pagePath(lang, "platform") },
+        { label: p.resellers.nav, desc: t("Vendi AI con il tuo marchio", "Sell AI under your brand"), href: pagePath(lang, "resellers") },
         { label: t("Console", "Console"), desc: t("Persone, quote, modelli, agenti remoti", "People, quotas, models, remote agents"), href: `${pre}/admin-panel/` },
       ],
     },
