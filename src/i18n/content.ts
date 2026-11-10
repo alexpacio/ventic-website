@@ -319,6 +319,7 @@ const it = {
     legal: "Netter srl · P.IVA IT03569900545 · Via Indipendenza, 06081 Assisi (PG), Italy",
     region: "Sulla tua infrastruttura",
     mail: "Mostra email",
+    cols: ["Prodotto", "Contatti", "Legale"],
     links: [
       { label: "Console", href: "/admin-panel/" },
       { label: "Installa la demo", href: "/demo/" },
@@ -1007,6 +1008,7 @@ const en: typeof it = {
     legal: "Netter srl · VAT IT03569900545 · Via Indipendenza, 06081 Assisi (PG), Italy",
     region: "On your own infrastructure",
     mail: "Show email",
+    cols: ["Product", "Contact", "Legal"],
     links: [
       { label: "Console", href: "/en/admin-panel/" },
       { label: "Deploy a demo", href: "/en/demo/" },

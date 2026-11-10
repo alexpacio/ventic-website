@@ -1,7 +1,7 @@
 ---
 import { content, type Lang } from "../i18n/content";
-interface Props { lang: Lang; num?: string; tint?: boolean; }
-const { lang, num, tint = true } = Astro.props;
+interface Props { lang: Lang; num?: string; tint?: boolean; lean?: boolean; }
+const { lang, num, tint = true, lean = false } = Astro.props;
 const c = content[lang].modes;
 const pricing = lang === "it" ? "/pricing/" : "/en/pricing/";
 const demoCta = lang === "it" ? "Richiedi la demo" : "Request the demo";
@@ -17,18 +17,18 @@ const fromPrice = lang === "it" ? "da €29 / host / mese" : "from €29 / host 
       <p class="shead-lead">{c.lead}</p>
     </div>
 
-    <div class="pair">
+    <div class="pair" data-stagger>
       <article class="card card--product">
         <div class="card-top">
           <span class="mono tag tag--accent">{c.byoh.tag}</span>
           <a class="mono price-hint" href={pricing}>{fromPrice}</a>
         </div>
         <h3 class="ctitle">{c.byoh.title}</h3>
-        <p class="desc">{c.byoh.desc}</p>
+        {!lean && <p class="desc">{c.byoh.desc}</p>}
         <ul class="list">
           {c.byoh.ticks.map((t) => <li><span class="ck" aria-hidden="true">✓</span>{t}</li>)}
         </ul>
-        <p class="note">{c.byoh.note}</p>
+        {!lean && <p class="note">{c.byoh.note}</p>}
         <a class="btn btn--a" href="#contatto">{demoCta} <span class="arr" aria-hidden="true">→</span></a>
       </article>
 
@@ -38,11 +38,11 @@ const fromPrice = lang === "it" ? "da €29 / host / mese" : "from €29 / host 
           <span class="mono live"><span class="dot dot--live"></span>{c.hosted.host}</span>
         </div>
         <h3 class="ctitle">{c.hosted.title}</h3>
-        <p class="desc">{c.hosted.desc}</p>
+        {!lean && <p class="desc">{c.hosted.desc}</p>}
         <ul class="list list--amber">
           {c.hosted.ticks.map((t) => <li><span class="ck" aria-hidden="true">✓</span>{t}</li>)}
         </ul>
-        <p class="note">{c.hosted.note}</p>
+        {!lean && <p class="note">{c.hosted.note}</p>}
         <a class="btn btn--b" href={c.hosted.url} rel="noopener">{c.hosted.cta} <span class="arr" aria-hidden="true">↗</span></a>
       </article>
     </div>

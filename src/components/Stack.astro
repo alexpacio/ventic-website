@@ -8,13 +8,11 @@ const icons = ["terminal", "provisioning", "overlay", "ops", "cloud"];
 ---
 <section id={c.id} class="sec">
   <div class="wrap">
-    <div class="grid top">
-      <div class="tcol">
-        <span class="plate">{c.plate}</span>
-        <h2 class="h2">{c.title[0]}<br />{c.title[1]}</h2>
-      </div>
+    <!-- page title lives in PageHero; this head keeps only the lead and legend -->
+    <div class="top">
       <div class="lcol">
-        <p class="body">{c.lead}</p>
+        <h2 class="sr-only">{c.title[0]} {c.title[1]}</h2>
+        <p class="lead">{c.lead}</p>
         <div class="legend">
           <span class="key"><span class="swatch"></span>{c.legend.own}</span>
           <span class="key"><span class="swatch swatch--opt"></span>{c.legend.opt}</span>
@@ -66,9 +64,8 @@ const icons = ["terminal", "provisioning", "overlay", "ops", "cloud"];
 </section>
 
 <style>
-  .top { align-items: end; margin-bottom: 32px; }
-  .tcol, .lcol { grid-column: span 6; }
-  .plate { margin-bottom: 16px; }
+  .top { margin-bottom: 32px; }
+  .lcol { max-width: 72ch; }
 
   .legend { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 14px; }
   .key {

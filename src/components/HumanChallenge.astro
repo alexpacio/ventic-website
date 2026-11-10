@@ -24,7 +24,7 @@ const isTurnstile = Boolean(sitekey);
       class="cf-turnstile"
       data-sitekey={sitekey}
       data-callback="onVenticTurnstileVerified"
-      data-theme="dark"
+      data-theme="light"
       data-size="normal"
     ></div>
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer is:inline></script>
@@ -71,7 +71,7 @@ const isTurnstile = Boolean(sitekey);
     background: #ffffff;
     border: 1px solid #e0e0e0;
     border-radius: 0;
-    font-family: "IBM Plex Mono", monospace;
+    font-family: "IBM Plex Sans", sans-serif;
     max-width: 320px;
     user-select: none;
   }
@@ -110,11 +110,11 @@ const isTurnstile = Boolean(sitekey);
   .cf-challenge[data-verified="1"] .cf-spinner { display: none; }
   .cf-challenge[data-verified="1"] .cf-check { display: block; }
   .cf-challenge[data-verified="1"] .cf-checkbox { border-color: rgba(14,159,142,.4); background: rgba(14,159,142,.08); }
-  .cf-label { font-size: 13px; color: #161616; font-weight: 500; }
+  .cf-label { font-size: 14px; color: #161616; font-weight: 600; }
   .cf-right { text-align: right; display: flex; flex-direction: column; gap: 1px; }
   .cf-logo { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: #2347e8; font-weight: 700; }
-  .cf-sub { font-size: 9px; letter-spacing: .08em; color: #6f6f6f; }
-  .cf-msg { font-size: 10px; color: #525252; letter-spacing: .04em; }
+  .cf-sub { font-size: 11px; letter-spacing: .08em; color: #6f6f6f; }
+  .cf-msg { font-size: 12px; color: #393939; letter-spacing: .04em; }
   .cf-challenge[data-verified="1"] .cf-msg { color: #0b6b5e; }
   @keyframes cf-spin { to { transform: rotate(360deg); } }
 </style>

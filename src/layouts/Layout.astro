@@ -285,7 +285,15 @@ const jsonLdString = JSON.stringify({
     <script type="application/ld+json" set:html={jsonLdString} />
   </head>
   <body>
+    <script is:inline>
+      document.documentElement.classList.add("js");
+      addEventListener("DOMContentLoaded", () => {
+        const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } }), { threshold: 0.15 });
+        document.querySelectorAll("[data-stagger]").forEach((g) => { [...g.children].forEach((c, i) => c.style.setProperty("--i", i)); io.observe(g); });
+      });
+    </script>
     <slot />
+    <script>import "../scripts/motion.ts";</script>
     <ChatLauncher lang={lang} />
     {/* Global Human Challenge — TrustCaptcha (preferito) o fallback — visibile solo su click mailto */}
     {trustSitekey ? (

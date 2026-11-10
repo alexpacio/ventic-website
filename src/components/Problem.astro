@@ -1,20 +1,18 @@
 ---
 import Icon from "./Icon.astro";
 import { content, type Lang } from "../i18n/content";
-interface Props { lang: Lang; num?: string; }
-const { lang, num } = Astro.props;
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
 const c = content[lang].problem;
 const icons = ["activity", "power", "restart", "key", "shield", "bars"];
 const tagLabel = (tag: string) => tag.replace(/^\d+\s*—\s*/, "");
 ---
 <section id={c.id} class="sec sec--tint prob">
   <div class="wrap vt-reveal">
-    <div class="shead">
-      <div>
-        <span class="plate">{num && <span class="plate-num">{num} —</span>}{c.plate}</span>
-        <h2 class="h2">{c.title[0]}<br />{c.title[1]}</h2>
-      </div>
-      <p class="shead-lead">{c.lead}</p>
+    <!-- page title lives in PageHero; keep only the lead to avoid a duplicate header -->
+    <div class="intro">
+      <h2 class="sr-only">{c.title[0]} {c.title[1]}</h2>
+      <p class="lead">{c.lead}</p>
     </div>
     <div class="cards">
       {c.cards.map((card, i) => {
@@ -35,6 +33,7 @@ const tagLabel = (tag: string) => tag.replace(/^\d+\s*—\s*/, "");
 </section>
 
 <style>
+  .intro { max-width: 72ch; margin-bottom: 40px; }
   .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px; }
   .card { background-color: var(--ink); padding: 28px 28px 32px; display: flex; flex-direction: column; gap: 14px; min-height: 230px; }
   .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }

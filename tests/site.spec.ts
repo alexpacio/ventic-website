@@ -72,6 +72,23 @@ for (const { lang, home, pre, demo, pages, h2 } of langs) {
     await expect(page).toHaveURL(new RegExp(`${how}`));
   });
 
+  test(`motion layer: button fill, headline wipe, auto-hiding bar (${lang})`, async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto(`${how}?nolocale=1`);
+    await expect(page.locator('.bar .cta .fill i')).toHaveCount(5);
+    await expect(page.locator('.bar .cta .roll')).toHaveAttribute('data-t', /\S/);
+    // headline words start hidden, the wipe reveals them and the bars clean up
+    const h = page.locator('h1.wipe');
+    await expect(h.locator('.w').first()).toHaveCSS('opacity', '1');
+    await expect(h.locator('.wipe-bar')).toHaveCount(0);
+    // bar hides on scroll down, returns on scroll up
+    await page.mouse.move(700, 500);
+    await page.mouse.wheel(0, 1500);
+    await expect(page.locator('header.bar')).toHaveAttribute('data-hidden', '');
+    await page.mouse.wheel(0, -300);
+    await expect(page.locator('header.bar')).not.toHaveAttribute('data-hidden', '');
+  });
+
   test(`no Alpha / early-access wording anywhere (${lang})`, async ({ page }) => {
     for (const path of pages) {
       await page.goto(`${path}?nolocale=1`);

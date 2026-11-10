@@ -37,7 +37,8 @@ const cells = Array.from({ length: 64 }, (_, i) => {
   .lead { color: #e6ebfd; max-width: 52ch; }
   .actions { display: flex; flex-wrap: wrap; gap: 2px; margin-top: 8px; }
   .actions :global(.btn) { min-width: 220px; }
-  .band :global(.btn--b:hover) { background: #000; border-color: #000; }
+  .band { --wipe: #fff; }
+  .band :global(.btn--b) { --btn-bg-h: #000; }
   @media (max-width: 860px) { .band { padding: 72px 0; } .pixels { width: 55%; opacity: .2; } }
   @media (max-width: 520px) { .actions { width: 100%; } .actions :global(.btn) { width: 100%; } }
 </style>

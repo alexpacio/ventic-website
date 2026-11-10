@@ -4,6 +4,13 @@ import type { Lang } from "../i18n/content";
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const c = hood(lang);
+// gate values are illustrative, language-neutral identifiers
+const gates = [
+  { x: 136, label: "KEY", value: "sk-team-dev ✓" },
+  { x: 232, label: "POLICY", value: "allow · €0.50" },
+  { x: 328, label: "PII", value: "mario → ‹P1›" },
+  { x: 424, label: "LEDGER", value: "€0.0042" },
+];
 ---
 <section id={c.id} class="sec">
   <div class="wrap">
@@ -16,26 +23,29 @@ const c = hood(lang);
       </div>
 
       <!-- blueprint art: a request crossing the control layers -->
-      <svg class="art art--dark" viewBox="0 0 560 300" role="img" aria-hidden="true">
+      <svg class="art art--dark" viewBox="0 76 560 190" role="img" aria-hidden="true">
         <defs>
-          <linearGradient id="uh-g" x1="0" x2="1"><stop offset="0" stop-color="#f5a83f" stop-opacity="0" /><stop offset="0.5" stop-color="#f5a83f" /><stop offset="1" stop-color="#35cfa4" /></linearGradient>
+          <linearGradient id="uh-g" x1="0" x2="1"><stop offset="0" stop-color="#f5a83f" /><stop offset="1" stop-color="#35cfa4" /></linearGradient>
           <pattern id="uh-grid" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M28 0H0V28" fill="none" stroke="#ffffff0a" /></pattern>
         </defs>
         <rect width="560" height="300" fill="url(#uh-grid)" />
-        {[0, 1, 2, 3].map((i) => (
-          <g transform={`translate(${70 + i * 118} 0)`}>
-            <path d="M0 70 60 40 120 70 60 100Z" fill="none" stroke="#32373d" transform="translate(-30 40)" />
-            <path d="M-30 110v90l60 30 60-30v-90" fill="#16181b" stroke="#3d444b" transform="translate(0 0)" />
-            <path d="M-30 110 30 140 90 110 30 80Z" fill="#1d2126" stroke={i === 1 ? "#f5a83f" : "#3d444b"} />
-            <path d="M30 140v90" stroke="#262a2f" />
-            <circle cx="30" cy="110" r="3" fill={i === 1 ? "#f5a83f" : "#5c5f63"} />
+        <!-- straight track: client → 4 control gates → model; one packet loops through, each gate lights as it passes -->
+        <path d="M40 150H520" stroke="#2a2e33" stroke-width="2" />
+        <path class="flow" d="M40 150H520" stroke="url(#uh-g)" stroke-width="2" />
+        <g font-family="var(--code)" font-size="9" letter-spacing="0.12em" fill="#8a8d92" text-anchor="middle">
+          <rect x="30" y="140" width="20" height="20" fill="none" stroke="#f5a83f" /><text x="40" y="186">CLIENT</text>
+          <rect x="510" y="140" width="20" height="20" fill="#35cfa4" fill-opacity=".15" stroke="#35cfa4" /><text x="520" y="186">MODEL</text>
+        </g>
+        {gates.map((g, i) => (
+          <g class="gate" style={`--d:${(((g.x - 40) / 480) * 4.8 - 0.35).toFixed(2)}s`}>
+            <rect class="gate-box" x={g.x - 34} y="116" width="68" height="68" />
+            <text class="gate-n" x={g.x - 27} y="130">0{i + 1}</text>
+            <rect class="gate-led" x={g.x - 4} y="146" width="8" height="8" />
+            <text class="gate-l" x={g.x} y="210">{g.label}</text>
+            <text class="gate-v" x={g.x} y="228">{g.value}</text>
           </g>
         ))}
-        <path d="M20 150C120 150 130 110 200 110S320 160 380 130 470 120 545 150" fill="none" stroke="url(#uh-g)" stroke-width="2.2" stroke-dasharray="1 0" />
-        <g class="mono" font-size="9.5" letter-spacing="0.14em" fill="#8a8d92">
-          <text x="36" y="268">KEY</text><text x="154" y="268">POLICY</text><text x="272" y="268">PII</text><text x="390" y="268">LEDGER</text>
-        </g>
-        <circle cx="20" cy="150" r="5" fill="#f5a83f" /><circle cx="545" cy="150" r="5" fill="#35cfa4" />
+        <rect class="pk" x="36" y="146" width="8" height="8" />
       </svg>
     </div>
 
@@ -59,6 +69,19 @@ const c = hood(lang);
   .ttl { margin-top: -4px; }
   .art { width: 100%; height: auto; background: var(--sunk); border: 1px solid var(--line-soft); border-radius: 0;  }
   .art--dark { background: var(--night); border-color: var(--night); }
+  /* one 4.8s cycle: packet crosses the track, each gate's --d is when the packet reaches it */
+  .flow { stroke-dasharray: 3 9; animation: uh-flow 1s linear infinite; }
+  .pk { fill: #f5a83f; filter: drop-shadow(0 0 6px #f5a83f); animation: uh-pk 4.8s linear infinite; }
+  .gate-box { fill: #16181b; stroke: #3d444b; animation: uh-box 4.8s ease-out var(--d) infinite; }
+  .gate-led { fill: #5c5f63; animation: uh-led 4.8s ease-out var(--d) infinite; }
+  .gate-n { font-family: var(--code); font-size: 8px; fill: #5c5f63; }
+  .gate-l { font-family: var(--code); font-size: 10px; letter-spacing: .14em; fill: #c6c6c6; text-anchor: middle; }
+  .gate-v { font-family: var(--code); font-size: 9px; fill: #6f6f6f; text-anchor: middle; animation: uh-val 4.8s ease-out var(--d) infinite; }
+  @keyframes uh-flow { to { stroke-dashoffset: -12; } }
+  @keyframes uh-pk { 0% { transform: translateX(0); fill: #f5a83f; opacity: 0; } 4% { opacity: 1; } 80% { fill: #f5a83f; } 92% { fill: #35cfa4; opacity: 1; } 100% { transform: translateX(480px); fill: #35cfa4; opacity: 0; } }
+  @keyframes uh-box { 0% { stroke: #3d444b; fill: #16181b; } 6% { stroke: #f5a83f; fill: #251d12; } 30%, 100% { stroke: #3d444b; fill: #16181b; } }
+  @keyframes uh-led { 0%, 4% { fill: #5c5f63; } 8%, 60% { fill: #35cfa4; } 100% { fill: #5c5f63; } }
+  @keyframes uh-val { 0%, 4% { fill: #6f6f6f; } 8%, 50% { fill: #f4f4f4; } 100% { fill: #6f6f6f; } }
   .cells { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
   .cell { display: flex; flex-direction: column; gap: 10px; padding: 20px; }
   .mini { width: 100%; height: 48px; margin-bottom: 6px; padding-bottom: 12px; border-bottom: 1px solid var(--line-soft); }

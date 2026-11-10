@@ -37,13 +37,15 @@ const isActive = (g: (typeof groups)[number]) => g.href === here || !!g.items?.s
               {g.label}
               <span class="chev"><Icon name="chevron" size={14} stroke="currentColor" width={1.8} /></span>
             </button>
-            <div class="pop panel" id={`pop-${i}`}>
-              {g.items.map((it) => (
-                <a class="item" href={it.href} aria-current={here === it.href ? "page" : undefined}>
-                  <span class="item-t">{it.label}</span>
-                  {it.desc && <span class="item-d">{it.desc}</span>}
-                </a>
-              ))}
+            <div class="pop" id={`pop-${i}`}>
+              <div class="wrap pop-in">
+                {g.items.map((it, j) => (
+                  <a class="item" href={it.href} style={`--i:${j}`} aria-current={here === it.href ? "page" : undefined}>
+                    <span class="item-t">{it.label}</span>
+                    {it.desc && <span class="item-d">{it.desc}</span>}
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
         ) : (
@@ -60,22 +62,22 @@ const isActive = (g: (typeof groups)[number]) => g.href === here || !!g.items?.s
       <a class="btn btn--a btn--sm cta" href={contact}>{c.cta}</a>
       <details class="menu">
         <summary aria-label="Menu"><Icon name="menu" size={22} stroke="var(--fg-mute)" width={1.6} /></summary>
-        <div class="drawer panel">
-          {groups.map((g) =>
+        <div class="drawer">
+          {groups.map((g, i) =>
             g.items ? (
-              <div class="dgroup">
+              <div class="dgroup" style={`--i:${i}`}>
                 <span class="dlabel">{g.label}</span>
                 {g.items.map((it) => (
                   <a class="drawerlink" href={it.href} aria-current={here === it.href ? "page" : undefined}>{it.label}</a>
                 ))}
               </div>
             ) : (
-              <div class="dgroup">
+              <div class="dgroup" style={`--i:${i}`}>
                 <a class="drawerlink drawerlink--top" href={g.href} aria-current={here === g.href ? "page" : undefined}>{g.label}</a>
               </div>
             )
           )}
-          <div class="dgroup dgroup--foot">
+          <div class="dgroup dgroup--foot" style={`--i:${groups.length}`}>
             <a class="drawerlink" href={otherHref} hreflang={other}>{c.langLabel}: {other.toUpperCase()}</a>
             <a class="drawerlink drawerlink--cta" href={contact}>{c.cta}</a>
           </div>
@@ -130,6 +132,16 @@ const isActive = (g: (typeof groups)[number]) => g.href === here || !!g.items?.s
   menu?.addEventListener("click", (e) => { if ((e.target as Element).closest("a")) menu.open = false; });
   document.addEventListener("click", (e) => { if (menu?.open && !menu.contains(e.target as Node)) menu.open = false; });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape" && menu?.open) menu.open = false; });
+
+  // Bar slides away while scrolling down, returns on any scroll up.
+  const bar = document.querySelector<HTMLElement>("header.bar")!;
+  let lastY = scrollY;
+  addEventListener("scroll", () => {
+    const y = scrollY;
+    if (Math.abs(y - lastY) < 6) return;
+    bar.toggleAttribute("data-hidden", y > lastY && y > 120);
+    lastY = y;
+  }, { passive: true });
 </script>
 
 <style>
@@ -143,15 +155,27 @@ const isActive = (g: (typeof groups)[number]) => g.href === here || !!g.items?.s
   .bar {
     position: sticky; top: 0; z-index: 50;
     border-bottom: 1px solid var(--line-soft);
-    background: rgba(255,255,255,.92); -webkit-backdrop-filter: saturate(1.4) blur(10px); backdrop-filter: saturate(1.4) blur(10px);
-    backdrop-filter: blur(12px);
+    background: #fff; /* opaque: a frosted bar smeared blue CTAs into a blob behind the menu */
+    overflow-x: clip; /* the drawer slides in from off-screen right */
+    transition: translate .3s ease;
   }
+  .bar[data-hidden]:not(:focus-within):not(:has(.menu[open], .group[data-open])) { translate: 0 -100%; }
+  /* page dims behind an open dropdown */
+  .bar::after {
+    content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 100vh; z-index: 1;
+    background: rgba(22,22,22,.35); opacity: 0; pointer-events: none; transition: opacity .45s ease;
+  }
+  .bar:has(.group[data-open], .group:not([data-dismissed]):hover)::after { opacity: 1; transition-duration: .3s; }
   .inner { display: flex; align-items: center; justify-content: space-between; gap: 18px; height: 64px; }
 
   .brand { display: flex; align-items: center; gap: 10px; color: var(--fg-strong); flex-shrink: 0; }
   .brand:hover { color: var(--fg-strong); }
 
-  .links { display: flex; align-items: center; gap: 6px; flex: 1; margin-left: 28px; }
+  .links { display: flex; align-items: center; align-self: stretch; gap: 6px; flex: 1; margin-left: 28px; }
+  /* siblings step back while one entry is hovered or open */
+  .links .navlink { transition: color .2s ease, opacity .15s ease; }
+  .links:has(.navlink:hover, .group:hover, .group[data-open]) .navlink { opacity: .55; }
+  .links .navlink:hover, .links .group:hover > .trigger, .links .group[data-open] > .trigger { opacity: 1; }
   .right { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
 
   .navlink {
@@ -168,18 +192,21 @@ const isActive = (g: (typeof groups)[number]) => g.href === here || !!g.items?.s
   }
   .lang { padding: 0; }
 
-  /* dropdown */
-  .group { position: relative; }
-  .chev { display: inline-flex; transition: transform .15s; }
+  /* dropdown: full-width panel unrolls from the bar; the group spans the bar's height so the pointer never leaves it */
+  .group { display: flex; align-items: center; align-self: stretch; }
+  .chev { display: inline-flex; transition: transform .45s var(--ease-nav); }
   .group[data-open] .chev, .group:not([data-dismissed]):hover .chev { transform: rotate(180deg); }
   .pop {
-    position: absolute; left: 0; top: 100%; z-index: 40;
-    display: none; flex-direction: column; gap: 2px; min-width: 300px; padding: 8px;
-    background: var(--ink); border-color: var(--line);
+    position: absolute; left: 0; right: 0; top: 100%; z-index: 2;
+    background: var(--ink); border-bottom: 1px solid var(--line-soft);
+    visibility: hidden; clip-path: inset(0 0 100% 0);
+    transition: clip-path .45s var(--ease-nav), visibility 0s linear .45s;
   }
-  /* invisible bridge so the pointer can travel from trigger to panel */
-  .pop::before { content: ""; position: absolute; left: 0; right: 0; top: -10px; height: 10px; }
-  .group:not([data-dismissed]):hover > .pop, .group[data-open] > .pop { display: flex; }
+  .group:not([data-dismissed]):hover > .pop, .group[data-open] > .pop {
+    visibility: visible; clip-path: inset(0); transition: clip-path .45s var(--ease-nav);
+  }
+  .pop-in { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 2px; padding-top: 20px; padding-bottom: 28px; }
+  .group:not([data-dismissed]):hover .item, .group[data-open] .item { animation: vt-rise .5s var(--ease) both; animation-delay: calc(var(--i) * 45ms + .08s); }
   .item {
     display: flex; flex-direction: column; gap: 3px; padding: 12px 14px;
     border-left: 2px solid transparent; color: var(--fg-dim);
@@ -193,14 +220,18 @@ const isActive = (g: (typeof groups)[number]) => g.href === here || !!g.items?.s
   .item-d { font-size: 13px; line-height: 1.4; color: var(--fg-mute); }
 
   /* mobile drawer */
-  .menu { display: none; position: relative; }
+  .menu { display: none; }
   .menu > summary { list-style: none; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; cursor: pointer; }
   .menu > summary::-webkit-details-marker { display: none; }
+  /* full-height sheet under the bar, slides in from the right; groups rise in after it */
   .drawer {
-    position: absolute; right: 0; top: 50px; z-index: 40;
-    display: flex; flex-direction: column; width: min(300px, calc(100vw - 32px));
-    max-height: calc(100vh - 80px); overflow-y: auto; padding: 6px 0;
+    position: absolute; left: 0; right: 0; top: 100%; z-index: 2;
+    display: flex; flex-direction: column; height: calc(100dvh - 60px);
+    overflow-y: auto; padding: 6px 0 32px; background: var(--ink); border-top: 1px solid var(--line-soft);
+    transition: translate .45s var(--ease-nav);
   }
+  @starting-style { .menu[open] .drawer { translate: 100% 0; } }
+  .menu[open] .dgroup { animation: vt-rise .5s var(--ease) both; animation-delay: calc(var(--i, 0) * 60ms + .15s); }
   .dgroup { display: flex; flex-direction: column; padding: 8px 0; border-bottom: 1px solid var(--line-soft); }
   .dgroup:last-child { border-bottom: 0; }
   .dlabel {
@@ -219,6 +250,7 @@ const isActive = (g: (typeof groups)[number]) => g.href === here || !!g.items?.s
   .dgroup--foot .drawerlink:first-child { padding-left: 20px; }
 
   @media (max-width: 1100px) {
+    :global(html:has(.menu[open])) { overflow: hidden; }
     .inner { height: 60px; }
     .links, .lang { display: none; }
     .menu { display: block; }
@@ -227,5 +259,5 @@ const isActive = (g: (typeof groups)[number]) => g.href === here || !!g.items?.s
   @media (max-width: 520px) {
     .cta { display: none; }
   }
-  @media (prefers-reduced-motion: reduce) { .chev { transition: none; } }
+  @media (prefers-reduced-motion: reduce) { .chev, .bar, .pop, .drawer { transition: none; } }
 </style>

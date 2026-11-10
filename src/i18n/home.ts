@@ -13,7 +13,7 @@ export function home(lang: Lang) {
   return {
     hero: {
       plate: t("Infrastruttura LLM ibrida · per aziende e provider", "Hybrid LLM infrastructure · for companies and providers"),
-      title: [t("Cloud, neocloud e GPU in casa.", "Cloud, neocloud and on-prem GPUs."), t("Un endpoint, le tue regole.", "One endpoint, your rules.")] as [string, string],
+      title: [t("Cloud, neocloud e GPU in casa.", "Cloud, neocloud and on‑prem GPUs."), t("Un endpoint, le tue regole.", "One endpoint, your rules.")] as [string, string],
       lead: t(
         "Smetti di dipendere da un solo provider LLM estero. Con Ventic mixi il traffico di inferenza tra provider cloud, GPU dedicate in neocloud e macchine locali, le metti in produzione con un manifest e decidi con regole quale modello, e in quale quantizzazione, serve ogni richiesta.",
         "Stop depending on a single foreign LLM provider. With Ventic you mix inference traffic across cloud providers, dedicated neocloud GPUs and local machines, put them in production with a manifest, and decide with rules which model, in which quantization, serves each request.",
@@ -42,6 +42,8 @@ export function home(lang: Lang) {
         protocols: "OpenAI · Anthropic",
         active: t("Regola attiva", "Active rule"),
         split: t("ripartizione del traffico", "traffic split"),
+        log: t("Richieste in tempo reale", "Live requests"),
+        req: t("richieste", "requests"),
       },
       targets: [
         { key: "cloud" as TargetKey, name: t("Provider cloud", "Cloud provider"), sub: t("API · chiave tua", "API · your key"), foot: t("pagamento a token · solo quando serve", "pay per token · only when needed"),

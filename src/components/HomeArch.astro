@@ -16,7 +16,7 @@ const toneColor: Record<string, string> = { accent: "var(--accent)", mid: "var(-
       <p class="shead-lead">{c.lead}</p>
     </div>
 
-    <div class="diagram" role="img" aria-label={`${c.clients.label} → ${c.platform.label} ← ${c.nodes.label}`}>
+    <div class="diagram" data-stagger role="img" aria-label={`${c.clients.label} → ${c.platform.label} ← ${c.nodes.label}`}>
       <div class="col">
         <span class="mono lbl">{c.clients.label}</span>
         {c.clients.items.map((s) => <div class="box">{s}</div>)}

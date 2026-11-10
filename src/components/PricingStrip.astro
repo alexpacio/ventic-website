@@ -15,7 +15,7 @@ const href = lang === "it" ? "/pricing/" : "/en/pricing/";
       <p class="shead-lead">{c.lead}</p>
     </div>
 
-    <div class="cards">
+    <div class="cards" data-stagger>
       {c.cards.map((card, i) => (
         <article class:list={["card", "vt-card", { "card--warm": card.warm && i === 1 }]}>
           <span class="mono tag">{card.tag}</span>

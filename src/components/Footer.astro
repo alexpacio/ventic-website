@@ -5,39 +5,54 @@ import { content, type Lang } from "../i18n/content";
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const c = content[lang].footer;
+// links order: console, demo, pricing, contact, terms, privacy, cookie
+const product = c.links.slice(0, 3);
+const contact = c.links.slice(3, 4);
+const legal = c.links.slice(4);
 ---
 <footer class="foot on-dark">
-  <div class="wrap inner">
-    <div class="left">
-      <Wordmark height={16} />
-      <span class="mono meta">{c.legal}</span>
+  <div class="wrap top">
+    <div class="brand">
+      <Wordmark height={20} />
+      <span class="tag">{c.region}</span>
     </div>
-    <div class="right">
-      <span class="mono meta">{c.region}</span>
-      <ObfuscatedEmail lang={lang} class="mono link" />
-      {c.links.map((l) => <a class="mono link" href={l.href}>{l.label}</a>)}
-    </div>
+    <nav class="cols" aria-label="Footer">
+      <div class="col">
+        <span class="mono lbl">{c.cols[0]}</span>
+        {product.map((l) => <a class="link" href={l.href}>{l.label}</a>)}
+      </div>
+      <div class="col">
+        <span class="mono lbl">{c.cols[1]}</span>
+        {contact.map((l) => <a class="link" href={l.href}>{l.label}</a>)}
+        <ObfuscatedEmail lang={lang} class="link" />
+      </div>
+      <div class="col">
+        <span class="mono lbl">{c.cols[2]}</span>
+        {legal.map((l) => <a class="link" href={l.href}>{l.label}</a>)}
+      </div>
+    </nav>
   </div>
-  {(c as any).disclaimer && (
-    <div class="wrap disclaimer">
-      <span class="mono meta disclaimer-text">{(c as any).disclaimer}</span>
-    </div>
-  )}
+  <div class="wrap bottom">
+    <span class="meta">{c.legal}</span>
+    {c.disclaimer && <span class="meta disclaimer">{c.disclaimer}</span>}
+  </div>
 </footer>
 
 <style>
   .foot { background: var(--ink); border-top: 1px solid var(--line-soft); }
-  .inner {
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 20px; padding-top: 40px; padding-bottom: 40px;
-  }
-  .left, .right { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
-  .meta { font-size: 12px; letter-spacing: .04em; color: var(--fg-mute); }
-  .link { font-size: 12px; letter-spacing: .04em; color: var(--fg-dim); }
-  .link:hover { color: var(--fg-strong); }
-  .disclaimer { padding-top: 0; padding-bottom: 18px; }
-  .disclaimer-text { display: block; font-size: 11px; line-height: 1.6; letter-spacing: .02em; color: var(--fg-mute); max-width: 90ch; }
-  @media (max-width: 900px) {
-    .inner { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px 64px; padding-top: 56px; padding-bottom: 48px; }
+  .brand { display: flex; flex-direction: column; gap: 14px; color: var(--fg-strong); }
+  .tag { font-size: 14px; color: var(--fg-mid); }
+  .cols { display: grid; grid-template-columns: repeat(3, minmax(140px, auto)); gap: 32px 64px; }
+  .col { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+  .lbl { margin-bottom: 4px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-faint); }
+  .foot :global(.link) { font-family: var(--sans); font-size: 14px; line-height: 1.4; letter-spacing: 0; color: var(--fg-dim); background: none; border: 0; padding: 0; cursor: pointer; text-align: left; }
+  .foot :global(.link:hover) { color: var(--fg-strong); }
+  .bottom { display: flex; flex-direction: column; gap: 8px; padding-top: 24px; padding-bottom: 96px; /* clears the fixed chat launcher */ border-top: 1px solid var(--line-soft); }
+  .meta { font-size: 12px; line-height: 1.6; color: var(--fg-mute); }
+  .disclaimer { font-size: 11px; color: var(--fg-faint); max-width: 100ch; }
+  @media (max-width: 640px) {
+    .top { padding-top: 40px; padding-bottom: 32px; }
+    .cols { grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; gap: 28px 24px; }
   }
 </style>

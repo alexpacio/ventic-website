@@ -15,7 +15,7 @@ const tones = ["var(--accent)", "#161616", "var(--jade)"];
       <p class="lead">{c.lead}</p>
       <a class="arrowlink" href={href}>{c.link} <span class="arr" aria-hidden="true">→</span></a>
     </div>
-    <ol class="steps">
+    <ol class="steps" data-stagger>
       {c.items.map((s, i) => (
         <li class="step">
           <div class="step-head">

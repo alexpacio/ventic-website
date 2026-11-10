@@ -69,29 +69,29 @@ export default function GlobalTrustCaptcha({ sitekey, lang = "it" }: Props) {
       {!verified ? (
         <>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
-            <span style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: 11, color: "#525252", letterSpacing: ".04em" }}>
+            <span style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 11, color: "#525252", letterSpacing: ".04em" }}>
               {lang === "it" ? "Protezione anti-spam" : "Anti-spam protection"}
             </span>
-            <span style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: 9, color: "#6f6f6f", letterSpacing: ".08em" }}>
+            <span style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 9, color: "#6f6f6f", letterSpacing: ".08em" }}>
               TrustCaptcha
             </span>
           </div>
           <TrustcaptchaComponent
             sitekey={sitekey}
             language={lang}
-            theme="dark"
+            theme="light"
             onCaptchaSolved={handleSolved as any}
             onCaptchaFailed={handleFailed as any}
             onCaptchaExpired={handleExpired as any}
           />
           {error && (
-            <span style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: 10, color: "#c4361a" }}>{error}</span>
+            <span style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 10, color: "#c4361a" }}>{error}</span>
           )}
         </>
       ) : (
         <span
           style={{
-            fontFamily: '"IBM Plex Mono", monospace',
+            fontFamily: '"IBM Plex Sans", sans-serif',
             fontSize: 11,
             color: "#0b6b5e",
             display: "inline-flex",

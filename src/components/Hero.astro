@@ -9,7 +9,10 @@ const c = content[lang].hero;
 const h = home(lang).hero;
 const first = h.scenarios[0];
 const data = JSON.stringify(h.scenarios.map((s) => ({ rule: s.rule, pct: s.pct, active: s.active })));
-const packetCount = (p: number) => (p >= 50 ? 3 : p >= 25 ? 2 : p > 0 ? 1 : 0);
+const models = JSON.stringify(h.targets.map((tg) => Object.fromEntries(tg.models.map((m) => [m.id, m.name]))));
+// illustrative running totals so the counters don't start at zero
+const seed = [1284, 5310, 3902];
+const srcIds = ["agent", "app", "chat"];
 ---
 <section class="hero">
   <div class="wrap top">
@@ -28,7 +31,7 @@ const packetCount = (p: number) => (p >= 50 ? 3 : p >= 25 ? 2 : p > 0 ? 1 : 0);
   </div>
 
   <div class="wrap">
-    <div class="board lattice" data-router data-scenarios={data}>
+    <div class="board lattice" data-router data-scenarios={data} data-models={models} data-lang={lang}>
       <div class="board-head">
         <div class="seg" role="group" aria-label={h.compareLabel}>
           <button type="button" class="seg--bad" data-mode="today" aria-pressed="false">{h.tabs.today}</button>
@@ -57,8 +60,8 @@ const packetCount = (p: number) => (p >= 50 ? 3 : p >= 25 ? 2 : p > 0 ? 1 : 0);
         <div class="foreign">
           <div class="foreign-head"><span class="foreign-title">{h.today.title}</span><span class="mono badge">{h.today.badge}</span></div>
           <div class="issues">
-            {h.today.issues.map(([title, body]) => (
-              <div class="issue"><span class="sq" aria-hidden="true"></span><span><strong>{title}</strong><br /><span class="issue-b">{body}</span></span></div>
+            {h.today.issues.map(([title, body], k) => (
+              <div class="issue" style={`--k:${k}`}><span class="sq" aria-hidden="true"></span><span><strong>{title}</strong><br /><span class="issue-b">{body}</span></span></div>
             ))}
           </div>
           <button type="button" class="btn btn--a btn--sm" data-mode="ventic">{h.today.cta} <span class="arr" aria-hidden="true">→</span></button>
@@ -67,20 +70,22 @@ const packetCount = (p: number) => (p >= 50 ? 3 : p >= 25 ? 2 : p > 0 ? 1 : 0);
 
       <!-- ventic: rules split traffic across targets -->
       <div class="view ventic" data-view="ventic">
+        <svg class="wires" aria-hidden="true" data-wires><g data-win></g><g data-wout></g><g data-packets></g></svg>
         <div class="sources">
           <span class="mono lbl">{h.sources.label}</span>
-          {h.sources.items.map((s) => <div class="src">{s}</div>)}
+          {h.sources.items.map((s, i) => <div class="src" data-src={i} data-sid={srcIds[i]}><span class="src-led" aria-hidden="true"></span>{s}</div>)}
         </div>
-        <div class="conn conn--in" aria-hidden="true">
-          <span class="track"><span class="vt-dash"></span><span class="vt-run" style="animation-duration:1.4s"></span></span>
-        </div>
-        <div class="router vt-breathe on-dark">
-          <div class="router-brand"><Wordmark /></div>
-          <div class="mono endpoint">{h.router.endpoint}<br /><span>{h.router.protocols}</span></div>
+        <div class="router vt-breathe on-dark" data-hub>
+          <div class="router-brand"><Wordmark /><span class="live" aria-hidden="true"><span class="live-dot"></span>live</span></div>
+          <div class="mono endpoint" data-endpoint>{h.router.endpoint}<br /><span>{h.router.protocols}</span></div>
           <span class="mono active-lbl">{h.router.active} · <span data-rule-name>{first.key}</span></span>
           <dl class="rule" data-rule>
             {first.rule.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
           </dl>
+          <div class="logwrap" aria-hidden="true">
+            <span class="mono log-lbl">{h.router.log}</span>
+            <ol class="log" data-log></ol>
+          </div>
           <div class="split" aria-hidden="true">
             {h.targets.map((tg, i) => <span class={`seg-${tg.key}`} data-seg={i} style={`width:${first.pct[i]}%`}></span>)}
           </div>
@@ -88,24 +93,17 @@ const packetCount = (p: number) => (p >= 50 ? 3 : p >= 25 ? 2 : p > 0 ? 1 : 0);
         </div>
         <div class="targets">
           {h.targets.map((tg, i) => (
-            <div class={`trow t-${tg.key}`} data-target={i} data-off={first.pct[i] === 0 ? "" : undefined}>
-              <div class="conn conn--out" aria-hidden="true">
-                <span class="mono pct" data-pct>{first.pct[i]}%</span>
-                <span class="track"><span class="vt-dash"></span>
-                  {[0, 1, 2].map((k) => (
-                    <span class="vt-run" data-packet={k} hidden={k >= packetCount(first.pct[i])} style={`animation-delay:${(k * 0.7 + i * 0.3).toFixed(2)}s`}></span>
-                  ))}
-                </span>
+            <div class={`tcard t-${tg.key}`} data-target={i} data-off={first.pct[i] === 0 ? "" : undefined}>
+              <div class="tcard-head">
+                <span class="tname"><span class="sq" aria-hidden="true"></span>{tg.name}<span class="mono tsub">{tg.sub}</span></span>
+                <span class="tpct" data-pct>{first.pct[i]}%</span>
               </div>
-              <div class="tcard">
-                <div class="tcard-head"><span class="tname"><span class="sq" aria-hidden="true"></span>{tg.name}<span class="mono pct-m" data-pct>{first.pct[i]}%</span></span><span class="mono tsub">{tg.sub}</span></div>
-                <ul class="models">
-                  {tg.models.map((m) => (
-                    <li data-model={m.id} class={first.active[i] === m.id ? "is-active" : undefined}><span class="mono">{m.name}</span><span class="mono qtag">{m.q}</span></li>
-                  ))}
-                </ul>
-                <span class="mono tfoot">{tg.foot}</span>
-              </div>
+              <ul class="models">
+                {tg.models.map((m) => (
+                  <li data-model={m.id} class={first.active[i] === m.id ? "is-active" : undefined}><span class="mono">{m.name}</span><span class="mono qtag">{m.q}</span></li>
+                ))}
+              </ul>
+              <div class="tfoot"><span class="mono">{tg.foot}</span><span class="mono tcount"><b data-count>{seed[i].toLocaleString(lang)}</b> {h.router.req}</span></div>
             </div>
           ))}
           <div class="add"><span>{h.add}</span><code class="mono">{h.addCmd}</code></div>
@@ -124,7 +122,144 @@ const packetCount = (p: number) => (p >= 50 ? 3 : p >= 25 ? 2 : p > 0 ? 1 : 0);
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let cur = 0, manual = reduce, mode = "ventic", visible = true, timer: number | undefined;
 
-    const packets = (p: number) => (p >= 50 ? 3 : p >= 25 ? 2 : p > 0 ? 1 : 0);
+    /* ── live traffic: SVG wires from real card positions, packets travel source → hub → target ── */
+    const SVGNS = "http://www.w3.org/2000/svg";
+    const view = root.querySelector<HTMLElement>('[data-view="ventic"]')!;
+    const svg = root.querySelector<SVGSVGElement>("[data-wires]")!;
+    const gIn = svg.querySelector("[data-win]")!, gOut = svg.querySelector("[data-wout]")!, gPk = svg.querySelector("[data-packets]")!;
+    const srcEls = Array.from(root.querySelectorAll<HTMLElement>("[data-src]"));
+    const tgtEls = Array.from(root.querySelectorAll<HTMLElement>("[data-target]"));
+    const hub = root.querySelector<HTMLElement>("[data-hub]")!;
+    const endpoint = root.querySelector<HTMLElement>("[data-endpoint]")!;
+    const log = root.querySelector<HTMLOListElement>("[data-log]")!;
+    const modelNames = JSON.parse(root.dataset.models || "[]") as Record<string, string>[];
+    const fmt = new Intl.NumberFormat(root.dataset.lang || "it");
+    const counts = tgtEls.map((t) => Number((t.querySelector("[data-count]")?.textContent || "0").replace(/\D/g, "")));
+    const colors = tgtEls.map((t) => getComputedStyle(t).getPropertyValue("--tc").trim() || "#2347e8");
+    const latency = [[380, 920], [110, 260], [60, 190]];
+    let inPaths: SVGPathElement[] = [], outPaths: SVGPathElement[] = [], outFlow: SVGPathElement[] = [], drawn = false;
+
+    const curve = (x1: number, y1: number, x2: number, y2: number) => {
+      const dx = (x2 - x1) * 0.5;
+      return `M${x1},${y1} C${x1 + dx},${y1} ${x2 - dx},${y2} ${x2},${y2}`;
+    };
+    const mkPath = (g: Element, d: string, cls: string, color?: string) => {
+      const p = document.createElementNS(SVGNS, "path");
+      p.setAttribute("d", d); p.setAttribute("class", cls);
+      if (color) p.style.stroke = color;
+      g.appendChild(p); return p;
+    };
+    const layout = () => {
+      drawn = getComputedStyle(svg).display !== "none" && !view.hidden;
+      gIn.replaceChildren(); gOut.replaceChildren();
+      inPaths = []; outPaths = []; outFlow = [];
+      if (!drawn) return;
+      const v = view.getBoundingClientRect();
+      svg.setAttribute("width", String(v.width)); svg.setAttribute("height", String(v.height));
+      const h = hub.getBoundingClientRect();
+      const hy = h.top + h.height / 2 - v.top;
+      srcEls.forEach((s, i) => {
+        const r = s.getBoundingClientRect();
+        const d = curve(r.right - v.left, r.top + r.height / 2 - v.top, h.left - v.left, hy + (i - 1) * 10);
+        mkPath(gIn, d, "wire");
+        inPaths.push(mkPath(gIn, d, "wire wire--flow"));
+      });
+      tgtEls.forEach((t, i) => {
+        const r = t.getBoundingClientRect();
+        const d = curve(h.right - v.left, hy + (i - 1) * 10, r.left - v.left, r.top + 30 - v.top);
+        outPaths.push(mkPath(gOut, d, "wire", colors[i]));
+        outFlow.push(mkPath(gOut, d, "wire wire--flow", colors[i]));
+      });
+      paintWires();
+    };
+    const paintWires = () => {
+      const pct = scen[cur].pct;
+      // base wire thickness = traffic share; thin dashes on top show the flow
+      outPaths.forEach((p, i) => { p.style.strokeWidth = String(pct[i] ? 2 + pct[i] / 6 : 1.5); p.style.opacity = pct[i] ? ".22" : ".15"; });
+      outFlow.forEach((p, i) => { p.style.opacity = pct[i] ? "1" : "0"; });
+    };
+
+    const flash = (el: Element | null | undefined, frames: Keyframe[], ms = 600) => el?.animate(frames, { duration: ms, easing: "cubic-bezier(.2,.7,.2,1)" });
+    const pick = (w: number[]) => { let r = Math.random() * w.reduce((a, b) => a + b, 0); for (let i = 0; i < w.length; i++) { r -= w[i]; if (r < 0) return i; } return w.length - 1; };
+    const addLog = (src: number, tgt: number, model: string, ms: number) => {
+      const li = document.createElement("li");
+      const sq = document.createElement("span"); sq.className = "lsq"; sq.style.background = colors[tgt];
+      const s = document.createElement("span"); s.className = "ls"; s.textContent = srcEls[src].dataset.sid || "";
+      const m = document.createElement("span"); m.className = "lm"; m.textContent = "→ " + model;
+      const t = document.createElement("span"); t.className = "lt"; t.textContent = ms + "ms";
+      li.append(sq, s, m, t);
+      log.prepend(li);
+      while (log.children.length > 8) log.lastElementChild?.remove();
+    };
+
+    type Packet = { src: number; tgt: number; model: string; phase: 0 | 1; t: number; el: SVGRectElement };
+    const live: Packet[] = [];
+    const IN_MS = 750, OUT_MS = 950;
+    const spawn = () => {
+      const s = scen[cur];
+      const tgt = pick(s.pct);
+      const id = s.active[tgt];
+      if (!s.pct[tgt] || !id) return;
+      const src = Math.floor(Math.random() * srcEls.length);
+      const el = document.createElementNS(SVGNS, "rect");
+      el.setAttribute("width", "8"); el.setAttribute("height", "8"); el.setAttribute("class", "pk");
+      gPk.appendChild(el);
+      live.push({ src, tgt, model: modelNames[tgt]?.[id] || id, phase: 0, t: 0, el });
+      flash(srcEls[src].querySelector(".src-led"), [{ background: "#2347e8", transform: "scale(1.8)" }, { background: "var(--line)", transform: "none" }], 500);
+      flash(srcEls[src], [{ borderColor: "#161616" }, { borderColor: "var(--line-soft)" }], 500);
+    };
+    const arrive = (p: Packet) => {
+      const card = tgtEls[p.tgt];
+      counts[p.tgt]++;
+      const c = card.querySelector("[data-count]"); if (c) c.textContent = fmt.format(counts[p.tgt]);
+      flash(card, [{ boxShadow: `0 0 0 3px color-mix(in srgb, ${colors[p.tgt]} 35%, transparent)` }, { boxShadow: "0 0 0 0 transparent" }], 700);
+      flash(card.querySelector("li.is-active"), [{ background: `color-mix(in srgb, ${colors[p.tgt]} 22%, transparent)` }, { background: "var(--deck)" }], 700);
+    };
+    const ease = (x: number) => (x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2);
+    const place = (p: Packet) => {
+      const path = p.phase === 0 ? inPaths[p.src] : outPaths[p.tgt];
+      if (!drawn || !path) { p.el.style.display = "none"; return; }
+      const len = path.getTotalLength();
+      const pt = path.getPointAtLength(ease(p.t) * len);
+      p.el.style.display = "";
+      p.el.setAttribute("x", String(pt.x - 4)); p.el.setAttribute("y", String(pt.y - 4));
+      p.el.style.fill = p.phase === 0 ? "#161616" : colors[p.tgt];
+      p.el.style.color = p.phase === 0 ? "#2347e8" : colors[p.tgt];
+    };
+
+    let last = 0, nextSpawn = 0, raf = 0;
+    const running = () => visible && mode === "ventic" && !document.hidden && !reduce;
+    const frame = (now: number) => {
+      raf = 0;
+      if (!running()) { last = 0; return; }
+      const dt = last ? Math.min(now - last, 50) : 16;
+      last = now;
+      nextSpawn -= dt;
+      if (nextSpawn <= 0) { spawn(); nextSpawn = 260 + Math.random() * 380; }
+      for (let i = live.length - 1; i >= 0; i--) {
+        const p = live[i];
+        p.t += dt / (p.phase === 0 ? IN_MS : OUT_MS);
+        if (p.t >= 1) {
+          if (p.phase === 0) {
+            p.phase = 1; p.t = 0;
+            flash(endpoint, [{ background: "#2347e8", color: "#fff" }, { background: "#262626", color: "#c6c6c6" }], 450);
+            const [lo, hi] = latency[p.tgt] || [100, 300];
+            addLog(p.src, p.tgt, p.model, Math.round(lo + Math.random() * (hi - lo)));
+          } else { arrive(p); p.el.remove(); live.splice(i, 1); continue; }
+        }
+        place(p);
+      }
+      raf = requestAnimationFrame(frame);
+    };
+    const kick = () => { if (!raf && running()) raf = requestAnimationFrame(frame); };
+
+    // seed the log so it is never empty (also the static state under reduced motion)
+    for (let k = 0; k < 6; k++) {
+      const s = scen[0], tgt = pick(s.pct), id = s.active[tgt];
+      if (id) { const [lo, hi] = latency[tgt]; addLog(k % srcEls.length, tgt, modelNames[tgt]?.[id] || id, Math.round(lo + Math.random() * (hi - lo))); }
+    }
+    new ResizeObserver(() => layout()).observe(view);
+    document.addEventListener("visibilitychange", kick);
 
     const restartTimerBar = () => {
       root.querySelectorAll<HTMLElement>("[data-scen] .timer").forEach((el, i) => {
@@ -151,14 +286,13 @@ const packetCount = (p: number) => (p >= 50 ? 3 : p >= 25 ? 2 : p > 0 ? 1 : 0);
         rule.classList.remove("swap"); void (rule as HTMLElement).offsetWidth; rule.classList.add("swap");
       }
       root.querySelectorAll<HTMLElement>("[data-seg]").forEach((el, k) => { el.style.width = s.pct[k] + "%"; });
-      root.querySelectorAll<HTMLElement>("[data-target]").forEach((row, k) => {
+      tgtEls.forEach((row, k) => {
         const p = s.pct[k];
         row.toggleAttribute("data-off", p === 0);
         row.querySelectorAll("[data-pct]").forEach((el) => { el.textContent = p + "%"; });
-        const n = packets(p);
-        row.querySelectorAll<HTMLElement>("[data-packet]").forEach((el, j) => { el.hidden = j >= n; });
         row.querySelectorAll<HTMLElement>("[data-model]").forEach((m) => m.classList.toggle("is-active", m.dataset.model === s.active[k]));
       });
+      paintWires();
       restartTimerBar();
     };
 
@@ -168,6 +302,7 @@ const packetCount = (p: number) => (p >= 50 ? 3 : p >= 25 ? 2 : p > 0 ? 1 : 0);
       root.querySelectorAll<HTMLElement>("[data-view]").forEach((v) => { v.hidden = v.dataset.view !== m; });
       root.querySelectorAll<HTMLElement>("[data-only]").forEach((v) => { v.hidden = v.dataset.only !== m; });
       restartTimerBar();
+      kick();
     };
 
     root.querySelectorAll<HTMLButtonElement>("[data-mode]").forEach((b) => b.addEventListener("click", () => setMode(b.dataset.mode || "ventic")));
@@ -178,6 +313,7 @@ const packetCount = (p: number) => (p >= 50 ? 3 : p >= 25 ? 2 : p > 0 ? 1 : 0);
     new IntersectionObserver((entries) => {
       visible = entries[0]?.isIntersecting ?? true;
       root.classList.toggle("paused", !visible);
+      kick();
     }).observe(root);
     restartTimerBar();
     void timer;
@@ -185,13 +321,17 @@ const packetCount = (p: number) => (p >= 50 ? 3 : p >= 25 ? 2 : p > 0 ? 1 : 0);
 </script>
 
 <style>
-  .hero { border-bottom: 1px solid var(--line-soft); padding-bottom: 80px; }
+  .hero { position: relative; isolation: isolate; overflow: hidden; border-bottom: 1px solid var(--line-soft); padding-bottom: 80px; }
+  .hero::before { content: ""; position: absolute; inset: -20% -10% auto; height: 80%; z-index: -1; pointer-events: none;
+    background: radial-gradient(40% 50% at 20% 30%, rgba(35,71,232,.14), transparent 70%), radial-gradient(35% 45% at 80% 20%, rgba(245,168,63,.16), transparent 70%), radial-gradient(30% 40% at 55% 70%, rgba(14,159,142,.10), transparent 70%);
+    animation: vt-aurora 18s ease-in-out infinite alternate; }
+  .copy :global(.hl) { background: linear-gradient(100deg, var(--accent) 20%, #6a4dff 45%, #3b8bff 60%, var(--accent) 85%); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: vt-rise .9s var(--ease) .14s both, vt-sheen 8s linear 1s infinite; }
   .top { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 32px 64px; padding-top: 80px; padding-bottom: 40px; }
   .copy { flex: 1 1 600px; min-width: 0; display: flex; flex-direction: column; gap: 24px; }
   .side { flex: 1 1 400px; min-width: 0; display: flex; flex-direction: column; gap: 24px; }
   .lead { font-size: 18px; }
   .actions { display: flex; flex-wrap: wrap; gap: 2px; }
-  .actions .btn { min-width: 220px; }
+  .actions .btn { flex: 1 1 auto; }
   .start { font-size: 14px; line-height: 1.6; color: var(--fg-mid); }
   :global(.link-inline) { color: var(--accent) !important; text-underline-offset: 3px; }
   :global(.link-inline:hover) { text-decoration: underline; }
@@ -213,8 +353,6 @@ const packetCount = (p: number) => (p >= 50 ? 3 : p >= 25 ? 2 : p > 0 ? 1 : 0);
   .src { background: var(--ink); border: 1px solid var(--line-soft); padding: 12px 14px; font-size: 14px; }
 
   .conn { display: flex; flex-direction: column; justify-content: center; gap: 6px; padding: 0 10px; transition: opacity .4s ease, color .4s ease; }
-  .conn--in { flex: 0 1 72px; min-width: 40px; color: var(--fg-strong); }
-  .conn--in .vt-run { background: var(--fg-strong); }
   .conn--bad { flex: 1 1 120px; min-width: 80px; color: var(--red); }
   .conn--bad .vt-run { background: var(--red); }
   .conn-lbl { font-size: 11px; text-align: center; }
@@ -228,15 +366,34 @@ const packetCount = (p: number) => (p >= 50 ? 3 : p >= 25 ? 2 : p > 0 ? 1 : 0);
   .foreign-title { font-size: 22px; font-weight: 300; letter-spacing: -.02em; color: var(--fg-strong); }
   .badge { font-size: 11px; color: #a8341c; text-transform: uppercase; letter-spacing: .06em; }
   .issues { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2px; background: var(--deck); }
-  .issue { background: var(--ink); padding: 16px; display: flex; gap: 12px; font-size: 14px; }
+  .issue { background: var(--ink); padding: 16px; display: flex; gap: 12px; font-size: 14px; box-shadow: inset 3px 0 0 transparent;
+    animation: vt-rise .6s var(--ease) calc(var(--k) * 90ms) both, vt-issue 6s ease-in-out calc(var(--k) * 1.5s + .8s) infinite; }
+  .issue .sq { animation: vt-issueSq 6s ease-in-out calc(var(--k) * 1.5s + .8s) infinite; }
+  @keyframes vt-issue { 0%, 26%, 100% { background: var(--ink); box-shadow: inset 3px 0 0 transparent; } 6%, 18% { background: #fdeeea; box-shadow: inset 3px 0 0 var(--red); } }
+  @keyframes vt-issueSq { 0%, 26%, 100% { transform: none; } 8% { transform: scale(1.5) rotate(45deg); } }
+  .board.paused .issue, .board.paused .issue .sq { animation-play-state: paused; }
   .issue strong { font-weight: 500; color: var(--fg-strong); }
   .issue-b { color: var(--fg-mid); }
   .issue .sq { flex: none; width: 10px; height: 10px; margin-top: 7px; background: var(--red); }
   .foreign .btn { align-self: flex-start; }
 
+  /* ventic view: grid with SVG wires drawn in the gutters */
+  .ventic { position: relative; display: grid; grid-template-columns: minmax(150px, 190px) minmax(250px, 290px) minmax(0, 1fr); column-gap: clamp(64px, 8vw, 120px); align-items: center; }
+  .ventic > :not(.wires) { position: relative; z-index: 1; }
+  .wires { position: absolute; left: 0; top: 0; z-index: 0; overflow: visible; pointer-events: none; }
+  .wires :global(.wire) { fill: none; stroke: #161616; stroke-width: 1.5; opacity: .25; transition: stroke-width .6s var(--ease), opacity .6s ease; }
+  .wires :global(.wire--flow) { opacity: 1; stroke-dasharray: 2 7; stroke-linecap: square; animation: vt-wire .9s linear infinite; }
+  .wires :global(.pk) { filter: drop-shadow(0 0 5px currentColor); }
+  .board.paused .wires :global(.wire--flow) { animation-play-state: paused; }
+  .ventic .sources { justify-content: center; }
+  .src { position: relative; display: flex; align-items: center; gap: 10px; transition: border-color .3s ease; }
+  .src-led { width: 6px; height: 6px; flex: none; background: var(--line); }
+
   /* router */
-  .router { flex: 0 1 290px; min-width: 240px; background: #161616; color: #f4f4f4; padding: 24px; display: flex; flex-direction: column; gap: 16px; }
-  .router-brand { color: #fff; }
+  .router { align-self: stretch; min-width: 0; background: #161616; color: #f4f4f4; padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+  .router-brand { color: #fff; display: flex; justify-content: space-between; align-items: center; }
+  .live { display: inline-flex; align-items: center; gap: 6px; font-family: var(--code); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: #6fdc8c; }
+  .live-dot { width: 6px; height: 6px; border-radius: 50%; background: #42be65; animation: vt-wave 1.4s ease-in-out infinite; }
   .endpoint { background: #262626; padding: 10px 12px; font-size: 12px; color: #c6c6c6; }
   .endpoint span { color: #8d8d8d; }
   .active-lbl { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-mid); }
@@ -247,7 +404,19 @@ const packetCount = (p: number) => (p >= 50 ? 3 : p >= 25 ? 2 : p > 0 ? 1 : 0);
   .rule.swap :global(div) { animation: vt-rise .5s var(--ease) both; }
   .rule.swap :global(div:nth-child(2)) { animation-delay: .06s; }
   .rule.swap :global(div:nth-child(3)) { animation-delay: .12s; }
-  .split { display: flex; height: 8px; margin-top: auto; background: #262626; }
+  .logwrap { flex: 1 1 auto; min-height: 150px; display: flex; flex-direction: column; gap: 8px; overflow: hidden; }
+  .log-lbl { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #8d8d8d; }
+  .log { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; font-family: var(--code); font-size: 11px; line-height: 1.5;
+    -webkit-mask-image: linear-gradient(#000 55%, transparent); mask-image: linear-gradient(#000 55%, transparent); }
+  .log :global(li) { display: grid; grid-template-columns: 6px 40px minmax(0, 1fr) auto; align-items: center; gap: 8px; padding: 2px 0; color: #c6c6c6; animation: vt-logIn .45s var(--ease) both; }
+  .log :global(li:first-child) { color: #fff; }
+  .log :global(.lsq) { width: 6px; height: 6px; }
+  .log :global(.ls) { color: #8d8d8d; }
+  .log :global(.lm) { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .log :global(.lt) { color: #8d8d8d; font-variant-numeric: tabular-nums; }
+  @keyframes vt-logIn { from { opacity: 0; transform: translateY(-8px); background: rgba(35,71,232,.35); } to { opacity: 1; transform: none; background: transparent; } }
+  @keyframes vt-wire { to { stroke-dashoffset: -18; } }
+  .split { display: flex; height: 8px; background: #262626; }
   .split span { display: block; height: 8px; transition: width .6s var(--ease); }
   .seg-cloud { background: var(--amber); }
   .seg-neocloud { background: var(--accent); }
@@ -255,47 +424,43 @@ const packetCount = (p: number) => (p >= 50 ? 3 : p >= 25 ? 2 : p > 0 ? 1 : 0);
   .split-lbl { font-size: 11px; color: #8d8d8d; }
 
   /* targets */
-  .targets { flex: 1 1 480px; min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 10px; }
-  .trow { display: flex; align-items: center; --tc: var(--accent); --tbg: var(--accent-soft); --tfg: var(--accent); }
+  .targets { min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 12px; }
+  .tcard { --tc: var(--accent); --tbg: var(--accent-soft); --tfg: var(--accent); }
   .t-cloud { --tc: var(--amber); --tbg: var(--amber-soft); --tfg: var(--amber-ink); }
   .t-local { --tc: var(--jade); --tbg: var(--jade-soft); --tfg: var(--jade-ink); }
-  .conn--out { flex: 0 0 110px; color: var(--tc); }
-  .conn--out .vt-run { background: var(--tc); }
-  .pct { font-size: 13px; font-weight: 500; text-align: center; color: var(--fg-strong); }
-  .tcard { flex: 1 1 auto; min-width: 0; background: var(--ink); border: 1px solid var(--line-soft); border-left: 4px solid var(--tc); padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; transition: opacity .4s ease; }
-  .trow[data-off] .tcard, .trow[data-off] .conn--out { opacity: .45; }
-  .tcard-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
-  .tname { display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 15px; color: var(--fg-strong); }
-  .tname .sq { width: 10px; height: 10px; background: var(--tc); }
-  .pct-m { display: none; margin-left: 4px; font-size: 12px; color: var(--fg-mid); }
-  .tsub, .tfoot { font-size: 11px; color: var(--fg-mid); }
+  .tcard { min-width: 0; background: var(--ink); border: 1px solid var(--line-soft); border-left: 4px solid var(--tc); padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; transition: opacity .4s ease; }
+  .tcard[data-off] { opacity: .45; }
+  .tcard-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .tname { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; font-weight: 500; font-size: 15px; color: var(--fg-strong); min-width: 0; }
+  .tname .sq { width: 10px; height: 10px; background: var(--tc); align-self: center; }
+  .tpct { font-size: 24px; font-weight: 300; letter-spacing: -.02em; line-height: 1; color: var(--fg-strong); font-variant-numeric: tabular-nums; }
+  .tsub { font-size: 11px; font-weight: 400; color: var(--fg-mid); }
+  .tfoot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 4px 12px; font-size: 11px; color: var(--fg-mid); }
+  .tcount { white-space: nowrap; }
+  .tcount b { font-weight: 500; color: var(--fg-strong); font-variant-numeric: tabular-nums; }
   .models { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
   .models li { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 6px 8px; font-size: 12.5px; color: var(--fg-faint); box-shadow: inset 2px 0 0 transparent; transition: background-color .3s ease, color .3s ease, box-shadow .3s ease; }
   .models li.is-active { background: var(--deck); color: var(--fg-strong); box-shadow: inset 2px 0 0 var(--tc); }
   .qtag { font-size: 10.5px; padding: 2px 6px; background: var(--tbg); color: var(--tfg); white-space: nowrap; }
-  .add { margin-left: 110px; border: 1px dashed #8d8d8d; padding: 12px 16px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; font-size: 14px; color: var(--fg-dim); }
+  .add { border: 1px dashed #8d8d8d; background: var(--ink); padding: 12px 16px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; font-size: 14px; color: var(--fg-dim); }
   .add code { font-size: 12px; background: #161616; color: #f4f4f4; padding: 6px 10px; }
   .note { padding: 0 32px 20px; font-size: 11px; color: var(--fg-faint); }
 
   @media (max-width: 1080px) {
-    .router { flex-basis: 100%; }
-    .conn--in { flex-basis: 100%; min-height: 32px; }
-    .sources { flex-basis: 100%; flex-direction: row; flex-wrap: wrap; }
+    .ventic { grid-template-columns: minmax(0, 1fr); row-gap: 16px; }
+    .wires { display: none; }
+    .sources, .ventic .sources { flex-basis: 100%; flex-direction: row; flex-wrap: wrap; justify-content: flex-start; }
+    .conn--bad { flex-basis: 100%; min-height: 40px; }
     .sources .lbl { flex-basis: 100%; }
-    .targets { margin-top: 16px; }
+    .logwrap { min-height: 120px; }
   }
   @media (max-width: 860px) {
     .top { padding-top: 48px; }
     .hero { padding-bottom: 56px; }
     .view { padding: 20px 16px; }
-    .conn--out { flex-basis: 64px; padding: 0 6px; }
-    .add { margin-left: 0; }
     .note { padding: 0 16px 16px; }
   }
   @media (max-width: 520px) {
     .actions .btn { width: 100%; }
-    .conn--out { display: none; }
-    .pct-m { display: inline; }
-    .trow .tcard { position: relative; }
   }
 </style>

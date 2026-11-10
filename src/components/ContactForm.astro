@@ -24,7 +24,7 @@ const privacyHref = lang === "en" ? "/en/privacy/" : "/privacy/";
     <label>{f.message}<textarea name="message" rows="6" required></textarea></label>
     <input class="hp" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" />
     <label class="consent"><input type="checkbox" name="consent" required /><span>{f.consent} <a href={privacyHref}>{f.privacy}</a>.</span></label>
-    <button class="btn" type="submit">{f.send}</button>
+    <button class="btn btn--a" type="submit">{f.send}</button>
     <p class="status mono" role="status" aria-live="polite"></p>
   </form>
 ) : (
@@ -34,18 +34,19 @@ const privacyHref = lang === "en" ? "/en/privacy/" : "/privacy/";
 <style is:global>
   .cf { display: grid; gap: 16px; max-width: 640px; }
   .cf .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .cf label { display: grid; gap: 6px; font-size: 13px; color: var(--fg-dim); }
+  .cf label { display: grid; gap: 8px; font-size: 14px; letter-spacing: .16px; font-weight: 500; color: var(--fg-strong); }
   .cf input:not([type=checkbox]), .cf select, .cf textarea {
-    background: var(--deck); color: var(--fg); border: 1px solid var(--line); border-radius: 4px;
-    padding: 10px 12px; font: inherit; font-size: 15px;
+    background: var(--deck); color: var(--fg); border: 0; border-bottom: 1px solid var(--fg-mid); border-radius: 0;
+    min-height: 48px; padding: 0 16px; font: inherit; font-size: 16px; font-weight: 400; color: var(--fg-strong);
   }
-  .cf input:focus, .cf select:focus, .cf textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .cf input:focus, .cf select:focus, .cf textarea:focus { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .cf textarea { padding: 12px 16px; resize: vertical; }
   .cf .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
-  .cf .consent { display: flex; gap: 10px; align-items: flex-start; }
+  .cf .consent { font-weight: 400; display: flex; gap: 10px; align-items: flex-start; }
   .cf .consent a { color: var(--accent); }
   .cf button { justify-self: start; cursor: pointer; }
   .cf button[disabled] { opacity: .6; cursor: progress; }
-  .cf .status { min-height: 1.4em; font-size: 12px; margin: 0; color: var(--fg-dim); }
+  .cf .status { min-height: 1.4em; font-size: 14px; margin: 0; color: var(--fg-dim); }
   .cf .status[data-state=ok] { color: var(--jade); }
   .cf .status[data-state=err] { color: var(--red); }
   @media (max-width: 640px) { .cf .row { grid-template-columns: 1fr; } }
