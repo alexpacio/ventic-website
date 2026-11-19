@@ -10,7 +10,7 @@ const c = venticode(lang);
 const uid = `vc-${lang}`;
 const installHref = pagePath(lang, "installVenticode");
 ---
-<section id={c.id} class="sec sec--dark vc">
+<section id={c.id} class:list={["sec", "sec--dark", "vc", { "vc--page": standalone }]}>
   <div class="wrap vt-reveal">
     {standalone ? (
       <div class="topbar">
@@ -251,6 +251,7 @@ const installHref = pagePath(lang, "installVenticode");
 </script>
 
 <style>
+  .vc--page :global(.px-edge) { display: none; }
   .shead-lead p { margin: 0 0 12px; }
   .repo-link { font-weight: 500; }
   .topbar {
