@@ -3,7 +3,7 @@ import type { Lang } from "./content";
 const pick = (lang: Lang) => <T,>(it: T, en: T): T => (lang === "it" ? it : en);
 
 /** Sub-pages that used to be sections of the one-page home. Same slug in both languages. */
-export const pageKeys = ["why", "how", "platform", "onprem", "resellers", "compare"] as const;
+export const pageKeys = ["why", "how", "platform", "onprem", "resellers", "compare", "venticode", "installVenticode"] as const;
 export type PageKey = (typeof pageKeys)[number];
 
 export const slugs: Record<PageKey, string> = {
@@ -13,6 +13,8 @@ export const slugs: Record<PageKey, string> = {
   onprem: "on-premise",
   resellers: "resellers",
   compare: "comparison",
+  venticode: "venticode",
+  installVenticode: "install-venticode",
 };
 
 export const pagePath = (lang: Lang, key: PageKey) => `${lang === "en" ? "/en" : ""}/${slugs[key]}/`;
@@ -135,6 +137,50 @@ export function pages(lang: Lang) {
         ),
       },
     },
+    venticode: {
+      nav: "Venticode",
+      crumb: "Venticode",
+      seo: {
+        title: t("Venticode — agente di coding e bot centralizzato open source (AGPL-3.0)", "Venticode — open-source centralized coding and bot agent (AGPL-3.0)"),
+        desc: t(
+          "Agente di coding e bot @ventic lato server in Rust, open source AGPL-3.0: Web UI WASM e CLI TUI condivise sullo stile di Pi agent, bot Slack/Telegram/GitLab con revisione umana e runner remoto senza porte aperte.",
+          "Centralized Rust server-side coding and @ventic bot agent, open-sourced under AGPL-3.0: shared WASM Web UI and CLI TUI like Pi agent, Slack/Telegram/GitLab bots with human review, and outbound remote runner with no open ports.",
+        ),
+      },
+      hero: {
+        plate: t("Venticode · Open source AGPL-3.0", "Venticode · Open source AGPL-3.0"),
+        title: t(
+          ["Agente di coding centralizzato.", "Web, CLI TUI e bot."],
+          ["Centralized coding agent.", "Web, CLI TUI and bots."],
+        ),
+        lead: t(
+          "Scritto in Rust e rilasciato con licenza GNU AGPL-3.0: Web UI WebAssembly e CLI TUI sincronizzate sullo stile di Pi agent, bot @ventic su Slack, Telegram e GitLab che leggono codice e log sull'harness e trattengono bozze e modifiche per revisione, e strumenti eseguiti in remoto senza porte aperte.",
+          "Written in Rust and released under GNU AGPL-3.0: synced WebAssembly Web UI and CLI TUI in the spirit of Pi agent, @ventic bots on Slack, Telegram and GitLab that inspect code and logs on the harness and hold drafts and edits for review, and remote tool execution with zero open ports.",
+        ),
+      },
+    },
+    installVenticode: {
+      nav: t("Installa Venticode", "Deploy Venticode"),
+      crumb: t("Installa Venticode", "Deploy Venticode"),
+      seo: {
+        title: t("Installa Venticode — guida server e client passo passo (AGPL-3.0)", "Deploy Venticode — server and client step-by-step guide (AGPL-3.0)"),
+        desc: t(
+          "Installa Venticode dagli artefatti precompilati su GitHub Releases (Linux, macOS, Windows): guida passo passo separata per parte server (venticode, PostgreSQL, S3, connettore bot) e parti client (venticode-harness, Web UI, venticode-tui).",
+          "Install Venticode from prebuilt GitHub Releases artifacts (Linux, macOS, Windows): separate step-by-step guides for the server side (venticode, PostgreSQL, S3, bot connector) and client side (venticode-harness, Web UI, venticode-tui).",
+        ),
+      },
+      hero: {
+        plate: t("Installa Venticode · AGPL-3.0", "Deploy Venticode · AGPL-3.0"),
+        title: t(
+          ["Parte server e client,", "passo dopo passo."],
+          ["Server and clients,", "step by step."],
+        ),
+        lead: t(
+          "Scarica gli artefatti già compilati dalla CI su GitHub (Linux x64, macOS, Windows) con verifica SHA256SUMS. Configura il servizio centrale e collega runner, Web UI e CLI TUI in pochi minuti.",
+          "Download prebuilt CI artifacts from GitHub Releases (Linux x64, macOS, Windows) with SHA256SUMS verification. Set up the central service and connect runners, Web UI and CLI TUI in minutes.",
+        ),
+      },
+    },
     explore: {
       plate: t("Esplora Ventic", "Explore Ventic"),
       title: t(["Tutto quello che", "c'è da sapere."], ["Everything you", "need to know."]),
@@ -201,12 +247,14 @@ export function navGroups(lang: Lang): NavGroup[] {
         { label: t("Console", "Console"), desc: t("Persone, quote, modelli, agenti remoti", "People, quotas, models, remote agents"), href: `${pre}/admin-panel/` },
       ],
     },
+    { label: p.venticode.nav, href: pagePath(lang, "venticode") },
     { label: t("Prezzi", "Pricing"), href: `${pre}/pricing/` },
     {
       label: t("Installa", "Deploy"),
       items: [
         { label: p.onprem.nav, desc: t("Sul tuo Kubernetes in otto passi", "On your Kubernetes in eight steps"), href: pagePath(lang, "onprem") },
         { label: t("Installa la demo", "Deploy a demo"), desc: t("Guida passo passo alla demo self-hosted", "Step-by-step self-hosted demo guide"), href: `${pre}/demo/` },
+        { label: p.installVenticode.nav, desc: t("Guida passo passo server e client (AGPL-3.0)", "Server and client step-by-step guide (AGPL-3.0)"), href: pagePath(lang, "installVenticode") },
       ],
     },
   ];

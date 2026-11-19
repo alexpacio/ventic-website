@@ -34,8 +34,8 @@ export function venticode(lang: Lang) {
       t("Web, CLI TUI e bot nel tuo perimetro.", "Web, CLI TUI and bots inside your perimeter."),
     ] as [string, string],
     lead: t(
-      "Venticode è l'agente di coding e bot lato server scritto in Rust e rilasciato open source con licenza GNU AGPL-3.0. Unisce una Web UI e una CLI TUI condivise sullo stile di Pi agent con bot @ventic per Slack, Telegram e GitLab sullo stile di Grok Bot e Rakazo, eseguendo gli strumenti in remoto sulle tue macchine senza porte aperte.",
-      "Venticode is the centralized, server-side coding and bot agent written in Rust and open-sourced under the GNU AGPL-3.0 licence. It pairs a shared Web and CLI TUI in the spirit of Pi agent with @ventic bots for Slack, Telegram and GitLab like Grok Bot or Rakazo, running tools remotely on your machines with no open ports.",
+      "Venticode è l'agente di coding e bot lato server scritto in Rust e rilasciato open source con licenza GNU AGPL-3.0. Unisce una Web UI e una CLI TUI condivise sullo stile di Pi agent a bot @ventic per Slack, Telegram e GitLab che ricevono menzioni, leggono codice e log via harness e MCP, e trattengono bozze e modifiche in coda di revisione prima di pubblicare.",
+      "Venticode is the centralized, server-side coding and bot agent written in Rust and open-sourced under the GNU AGPL-3.0 licence. It pairs a shared Web and CLI TUI in the spirit of Pi agent with @ventic bots for Slack, Telegram and GitLab that pick up mentions, inspect code and logs via harness and MCP, and hold drafts and edits for review before publishing.",
     ),
     repoUrl: VENTICODE_REPO_URL,
     repoLink: t("Esplora il codice su GitHub", "Explore the code on GitHub"),
@@ -44,18 +44,18 @@ export function venticode(lang: Lang) {
       {
         id: "workspace",
         tab: t("Web & CLI TUI", "Web & CLI TUI"),
-        title: t("Stesso FrankenTUI in browser (WASM) e terminale", "Same FrankenTUI in browser (WASM) and terminal"),
+        title: t("Stessa TUI in browser (WASM) e terminale", "Same TUI in browser (WASM) and terminal"),
         body: t(
-          "A sinistra l'inventario degli harness e dei progetti, al centro il terminale FrankenTUI compilato in WebAssembly con tool call, diff e output test, a destra attività, modifiche, server MCP e contesto. Con venticode-tui apri la stessa sessione server-side dal tuo terminale.",
-          "Harness and project inventory on the left, the WebAssembly FrankenTUI terminal with tool calls, diffs and test output in the centre, and tasks, changes, MCP servers and context on the right. Open the exact same server-side session from your terminal with venticode-tui.",
+          "A sinistra l'inventario degli harness e dei progetti, al centro il terminale TUI compilato in WebAssembly con tool call, diff e output test, a destra attività, modifiche, server MCP e contesto. Con venticode-tui apri la stessa sessione server-side dal tuo terminale.",
+          "Harness and project inventory on the left, the WebAssembly TUI terminal with tool calls, diffs and test output in the centre, and tasks, changes, MCP servers and context on the right. Open the exact same server-side session from your terminal with venticode-tui.",
         ),
         src: "/venticode/workspace.webp",
         w: 1440,
         h: 860,
         url: "workspace.code.example.org/c/harness-project-access",
         alt: t(
-          "Interfaccia reale di Venticode: inventario degli harness a sinistra, terminale WebAssembly FrankenTUI con read_file, write_file, diff SQL e cargo test al centro, pannello attività e server MCP a destra.",
-          "Real Venticode workspace UI: harness inventory on the left, WebAssembly FrankenTUI terminal showing read_file, write_file SQL diff and cargo test in the centre, tasks and MCP servers on the right.",
+          "Interfaccia reale di Venticode: inventario degli harness a sinistra, terminale WebAssembly TUI con read_file, write_file, diff SQL e cargo test al centro, pannello attività e server MCP a destra.",
+          "Real Venticode workspace UI: harness inventory on the left, WebAssembly TUI terminal showing read_file, write_file SQL diff and cargo test in the centre, tasks and MCP servers on the right.",
         ),
       },
       {
@@ -99,7 +99,7 @@ export function venticode(lang: Lang) {
       surfaces: {
         label: t("Interfacce condivise", "Shared surfaces"),
         items: [
-          t("Web UI (FrankenTUI WASM)", "Web UI (FrankenTUI WASM)"),
+          t("Web UI (TUI WebAssembly)", "Web UI (WebAssembly TUI)"),
           t("CLI nativa (venticode-tui)", "Native CLI (venticode-tui)"),
           t("Bot @ventic · Slack, Telegram, GitLab", "@ventic bots · Slack, Telegram, GitLab"),
         ],
@@ -133,18 +133,18 @@ export function venticode(lang: Lang) {
         tag: t("Stile Pi agent", "Pi-agent ergonomics"),
         title: t("Web + CLI TUI sulla stessa sessione", "Web + CLI TUI on the same session"),
         body: t(
-          "Lo stesso renderer FrankenTUI gira nativo nel terminale (venticode-tui) e in WebAssembly nel browser. Inizi un task dalla shell, lo continui dal browser o da un altro dispositivo: lo stato e lo stream SSE vivono sul server e non spariscono quando chiudi il terminale.",
-          "The same FrankenTUI renderer runs natively in the terminal (venticode-tui) and in WebAssembly in the browser. Start a task from your shell, pick it up from the browser or another device: state and SSE streams live on the server and survive closing your terminal.",
+          "Lo stesso renderer TUI gira nativo nel terminale (venticode-tui) e in WebAssembly nel browser. Inizi un task dalla shell, lo continui dal browser o da un altro dispositivo: lo stato e lo stream SSE vivono sul server e non spariscono quando chiudi il terminale.",
+          "The same TUI renderer runs natively in the terminal (venticode-tui) and in WebAssembly in the browser. Start a task from your shell, pick it up from the browser or another device: state and SSE streams live on the server and survive closing your terminal.",
         ),
       },
       {
         icon: "users",
         tone: "amber",
-        tag: t("Stile Grok Bot e Rakazo", "Like Grok Bot & Rakazo"),
-        title: t("Bot @ventic su Slack, Telegram e GitLab", "@ventic bots on Slack, Telegram & GitLab"),
+        tag: t("Bot operativi · @ventic", "Operational bots · @ventic"),
+        title: t("Come funziona @ventic su Slack, Telegram e GitLab", "How @ventic works on Slack, Telegram & GitLab"),
         body: t(
-          "Un unico agente operativo risponde alle menzioni in chat e nelle merge request, interrogando i repository reali e i log CI via MCP. A differenza dei bot cloud generici, ha accesso governato al tuo codice e trattiene bozze e modifiche per revisione umana prima di pubblicare.",
-          "One operational agent answers mentions in chat and merge requests, querying real repositories and CI logs over MCP. Unlike generic cloud bots, it has governed access to your code and holds drafts and edits for human review before posting.",
+          "Quando un collega menziona @ventic in un canale, in DM o in una merge request, il connettore Apache Camel su loopback inoltra la richiesta al server. L'agente verifica identità collegata, canali autorizzati e limite orario, consulta file e log CI via harness e MCP, e trattiene scritture e bozze di risposta in coda di revisione finché un umano non approva e pubblica.",
+          "When a teammate mentions @ventic in a channel, DM or merge request, the loopback Apache Camel connector relays the event to the server. The agent checks linked user identity, allowed channels and hourly rate limits, inspects files and CI logs through the harness and MCP, and holds edits and draft replies in the review queue until a human approves and posts.",
         ),
       },
       {
@@ -189,6 +189,57 @@ export function venticode(lang: Lang) {
       },
     ] as VenticodeAdvantage[],
 
+    browser: {
+      label: t("Browser sandboxato su Kubernetes · senza VM", "Sandboxed browser on Kubernetes · VM-free"),
+      title: t(
+        "Navigazione autonoma isolata con gVisor e takeover umano.",
+        "Isolated autonomous browsing with gVisor and human takeover.",
+      ),
+      lead: t(
+        "Per i task web autonomi, il servizio agente avvia un pod browser effimero per sessione isolato con gVisor in modalità systrap — nessun hypervisor né VM guest. Osservi in diretta le schede su cui lavora l'agente, prendi il controllo esclusivo quando serve e, se il pod cade, la conversazione sopravvive.",
+        "For autonomous web tasks, the agent service launches one disposable browser pod per active session isolated with gVisor in systrap mode — no guest VM or hardware virtualization. You watch the live tabs, take exclusive control whenever needed, and if the pod dies the chat survives.",
+      ),
+      flow: [
+        t("Viewer live + Takeover + Tool MCP", "Live viewer + Takeover + MCP tools"),
+        t("CDP privato (solo servizio agente)", "Private CDP (agent service only)"),
+        t("Pod browser effimero · gVisor systrap", "Disposable browser pod · gVisor systrap"),
+      ] as [string, string, string],
+      points: [
+        {
+          k: t("Isolamento senza VM", "VM-free isolation"),
+          title: t("gVisor in modalità systrap (runsc)", "gVisor in systrap mode (runsc)"),
+          body: t(
+            "Node pool Linux dedicato con runtimeClassName: gvisor obbligatorio (i pod senza gVisor vengono rifiutati). Il kernel userspace intercetta le syscall senza VM guest; ogni sessione usa un pod effimero con immagini pinnate dal tuo registry, risorse limitate ed egress ristretto.",
+            "Dedicated Linux node pool enforcing runtimeClassName: gvisor (pods without gVisor are rejected). The userspace kernel intercepts syscalls without guest VMs; each active session gets a disposable pod from pinned builds in your registry with bounded resources and restricted egress.",
+          ),
+        },
+        {
+          k: t("Un solo canale CDP", "Single CDP channel"),
+          title: t("Viewer live e tool MCP sulla stessa sessione", "Live viewer & MCP tools on one session"),
+          body: t(
+            "L'endpoint CDP è raggiungibile solo dal servizio agente ed è condiviso tra i tool MCP e il viewer integrato, che trasmette in diretta la scheda attiva e la barra delle schede.",
+            "The CDP endpoint is reachable only by the agent service and shared between MCP tools and the built-in viewer, screencasting the active tab and tab strip in real time.",
+          ),
+        },
+        {
+          k: t("Controllo condiviso", "Human-in-the-loop"),
+          title: t("Takeover esclusivo e rilascio con snapshot", "Exclusive takeover & fresh-snapshot handback"),
+          body: t(
+            "Quando premi takeover ottieni l'input esclusivo sul browser (utile per autenticazioni, MFA o conferme manuali). Al rilascio, l'agente riceve uno snapshot aggiornato della pagina e riprende da dove ti sei fermato.",
+            "During takeover you have exclusive browser input (ideal for sign-ins, MFA or manual checks). On release, the agent receives a fresh page snapshot and resumes right where you left off.",
+          ),
+        },
+        {
+          k: t("Resilienza e segreti", "Resilience & secrets"),
+          title: t("Stato e credenziali fuori dal pod browser", "State & credentials outside the browser pod"),
+          body: t(
+            "Credenziali, identità e cronologia restano nel servizio agente Ventic (Keycloak, PostgreSQL e gateway di inferenza). Se il pod browser termina o viene riciclato, la chat resta intatta e il browser successivo parte pulito.",
+            "Credentials, identity and durable state stay in the Ventic agent service (Keycloak, PostgreSQL and the inference gateway). If the browser pod dies or is recycled, the chat survives intact and the next browser starts fresh.",
+          ),
+        },
+      ],
+    },
+
     deploy: {
       standalone: {
         tag: t("Open source · GNU AGPL-3.0", "Open source · GNU AGPL-3.0"),
@@ -199,6 +250,7 @@ export function venticode(lang: Lang) {
         ),
         cmd: "venticode-tui --standalone https://code.example.org",
         cta: t("Apri github.com/alexpacio/venticode", "Open github.com/alexpacio/venticode"),
+        guide: t("Guida di installazione passo passo", "Step-by-step install guide"),
       },
       ventic: {
         tag: t("Incluso nella distribuzione Ventic", "Included in the Ventic distribution"),

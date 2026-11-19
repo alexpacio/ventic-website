@@ -1,0 +1,292 @@
+---
+import type { Lang } from "../i18n/content";
+import { venticodeInstall } from "../i18n/venticodeInstall";
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const c = venticodeInstall(lang);
+const blocks = [
+  { data: c.server, cls: "sec sec--rule", accent: "var(--accent)" },
+  { data: c.client, cls: "sec sec--tint", accent: "var(--jade-ink)" },
+];
+---
+<!-- Prebuilt GitHub Releases artifacts + quick navigation -->
+<section class="sec sec--tint art-sec">
+  <div class="wrap">
+    <div class="shead art-head">
+      <div>
+        <span class="plate">{c.artifacts.plate}</span>
+        <h2 class="h2">{c.artifacts.title}</h2>
+      </div>
+      <div class="shead-lead">
+        <p>{c.artifacts.lead}</p>
+        <div class="jump-row">
+          <a class="btn btn--a btn--sm" href={c.releasesUrl} target="_blank" rel="noopener noreferrer">
+            {c.jump.releases} <span class="arr" aria-hidden="true">↗</span>
+          </a>
+          <a class="btn btn--ghost btn--sm" href={`#${c.server.id}`}>{c.jump.server}</a>
+          <a class="btn btn--ghost btn--sm" href={`#${c.client.id}`}>{c.jump.client}</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="art-grid hairgrid">
+      {c.artifacts.items.map((a) => (
+        <a
+          class="art-card vt-card"
+          href={`${c.releasesUrl}/download/${a.file}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span class="mono art-os">{a.os}</span>
+          <strong class="art-file">{a.file}</strong>
+          <span class="art-role">{a.role}</span>
+        </a>
+      ))}
+    </div>
+
+    <div class="art-contents">
+      <span class="mono art-clbl">{c.artifacts.contentsLabel}</span>
+      <ul class="art-pills">
+        {c.artifacts.contents.map((item) => <li class="mono art-pill">{item}</li>)}
+        <li class="mono art-pill art-pill--sum">
+          <a href={`${c.releasesUrl}/download/SHA256SUMS`} target="_blank" rel="noopener noreferrer">SHA256SUMS ↗</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Two separate step-by-step sections: 01 Server side, 02 Client side -->
+{blocks.map(({ data, cls, accent }) => (
+  <section id={data.id} class={cls}>
+    <div class="wrap">
+      <div class="shead">
+        <div>
+          <span class="plate"><span class="plate-num">{data.num} —</span>{data.plate}</span>
+          <h2 class="h2">{data.title[0]}<br /><span class="h-accent">{data.title[1]}</span></h2>
+        </div>
+        <p class="shead-lead">{data.lead}</p>
+      </div>
+
+      <div class="layout">
+        <aside class="side">
+          <div class="panel box">
+            <h3 class="boxt mono">{data.needsTitle}</h3>
+            <ul class="ticks">
+              {data.needs.map((item) => <li class="tick">{item}</li>)}
+            </ul>
+          </div>
+          <div class="panel box">
+            <h3 class="boxt mono">{data.envTitle}</h3>
+            <dl class="dl">
+              {data.env.map((row) => (
+                <div class="dl-row">
+                  <dt class="mono">{row.k}</dt>
+                  <dd>{row.v}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+          <a class="btn btn--b btn--sm wide" href={c.repoUrl} target="_blank" rel="noopener noreferrer">
+            {c.jump.repo} <span class="arr" aria-hidden="true">↗</span>
+          </a>
+        </aside>
+
+        <ol class="steps" style={`--step-accent:${accent}`}>
+          {data.steps.map((s) => (
+            <li class="step">
+              <span class="num mono">{s.n}</span>
+              <div class="body-col">
+                <h3 class="cell-t st">{s.title}</h3>
+                <p class="cell-b">{s.body}</p>
+                {s.code && (
+                  <div class="codebox">
+                    <button class="vc-copy-btn mono" type="button" data-copied={c.copied}>{c.copy}</button>
+                    <pre><code>{s.code}</code></pre>
+                  </div>
+                )}
+                {s.note && <p class="note">{s.note}</p>}
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+))}
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>(".vc-copy-btn").forEach((btn) => {
+    const label = btn.textContent;
+    btn.addEventListener("click", async () => {
+      const code = btn.parentElement?.querySelector("code")?.textContent ?? "";
+      try {
+        await navigator.clipboard.writeText(code);
+        btn.textContent = btn.dataset.copied ?? "OK";
+        setTimeout(() => { btn.textContent = label; }, 1600);
+      } catch { /* clipboard unavailable */ }
+    });
+  });
+</script>
+
+<style>
+  .art-sec { padding: 64px 0 72px; }
+  .art-head { margin-bottom: 32px; }
+  .art-head .shead-lead p { margin: 0 0 18px; }
+  .jump-row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .art-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .art-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 20px;
+    color: var(--fg);
+  }
+  .art-card:hover { color: var(--fg-strong); }
+  .art-os { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+  .art-file {
+    font-family: var(--code);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--fg-strong);
+    word-break: break-all;
+  }
+  .art-role { font-size: 13px; color: var(--fg-mid); }
+
+  .art-contents {
+    margin-top: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 14px;
+  }
+  .art-clbl { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-mute); }
+  .art-pills { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+  .art-pill {
+    font-family: var(--code);
+    font-size: 12px;
+    padding: 4px 10px;
+    background: var(--ink);
+    border: 1px solid var(--line-soft);
+    color: var(--fg-dim);
+  }
+  .art-pill--sum { border-color: var(--line); }
+  .art-pill--sum a { color: var(--accent); }
+
+  /* ── server / client step layouts ────────────────────────── */
+  .layout { display: grid; grid-template-columns: 310px minmax(0, 1fr); gap: 40px; align-items: start; }
+  .side { position: sticky; top: 88px; display: flex; flex-direction: column; gap: 16px; }
+  .box { padding: 20px; }
+  .boxt {
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--fg-mute);
+    margin-bottom: 14px;
+    font-weight: 600;
+  }
+  .box .ticks { margin: 0; padding: 0; list-style: none; }
+  .dl { margin: 0; display: flex; flex-direction: column; gap: 12px; }
+  .dl-row dt { font-family: var(--code); font-size: 12px; font-weight: 500; color: var(--accent); }
+  .dl-row dd { margin: 2px 0 0; font-size: 14px; line-height: 1.5; color: var(--fg-dim); }
+  .wide { width: 100%; }
+
+  .steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .step {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr);
+    gap: 18px;
+    padding-bottom: 32px;
+    position: relative;
+  }
+  .step::before {
+    content: "";
+    position: absolute;
+    left: 21px;
+    top: 44px;
+    bottom: 6px;
+    width: 1px;
+    background: linear-gradient(var(--line), transparent);
+  }
+  .step:last-child { padding-bottom: 0; }
+  .step:last-child::before { display: none; }
+
+  .num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--step-accent, var(--accent));
+    background: var(--panel-a);
+    border: 1px solid var(--line);
+  }
+  .body-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+    min-width: 0;
+    padding-top: 6px;
+  }
+  .st { font-size: 19px; }
+  .body-col .cell-b { font-size: 15px; max-width: 70ch; }
+
+  .codebox {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    background: var(--night);
+    border: 1px solid var(--night);
+  }
+  .codebox pre {
+    margin: 0;
+    padding: 44px 18px 16px;
+    overflow-x: auto;
+    font-family: var(--code);
+    font-size: 12.5px;
+    line-height: 1.7;
+    color: #e0e0e0;
+  }
+  .vc-copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    height: 28px;
+    padding: 0 10px;
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: #c6c6c6;
+    background: #161616;
+    border: 1px solid #393939;
+    cursor: pointer;
+  }
+  .vc-copy-btn:hover { color: #fff; border-color: #fff; }
+  .note {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--fg-dim);
+    padding: 10px 14px;
+    background: var(--jade-soft);
+    border-left: 2px solid var(--jade-ink);
+    max-width: 70ch;
+  }
+
+  @media (max-width: 1080px) {
+    .art-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .layout { grid-template-columns: 1fr; }
+    .side { position: static; }
+  }
+  @media (max-width: 600px) {
+    .art-grid { grid-template-columns: 1fr; }
+    .step { grid-template-columns: 40px minmax(0, 1fr); gap: 12px; }
+    .num { width: 36px; height: 36px; font-size: 12px; }
+    .step::before { left: 17px; top: 38px; }
+    .codebox pre { padding: 44px 14px 14px; font-size: 12px; }
+  }
+</style>
