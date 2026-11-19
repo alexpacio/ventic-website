@@ -141,21 +141,21 @@ export function pages(lang: Lang) {
       nav: "Venticode",
       crumb: "Venticode",
       seo: {
-        title: t("Venticode — agente di coding e bot centralizzato open source (AGPL-3.0)", "Venticode — open-source centralized coding and bot agent (AGPL-3.0)"),
+        title: t("Venticode — agente di coding e bot centralizzato", "Venticode — centralized coding and bot agent"),
         desc: t(
-          "Agente di coding e bot @ventic lato server in Rust, open source AGPL-3.0: Web UI WASM e CLI TUI condivise sullo stile di Pi agent, bot Slack/Telegram/GitLab con revisione umana e runner remoto senza porte aperte.",
-          "Centralized Rust server-side coding and @ventic bot agent, open-sourced under AGPL-3.0: shared WASM Web UI and CLI TUI like Pi agent, Slack/Telegram/GitLab bots with human review, and outbound remote runner with no open ports.",
+          "Agente di coding e bot @ventic lato server in Rust con codice sorgente disponibile, Web UI WASM, CLI TUI, bot Slack/Telegram/GitLab con revisione umana e runner remoto senza porte aperte.",
+          "Source-available Rust server-side coding and @ventic bot agent with a WASM Web UI, terminal client, Slack/Telegram/GitLab bots with human review, and an outbound remote runner.",
         ),
       },
       hero: {
-        plate: t("Venticode · Open source AGPL-3.0", "Venticode · Open source AGPL-3.0"),
+        plate: "Venticode · Source-available",
         title: t(
           ["Agente di coding centralizzato.", "Web, CLI TUI e bot."],
           ["Centralized coding agent.", "Web, CLI TUI and bots."],
         ),
         lead: t(
-          "Scritto in Rust e rilasciato con licenza GNU AGPL-3.0: Web UI WebAssembly e CLI TUI sincronizzate sullo stile di Pi agent, bot @ventic su Slack, Telegram e GitLab che leggono codice e log sull'harness e trattengono bozze e modifiche per revisione, e strumenti eseguiti in remoto senza porte aperte.",
-          "Written in Rust and released under GNU AGPL-3.0: synced WebAssembly Web UI and CLI TUI in the spirit of Pi agent, @ventic bots on Slack, Telegram and GitLab that inspect code and logs on the harness and hold drafts and edits for review, and remote tool execution with zero open ports.",
+          "Scritto in Rust, con Web UI WebAssembly e CLI TUI sincronizzate sullo stile di Pi agent. I bot @ventic su Slack, Telegram e GitLab leggono codice e log sull'harness e trattengono bozze e modifiche per revisione. Gli strumenti vengono eseguiti in remoto senza porte aperte.",
+          "Written in Rust with a synced WebAssembly Web UI and CLI TUI in the spirit of Pi agent. The @ventic bots on Slack, Telegram and GitLab inspect code and logs on the harness and hold drafts and edits for review. Tools run remotely with zero open ports.",
         ),
       },
     },
@@ -163,14 +163,14 @@ export function pages(lang: Lang) {
       nav: t("Installa Venticode", "Deploy Venticode"),
       crumb: t("Installa Venticode", "Deploy Venticode"),
       seo: {
-        title: t("Installa Venticode — guida server e client passo passo (AGPL-3.0)", "Deploy Venticode — server and client step-by-step guide (AGPL-3.0)"),
+        title: t("Installa Venticode — guida server e client passo passo", "Deploy Venticode — server and client step-by-step guide"),
         desc: t(
           "Installa Venticode dagli artefatti precompilati su GitHub Releases (Linux, macOS, Windows): guida passo passo separata per parte server (venticode, PostgreSQL, S3, connettore bot) e parti client (venticode-harness, Web UI, venticode-tui).",
           "Install Venticode from prebuilt GitHub Releases artifacts (Linux, macOS, Windows): separate step-by-step guides for the server side (venticode, PostgreSQL, S3, bot connector) and client side (venticode-harness, Web UI, venticode-tui).",
         ),
       },
       hero: {
-        plate: t("Installa Venticode · AGPL-3.0", "Deploy Venticode · AGPL-3.0"),
+        plate: t("Installa Venticode", "Deploy Venticode"),
         title: t(
           ["Parte server e client,", "passo dopo passo."],
           ["Server and clients,", "step by step."],
@@ -254,7 +254,7 @@ export function navGroups(lang: Lang): NavGroup[] {
       items: [
         { label: p.onprem.nav, desc: t("Sul tuo Kubernetes in otto passi", "On your Kubernetes in eight steps"), href: pagePath(lang, "onprem") },
         { label: t("Installa la demo", "Deploy a demo"), desc: t("Guida passo passo alla demo self-hosted", "Step-by-step self-hosted demo guide"), href: `${pre}/demo/` },
-        { label: p.installVenticode.nav, desc: t("Guida passo passo server e client (AGPL-3.0)", "Server and client step-by-step guide (AGPL-3.0)"), href: pagePath(lang, "installVenticode") },
+        { label: p.installVenticode.nav, desc: t("Guida passo passo server e client", "Server and client step-by-step guide"), href: pagePath(lang, "installVenticode") },
       ],
     },
   ];

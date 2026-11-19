@@ -2,7 +2,7 @@
 import Icon from "./Icon.astro";
 import type { Lang } from "../i18n/content";
 import { pagePath } from "../i18n/pages";
-import { venticode } from "../i18n/venticode";
+import { venticode, VENTICODE_LICENSE_URL } from "../i18n/venticode";
 
 interface Props { lang: Lang; num?: string; standalone?: boolean; }
 const { lang, num, standalone = false } = Astro.props;
@@ -68,7 +68,7 @@ const installHref = pagePath(lang, "installVenticode");
             </svg>
             <span class="url-text" data-vc-url>{c.shots[0].url}</span>
           </span>
-          <span class="badge mono">AGPL-3.0</span>
+          <span class="badge mono">{c.arch.server.badge}</span>
         </div>
 
         <div class="stage">
@@ -183,19 +183,20 @@ const installHref = pagePath(lang, "installVenticode");
       </div>
     </div>
 
-    <!-- Open-source AGPL-3.0 standalone vs Ventic-integrated -->
+    <!-- Standalone and Ventic deployment -->
     <div id="deploy" class="deploy">
       <article class="dcard dcard--oss">
         <span class="mono dtag dtag--jade">{c.deploy.standalone.tag}</span>
         <h3 class="dtitle">{c.deploy.standalone.title}</h3>
         <p class="cell-b">{c.deploy.standalone.body}</p>
+        <p class="cell-b">{c.deploy.standalone.license}</p>
         <div class="dfoot">
           <pre class="dcmd"><code>$ {c.deploy.standalone.cmd}</code></pre>
           <div class="dactions">
             <a class="btn btn--a btn--sm" href={installHref}>
               {c.deploy.standalone.guide} <span class="arr" aria-hidden="true">→</span>
             </a>
-            <a class="btn btn--ghost btn--sm" href={c.repoUrl} target="_blank" rel="noopener noreferrer">
+            <a class="btn btn--ghost btn--sm" href={VENTICODE_LICENSE_URL} target="_blank" rel="noopener noreferrer">
               {c.deploy.standalone.cta} <span class="arr" aria-hidden="true">↗</span>
             </a>
           </div>
@@ -545,7 +546,7 @@ const installHref = pagePath(lang, "installVenticode");
   .bk { font-size: 11px; letter-spacing: .07em; text-transform: uppercase; color: var(--amber); }
   .bct { font-size: 17px; font-weight: 500; line-height: 1.3; color: var(--fg-strong); }
 
-  /* ── deployment & AGPL-3.0 strip ─────────────────────────── */
+  /* ── deployment and license ──────────────────────────────── */
   .deploy {
     margin-top: 28px;
     display: grid;

@@ -1,5 +1,6 @@
 ---
 import type { Lang } from "../i18n/content";
+import { VENTICODE_LICENSE_NAME, VENTICODE_LICENSE_URL } from "../i18n/venticode";
 import { venticodeInstall } from "../i18n/venticodeInstall";
 
 interface Props { lang: Lang; }
@@ -20,6 +21,7 @@ const blocks = [
       </div>
       <div class="shead-lead">
         <p>{c.artifacts.lead}</p>
+        <p><a class="arrowlink" href={VENTICODE_LICENSE_URL}>{VENTICODE_LICENSE_NAME}</a></p>
         <div class="jump-row">
           <a class="btn btn--a btn--sm" href={c.releasesUrl} target="_blank" rel="noopener noreferrer">
             {c.jump.releases} <span class="arr" aria-hidden="true">↗</span>

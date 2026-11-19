@@ -2,6 +2,8 @@ import type { Lang } from "./content";
 import { pick } from "./onprem";
 
 export const VENTICODE_REPO_URL = "https://github.com/alexpacio/venticode";
+export const VENTICODE_LICENSE_URL = `${VENTICODE_REPO_URL}/blob/main/LICENSE`;
+export const VENTICODE_LICENSE_NAME = "Venticode Source-Available License 1.0";
 
 export interface VenticodeShot {
   id: string;
@@ -28,14 +30,14 @@ export function venticode(lang: Lang) {
 
   return {
     id: "venticode",
-    plate: t("Venticode · Open source AGPL-3.0", "Venticode · Open source AGPL-3.0"),
+    plate: "Venticode · Source-available",
     title: [
       t("Un agente di coding centralizzato.", "A centralized coding agent."),
       t("Web, CLI TUI e bot nel tuo perimetro.", "Web, CLI TUI and bots inside your perimeter."),
     ] as [string, string],
     lead: t(
-      "Venticode è l'agente di coding e bot lato server scritto in Rust e rilasciato open source con licenza GNU AGPL-3.0. Unisce una Web UI e una CLI TUI condivise sullo stile di Pi agent a bot @ventic per Slack, Telegram e GitLab che ricevono menzioni, leggono codice e log via harness e MCP, e trattengono bozze e modifiche in coda di revisione prima di pubblicare.",
-      "Venticode is the centralized, server-side coding and bot agent written in Rust and open-sourced under the GNU AGPL-3.0 licence. It pairs a shared Web and CLI TUI in the spirit of Pi agent with @ventic bots for Slack, Telegram and GitLab that pick up mentions, inspect code and logs via harness and MCP, and hold drafts and edits for review before publishing.",
+      "Venticode è l'agente di coding e bot lato server scritto in Rust. Unisce una Web UI e una CLI TUI condivise sullo stile di Pi agent a bot @ventic per Slack, Telegram e GitLab che ricevono menzioni, leggono codice e log via harness e MCP, e trattengono bozze e modifiche in coda di revisione prima di pubblicare.",
+      "Venticode is the centralized, server-side coding and bot agent written in Rust. It pairs a shared Web and CLI TUI in the spirit of Pi agent with @ventic bots for Slack, Telegram and GitLab that pick up mentions, inspect code and logs via harness and MCP, and hold drafts and edits for review before publishing.",
     ),
     repoUrl: VENTICODE_REPO_URL,
     repoLink: t("Esplora il codice su GitHub", "Explore the code on GitHub"),
@@ -107,7 +109,7 @@ export function venticode(lang: Lang) {
       inLink: t("HTTPS · SSE senza buffer", "HTTPS · unbuffered SSE"),
       server: {
         label: t("Venticode Server · Rust", "Venticode Server · Rust"),
-        badge: "AGPL-3.0",
+        badge: "Source-available",
         items: [
           t("Sessioni, policy e approvazioni su PostgreSQL", "Sessions, policies and approvals in PostgreSQL"),
           t("Trascrizioni, diff e output cifrati AES-256-GCM su S3", "Transcripts, diffs and output encrypted AES-256-GCM in S3"),
@@ -180,11 +182,11 @@ export function venticode(lang: Lang) {
       {
         icon: "globe",
         tone: "jade",
-        tag: t("Open source · GNU AGPL-3.0", "Open source · GNU AGPL-3.0"),
+        tag: "Source-available",
         title: t("Libero da lock-in, standalone o con Ventic", "Zero lock-in, standalone or with Ventic"),
         body: t(
-          "Venticode è open source sotto licenza GNU AGPL-3.0: puoi ispezionare il codice, estenderlo e installarlo in autonomia su qualsiasi endpoint OpenAI o Anthropic. Dentro Ventic eredita automaticamente host per workspace, SSO, quote prepagate, filtro PII e routing Switchyard.",
-          "Venticode is open-sourced under the GNU AGPL-3.0 licence: inspect the code, extend it and self-host standalone against any OpenAI- or Anthropic-compatible endpoint. Inside Ventic it automatically inherits per-workspace hosts, SSO, prepaid quotas, PII masking and Switchyard routing.",
+          "Puoi consultare il codice e installare Venticode sulla tua infrastruttura per uso aziendale interno. Dentro Ventic eredita automaticamente host per workspace, SSO, quote prepagate, filtro PII e routing Switchyard.",
+          "You can inspect the code and self-host Venticode for internal business use. Inside Ventic it automatically inherits per-workspace hosts, SSO, prepaid quotas, PII masking and Switchyard routing.",
         ),
       },
     ] as VenticodeAdvantage[],
@@ -242,14 +244,18 @@ export function venticode(lang: Lang) {
 
     deploy: {
       standalone: {
-        tag: t("Open source · GNU AGPL-3.0", "Open source · GNU AGPL-3.0"),
+        tag: VENTICODE_LICENSE_NAME,
         title: t("Usa Venticode in autonomia (Standalone)", "Run Venticode standalone"),
         body: t(
           "Compili ed esegui il servizio Rust venticode e il runner venticode-harness sulla tua infrastruttura con PostgreSQL, S3 e qualsiasi provider OpenAI o Anthropic (anche modelli locali). Stessa Web UI WASM, stessa CLI TUI e stesso connettore bot Apache Camel.",
           "Build and run the Rust venticode service and venticode-harness runner on your own infrastructure with PostgreSQL, S3 and any OpenAI- or Anthropic-compatible endpoint (including local models). Same WASM Web UI, same CLI TUI and same Apache Camel bot connector.",
         ),
+        license: t(
+          "L’uso aziendale interno è consentito. Mantieni il logo originale, chiedi autorizzazione scritta prima di redistribuire sorgenti o binari e invia le modifiche al repository ufficiale tramite pull request prima di usarle in produzione.",
+          "Internal business use is permitted. Keep the original logo, obtain written permission before redistributing source or binaries, and submit changes to the official repository by pull request before using them in production.",
+        ),
         cmd: "venticode-tui --standalone https://code.example.org",
-        cta: t("Apri github.com/alexpacio/venticode", "Open github.com/alexpacio/venticode"),
+        cta: t("Leggi la licenza", "Read the license"),
         guide: t("Guida di installazione passo passo", "Step-by-step install guide"),
       },
       ventic: {
